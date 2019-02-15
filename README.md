@@ -26,6 +26,6 @@ Hugo Koot <img src="https://i.imgur.com/R2g981c.jpg" width="300" height="400">
 
 Otni ![picture of Otni](https://i.imgur.com/dpqDW2r.png)
 
-Duyemo (https://imgur.com/a/r3N9JRA.png) (https://imgur.com/a/TIVMA6J.png)
+Duyemo (https://i.imgur.com/5jUfmmG.jpg)
 
 Saman Shahbazi ![Picture of Sam](https://i.imgur.com/kuTXbXK.jpg)
