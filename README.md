@@ -20,21 +20,27 @@ Run `maven install` ([Intellij](https://www.jetbrains.com/help/idea/2016.3/getti
 **Checkstyle**:  
 Run `maven site`
 
-Benjamin <img src="https://i.imgur.com/udyAZdC.jpg" width="2220" height="1080">
+Benjamin netid: bknol 
+<img src="https://i.imgur.com/udyAZdC.jpg" width="2220" height="1080">
 
-Hugo Koot <img src="https://i.imgur.com/R2g981c.jpg" width="300" height="400">
+Hugo Koot netid: hmgkoot 
+<img src="https://i.imgur.com/R2g981c.jpg" width="300" height="400">
 
-Otni ![picture of Otni](https://i.imgur.com/dpqDW2r.png)
+Otni netid: oledelay
+![picture of Otni](https://i.imgur.com/dpqDW2r.png)
 
-Duyemo danceaux <img src="https://i.imgur.com/5jUfmmG.jpg" width="200" height="280"><img src="https://i.imgur.com/rDIER3M.jpg" width="200" height ="280">
+Duyemo netid: danceaux 
+<img src="https://i.imgur.com/5jUfmmG.jpg" width="200" height="280"><img src="https://i.imgur.com/rDIER3M.jpg" width="200" height ="280">
 
-Saman Shahbazi ![Picture of Sam](https://i.imgur.com/kuTXbXK.jpg)
+Saman Shahbazi netid: sshahbazi
+![Picture of Sam](https://i.imgur.com/kuTXbXK.jpg)
 
-Mihhail ![picture of Mihhail](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/1614/avatar.png?width=400)
+Mihhail netid: msokolov
+![picture of Mihhail](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/1614/avatar.png?width=400)
 
-Markus ![picure of Markus](https://www.upload.ee/image/9573307/Max_dokumendifoto18-06-2015-12-49-56-11132.jpg)
+Markus netid: mmilk
+![picure of Markus](https://www.upload.ee/image/9573307/Max_dokumendifoto18-06-2015-12-49-56-11132.jpg)
 
-<img src="https://i.imgur.com/LY4lp2i.jpg" width="2220" height="1080">
 
 ![picture of god](https://i.imgur.com/wnc0Ssn.jpg)
 
