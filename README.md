@@ -33,3 +33,5 @@ Saman Shahbazi ![Picture of Sam](https://i.imgur.com/kuTXbXK.jpg)
 Mihhail ![picture of Mihhail](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/1614/avatar.png?width=400)
 
 Markus ![picure of Markus](https://www.upload.ee/image/9573307/Max_dokumendifoto18-06-2015-12-49-56-11132.jpg)
+
+<img src="https://www.google.com/imgres?imgurl=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2Ff%2Ff0%2FVladimir_Putin_%25282018-05-14%2529.jpg%2F220px-Vladimir_Putin_%25282018-05-14%2529.jpg&imgrefurl=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FVladimir_Putin&docid=31fDIBOoZJpqRM&tbnid=Z8QaQaJbTqGQfM%3A&vet=10ahUKEwjL89-8_73gAhWELlAKHdbNB8MQMwhrKAAwAA..i&w=220&h=295&bih=706&biw=1536&q=Vladimir%20Putin&ved=0ahUKEwjL89-8_73gAhWELlAKHdbNB8MQMwhrKAAwAA&iact=mrc&uact=8" width="2220" height="1080">
