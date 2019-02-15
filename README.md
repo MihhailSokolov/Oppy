@@ -34,5 +34,5 @@ Mihhail ![picture of Mihhail](https://gitlab.ewi.tudelft.nl/uploads/-/system/use
 
 Markus ![picure of Markus](https://www.upload.ee/image/9573307/Max_dokumendifoto18-06-2015-12-49-56-11132.jpg)
 
-<img src=https://imgur.com/LY4lp2i"><img src="https://i.imgur.com/LY4lp2i.jpg width="2220" height="1080">
+<img src="https://i.imgur.com/LY4lp2i.jpg" width="2220" height="1080">
 
