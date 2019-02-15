@@ -22,4 +22,4 @@ Run `maven install` ([Intellij](https://www.jetbrains.com/help/idea/2016.3/getti
 **Checkstyle**:  
 Run `maven site`
 
-Benjamin ![picture of Benjamin](https://imgur.com/udyAZdC)
+Benjamin ![picture of Benjamin](https://i.imgur.com/udyAZdC.jpg)
