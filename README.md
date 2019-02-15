@@ -31,3 +31,5 @@ Duyemo <img src="https://i.imgur.com/5jUfmmG.jpg" width="200" height="280"><img 
 Saman Shahbazi ![Picture of Sam](https://i.imgur.com/kuTXbXK.jpg)
 
 Mihhail ![picture of Mihhail](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/1614/avatar.png?width=400)
+
+<img src="https://www.vox.com/2017-in-review/2017/12/27/16810186/trump-2017-foreign-policy-russia-twitter" width="2220" height="1080">
