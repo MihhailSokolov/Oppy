@@ -1,5 +1,3 @@
-# CSE1105 Template Repository
-
 This a template repository to help you get started on making the best project possible!
 
 You can download the latest version [here](https://github.com/SERG-Delft/TI1216/releases)
@@ -27,4 +25,5 @@ Benjamin <img src="https://i.imgur.com/udyAZdC.jpg" width="1080" height="1080">
 Hugo Koot <img src="https://i.imgur.com/R2g981c.jpg" width="300" height="400">
 
 Otni ![picture of Otni](https://i.imgur.com/dpqDW2r.png)
+
 
