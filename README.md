@@ -32,4 +32,4 @@ Saman Shahbazi ![Picture of Sam](https://i.imgur.com/kuTXbXK.jpg)
 
 Mihhail ![picture of Mihhail](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/1614/avatar.png?width=400)
 
-<img src="https://i.imgur.com/vwWua39.jpg" width="2220" height="1080">
+Markus ![picure of Markus](https://www.upload.ee/image/9573307/Max_dokumendifoto18-06-2015-12-49-56-11132.jpg)
