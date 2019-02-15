@@ -23,3 +23,7 @@ Run `maven install` ([Intellij](https://www.jetbrains.com/help/idea/2016.3/getti
 Run `maven site`
 
 Benjamin ![picture of Benjamin](https://i.imgur.com/udyAZdC.jpg)
+
+Hugo Koot ![picture of Hugo](https://i.imgur.com/R2g981c.jpg)
+
+
