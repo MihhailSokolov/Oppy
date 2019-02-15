@@ -28,5 +28,4 @@ Otni ![picture of Otni](https://i.imgur.com/dpqDW2r.png)
 
 Duyemo (https://i.imgur.com/5jUfmmG.jpg)
 
-Saman Shahbazi ![Picture of Sam](https://imgur.com/a/mJaDKwI)
-
+Saman Shahbazi ![Picture of Sam](https://i.imgur.com/kuTXbXK.jpg)
