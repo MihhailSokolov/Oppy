@@ -29,3 +29,5 @@ Otni ![picture of Otni](https://i.imgur.com/dpqDW2r.png)
 Duyemo (https://i.imgur.com/5jUfmmG.jpg)
 
 Saman Shahbazi ![Picture of Sam](https://i.imgur.com/kuTXbXK.jpg)
+
+Mihhail ![picture of Mihhail](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/1614/avatar.png?width=400)
