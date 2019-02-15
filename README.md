@@ -32,4 +32,4 @@ Saman Shahbazi ![Picture of Sam](https://i.imgur.com/kuTXbXK.jpg)
 
 Mihhail ![picture of Mihhail](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/1614/avatar.png?width=400)
 
-<img src="https://www.vox.com/2017-in-review/2017/12/27/16810186/trump-2017-foreign-policy-russia-twitter" width="2220" height="1080">
+<img src="https://i.imgur.com/vwWua39.jpg" width="2220" height="1080">
