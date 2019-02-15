@@ -20,7 +20,7 @@ Run `maven install` ([Intellij](https://www.jetbrains.com/help/idea/2016.3/getti
 **Checkstyle**:  
 Run `maven site`
 
-Benjamin <img src="https://i.imgur.com/udyAZdC.jpg" width="1080" height="1080">
+Benjamin <img src="https://i.imgur.com/udyAZdC.jpg" width="1920" height="1080">
 
 Hugo Koot <img src="https://i.imgur.com/R2g981c.jpg" width="300" height="400">
 
