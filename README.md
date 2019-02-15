@@ -61,6 +61,10 @@ Saman Shahbazi netid: sshahbazi
 ![Picture of Sam](https://i.imgur.com/kuTXbXK.jpg)
 
 Mihhail netid: msokolov
+Personal Development Plan:
+I consider my strong points to be that I am hard-working and quick-learning. So, I can quite quickly learn new things. My weak point, I think, is the lack of experience of working in team. My second weak point is that I am not good in testing. I would really like to improve that because it will be essential in the future.
+My main goal would be to get a high grade for this course (at least 8), but I also would like to obtain more experience in working in team with other programmers. Because later, when working for some company, this experience will most likely be crucial. Currently, I am overcoming the dislike for asking for help and becoming more open. Now I just want to get experience in working in team.
+To achieve my goal, I reckon, I just need to work in team, complete my tasks in time and take part in discussions and planning. And I will certainly do my best to achieve all my goals.
 ![picture of Mihhail](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/1614/avatar.png?width=400)
 
 Markus netid: mmilk
