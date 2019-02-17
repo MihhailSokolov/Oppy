@@ -56,6 +56,19 @@ Otni netid: oledelay
 
 Duyemo netid: danceaux 
 <img src="https://i.imgur.com/5jUfmmG.jpg" width="200" height="280"><img src="https://i.imgur.com/rDIER3M.jpg" width="200" height ="280">
+Strong points:
+-I can work many hours in a day till late in the night. For example I worked until 04:30 when finishing the project for the web part of web- and database. If there's a deadline I can do some stuff till late at night if needed.
+-I have my stuff complete when we agreed. I used to work manny times in the night on high school to reach deadlines which I discussed with teammates. this show in the team (hopefully) by finishing my work in time.
+
+Weak points:
+-I sometimes have tunnel vision. Like when I try to hardcode something you can easily do with a loop. Can show when I focus too much on one particular way of solving a problem while negating an easier one. 
+-I can get distracted while working with a group. Like hired a room at ewi to study for the ADS exame, but we just ended up joking around and not doing anything productive. Can show by not being as productive when i知 with the group as when i知 working alone.
+
+I want to learn how to work together with a group while developing a project. This is important to me because I have to do this when I get a job later.
+I知 not working at that goal jet. I知 gonna start doing that with this project.
+To reach this goal I知 gonna do this project. My first step is starting making a planning with this group. 
+My teammates can help me with this by making their part of the project.
+
 
 Saman Shahbazi netid: sshahbazi
 ![Picture of Sam](https://i.imgur.com/kuTXbXK.jpg)
