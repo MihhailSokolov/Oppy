@@ -106,6 +106,32 @@ What I can do right now is make sure i meet everyone and start refresh my memory
 Otni netid: oledelay
 ![picture of Otni](https://i.imgur.com/dpqDW2r.png)
 
+| Strong point | Pitfall | Supplement | Opposite |
+| :----------: | :-----: | :--------: | :------: |
+| perfectionism | micromanagement | leaving things be | sloppiness |
+| not easily angered | not voicing dissatisfaction | voicing dissatisfaction | anger management issues |
+
+| Weak point | Supplement | Opposite | Moderated |
+| :---------: | :--------: | :------: | :-------: |
+| disorganized | organizing | inflexibility | flexible |
+| postponing | punctual | overexpecting punctuality | chill and efficient |
+
+The strong points I mentioned help balance eachother, so those don't require much attention.
+G I want to:
+* improve my tendency to postpone things 
+	This is important to me because postponing things tends to cause issues, such as leaving me stressed and sometimes unable to finish something I wanted to finish as a deadline approaches.
+	I'll have succeeded in this if it's not "normal" for me to postpone by the end of the project.
+
+* learn more about working on a project as a team
+	Being able to deal with others whose opinions and ideals might not perfectly align with yours is a valuable and necessary skill for future projects and jobs.
+	I'll have reached this goal if there is a significant improvement in my ability to work with others as a team.
+
+R I've only just formulated these goals, but I am going to actively work on them during this course.
+O This project is for a large portion about learning to work as a team, and that helps create opportunities to learn. If I find myself not understanding how to deal with a situation, the TAs seem very willing to assist and that really helps.
+The option I want to use most for learning about teamwork is communicating with my team members without the need of outside intervention. As for postponing, I am going to set smaller deadlines for myself for smaller portions of tasks, so that it's easier to get working (A method known as chunking). As far as I can tell, the only things that might stop me from reaching these goals are a lack of discipline and/or some major incident.
+W I will use chunking and the pressure of being in a group and not wanting to disappoint others to help deal with the postponing issue, whenever we decide on tasks to fulfill. I'll try to be a cooperative team member during this project and try to learn from anything that goes wrong.
+
+
 Duyemo netid: danceaux
 <img src="https://i.imgur.com/5jUfmmG.jpg" width="200" height="280"><img src="https://i.imgur.com/rDIER3M.jpg" width="200" height ="280">
 Strong points:
@@ -158,7 +184,7 @@ Markus netid: mmilk
 Step 1
 Stronger points:
 Responsibility - I believe I complete my tasks in time. It might take me some time to get started, but I feel like I finish most of my tasks before the deadline.
-ìA team playerî - I always try to be positive. I enjoy helping out my team members if I can and have the required knowledge. 
+ìA team playerÅE- I always try to be positive. I enjoy helping out my team members if I can and have the required knowledge. 
 
 Weaker points:
 Problem solving - sometimes when I get confused with certain tasks, I tend to get stuck and not make much progression by searching for solutions in wrong places.
