@@ -111,6 +111,28 @@ Duyemo netid: danceaux
 
 Saman Shahbazi netid: sshahbazi
 ![Picture of Sam](https://i.imgur.com/kuTXbXK.jpg)
+4980832 : Saman Shahbazi
+Strong points:
+-- Local programming
+-- Can explain known concepts well
+
+Weak points:
+-- Sometimes work alone for too long
+Personally I'd like to learn more about:
+
+G - Goal
+- Downloading/computing using a web-api
+- Client server interactions
+
+It's important to me because it's something that I haven't worked with before and I'd like to learn more about. I believe when we have succesfully deployed our application I will have at the very least a basic grasp of the aforementioned subjects.
+R - Reality
+- Not actively working on it (yet)
+O - Options
+- Study the required/appropriate material every day
+W - Will
+- Do my best to keep up with the required material
+- Lab days and in between those days if time permits
+================================================================
 
 Mihhail netid: msokolov
 Personal Development Plan:
