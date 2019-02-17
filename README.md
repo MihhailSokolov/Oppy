@@ -142,6 +142,27 @@ To achieve my goal, I reckon, I just need to work in team, complete my tasks in 
 ![picture of Mihhail](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/1614/avatar.png?width=400)
 
 Markus netid: mmilk
+Step 1
+Stronger points:
+Responsibility - I believe I complete my tasks in time. It might take me some time to get started, but I feel like I finish most of my tasks before the deadline.
+“A team player” - I always try to be positive. I enjoy helping out my team members if I can and have the required knowledge. 
+
+Weaker points:
+Problem solving - sometimes when I get confused with certain tasks, I tend to get stuck and not make much progression by searching for solutions in wrong places.
+Experience in the field of programming - I am relatively new to programming(no previous experience before OOP course). This might lead to me looking for some advice from my fellow group members.
+
+Step 2
+G - Goal
+Improving my programming skills/mastering the basics - I feel this is the basis of creating something. I believe I have achieved this goal by the end of our project.
+R - Reality
+	I feel like recently I haven’t put much focus on improving my programming skills. I should start looking for ways to implement programming in my daily life and create simple projects for practice. 
+	I think I should start looking for different languages for programming and find something that suits me the most.
+O - Options
+	There seems to be a lot of options to achieve my goal, since the internet is full of information and I also have my teammates to learn from. 
+	I would like to learn from my team members, as this would also complement my team-work skills. I think the only thing holding me back could be my own motivation.
+W - Will
+	I am going to start creating small projects and will try to perfect them/make them as efficient as possible(I was thinking about creating a program to create flashcards for learning a language). 
+	I feel like my teammates could help me notice some inefficenies inside my code and guide me to a better solution.
 ![picure of Markus](https://www.upload.ee/image/9573307/Max_dokumendifoto18-06-2015-12-49-56-11132.jpg)
 
 
