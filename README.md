@@ -72,35 +72,35 @@ To reach my goals I am going to do two things:
 1. try to do as much testing as possible.
 2. work structured all the time.
 
-I am going to start work on this monday the 18th.
+I am going to start work on this monday the 18th.  
 <img src="https://i.imgur.com/udyAZdC.jpg" width="300" height="400">
 
-Hugo Koot netid: hmgkoot
-self dev:
+Hugo Koot netid: hmgkoot  
+self dev:  
 Step 1: Develop a goal
 
-These are some of my personal strengths:
-- I have a strong motivation which allows me to work very hard voor extended periods of time when I have to.
-For example when I realize a haven't done enough for a test I can easily work through the night untill I get everything done.
-For the team this means that when I say I'm getting something done, I get it done.
+These are some of my personal strengths:  
+- I have a strong motivation which allows me to work very hard voor extended periods of time when I have to.  
+For example when I realize a haven't done enough for a test I can easily work through the night untill I get everything done.  
+For the team this means that when I say I'm getting something done, I get it done.  
 
-- I take initiative, for example I do not wait for other people to ask me to do something before I do it.
+- I take initiative, for example I do not wait for other people to ask me to do something before I do it.  
 For the team this means, I won't sit around doing nothing for extended periods of time.
 
-These are some of my personal weaknesses:
-- I ask a lot of questions even about little things. I do this because I want to make sure I am doing things the right way.
+These are some of my personal weaknesses:  
+- I ask a lot of questions even about little things. I do this because I want to make sure I am doing things the right way.  
 This can result in me becomming a little anoying to my teammates.
 
-- I do get distracted easily when I get stuck somewhere. This happens a lot when learning for test but I always get trough it.
+- I do get distracted easily when I get stuck somewhere. This happens a lot when learning for test but I always get through it.  
 In the team this may result in me working at a less than optimal speed.
 
 Step 2: Create a plan to achieve your goal
 
-My goal for this project is to improve my communication skills, and become good enough at java to work on a project on my own.
-I haven not continued developing my java skills after OOP, buy I am eager to learn. I plan to start improving my communication skills by keeping everyone updated on what I am doing.
-And helping others as much as possible.
-I plan to start improving my java skills by coding as much as possible and asking my teammates when I can not find answers on google.
-What I can do right now is make sure i meet everyone and start refresh my memory about java.
+My goal for this project is to improve my communication skills, and become good enough at java to work on a project on my own.  
+I have not continued developing my java skills after OOP, but I am eager to learn. I plan to start improving my communication skills by keeping everyone updated on what I am doing.
+And helping others as much as possible.  
+I plan to start improving my java skills by coding as much as possible and asking my teammates when I can not find answers on google.  
+What I can do right now is make sure I meet everyone and start refresh my memory about java.  
 <img src="https://i.imgur.com/R2g981c.jpg" width="300" height="400">
 
 Otni netid: oledelay
@@ -116,41 +116,43 @@ Otni netid: oledelay
 | disorganized | organizing | inflexibility | flexible |
 | postponing | punctual | overexpecting punctuality | chill and efficient |
 
-The strong points I mentioned help balance eachother, so those don't require much attention.
-G I want to:
-* improve my tendency to postpone things 
-	This is important to me because postponing things tends to cause issues, such as leaving me stressed and sometimes unable to finish something I wanted to finish as a deadline approaches.
+G The strong points I mentioned help balance eachother, so those don't require much attention.  
+I want to:
+* Improve my tendency to postpone things:  
+	This is important to me because postponing things tends to cause issues, such as leaving me stressed and sometimes unable to finish something I wanted to finish as a deadline approaches.  
 	I'll have succeeded in this if it's not "normal" for me to postpone by the end of the project.
 
-* learn more about working on a project as a team
-	Being able to deal with others whose opinions and ideals might not perfectly align with yours is a valuable and necessary skill for future projects and jobs.
+* Learn more about working on a project as a team:  
+	Being able to deal with others whose opinions and ideals might not perfectly align with yours is a valuable and necessary skill for future projects and jobs.  
 	I'll have reached this goal if there is a significant improvement in my ability to work with others as a team.
 
 R I've only just formulated these goals, but I am going to actively work on them during this course.
-O This project is for a large portion about learning to work as a team, and that helps create opportunities to learn. If I find myself not understanding how to deal with a situation, the TAs seem very willing to assist and that really helps.
+
+O This project is for a large portion about learning to work as a team, and that helps create opportunities to learn. If I find myself not understanding how to deal with a situation, the TAs seem very willing to assist and that really helps.  
 The option I want to use most for learning about teamwork is communicating with my team members without the need of outside intervention. As for postponing, I am going to set smaller deadlines for myself for smaller portions of tasks, so that it's easier to get working (A method known as chunking). As far as I can tell, the only things that might stop me from reaching these goals are a lack of discipline and/or some major incident.
+
 W I will use chunking and the pressure of being in a group and not wanting to disappoint others to help deal with the postponing issue, whenever we decide on tasks to fulfill. I'll try to be a cooperative team member during this project and try to learn from anything that goes wrong.
 
 
 Duyemo netid: danceaux
 <img src="https://i.imgur.com/5jUfmmG.jpg" width="200" height="280"><img src="https://i.imgur.com/rDIER3M.jpg" width="200" height ="280">
 Strong points:
--I can work many hours in a day till late in the night. For example I worked until 04:30 when finishing the project for the web part of web- and database. If there's a deadline I can do some stuff till late at night if needed.
+-I can work many hours in a day till late in the night. For example I worked until 04:30 when finishing the project for the web part of web- and database. If there's a deadline I can do some stuff till late at night if needed.  
 -I have my stuff complete when we agreed. I used to work manny times in the night on high school to reach deadlines which I discussed with teammates. this show in the team (hopefully) by finishing my work in time.
 
 Weak points:
--I sometimes have tunnel vision. Like when I try to hardcode something you can easily do with a loop. Can show when I focus too much on one particular way of solving a problem while negating an easier one. 
--I can get distracted while working with a group. Like hired a room at ewi to study for the ADS exame, but we just ended up joking around and not doing anything productive. Can show by not being as productive when i知 with the group as when i知 working alone.
+-I sometimes have tunnel vision. Like when I try to hardcode something you can easily do with a loop. Can show when I focus too much on one particular way of solving a problem while negating an easier one.  
+-I can get distracted while working with a group. Like we hired a room at ewi to study for the ADS exam, but we just ended up joking around and not doing anything productive. Can show by not being as productive when I'm with the group as when I'm working alone.
 
-I want to learn how to work together with a group while developing a project. This is important to me because I have to do this when I get a job later.
-I知 not working at that goal jet. I知 gonna start doing that with this project.
-To reach this goal I知 gonna do this project. My first step is starting making a planning with this group. 
+I want to learn how to work together with a group while developing a project. This is important to me because I have to do this when I get a job later.  
+I'm not working at that goal jet. I'm gonna start doing that with this project.  
+To reach this goal I'm gonna do this project. My first step is starting making a planning with this group.  
 My teammates can help me with this by making their part of the project.
 
 
 Saman Shahbazi netid: sshahbazi
 ![Picture of Sam](https://i.imgur.com/kuTXbXK.jpg)
-4980832 : Saman Shahbazi
+4980832 : Saman Shahbazi  
 Strong points:
 -- Local programming
 -- Can explain known concepts well
@@ -163,46 +165,46 @@ G - Goal
 - Downloading/computing using a web-api
 - Client server interactions
 
-It's important to me because it's something that I haven't worked with before and I'd like to learn more about. I believe when we have succesfully deployed our application I will have at the very least a basic grasp of the aforementioned subjects.
+It's important to me because it's something that I haven't worked with before and I'd like to learn more about. I believe when we have succesfully deployed our application I will have at the very least a basic grasp of the aforementioned subjects.  
 R - Reality
-- Not actively working on it (yet)
+- Not actively working on it (yet)  
 O - Options
-- Study the required/appropriate material every day
+- Study the required/appropriate material every day  
 W - Will
 - Do my best to keep up with the required material
 - Lab days and in between those days if time permits
 ================================================================
 
-Mihhail netid: msokolov
-Personal Development Plan:
-I consider my strong points to be that I am hard-working and quick-learning. So, I can quite quickly learn new things. My weak point, I think, is the lack of experience of working in team. My second weak point is that I am not good in testing. I would really like to improve that because it will be essential in the future.
-My main goal would be to get a high grade for this course (at least 8), but I also would like to obtain more experience in working in team with other programmers. Because later, when working for some company, this experience will most likely be crucial. Currently, I am overcoming the dislike for asking for help and becoming more open. Now I just want to get experience in working in team.
-To achieve my goal, I reckon, I just need to work in team, complete my tasks in time and take part in discussions and planning. And I will certainly do my best to achieve all my goals.
+Mihhail netid: msokolov  
+Personal Development Plan:  
+I consider my strong points to be that I am hard-working and quick-learning. So, I can quite quickly learn new things. My weak point, I think, is the lack of experience of working in team. My second weak point is that I am not good in testing. I would really like to improve that because it will be essential in the future.  
+My main goal would be to get a high grade for this course (at least 8), but I also would like to obtain more experience in working in team with other programmers. Because later, when working for some company, this experience will most likely be crucial. Currently, I am overcoming the dislike for asking for help and becoming more open. Now I just want to get experience in working in team.  
+To achieve my goal, I reckon, I just need to work in team, complete my tasks in time and take part in discussions and planning. And I will certainly do my best to achieve all my goals.  
 ![picture of Mihhail](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/1614/avatar.png?width=400)
 
-Markus netid: mmilk
+Markus netid: mmilk  
 Step 1
-Stronger points:
-Responsibility - I believe I complete my tasks in time. It might take me some time to get started, but I feel like I finish most of my tasks before the deadline.
-鄭 team player・- I always try to be positive. I enjoy helping out my team members if I can and have the required knowledge. 
+Stronger points:  
+Responsibility - I believe I complete my tasks in time. It might take me some time to get started, but I feel like I finish most of my tasks before the deadline.  
+"A team player" - I always try to be positive. I enjoy helping out my team members if I can and have the required knowledge.  
 
-Weaker points:
-Problem solving - sometimes when I get confused with certain tasks, I tend to get stuck and not make much progression by searching for solutions in wrong places.
-Experience in the field of programming - I am relatively new to programming(no previous experience before OOP course). This might lead to me looking for some advice from my fellow group members.
+Weaker points:  
+Problem solving - sometimes when I get confused with certain tasks, I tend to get stuck and not make much progression by searching for solutions in wrong places.  
+Experience in the field of programming - I am relatively new to programming (no previous experience before OOP course). This might lead to me looking for some advice from my fellow group members.  
 
-Step 2
-G - Goal
-Improving my programming skills/mastering the basics - I feel this is the basis of creating something. I believe I have achieved this goal by the end of our project.
-R - Reality
-	I feel like recently I haven稚 put much focus on improving my programming skills. I should start looking for ways to implement programming in my daily life and create simple projects for practice. 
-	I think I should start looking for different languages for programming and find something that suits me the most.
-O - Options
-	There seems to be a lot of options to achieve my goal, since the internet is full of information and I also have my teammates to learn from. 
-	I would like to learn from my team members, as this would also complement my team-work skills. I think the only thing holding me back could be my own motivation.
-W - Will
-	I am going to start creating small projects and will try to perfect them/make them as efficient as possible(I was thinking about creating a program to create flashcards for learning a language). 
-	I feel like my teammates could help me notice some inefficenies inside my code and guide me to a better solution.
+Step 2  
+G - Goal  
+Improving my programming skills/mastering the basics - I feel this is the basis of creating something. I believe I have achieved this goal by the end of our project.  
+R - Reality  
+	I feel like recently I haven't put much focus on improving my programming skills. I should start looking for ways to implement programming in my daily life and create simple projects for practice.  
+	I think I should start looking for different languages for programming and find something that suits me the most.  
+O - Options  
+	There seems to be a lot of options to achieve my goal, since the internet is full of information and I also have my teammates to learn from.  
+	I would like to learn from my team members, as this would also complement my team-work skills. I think the only thing holding me back could be my own motivation.  
+W - Will  
+	I am going to start creating small projects and will try to perfect them/make them as efficient as possible(I was thinking about creating a program to create flashcards for learning a language).  
+	I feel like my teammates could help me notice some inefficiencies inside my code and guide me to a better solution.  
 ![picure of Markus](https://www.upload.ee/image/9573307/Max_dokumendifoto18-06-2015-12-49-56-11132.jpg)
 
 
-![picture of god](https://i.imgur.com/wnc0Ssn.jpg)
+![picture of peak performance](https://i.imgur.com/wnc0Ssn.jpg)
