@@ -184,7 +184,7 @@ To achieve my goal, I reckon, I just need to work in team, complete my tasks in 
 ![picture of Mihhail](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/1614/avatar.png?width=400)
 
 Markus netid: mmilk  
-Step 1
+Step 1  
 Stronger points:  
 Responsibility - I believe I complete my tasks in time. It might take me some time to get started, but I feel like I finish most of my tasks before the deadline.  
 "A team player" - I always try to be positive. I enjoy helping out my team members if I can and have the required knowledge.  
