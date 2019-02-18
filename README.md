@@ -21,6 +21,7 @@ Run `maven install` ([Intellij](https://www.jetbrains.com/help/idea/2016.3/getti
 Run `maven site`
 
 Benjamin netid: bknol
+<img src="https://i.imgur.com/udyAZdC.jpg" width="300" height="400">  
 Personal Development Plan
 
 Two of my strong points are:
@@ -73,9 +74,10 @@ To reach my goals I am going to do two things:
 2. work structured all the time.
 
 I am going to start work on this monday the 18th.  
-<img src="https://i.imgur.com/udyAZdC.jpg" width="300" height="400">
 
-Hugo Koot netid: hmgkoot  
+Hugo Koot netid: hmgkoot
+<img src="https://i.imgur.com/R2g981c.jpg" width="300" height="400">  
+
 self dev:  
 Step 1: Develop a goal
 
@@ -101,7 +103,6 @@ I have not continued developing my java skills after OOP, but I am eager to lear
 And helping others as much as possible.  
 I plan to start improving my java skills by coding as much as possible and asking my teammates when I can not find answers on google.  
 What I can do right now is make sure I meet everyone and start refresh my memory about java.  
-<img src="https://i.imgur.com/R2g981c.jpg" width="300" height="400">
 
 Otni netid: oledelay
 ![picture of Otni](https://i.imgur.com/dpqDW2r.png)
@@ -152,8 +153,8 @@ My teammates can help me with this by making their part of the project.
 
 
 Saman Shahbazi netid: sshahbazi
-![Picture of Sam](https://i.imgur.com/kuTXbXK.jpg)
-4980832 : Saman Shahbazi  
+![Picture of Sam](https://i.imgur.com/kuTXbXK.jpg)  
+
 Strong points:
 -- Local programming
 -- Can explain known concepts well
@@ -176,14 +177,17 @@ W - Will
 - Lab days and in between those days if time permits
 ================================================================
 
-Mihhail netid: msokolov  
+Mihhail netid: msokolov
+![picture of Mihhail](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/1614/avatar.png?width=400)
+
 Personal Development Plan:  
 I consider my strong points to be that I am hard-working and quick-learning. So, I can quite quickly learn new things. My weak point, I think, is the lack of experience of working in team. My second weak point is that I am not good in testing. I would really like to improve that because it will be essential in the future.  
 My main goal would be to get a high grade for this course (at least 8), but I also would like to obtain more experience in working in team with other programmers. Because later, when working for some company, this experience will most likely be crucial. Currently, I am overcoming the dislike for asking for help and becoming more open. Now I just want to get experience in working in team.  
 To achieve my goal, I reckon, I just need to work in team, complete my tasks in time and take part in discussions and planning. And I will certainly do my best to achieve all my goals.  
-![picture of Mihhail](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/1614/avatar.png?width=400)
 
-Markus netid: mmilk  
+Markus netid: mmilk
+![picure of Markus](https://www.upload.ee/image/9573307/Max_dokumendifoto18-06-2015-12-49-56-11132.jpg)
+
 Step 1  
 Stronger points:  
 Responsibility - I believe I complete my tasks in time. It might take me some time to get started, but I feel like I finish most of my tasks before the deadline.  
@@ -204,8 +208,7 @@ O - Options
 	I would like to learn from my team members, as this would also complement my team-work skills. I think the only thing holding me back could be my own motivation.  
 W - Will  
 	I am going to start creating small projects and will try to perfect them/make them as efficient as possible(I was thinking about creating a program to create flashcards for learning a language).  
-	I feel like my teammates could help me notice some inefficiencies inside my code and guide me to a better solution.  
-![picure of Markus](https://www.upload.ee/image/9573307/Max_dokumendifoto18-06-2015-12-49-56-11132.jpg)
+	I feel like my teammates could help me notice some inefficiencies inside my code and guide me to a better solution.
 
 
 ![picture of peak performance](https://i.imgur.com/wnc0Ssn.jpg)
