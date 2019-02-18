@@ -136,11 +136,12 @@ W I will use chunking and the pressure of being in a group and not wanting to di
 
 Duyemo netid: danceaux
 <img src="https://i.imgur.com/5jUfmmG.jpg" width="200" height="280"><img src="https://i.imgur.com/rDIER3M.jpg" width="200" height ="280">
-Strong points:
+
+Strong points:  
 -I can work many hours in a day till late in the night. For example I worked until 04:30 when finishing the project for the web part of web- and database. If there's a deadline I can do some stuff till late at night if needed.  
 -I have my stuff complete when we agreed. I used to work manny times in the night on high school to reach deadlines which I discussed with teammates. this show in the team (hopefully) by finishing my work in time.
 
-Weak points:
+Weak points:  
 -I sometimes have tunnel vision. Like when I try to hardcode something you can easily do with a loop. Can show when I focus too much on one particular way of solving a problem while negating an easier one.  
 -I can get distracted while working with a group. Like we hired a room at ewi to study for the ADS exam, but we just ended up joking around and not doing anything productive. Can show by not being as productive when I'm with the group as when I'm working alone.
 
