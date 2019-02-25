@@ -1,0 +1,23 @@
+REGISTRATION
+    To check if username "oppy123" is available for registration
+    Request:
+        /nameavailable?username=oppy123
+    Response
+        200 OK
+        Body: 'true' if is available, 'false' otherwise
+
+    To register a new user with username "oppy123", password "passwd" (which after SHA256 hash becomes "0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb")
+    and email "oppy@gmail.com" (which should become oppy%40gmail.com because '@' should be represented as '%40' in UTF-8 encoding)
+    Request:
+        /register?username=oppy123&pass=0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb&email=oppy%40gmail.com
+    Response:
+        200 OK if user has been successfully registered. Body is empty.
+        500 ERROR if could not register this user. Body contains message explaining the error
+
+LOGIN
+    To login with existing user whose username is "oppy123" and password "passwd" (which after SHA256 hash becomes "0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb")
+    Request:
+        /login?username=oppy123&pass=0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb
+    Response:
+        200 OK
+        Body: 'true' if username and password are correct, 'false' otherwise
