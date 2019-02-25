@@ -6,6 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Server {
     public static void main(String[] args) {
-        SpringApplication.run(Server.class, args);  // Start server, to check go to localhost:8080/check?msg=Hi
+        SpringApplication.run(Server.class, args);
     }
 }
