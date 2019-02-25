@@ -1,72 +1,97 @@
-sign in page:				
-username/email field		
-password field				
-log in button				
-log in via facebook			
-forgot password button		
-register page button
-remember me checkbox
+Client side 
+    sign in page:
+        UI:
+            username/email/password field				
+            log in button				
+            log in via facebook (low priority)			
+            forgot password button		
+            register page button
+            remember me checkbox
+    
+    
+    register page:	
+        UI:
+            email address field			
+            username field
+            check availability (username, low priority)
+            
+            password field				
+            confirm password
+            captcha (low)
+            sign up button
+            email confirmation
+            unique username
+            unique email
+    
+        sign in page "back end":
+            sign in button: send information to server (email/pass)
+            show response to sign in
+    
+        register "back end":
+            send registrant info to server
+            show response / confirmation to registration
+            check availability username (info to server, low priority)
+            move to sign in page
 
-register page:				
-email address field			
-username field				
-password field				
-confirm password
-captcha
-sign up button
-email confirmation
-unique username
-unique email
+    main page:
+        design planet faces. There need to be 7. 
+        make faces react to number of points
+        get number of points from server
+        show number of points
+        show countdown timer for point loss
+        show presets (redirect to action page with filled in boxes)
+        show delete buttons on preset buttons (confirmation)
+        make presets perform action
 
-main page:
-planet
-points
-countdown timer for point loss
-point loss amount
-presets (redirect to action page with filled in boxes)
-delete buttons on preset buttons (confirmation)
-sidebar menu
+
 
 side bar menu:
-back button
-leaderboards
-actions
+    show back button
+    show sidebar menu
+    show features/actions on sidebar
+    make sidebar react
+    make back button react
+    show leaderboards button
+    back button
+    enable push notifications
+    play anonymously
+    change password
+    log out
+    delete account (confirmation)
+    reset progress (confirmation)
+    profile picture
 
-account settings:
-back button
-enable push notifications
-play anonymously
-change password
-log out
-delete account (confirmation)
-reset progress (confirmation)
-profile picture
+    leaderboards:
+        back button
+        worldwide top 50
+        your current standing
+        top 50 among friends
 
-leaderboards:
-back button
-worldwide top 50
-your current standing
-top 50 among friends
+    dropdown tab categories (at most one active at a time)
+    save as preset (popup for name)
+    show submit button
+    make submit button react
+    search function for actions (low)
 
-actions:
-back button
-dropdown tab categories (at most one active at a time)
-save as preset (popup for name)
-submit button
-search function for actions
-
-planet
-planet becomes happier as points increase
-submitting checkbox actions rewards points
-tutorial
-
-passive loss of points
-can't gain points passively
-natural items(e.g. trees) appear if you do well
-natural items disappear if you do badly
-invitation reward
-
-user database
+Server-side:
+    Create data objects 
+        Users
+        Points
+    Create database (mongo)
+        According to users points model
+    
+    Sign in page:
+        Create sign in path
+        Check if username/pass is correct (query)
+        Return response from db to sign in attempt
+        
+    Register page:
+        Create register path
+        Check availability username
+        Create user/insert into db
+        Return confirmation
+    
+        
 
 
 
