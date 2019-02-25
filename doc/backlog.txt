@@ -1,0 +1,72 @@
+sign in page:				
+username/email field		
+password field				
+log in button				
+log in via facebook			
+forgot password button		
+register page button
+remember me checkbox
+
+register page:				
+email address field			
+username field				
+password field				
+confirm password
+captcha
+sign up button
+email confirmation
+unique username
+unique email
+
+main page:
+planet
+points
+countdown timer for point loss
+point loss amount
+presets (redirect to action page with filled in boxes)
+delete buttons on preset buttons (confirmation)
+sidebar menu
+
+side bar menu:
+back button
+leaderboards
+actions
+
+account settings:
+back button
+enable push notifications
+play anonymously
+change password
+log out
+delete account (confirmation)
+reset progress (confirmation)
+profile picture
+
+leaderboards:
+back button
+worldwide top 50
+your current standing
+top 50 among friends
+
+actions:
+back button
+dropdown tab categories (at most one active at a time)
+save as preset (popup for name)
+submit button
+search function for actions
+
+planet
+planet becomes happier as points increase
+submitting checkbox actions rewards points
+tutorial
+
+passive loss of points
+can't gain points passively
+natural items(e.g. trees) appear if you do well
+natural items disappear if you do badly
+invitation reward
+
+user database
+
+
+
