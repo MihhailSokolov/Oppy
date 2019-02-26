@@ -41,4 +41,26 @@ public class ControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message", is("Server: Hello")));
     }
+
+    @Test
+    public void checkUsernameAvailable() throws Exception {
+        mockMvc.perform(get("/nameavailable?username=oppy123"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+    }
+
+    @Test
+    public void checkUserLogin() throws Exception {
+        mockMvc.perform(get("/login?username=oppy123&pass=0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+    }
+
+    @Test
+    public void checkUserRegister() throws Exception {
+        mockMvc.perform(get("/register?username=oppy123"
+                +"&pass=0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb&email=oppy%40gmail.com"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(""));
+    }
 }
