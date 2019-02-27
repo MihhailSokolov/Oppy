@@ -1,5 +1,10 @@
 package server.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "user")
 public class User {
 
     private String username;
@@ -41,6 +46,13 @@ public class User {
     }
     public void setScore(int score) {
         this.score = score;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "User[username=%s, password='%s', email='%s', score='%d']",
+                username, password, email, score);
     }
 
 }
