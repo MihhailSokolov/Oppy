@@ -6,7 +6,7 @@ MongoDB:
 REGISTRATION
     To check if username "oppy123" is available for registration
     Request:
-            /nameavailable?username=oppy123
+        /nameavailable?username=oppy123
     Response
         200 OK
         Body: 'true' if is available, 'false' otherwise
