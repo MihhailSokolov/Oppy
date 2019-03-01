@@ -1,3 +1,8 @@
+MongoDB:
+    Install mongo: https://docs.mongodb.com/manual/administration/install-community/
+    Start mongoDB server
+    (optional) Interact with mongoDB client
+
 REGISTRATION
     To check if username "oppy123" is available for registration
     Request:
