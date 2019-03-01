@@ -2,6 +2,8 @@ MongoDB:
     Install mongo: https://docs.mongodb.com/manual/administration/install-community/
     Start mongoDB server
     (optional) Interact with mongoDB client
+    **Note when you are running this locally (ie., connecting to a local mongod server) You have to start
+    up your own server!)
 
 REGISTRATION
     To check if username "oppy123" is available for registration
