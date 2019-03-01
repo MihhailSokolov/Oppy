@@ -21,7 +21,7 @@ public class RegisterPage {
         grid.setHgap(10);
 
         //here the logo is created
-        Image logo = new Image("sample/placeholder350x150.png");
+        Image logo = new Image("placeholder 350x150.png");
         ImageView displayLogo = new ImageView(logo);
         GridPane.setConstraints(displayLogo, 0, 0, 3, 1);
 
