@@ -42,7 +42,7 @@ public class LoginPage {
         ToggleButton registerButton = new ToggleButton("Register");
         GridPane.setConstraints(registerButton, 1, 1);
         registerButton.setOnAction(e->{
-                window.setScene(RegisterPage.registerScene(primaryStage));
+                window.setScene(RegisterPage.registerScene(window));
         });
         registerButton.setToggleGroup(loginRegister);
 

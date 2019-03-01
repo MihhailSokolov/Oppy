@@ -15,10 +15,10 @@ public class RegisterPage {
         Stage window = primaryStage;
         window.setTitle("RegisterPage");
 
-        GridPane gridRegisterVieuw = new GridPane();
-        gridRegisterVieuw.setPadding(new Insets(10, 10, 10, 10));
-        gridRegisterVieuw.setVgap(8);
-        gridRegisterVieuw.setHgap(10);
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setVgap(8);
+        grid.setHgap(10);
 
         //here the logo is created
         Image logo = new Image("sample/placeholder350x150.png");
@@ -37,7 +37,7 @@ public class RegisterPage {
         ToggleButton loginButton = new ToggleButton("Sign in");
         GridPane.setConstraints(loginButton, 0, 1);
         loginButton.setOnAction(e ->{
-            window.setScene(LoginPage.LoginScene(primaryStage));
+            window.setScene(LoginPage.LoginScene(window));
         });
         loginButton.setToggleGroup(loginRegister);
 
@@ -77,11 +77,11 @@ public class RegisterPage {
         GridPane.setConstraints(registerButton, 2, 6);
 
         //Here all elements previously created are added to the vieuw and the vieuw is centerd
-        gridRegisterVieuw.getChildren().addAll(email, username, password, confirmPassword, emailTextfield, usernameTextfield, passwordTextfield, confirmPasswordTextfiel, registerButton, loginButton, fakeRegisterButton, displayLogo);
-        gridRegisterVieuw.setAlignment(Pos.CENTER);
+        grid.getChildren().addAll(email, username, password, confirmPassword, emailTextfield, usernameTextfield, passwordTextfield, confirmPasswordTextfiel, registerButton, loginButton, fakeRegisterButton, displayLogo);
+        grid.setAlignment(Pos.CENTER);
 
         //here the create vieuw is made into a scene and returnd when the method is called
-        Scene registerScene = new Scene(gridRegisterVieuw, 500, 400);
+        Scene registerScene = new Scene(grid, 500, 400);
         return registerScene;
     }
 }
