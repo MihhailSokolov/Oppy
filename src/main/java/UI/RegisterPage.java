@@ -66,9 +66,9 @@ public class RegisterPage {
         passwordTextfield.setPromptText("Password");
         GridPane.setConstraints(passwordTextfield, 1, 4);
 
-        PasswordField confirmPasswordTextfiel = new PasswordField();
-        confirmPasswordTextfiel.setPromptText("Confirm password");
-        GridPane.setConstraints(confirmPasswordTextfiel,1,5);
+        PasswordField confirmPasswordTextfield = new PasswordField();
+        confirmPasswordTextfield.setPromptText("Confirm password");
+        GridPane.setConstraints(confirmPasswordTextfield,1,5);
 
 
         //Here the register button is created
@@ -77,7 +77,7 @@ public class RegisterPage {
         GridPane.setConstraints(registerButton, 2, 6);
 
         //Here all elements previously created are added to the vieuw and the vieuw is centerd
-        grid.getChildren().addAll(email, username, password, confirmPassword, emailTextfield, usernameTextfield, passwordTextfield, confirmPasswordTextfiel, registerButton, loginButton, fakeRegisterButton, displayLogo);
+        grid.getChildren().addAll(email, username, password, confirmPassword, emailTextfield, usernameTextfield, passwordTextfield, confirmPasswordTextfield, registerButton, loginButton, fakeRegisterButton, displayLogo);
         grid.setAlignment(Pos.CENTER);
 
         //here the create vieuw is made into a scene and returnd when the method is called
