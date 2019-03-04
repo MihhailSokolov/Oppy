@@ -74,8 +74,6 @@ public class LoginPage {
         Button loginButton = new Button("Login");
 //        loginButton.setOnAction(new ClientHandler(loginButton));
         loginButton.setOnAction(e -> {
-
-
             LoginHandler log = new LoginHandler(usernameTextfield.getText(), passwordTextfield.getText(), rememberMe.isSelected());
             // ClientController.sendLogin(log.toString());
             final String uri = "http://oppy-project.herokuapp.com" + log.toString();
