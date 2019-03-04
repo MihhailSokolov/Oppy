@@ -46,7 +46,7 @@ public class Controller {
                                            @RequestParam(value = "email") String email) {
         String msg = dbDataController.createNewUser(username, pass, email);
         if (msg.isEmpty()) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body("true");
         } else {
             return ResponseEntity.status(500).body(msg);
         }
