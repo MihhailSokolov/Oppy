@@ -85,6 +85,7 @@ public class RegisterPage {
             final String uri = "http://oppy-project.herokuapp.com" + register.toString();
             RestTemplate restTemplate = new RestTemplate();
             String result = restTemplate.getForObject(uri, String.class);
+            System.out.println(result);
             if(result.equals("true")){
                 System.out.println("WIP");
                 //We need to make a different UI page so that it can give a pop-up that tells us that either an account has been created successfully and that you will be redirected to

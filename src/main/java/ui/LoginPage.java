@@ -1,4 +1,4 @@
-package UI;
+package ui;
 
 import clientSide.LoginHandler;
 import javafx.geometry.Insets;

@@ -12,7 +12,7 @@ public class Main extends Application {
     }
 
     /**
-     * Start UI.
+     * Start ui.
      * @param primaryStage primStage
      * @throws Exception exc
      */
