@@ -19,7 +19,7 @@ public class LoginHandler implements EventHandler<ActionEvent> {
 
     @Override
     public String toString(){
-        return "/Login?username=" + this.username + "&pass=" + Hashing.sha256().hashString(this.password, StandardCharsets.UTF_8).toString();
+        return "/login?username=" + this.username + "&pass=" + Hashing.sha256().hashString(this.password, StandardCharsets.UTF_8).toString();
     }
 
 

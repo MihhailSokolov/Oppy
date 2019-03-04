@@ -14,7 +14,11 @@ public class ClientController {
 
 
     public static void sendLogin(String param) {
+        System.out.println(param);
         String text = executeGet("http://oppy-project.herokuapp.com"+param, "");
+        if(text.equals("true")){
+            //go to main page
+        }
     }
 
     public static String executeGet(String targetURL, String urlParameters) {
@@ -43,7 +47,7 @@ public class ClientController {
                 response.append('\n');
             }
             rd.close();
-            System.out.println("response: " + response.toString());
+            System.out.println(response.toString());
             return response.toString();
         } catch (Exception e) {
             e.printStackTrace();
