@@ -88,7 +88,7 @@ public class MainPage {
 
         ToggleButton addActionButton = new ToggleButton("Add action");
         addActionButton.setOnAction(e->{
-            //add function to switch vieuw to addActionPage
+            window.setScene(AddActionPage.addActionScene(window));
         });
         gridHamburger.setConstraints(addActionButton,0,2);
 
