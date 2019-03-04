@@ -1,5 +1,8 @@
 package UI;
 
+import clientSide.ClientController;
+import clientSide.ClientHandler;
+import clientSide.LoginHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,8 +14,6 @@ import javafx.stage.Stage;
 
 
 public class LoginPage {
-
-
 
         public static Scene LoginScene(Stage primaryStage){
         Stage window = primaryStage;
@@ -67,7 +68,11 @@ public class LoginPage {
         GridPane.setConstraints(rememberMe, 1,4);
 
         Button loginButton = new Button("Login");
-//      loginButton.setOnAction(classthatwillhandleactionsnshit); this will redirect you to the main page after sending the data in user and passwd fields to be authed
+        loginButton.setOnAction(new ClientHandler(loginButton));
+        loginButton.setOnAction(e->{
+                        LoginHandler log = new LoginHandler(usernameTextfield.getText(), passwordTextfield.getText(), rememberMe.isSelected());
+                        ClientController.sendLogin(log.toString());
+                });
         GridPane.setConstraints(loginButton, 2, 4);
 
         Button forgotPasswordButton = new Button("forgot password?");
