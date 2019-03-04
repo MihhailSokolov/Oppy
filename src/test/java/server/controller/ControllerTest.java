@@ -82,7 +82,7 @@ public class ControllerTest {
         mockMvc.perform(get(String.format("/register?username=%s&pass=%s&email=%soppy%%40gmail.com",
                 testUser.getUsername(), testUser.getPassword(), testUser.getEmail())))
                 .andExpect(status().isOk())
-                .andExpect(content().string(""));
+                .andExpect(content().string("true"));
 
         mockMvc.perform(get(String.format("/register?username=%s&pass=%s&email=%soppy%%40gmail.com",
                 testUser.getUsername(), testUser.getPassword(), testUser.getEmail())))
