@@ -14,7 +14,7 @@ public class ClientController {
 
 
     public static void sendLogin(String param) {
-        String text = executeGet("oppy-project.herokuapp.com", param);
+        String text = executeGet("http://oppy-project.herokuapp.com"+param, "");
     }
 
     public static String executeGet(String targetURL, String urlParameters) {
