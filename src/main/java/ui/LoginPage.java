@@ -1,9 +1,16 @@
-package UI;
+package ui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -11,10 +18,13 @@ import javafx.stage.Stage;
 
 
 public class LoginPage {
+    /**
+     * Login page.
+     * @param primaryStage primStage
+     * @return scene
+     */
 
-
-
-        public static Scene LoginScene(Stage primaryStage){
+    public static Scene loginScene(Stage primaryStage) {
         Stage window = primaryStage;
         window.setTitle("LoginPage");
 
@@ -30,18 +40,18 @@ public class LoginPage {
 
 
         //fake login button at the top
-        ToggleGroup loginRegister = new ToggleGroup();
         ToggleButton fakeLoginButton = new ToggleButton("Sign in");
         fakeLoginButton.setSelected(true);
         fakeLoginButton.setDisable(true);
-        GridPane.setConstraints(fakeLoginButton, 0,1);
+        ToggleGroup loginRegister = new ToggleGroup();
+        GridPane.setConstraints(fakeLoginButton, 0, 1);
         fakeLoginButton.setToggleGroup(loginRegister);
 
         //the button the redirects to the register page
         ToggleButton registerButton = new ToggleButton("Register");
         GridPane.setConstraints(registerButton, 1, 1);
-        registerButton.setOnAction(e->{
-                window.setScene(RegisterPage.registerScene(window));
+        registerButton.setOnAction(e -> {
+            window.setScene(RegisterPage.registerScene(window));
         });
         registerButton.setToggleGroup(loginRegister);
 
@@ -64,17 +74,21 @@ public class LoginPage {
 
         //remember forgot login
         CheckBox rememberMe = new CheckBox("remember me");
-        GridPane.setConstraints(rememberMe, 1,4);
+        GridPane.setConstraints(rememberMe, 1, 4);
 
         Button loginButton = new Button("Login");
-//      loginButton.setOnAction(classthatwillhandleactionsnshit); this will redirect you to the main page after sending the data in user and passwd fields to be authed
+        // loginButton.setOnAction(classthatwillhandleactionsnshit);
+        // this will redirect you to the main page after sending the data in user and
+        // passwd fields to be authed
         GridPane.setConstraints(loginButton, 2, 4);
 
         Button forgotPasswordButton = new Button("forgot password?");
         GridPane.setConstraints(forgotPasswordButton, 0, 4);
 
         //Here all elements previously created are added to the vieuw and the vieuw is centerd
-        grid.getChildren().addAll(loginButton, username, password, usernameTextfield, passwordTextfield, rememberMe, forgotPasswordButton, displayLogo, fakeLoginButton, registerButton);
+        grid.getChildren().addAll(loginButton, username, password, usernameTextfield,
+                passwordTextfield, rememberMe, forgotPasswordButton, displayLogo,
+                fakeLoginButton, registerButton);
         grid.setAlignment(Pos.CENTER);
 
         //here the create vieuw is made into a scene and returnd when the method is called
