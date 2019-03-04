@@ -44,4 +44,8 @@ public class DbDataController {
         }
         return message;
     }
+
+    public int getUserScore(String username) {
+        return userRepository.findFirstByUsername(username).getScore();
+    }
 }

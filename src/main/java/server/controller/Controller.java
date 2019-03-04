@@ -51,4 +51,9 @@ public class Controller {
             return ResponseEntity.status(500).body(msg);
         }
     }
+
+    @RequestMapping("/score")
+    public ResponseEntity<Integer> getPoints(@RequestParam(value = "username") String username) {
+        return ResponseEntity.ok().body(dbDataController.getUserScore(username));
+    }
 }
