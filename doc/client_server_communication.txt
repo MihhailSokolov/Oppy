@@ -36,3 +36,12 @@ GET POINTS
     Response:
         200 OK Body: 42 (Integer score)
         500 ERROR if could not get points/find user
+
+DELETE ACCOUNT
+    To delete account for certain username. Also provide password in order to make sure nobody else can delete it.
+    Request:
+        /delete?username=oppy123&pass=0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb
+    Response:
+        200 OK if user is authorized with provided username and password
+        401 UNAUTHORIZED if user could not be authorized
+        Body: 'true' if account was successfully deleted, 'false' if user was not authorized or account could not be deleted

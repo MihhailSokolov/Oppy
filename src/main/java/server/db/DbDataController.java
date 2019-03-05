@@ -48,4 +48,8 @@ public class DbDataController {
     public int getUserScore(String username) {
         return userRepository.findFirstByUsername(username).getScore();
     }
+
+    public boolean deleteUser(String username) {
+        return userRepository.deleteUserByUsername(username) == 1;
+    }
 }
