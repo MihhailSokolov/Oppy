@@ -60,10 +60,12 @@ public class AddActionPage {
         GridPane.setConstraints(transportCategory, 1,1,2,1);
         transportCategory.setExpanded(false);
 
+        //Set the layout for the TiteldPane's contents
         GridPane gridTransport = new GridPane();
         gridTransport.setPadding(new Insets(10, 10, 10, 10));
         gridTransport.setVgap(8);
         gridTransport.setHgap(10);
+
         //only here for testing
         ArrayList<AddActionObject> listOfActions = new ArrayList<AddActionObject>();
         AddActionObject firstAction = new AddActionObject("bike instead of car", "transport", 100);
@@ -79,6 +81,7 @@ public class AddActionPage {
 
         // end of only here for testing part
 
+        //gets all available actions and display's dem in the right category
         for(int i=0; i<listOfActions.size(); i++){
             if(listOfActions.get(i).category == "transport"){
                 CheckBox newCheckBox = new CheckBox(listOfActions.get(i).nameAction);
@@ -101,11 +104,13 @@ public class AddActionPage {
         GridPane.setConstraints(foodCategory, 1,2,2,1);
         foodCategory.setExpanded(false);
 
+        //Set the layout for the TiteldPane's contents
         GridPane gridFood = new GridPane();
         gridFood.setPadding(new Insets(10, 10, 10, 10));
         gridFood.setVgap(8);
         gridFood.setHgap(10);
 
+        //gets all available actions and display's dem in the right category
         for(int i=0; i<listOfActions.size(); i++){
             if(listOfActions.get(i).category == "food"){
                 CheckBox newCheckBox = new CheckBox(listOfActions.get(i).nameAction);
@@ -125,11 +130,13 @@ public class AddActionPage {
         GridPane.setConstraints(energyCategory, 1,3,2,1);
         energyCategory.setExpanded(false);
 
+        //Set the layout for the TiteldPane's contents
         GridPane gridEnergy= new GridPane();
         gridEnergy.setPadding(new Insets(10, 10, 10, 10));
         gridEnergy.setVgap(8);
         gridEnergy.setHgap(10);
 
+        //gets all available actions and display's dem in the right category
         for(int i=0; i<listOfActions.size(); i++){
             if(listOfActions.get(i).category == "energy"){
                 CheckBox newCheckBox = new CheckBox(listOfActions.get(i).nameAction);
@@ -142,17 +149,11 @@ public class AddActionPage {
         }
         energyCategory.setContent(gridEnergy);
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
+        ////central page layout////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         gridCenter.getChildren().addAll(backButton, saveAsButton,submitButton, transportCategory, foodCategory, energyCategory);
         centralPageLayout.setCenter(gridCenter);
+
         //here the create vieuw is made into a scene and returned when the method is called
         Scene scene = new Scene(centralPageLayout, 1000, 600);
         return scene;
