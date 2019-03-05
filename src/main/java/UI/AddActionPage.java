@@ -2,6 +2,8 @@ package UI;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
@@ -44,6 +46,22 @@ public class AddActionPage {
         submitButton.setToggleGroup(addActionGroup);
 
         //here the drop down manu's are created
+        TitledPane transportCategory = new TitledPane();
+        transportCategory.setText("Transport");
+        GridPane.setConstraints(transportCategory, 1,1);
+        transportCategory.setExpanded(false);
+
+        TitledPane foodCategory = new TitledPane();
+        foodCategory.setText("Food");
+        GridPane.setConstraints(foodCategory, 1,2);
+        foodCategory.setExpanded(false);
+
+        TitledPane enegryCategory = new TitledPane();
+        enegryCategory.setText("energy");
+        GridPane.setConstraints(enegryCategory, 1,3);
+        enegryCategory.setExpanded(false);
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -52,8 +70,7 @@ public class AddActionPage {
 
 
 
-
-        gridCenter.getChildren().addAll(backButton, saveAsButton,submitButton);
+        gridCenter.getChildren().addAll(backButton, saveAsButton,submitButton, transportCategory, foodCategory, enegryCategory);
         centralPageLayout.setCenter(gridCenter);
         //here the create vieuw is made into a scene and returned when the method is called
         Scene scene = new Scene(centralPageLayout, 1000, 600);
