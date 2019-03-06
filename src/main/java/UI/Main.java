@@ -1,4 +1,4 @@
-package UI;
+ackage ui;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -11,12 +11,15 @@ public class Main extends Application {
         launch(args);
     }
 
+    /**
+     * Start UI.
+     * @param primaryStage primStage
+     * @throws Exception exc
+     */
     public void start(Stage primaryStage) throws Exception {
         Stage window = primaryStage;
-        //window.setTitle("LoginPage");
-        //window.setScene(LoginPage.LoginScene(window));
-        window.setTitle("Main Page");
-        window.setScene(MainPage.MainScene(window));
+        window.setTitle("LoginPage");
+        window.setScene(LoginPage.loginScene(window));
         window.show();
 
     }
