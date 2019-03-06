@@ -1,4 +1,4 @@
-Package ui;
+package UI;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -19,7 +19,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Stage window = primaryStage;
         window.setTitle("LoginPage");
-        window.setScene(LoginPage.loginScene(window));
+        window.setScene(LoginPage.LoginScene(window));
         window.show();
 
     }
