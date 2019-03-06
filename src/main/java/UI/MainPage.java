@@ -81,7 +81,7 @@ public class MainPage {
 
         ToggleButton leaderboardButton = new ToggleButton("Leaderboard");
         leaderboardButton.setOnAction(e->{
-            //add function to switch vieuw to leaderboardPage;
+            window.setScene(LeaderboardPage.LeaderboardScene(window));
         });
         leaderboardButton.setToggleGroup(mainHamburgerGroup);
         gridHamburger.setConstraints(leaderboardButton,0,1);
