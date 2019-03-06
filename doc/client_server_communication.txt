@@ -41,3 +41,20 @@ DELETE ACCOUNT
         200 OK if user is authorized with provided username and password
         401 UNAUTHORIZED if user could not be authorized
         Body: 'true' if account was successfully deleted, 'false' if user was not authorized or account could not be deleted
+
+GET ACTIONS
+    To get all the actions from the database
+    Request:
+        /actions
+    Response:
+        200 OK
+        Body contains list of json action objects
+
+ADD NEW ACTION
+    To add a new action to the list of existing actions in the database
+    Example: want to add action with name "Recycle bottle", category "Recycling" and which gives 10 points
+    Request:
+        /addaction?name=Recycle%20bottle&category=Recycling&points=10
+    Response:
+        200 OK
+        Body contains 'true' if action was successfully added to the db, 'false' otherwise
