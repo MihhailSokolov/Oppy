@@ -74,7 +74,7 @@ public class MainPage {
 
         ToggleButton settingsButton = new ToggleButton("settings");
         settingsButton.setOnAction(e->{
-           //add function to switch vieuw to settingsPage
+           window.setScene(SettingsPage.SettingsScene(window));
         });
         settingsButton.setToggleGroup(mainHamburgerGroup);
         gridHamburger.setConstraints(settingsButton,0,0);
