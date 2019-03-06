@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import server.db.DbDataController;
+import server.model.Action;
 import server.model.Response;
+
+import java.util.List;
 
 @RestController
 public class Controller {
@@ -81,13 +84,24 @@ public class Controller {
     public ResponseEntity<Boolean> updatepass(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "pass") String pass,
-            @RequestParam(value = "newpass") String newpass)
-    {
+            @RequestParam(value = "newpass") String newpass) {
         if (dbDataController.isUserAuthenticated(username, pass)) {
             return ResponseEntity.ok().body(dbDataController.updatePassword(username, pass, newpass));
-        }
-        else{
+        } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
         }
+    }
+    @RequestMapping("/addaction")
+    public ResponseEntity<Boolean> addNewAction(
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "category") String category,
+            @RequestParam(value = "points") String strPoints) {
+        int points = Integer.parseInt(strPoints);
+        return ResponseEntity.ok().body(dbDataController.addAction(name, category, points));
+    }
+
+    @RequestMapping("/actions")
+    public ResponseEntity<List<Action>> getActions() {
+        return ResponseEntity.ok().body(dbDataController.getAllActions());
     }
 }

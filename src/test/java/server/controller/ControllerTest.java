@@ -8,10 +8,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
+import server.model.Action;
+import server.model.ActionRepository;
 import server.model.User;
 import server.model.UserRepository;
 
+import java.nio.charset.Charset;
+
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
@@ -24,11 +31,16 @@ public class ControllerTest {
 
     User testUser;
 
+    Action testAction;
+
     @Autowired
     Controller controller;
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ActionRepository actionRepository;
 
     @Before
     public void setup() {
@@ -39,6 +51,9 @@ public class ControllerTest {
                 42);
         if(userRepository.findFirstByUsername(testUser.getUsername())!=null)
             userRepository.delete(userRepository.findFirstByUsername(testUser.getUsername()));
+        testAction = new Action("Recycle paper", "Recycling", 10);
+        if(actionRepository.findFirstByActionName(testAction.getActionName()) != null)
+            actionRepository.delete(actionRepository.findFirstByActionName(testAction.getActionName()));
     }
 
     @Test
@@ -131,7 +146,7 @@ public class ControllerTest {
         userRepository.save(testUser);
         String newpass = "newpass";
         // wrong oldpass:
-        mockMvc.perform(get(String.format("/updatepass?username=%s&pass=%s&newpass=%s", testUser.getUsername()+"nuh-uh!", testUser.getPassword(), newpass)))
+        mockMvc.perform(get(String.format("/updatepass?username=%s&pass=%s&newpass=%s", testUser.getUsername() + "nuh-uh!", testUser.getPassword(), newpass)))
                 .andExpect(status().isUnauthorized())
                 .andExpect(content().string("false"));
         // correct oldpass :
@@ -143,5 +158,22 @@ public class ControllerTest {
         mockMvc.perform(get(String.format("/login?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
+    }
+    public void checkGetAllActions() throws Exception {
+        actionRepository.save(testAction);
+        mockMvc.perform(get("/actions"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"));
+        actionRepository.delete(testAction);
+    }
+
+    @Test
+    public void checkAddAction() throws Exception {
+        mockMvc.perform(get(String.format("/addaction?name=%s&category=%s&points=%s",
+                testAction.getActionName(), testAction.getCategory(), String.valueOf(testAction.getPoints()))))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+        assertEquals(testAction, actionRepository.findFirstByActionName(testAction.getActionName()));
+        actionRepository.delete(actionRepository.findFirstByActionName(testAction.getActionName()));
     }
 }
