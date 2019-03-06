@@ -36,6 +36,7 @@ public class Controller {
 
     /**
      * Mapping for registering a user.
+     *
      * @param username of user to be checked if there are no duplicates and registering
      * @param pass     of user for registering
      * @param email    of user to be checked for duplicates and for registering
@@ -58,13 +59,21 @@ public class Controller {
         return ResponseEntity.ok().body(dbDataController.getUserScore(username));
     }
 
+    /**
+     * Delete user mapping.
+     *
+     * @param username to delete
+     * @param pass     to confirm the action is requested by correct user.
+     * @return returns status code.
+     */
     @RequestMapping("/delete")
     public ResponseEntity<Boolean> delete(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "pass") String pass) {
-        if(dbDataController.isUserAuthenticated(username, pass))
+        if (dbDataController.isUserAuthenticated(username, pass)) {
             return ResponseEntity.ok().body(dbDataController.deleteUser(username));
-        else
+        } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+        }
     }
 }

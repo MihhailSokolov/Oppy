@@ -1,9 +1,10 @@
 package ui;
 
+import clientside.LoginHandler;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -16,6 +17,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import org.springframework.web.client.RestTemplate;
+
 
 public class LoginPage {
     /**
@@ -23,6 +26,7 @@ public class LoginPage {
      * @param primaryStage primStage
      * @return scene
      */
+
 
     public static Scene loginScene(Stage primaryStage) {
         Stage window = primaryStage;
@@ -77,6 +81,20 @@ public class LoginPage {
         GridPane.setConstraints(rememberMe, 1, 4);
 
         Button loginButton = new Button("Login");
+        loginButton.setOnAction(e -> {
+
+
+            LoginHandler log = new LoginHandler(usernameTextfield.getText(),
+                    passwordTextfield.getText(), rememberMe.isSelected());
+            // ClientController.sendLogin(log.toString());
+            final String uri = "http://oppy-project.herokuapp.com" + log.toString();
+            RestTemplate restTemplate = new RestTemplate();
+            String result = restTemplate.getForObject(uri, String.class);
+            if (result.equals("true")) { // go to main page, now set to register as example
+                window.setScene(RegisterPage.registerScene(window));
+            }
+
+        });
         // loginButton.setOnAction(classthatwillhandleactionsnshit);
         // this will redirect you to the main page after sending the data in user and
         // passwd fields to be authed
