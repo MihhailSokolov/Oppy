@@ -9,4 +9,6 @@ public interface UserRepository extends MongoRepository<User, String> {
     User findFirstByUsername(String username);
 
     User findFirstByEmail(String email);
+
+    int deleteUserByUsername(String username);
 }

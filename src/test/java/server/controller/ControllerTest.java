@@ -111,4 +111,18 @@ public class ControllerTest {
                 .andExpect(content().string("42"));
         userRepository.delete(testUser);
     }
+
+    @Test
+    public void checkDelete() throws Exception {
+        userRepository.save(testUser);
+        mockMvc.perform(get(String.format("/delete?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword() + "oops")))
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().string("false"));
+        mockMvc.perform(get(String.format("/delete?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+        mockMvc.perform(get(String.format("/delete?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().string("false"));
+    }
 }

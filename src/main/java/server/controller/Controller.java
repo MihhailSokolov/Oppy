@@ -1,6 +1,7 @@
 package server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,5 +56,15 @@ public class Controller {
     @RequestMapping("/score")
     public ResponseEntity<Integer> getPoints(@RequestParam(value = "username") String username) {
         return ResponseEntity.ok().body(dbDataController.getUserScore(username));
+    }
+
+    @RequestMapping("/delete")
+    public ResponseEntity<Boolean> delete(
+            @RequestParam(value = "username") String username,
+            @RequestParam(value = "pass") String pass) {
+        if(dbDataController.isUserAuthenticated(username, pass))
+            return ResponseEntity.ok().body(dbDataController.deleteUser(username));
+        else
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
     }
 }
