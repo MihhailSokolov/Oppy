@@ -84,7 +84,7 @@ public class AddActionPage {
         //gets all available actions and display's dem in the right category
         for(int i=0; i<listOfActions.size(); i++){
             if(listOfActions.get(i).getCategory() == "transport"){
-                CheckBox newCheckBox = new CheckBox(listOfActions.get(i).getNameAction());
+                CheckBox newCheckBox = new CheckBox(listOfActions.get(i).getActionName());
                 GridPane.setConstraints(newCheckBox, 1,i);
                 listCheckboxes.add(newCheckBox);
                 Label  newLabelPoints = new Label(Integer.toString(listOfActions.get(i).getPoints()));
@@ -113,7 +113,7 @@ public class AddActionPage {
         //gets all available actions and display's dem in the right category
         for(int i=0; i<listOfActions.size(); i++){
             if(listOfActions.get(i).getCategory() == "food"){
-                CheckBox newCheckBox = new CheckBox(listOfActions.get(i).getNameAction());
+                CheckBox newCheckBox = new CheckBox(listOfActions.get(i).getActionName());
                 GridPane.setConstraints(newCheckBox, 1,i);
                 listCheckboxes.add(newCheckBox);
                 Label  newLabelPoints = new Label(Integer.toString(listOfActions.get(i).getPoints()));
@@ -139,7 +139,7 @@ public class AddActionPage {
         //gets all available actions and display's dem in the right category
         for(int i=0; i<listOfActions.size(); i++){
             if(listOfActions.get(i).getCategory() == "energy"){
-                CheckBox newCheckBox = new CheckBox(listOfActions.get(i).getNameAction());
+                CheckBox newCheckBox = new CheckBox(listOfActions.get(i).getActionName());
                 GridPane.setConstraints(newCheckBox, 1,i);
                 listCheckboxes.add(newCheckBox);
                 Label  newLabelPoints = new Label(Integer.toString(listOfActions.get(i).getPoints()));
