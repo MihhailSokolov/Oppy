@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import server.model.Action;
 
 import java.util.ArrayList;
 
@@ -44,7 +45,6 @@ public class AddActionPage {
         ToggleButton submitButton = new ToggleButton("submit");
         GridPane.setConstraints(submitButton, 2,4);
         submitButton.setOnAction(e->{
-            System.out.println("jo");
             for(int i=0; i<listCheckboxes.size(); i++){
                if(listCheckboxes.get(i).isSelected()){
                    System.out.println(listCheckboxes.get(i).getText());
@@ -67,12 +67,12 @@ public class AddActionPage {
         gridTransport.setHgap(10);
 
         //only here for testing
-        ArrayList<AddActionObject> listOfActions = new ArrayList<AddActionObject>();
-        AddActionObject firstAction = new AddActionObject("bike instead of car", "transport", 100);
-        AddActionObject secondAction = new AddActionObject("train instead of car", "transport", 20);
-        AddActionObject thirdAction = new AddActionObject("vegetarian meal", "food", 20);
-        AddActionObject fourthAction = new AddActionObject("lights out", "energy", 30);
-        AddActionObject fifthAction = new AddActionObject("heating off", "energy", 50);
+        ArrayList<Action> listOfActions = new ArrayList<Action>();
+        Action firstAction = new Action("bike instead of car", "transport", 100);
+        Action secondAction = new Action("train instead of car", "transport", 20);
+        Action thirdAction = new Action("vegetarian meal", "food", 20);
+        Action fourthAction = new Action("lights out", "energy", 30);
+        Action fifthAction = new Action("heating off", "energy", 50);
         listOfActions.add(thirdAction);
         listOfActions.add(firstAction);
         listOfActions.add(fifthAction);
@@ -83,11 +83,11 @@ public class AddActionPage {
 
         //gets all available actions and display's dem in the right category
         for(int i=0; i<listOfActions.size(); i++){
-            if(listOfActions.get(i).category == "transport"){
-                CheckBox newCheckBox = new CheckBox(listOfActions.get(i).nameAction);
+            if(listOfActions.get(i).getCategory() == "transport"){
+                CheckBox newCheckBox = new CheckBox(listOfActions.get(i).getNameAction());
                 GridPane.setConstraints(newCheckBox, 1,i);
                 listCheckboxes.add(newCheckBox);
-                Label  newLabelPoints = new Label(Integer.toString(listOfActions.get(i).points));
+                Label  newLabelPoints = new Label(Integer.toString(listOfActions.get(i).getPoints()));
                 GridPane.setConstraints(newLabelPoints,2,i);
                 gridTransport.getChildren().addAll(newCheckBox, newLabelPoints);
             }
@@ -112,11 +112,11 @@ public class AddActionPage {
 
         //gets all available actions and display's dem in the right category
         for(int i=0; i<listOfActions.size(); i++){
-            if(listOfActions.get(i).category == "food"){
-                CheckBox newCheckBox = new CheckBox(listOfActions.get(i).nameAction);
+            if(listOfActions.get(i).getCategory() == "food"){
+                CheckBox newCheckBox = new CheckBox(listOfActions.get(i).getNameAction());
                 GridPane.setConstraints(newCheckBox, 1,i);
                 listCheckboxes.add(newCheckBox);
-                Label  newLabelPoints = new Label(Integer.toString(listOfActions.get(i).points));
+                Label  newLabelPoints = new Label(Integer.toString(listOfActions.get(i).getPoints()));
                 GridPane.setConstraints(newLabelPoints,2,i);
                 gridFood.getChildren().addAll(newCheckBox, newLabelPoints);
             }
@@ -138,11 +138,11 @@ public class AddActionPage {
 
         //gets all available actions and display's dem in the right category
         for(int i=0; i<listOfActions.size(); i++){
-            if(listOfActions.get(i).category == "energy"){
-                CheckBox newCheckBox = new CheckBox(listOfActions.get(i).nameAction);
+            if(listOfActions.get(i).getCategory() == "energy"){
+                CheckBox newCheckBox = new CheckBox(listOfActions.get(i).getNameAction());
                 GridPane.setConstraints(newCheckBox, 1,i);
                 listCheckboxes.add(newCheckBox);
-                Label  newLabelPoints = new Label(Integer.toString(listOfActions.get(i).points));
+                Label  newLabelPoints = new Label(Integer.toString(listOfActions.get(i).getPoints()));
                 GridPane.setConstraints(newLabelPoints,2,i);
                 gridEnergy.getChildren().addAll(newCheckBox, newLabelPoints);
             }
