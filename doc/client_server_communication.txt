@@ -41,3 +41,15 @@ DELETE ACCOUNT
         200 OK if user is authorized with provided username and password
         401 UNAUTHORIZED if user could not be authorized
         Body: 'true' if account was successfully deleted, 'false' if user was not authorized or account could not be deleted
+
+UPDATE PASSWORD
+    Required:
+        Username, old password, new password
+    Request:
+        /updatepass?username=usr&pass=oldPass&newpass=newPass
+    Response:
+        200 OK if user authorized to change pass
+        401 UNAUTHORIZED otherwise
+        Body: 'true' if account was successfully deleted, 'false' if user was not authorized or account could not be updated
+
+
