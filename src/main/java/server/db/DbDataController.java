@@ -1,6 +1,5 @@
 package server.db;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import server.model.Action;
@@ -60,6 +59,11 @@ public class DbDataController {
         return userRepository.deleteUserByUsername(username) == 1;
     }
 
+    public boolean updatePassword(String username, String pass, String newpass) {
+        User userToUpdate = userRepository.findFirstByUsername(username);
+        userToUpdate.setPassword(newpass);
+        return userRepository.save(userToUpdate) != null;
+    }
     public List<Action> getAllActions(){
         return actionRepository.findAll();
     }

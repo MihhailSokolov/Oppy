@@ -80,6 +80,17 @@ public class Controller {
         }
     }
 
+    @RequestMapping("/updatepass")
+    public ResponseEntity<Boolean> updatepass(
+            @RequestParam(value = "username") String username,
+            @RequestParam(value = "pass") String pass,
+            @RequestParam(value = "newpass") String newpass) {
+        if (dbDataController.isUserAuthenticated(username, pass)) {
+            return ResponseEntity.ok().body(dbDataController.updatePassword(username, pass, newpass));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+        }
+    }
     @RequestMapping("/addaction")
     public ResponseEntity<Boolean> addNewAction(
             @RequestParam(value = "name") String name,

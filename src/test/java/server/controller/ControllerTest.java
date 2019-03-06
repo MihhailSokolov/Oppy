@@ -142,6 +142,23 @@ public class ControllerTest {
     }
 
     @Test
+    public void checkUpdatePass() throws Exception {
+        userRepository.save(testUser);
+        String newpass = "newpass";
+        // wrong oldpass:
+        mockMvc.perform(get(String.format("/updatepass?username=%s&pass=%s&newpass=%s", testUser.getUsername() + "nuh-uh!", testUser.getPassword(), newpass)))
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().string("false"));
+        // correct oldpass :
+        mockMvc.perform(get(String.format("/updatepass?username=%s&pass=%s&newpass=%s", testUser.getUsername(), testUser.getPassword(), newpass)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+        // check to see if pass has indeed been changed
+        testUser.setPassword(newpass);
+        mockMvc.perform(get(String.format("/login?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+    }
     public void checkGetAllActions() throws Exception {
         actionRepository.save(testAction);
         mockMvc.perform(get("/actions"))
