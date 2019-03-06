@@ -21,22 +21,35 @@ public class DbDataController {
         return userRepository.findFirstByUsername(username) == null;
     }
 
-    public boolean isEmailAvailable(String email){
+    public boolean isEmailAvailable(String email) {
         return userRepository.findFirstByEmail(email) == null;
     }
 
+
+    /**
+     * User creation method: checks whether user exists - if not: user is created.
+     * @param username of user to be checked if there are no duplicates and registering
+     * @param password of user for registering
+     * @param email    of user to be checked for duplicates and for registering
+     * @return an empty msg if all went well otherwise fill the msg with the error
+     */
     public String createNewUser(String username, String password, String email) {
         String message = "";
-        if(!isUsernameAvailable(username))
+        if (!isUsernameAvailable(username)) {
             message = "Username is already taken. Try another username.";
-        else if (!isEmailAvailable(email)){
+        } else if (!isEmailAvailable(email)) {
             message = "Email address is already registered.";
-        }
-        // If user was successfully registered, return empty message
-        // Otherwise message contains explanation of error
-        else{
+        } else {
             userRepository.save(new User(username, password, email, 0));
         }
         return message;
+    }
+
+    public int getUserScore(String username) {
+        return userRepository.findFirstByUsername(username).getScore();
+    }
+
+    public boolean deleteUser(String username) {
+        return userRepository.deleteUserByUsername(username) == 1;
     }
 }

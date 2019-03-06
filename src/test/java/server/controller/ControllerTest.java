@@ -36,7 +36,7 @@ public class ControllerTest {
         testUser = new User("oppy123",
                 "0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb",
                 "oppy%40gmail.com",
-                0);
+                42);
         if(userRepository.findFirstByUsername(testUser.getUsername())!=null)
             userRepository.delete(userRepository.findFirstByUsername(testUser.getUsername()));
     }
@@ -82,7 +82,7 @@ public class ControllerTest {
         mockMvc.perform(get(String.format("/register?username=%s&pass=%s&email=%soppy%%40gmail.com",
                 testUser.getUsername(), testUser.getPassword(), testUser.getEmail())))
                 .andExpect(status().isOk())
-                .andExpect(content().string(""));
+                .andExpect(content().string("true"));
 
         mockMvc.perform(get(String.format("/register?username=%s&pass=%s&email=%soppy%%40gmail.com",
                 testUser.getUsername(), testUser.getPassword(), testUser.getEmail())))
@@ -100,6 +100,29 @@ public class ControllerTest {
         userRepository.delete(testUser);
         mockMvc.perform(get(String.format("/login?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
                 .andExpect(status().isOk())
+                .andExpect(content().string("false"));
+    }
+
+    @Test
+    public void checkUserScore() throws Exception {
+        userRepository.save(testUser);
+        mockMvc.perform(get(String.format("/score?username=%s", testUser.getUsername())))
+                .andExpect(status().isOk())
+                .andExpect(content().string("42"));
+        userRepository.delete(testUser);
+    }
+
+    @Test
+    public void checkDelete() throws Exception {
+        userRepository.save(testUser);
+        mockMvc.perform(get(String.format("/delete?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword() + "oops")))
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().string("false"));
+        mockMvc.perform(get(String.format("/delete?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+        mockMvc.perform(get(String.format("/delete?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
+                .andExpect(status().isUnauthorized())
                 .andExpect(content().string("false"));
     }
 }

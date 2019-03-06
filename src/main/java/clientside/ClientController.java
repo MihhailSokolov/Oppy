@@ -1,6 +1,4 @@
-package clientSide;
-
-import javafx.event.ActionEvent;
+package clientside;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -10,13 +8,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ClientController {
-
-
-
+    /**
+     * Sends login request. Possibly deprecated class.
+     * @param param login params
+     */
     public static void sendLogin(String param) {
         System.out.println(param);
-        String text = executeGet("http://oppy-project.herokuapp.com"+param, "");
-        if(text.equals("true")){
+        String text = executeGet("http://oppy-project.herokuapp.com" + param, "");
+        if (text.equals("true")) {
             //go to main page
         }
     }
@@ -32,8 +31,7 @@ public class ClientController {
             connection.setDoOutput(true);
 
             //Send request
-            DataOutputStream wr = new DataOutputStream (
-                    connection.getOutputStream());
+            DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
             wr.writeBytes(urlParameters);
             wr.close();
 
@@ -58,7 +56,6 @@ public class ClientController {
             }
         }
     }
-
 
 
 }
