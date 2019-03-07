@@ -104,4 +104,11 @@ public class Controller {
     public ResponseEntity<List<Action>> getActions() {
         return ResponseEntity.ok().body(dbDataController.getAllActions());
     }
+
+    @RequestMapping("/takeaction")
+    public ResponseEntity<Boolean> takeAction(@RequestParam(value = "username") String username,
+                                              @RequestParam(value = "action") String action) {
+        int pointsToAdd = dbDataController.getActionPoints(action);
+        return ResponseEntity.ok().body(dbDataController.updateUserScore(username, pointsToAdd));
+    }
 }
