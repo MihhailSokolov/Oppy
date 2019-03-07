@@ -157,5 +157,5 @@ public class AddActionPage {
         //here the create vieuw is made into a scene and returned when the method is called
         Scene scene = new Scene(centralPageLayout, 1000, 600);
         return scene;
-    }
+}
 }

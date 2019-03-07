@@ -18,8 +18,10 @@ public class Main extends Application {
      */
     public void start(Stage primaryStage) throws Exception {
         Stage window = primaryStage;
-        window.setTitle("LoginPage");
-        window.setScene(LoginPage.LoginScene(window));
+        //window.setTitle("LoginPage");
+        //window.setScene(LoginPage.LoginScene(window));
+        window.setTitle("MainPage");
+        window.setScene((MainPage.MainScene(window)));
         window.show();
 
     }
