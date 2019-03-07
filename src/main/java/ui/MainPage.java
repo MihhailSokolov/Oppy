@@ -1,10 +1,8 @@
-package UI;
+package ui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
@@ -16,12 +14,7 @@ import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
 
 import com.jfoenix.controls.JFXHamburger;
-import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
-import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
-import com.jfoenix.transitions.hamburger.HamburgerNextArrowBasicTransition;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
-
-import java.awt.*;
 
 //import javax.xml.soap.Text;
 

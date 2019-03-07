@@ -1,19 +1,23 @@
-package sample;
+package clientside;
 
-import javafx.event.ActionEvent;
-import javafx.scene.control.Label;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class SampleController {
-    public Label helloWorld;
-
-    public void sayHelloWorld(ActionEvent actionEvent) {
-        String text = executeGet("http://localhost:8080/check?msg=Hello+World!","");
-        text = text.substring(12,text.length()-3);
-        helloWorld.setText(text);
+public class ClientController {
+    /**
+     * Sends login request. Possibly deprecated class.
+     * @param param login params
+     */
+    public static void sendLogin(String param) {
+        System.out.println(param);
+        String text = executeGet("http://oppy-project.herokuapp.com" + param, "");
+        if (text.equals("true")) {
+            //go to main page
+        }
     }
 
     public static String executeGet(String targetURL, String urlParameters) {
@@ -27,8 +31,7 @@ public class SampleController {
             connection.setDoOutput(true);
 
             //Send request
-            DataOutputStream wr = new DataOutputStream (
-                    connection.getOutputStream());
+            DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
             wr.writeBytes(urlParameters);
             wr.close();
 
@@ -39,9 +42,10 @@ public class SampleController {
             String line;
             while ((line = rd.readLine()) != null) {
                 response.append(line);
-                response.append('\r');
+                response.append('\n');
             }
             rd.close();
+            System.out.println(response.toString());
             return response.toString();
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,5 +56,6 @@ public class SampleController {
             }
         }
     }
+
 
 }

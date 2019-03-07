@@ -1,4 +1,4 @@
-package UI;
+package ui;
 
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
