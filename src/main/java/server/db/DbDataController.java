@@ -68,7 +68,17 @@ public class DbDataController {
         return actionRepository.findAll();
     }
 
-    public boolean addAction(String actionName, String category, int points){
+    public boolean addAction(String actionName, String category, int points) {
         return actionRepository.save(new Action(actionName, category, points)) != null;
+    }
+
+    public int getActionPoints(String actionName) {
+        return actionRepository.findFirstByActionName(actionName).getPoints();
+    }
+
+    public boolean addToUserScore(String username, int points) {
+        User user = userRepository.findFirstByUsername(username);
+        user.setScore(user.getScore() + points);
+        return userRepository.save(user) != null;
     }
 }

@@ -14,6 +14,7 @@ import server.model.ActionRepository;
 import server.model.User;
 import server.model.UserRepository;
 
+import javax.validation.constraints.NotNull;
 import java.nio.charset.Charset;
 
 import static org.hamcrest.Matchers.is;
@@ -175,5 +176,20 @@ public class ControllerTest {
                 .andExpect(content().string("true"));
         assertEquals(testAction, actionRepository.findFirstByActionName(testAction.getActionName()));
         actionRepository.delete(actionRepository.findFirstByActionName(testAction.getActionName()));
+    }
+
+    @Test
+    public void checkTakeAction() throws Exception {
+        userRepository.save(testUser);
+        actionRepository.save(testAction);
+        int oldPoints = testUser.getScore();
+        mockMvc.perform(get(String.format("/takeaction?username=%s&action=%s",
+                testUser.getUsername(), testAction.getActionName())))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+        testUser = userRepository.findFirstByUsername(testUser.getUsername());
+        assertEquals(oldPoints + testAction.getPoints(), testUser.getScore());
+        userRepository.delete(testUser);
+        actionRepository.delete(testAction);
     }
 }
