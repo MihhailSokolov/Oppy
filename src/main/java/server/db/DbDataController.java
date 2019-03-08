@@ -76,7 +76,7 @@ public class DbDataController {
         return actionRepository.findFirstByActionName(actionName).getPoints();
     }
 
-    public boolean updateUserScore(String username, int points) {
+    public boolean addToUserScore(String username, int points) {
         User user = userRepository.findFirstByUsername(username);
         user.setScore(user.getScore() + points);
         return userRepository.save(user) != null;

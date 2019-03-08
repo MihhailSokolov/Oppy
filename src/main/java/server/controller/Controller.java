@@ -109,6 +109,6 @@ public class Controller {
     public ResponseEntity<Boolean> takeAction(@RequestParam(value = "username") String username,
                                               @RequestParam(value = "action") String action) {
         int pointsToAdd = dbDataController.getActionPoints(action);
-        return ResponseEntity.ok().body(dbDataController.updateUserScore(username, pointsToAdd));
+        return ResponseEntity.ok().body(dbDataController.addToUserScore(username, pointsToAdd));
     }
 }
