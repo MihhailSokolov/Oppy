@@ -59,12 +59,23 @@ public class DbDataController {
         return userRepository.deleteUserByUsername(username) == 1;
     }
 
-    public boolean updatePassword(String username, String pass, String newpass) {
+    /**
+     * Method for updating user's password in db.
+     * @param username user's username
+     * @param newpass user's new password
+     * @return true is successful, false otherwise
+     */
+    public boolean updatePassword(String username, String newpass) {
         User userToUpdate = userRepository.findFirstByUsername(username);
         userToUpdate.setPassword(newpass);
         return userRepository.save(userToUpdate) != null;
     }
-    public List<Action> getAllActions(){
+
+    /**
+     * Method to get all the actions from db.
+     * @return List of actions
+     */
+    public List<Action> getAllActions() {
         return actionRepository.findAll();
     }
 
@@ -72,10 +83,21 @@ public class DbDataController {
         return actionRepository.save(new Action(actionName, category, points)) != null;
     }
 
+    /**
+     * Method to get number of points a certain action is worth.
+     * @param actionName name of the action
+     * @return number of points
+     */
     public int getActionPoints(String actionName) {
         return actionRepository.findFirstByActionName(actionName).getPoints();
     }
 
+    /**
+     * Method to increase user's score by certain amount of points.
+     * @param username user's username
+     * @param points number of points to add to current user's score
+     * @return true if successful, false otherwise
+     */
     public boolean addToUserScore(String username, int points) {
         User user = userRepository.findFirstByUsername(username);
         user.setScore(user.getScore() + points);

@@ -80,17 +80,25 @@ public class Controller {
         }
     }
 
+    /**
+     * Method for updating user's password.
+     * @param username username
+     * @param pass old password
+     * @param newpass new password
+     * @return 'true' if successful and 'false' otherwise
+     */
     @RequestMapping("/updatepass")
     public ResponseEntity<Boolean> updatepass(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "pass") String pass,
             @RequestParam(value = "newpass") String newpass) {
         if (dbDataController.isUserAuthenticated(username, pass)) {
-            return ResponseEntity.ok().body(dbDataController.updatePassword(username, pass, newpass));
+            return ResponseEntity.ok().body(dbDataController.updatePassword(username, newpass));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
         }
     }
+
     @RequestMapping("/addaction")
     public ResponseEntity<Boolean> addNewAction(
             @RequestParam(value = "name") String name,

@@ -46,7 +46,7 @@ public class RegisterPage {
         ToggleButton loginButton = new ToggleButton("Sign in");
         GridPane.setConstraints(loginButton, 0, 1);
         loginButton.setOnAction(e -> {
-            window.setScene(LoginPage.LoginScene(window));
+            window.setScene(LoginPage.loginScene(window));
         });
         loginButton.setToggleGroup(loginRegister);
 
@@ -86,13 +86,13 @@ public class RegisterPage {
         // your email and username are unique and if they are create your account in the database
         GridPane.setConstraints(registerButton, 2, 6);
 
-        //Here all elements previously created are added to the vieuw and the vieuw is centerd
+        //Here all elements previously created are added to the view and the view is centered
         grid.getChildren().addAll(email, username, password, confirmPassword, emailTextfield,
                 usernameTextfield, passwordTextfield, confirmPasswordTextfield,
                 registerButton, loginButton, fakeRegisterButton, displayLogo);
         grid.setAlignment(Pos.CENTER);
 
-        //here the create vieuw is made into a scene and returnd when the method is called
+        //here the create view is made into a scene and return when the method is called
         Scene registerScene = new Scene(grid, 500, 400);
         return registerScene;
     }

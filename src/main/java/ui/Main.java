@@ -14,15 +14,14 @@ public class Main extends Application {
     /**
      * Start UI.
      * @param primaryStage primStage
-     * @throws Exception exc
      */
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         Stage window = primaryStage;
 
-//        window.setTitle("LoginPage");
-//        window.setScene(LoginPage.LoginScene(window));
+        // window.setTitle("LoginPage");
+        // window.setScene(LoginPage.loginScene(window));
         window.setTitle("MainPage");
-        window.setScene((MainPage.MainScene(window)));
+        window.setScene(MainPage.mainScene(window));
 
         window.show();
 

@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface ActionRepository extends MongoRepository<Action, String> {
     List<Action> findAll();
+
     Action findFirstByActionName(String actionName);
 }
