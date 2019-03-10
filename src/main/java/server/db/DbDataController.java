@@ -1,16 +1,22 @@
 package server.db;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import server.model.Action;
+import server.model.ActionRepository;
 import server.model.User;
 import server.model.UserRepository;
+
+import java.util.List;
 
 // Class which will contain all the methods for querying the database
 @Service
 public class DbDataController {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ActionRepository actionRepository;
 
     // Check if provided user details are correct
     public boolean isUserAuthenticated(String username, String password) {
@@ -47,5 +53,32 @@ public class DbDataController {
 
     public int getUserScore(String username) {
         return userRepository.findFirstByUsername(username).getScore();
+    }
+
+    public boolean deleteUser(String username) {
+        return userRepository.deleteUserByUsername(username) == 1;
+    }
+
+    public boolean updatePassword(String username, String pass, String newpass) {
+        User userToUpdate = userRepository.findFirstByUsername(username);
+        userToUpdate.setPassword(newpass);
+        return userRepository.save(userToUpdate) != null;
+    }
+    public List<Action> getAllActions(){
+        return actionRepository.findAll();
+    }
+
+    public boolean addAction(String actionName, String category, int points) {
+        return actionRepository.save(new Action(actionName, category, points)) != null;
+    }
+
+    public int getActionPoints(String actionName) {
+        return actionRepository.findFirstByActionName(actionName).getPoints();
+    }
+
+    public boolean addToUserScore(String username, int points) {
+        User user = userRepository.findFirstByUsername(username);
+        user.setScore(user.getScore() + points);
+        return userRepository.save(user) != null;
     }
 }

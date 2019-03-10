@@ -8,10 +8,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
+import server.model.Action;
+import server.model.ActionRepository;
 import server.model.User;
 import server.model.UserRepository;
 
+import javax.validation.constraints.NotNull;
+import java.nio.charset.Charset;
+
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
@@ -24,11 +32,16 @@ public class ControllerTest {
 
     User testUser;
 
+    Action testAction;
+
     @Autowired
     Controller controller;
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ActionRepository actionRepository;
 
     @Before
     public void setup() {
@@ -39,6 +52,9 @@ public class ControllerTest {
                 42);
         if(userRepository.findFirstByUsername(testUser.getUsername())!=null)
             userRepository.delete(userRepository.findFirstByUsername(testUser.getUsername()));
+        testAction = new Action("Recycle paper", "Recycling", 10);
+        if(actionRepository.findFirstByActionName(testAction.getActionName()) != null)
+            actionRepository.delete(actionRepository.findFirstByActionName(testAction.getActionName()));
     }
 
     @Test
@@ -110,5 +126,70 @@ public class ControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("42"));
         userRepository.delete(testUser);
+    }
+
+    @Test
+    public void checkDelete() throws Exception {
+        userRepository.save(testUser);
+        mockMvc.perform(get(String.format("/delete?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword() + "oops")))
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().string("false"));
+        mockMvc.perform(get(String.format("/delete?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+        mockMvc.perform(get(String.format("/delete?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().string("false"));
+    }
+
+    @Test
+    public void checkUpdatePass() throws Exception {
+        userRepository.save(testUser);
+        String newpass = "newpass";
+        // wrong oldpass:
+        mockMvc.perform(get(String.format("/updatepass?username=%s&pass=%s&newpass=%s", testUser.getUsername() + "nuh-uh!", testUser.getPassword(), newpass)))
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().string("false"));
+        // correct oldpass :
+        mockMvc.perform(get(String.format("/updatepass?username=%s&pass=%s&newpass=%s", testUser.getUsername(), testUser.getPassword(), newpass)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+        // check to see if pass has indeed been changed
+        testUser.setPassword(newpass);
+        mockMvc.perform(get(String.format("/login?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+    }
+    public void checkGetAllActions() throws Exception {
+        actionRepository.save(testAction);
+        mockMvc.perform(get("/actions"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"));
+        actionRepository.delete(testAction);
+    }
+
+    @Test
+    public void checkAddAction() throws Exception {
+        mockMvc.perform(get(String.format("/addaction?name=%s&category=%s&points=%s",
+                testAction.getActionName(), testAction.getCategory(), String.valueOf(testAction.getPoints()))))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+        assertEquals(testAction, actionRepository.findFirstByActionName(testAction.getActionName()));
+        actionRepository.delete(actionRepository.findFirstByActionName(testAction.getActionName()));
+    }
+
+    @Test
+    public void checkTakeAction() throws Exception {
+        userRepository.save(testUser);
+        actionRepository.save(testAction);
+        int oldPoints = testUser.getScore();
+        mockMvc.perform(get(String.format("/takeaction?username=%s&action=%s",
+                testUser.getUsername(), testAction.getActionName())))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+        testUser = userRepository.findFirstByUsername(testUser.getUsername());
+        assertEquals(oldPoints + testAction.getPoints(), testUser.getScore());
+        userRepository.delete(testUser);
+        actionRepository.delete(testAction);
     }
 }

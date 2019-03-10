@@ -1,12 +1,16 @@
 package server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import server.db.DbDataController;
+import server.model.Action;
 import server.model.Response;
+
+import java.util.List;
 
 @RestController
 public class Controller {
@@ -35,6 +39,7 @@ public class Controller {
 
     /**
      * Mapping for registering a user.
+     *
      * @param username of user to be checked if there are no duplicates and registering
      * @param pass     of user for registering
      * @param email    of user to be checked for duplicates and for registering
@@ -55,5 +60,55 @@ public class Controller {
     @RequestMapping("/score")
     public ResponseEntity<Integer> getPoints(@RequestParam(value = "username") String username) {
         return ResponseEntity.ok().body(dbDataController.getUserScore(username));
+    }
+
+    /**
+     * Delete user mapping.
+     *
+     * @param username to delete
+     * @param pass     to confirm the action is requested by correct user.
+     * @return returns status code.
+     */
+    @RequestMapping("/delete")
+    public ResponseEntity<Boolean> delete(
+            @RequestParam(value = "username") String username,
+            @RequestParam(value = "pass") String pass) {
+        if (dbDataController.isUserAuthenticated(username, pass)) {
+            return ResponseEntity.ok().body(dbDataController.deleteUser(username));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+        }
+    }
+
+    @RequestMapping("/updatepass")
+    public ResponseEntity<Boolean> updatepass(
+            @RequestParam(value = "username") String username,
+            @RequestParam(value = "pass") String pass,
+            @RequestParam(value = "newpass") String newpass) {
+        if (dbDataController.isUserAuthenticated(username, pass)) {
+            return ResponseEntity.ok().body(dbDataController.updatePassword(username, pass, newpass));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+        }
+    }
+    @RequestMapping("/addaction")
+    public ResponseEntity<Boolean> addNewAction(
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "category") String category,
+            @RequestParam(value = "points") String strPoints) {
+        int points = Integer.parseInt(strPoints);
+        return ResponseEntity.ok().body(dbDataController.addAction(name, category, points));
+    }
+
+    @RequestMapping("/actions")
+    public ResponseEntity<List<Action>> getActions() {
+        return ResponseEntity.ok().body(dbDataController.getAllActions());
+    }
+
+    @RequestMapping("/takeaction")
+    public ResponseEntity<Boolean> takeAction(@RequestParam(value = "username") String username,
+                                              @RequestParam(value = "action") String action) {
+        int pointsToAdd = dbDataController.getActionPoints(action);
+        return ResponseEntity.ok().body(dbDataController.addToUserScore(username, pointsToAdd));
     }
 }
