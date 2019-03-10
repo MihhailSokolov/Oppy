@@ -40,10 +40,8 @@ public class AddActionPage {
 
         Button backButton = new Button("Back");
         GridPane.setConstraints(backButton, 0, 0);
-
         backButton.setOnAction(e -> window.setScene(MainPage.mainScene(window)));
         
-
 
         Button saveAsButton = new Button("Save as ...");
         GridPane.setConstraints(saveAsButton, 1,4);

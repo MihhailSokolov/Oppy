@@ -71,23 +71,29 @@ public class MainPage {
 
         //creating the buttons for settings, leaderboard and addAction
 
+        Image profilePicture = new Image("placeholder 100x100.png"); //Here your profile picture needs to be gotten from the database
+        ImageView displayProfilePicture = new ImageView(profilePicture);
+        displayProfilePicture.setFitHeight(50);
+        displayProfilePicture.setFitWidth(50);
+        gridHamburger.setConstraints(displayProfilePicture,0,0,1,1);
+
         Button settingsButton = new Button("settings");
         settingsButton.setOnAction(e -> window.setScene(SettingsPage.settingsScene(window)));
-        gridHamburger.setConstraints(settingsButton,0,0);
+        gridHamburger.setConstraints(settingsButton,1,0,1,1);
 
         Button leaderboardButton = new Button("Leaderboard");
         leaderboardButton.setOnAction(e -> {
             window.setScene(LeaderboardPage.leaderboardScene(window));
         });
-        gridHamburger.setConstraints(leaderboardButton,0,1);
+        gridHamburger.setConstraints(leaderboardButton,0,1,2,1);
 
 
         Button addActionButton = new Button("Add action");
         addActionButton.setOnAction(e-> window.setScene(AddActionPage.addActionScene(window)));
-        gridHamburger.setConstraints(addActionButton,0,2);
+        gridHamburger.setConstraints(addActionButton,0,2,2,1);
 
         //add all previously created elements to the hamburger layout
-        gridHamburger.getChildren().addAll(settingsButton,leaderboardButton,addActionButton);
+        gridHamburger.getChildren().addAll(settingsButton,leaderboardButton,addActionButton, displayProfilePicture);
         gridHamburger.setAlignment(Pos.TOP_LEFT);
         gridHamburger.setStyle("-fx-background-color: #FFFFFF;");
 

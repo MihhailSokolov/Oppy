@@ -38,7 +38,7 @@ public class SettingsPage {
       
 
         //in this line the placeholder should be replaced with the actual profile picture
-        Image profilePicture = new Image("placeholder 100x100.png");
+        Image profilePicture = new Image("placeholder 100x100.png"); //Here your profile picture needs to be gotten from the database
         ImageView displayProfilePicture = new ImageView(profilePicture);
         JFXButton profilePictureButton = new JFXButton();
         profilePictureButton.setGraphic(displayProfilePicture);
