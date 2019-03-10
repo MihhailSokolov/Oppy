@@ -5,8 +5,7 @@ import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -71,22 +70,20 @@ public class MainPage {
         gridHamburger.setHgap(10);
 
         //creating the buttons for settings, leaderboard and addAction
-        ToggleGroup mainHamburgerGroup = new ToggleGroup();
 
-        ToggleButton settingsButton = new ToggleButton("settings");
+        Button settingsButton = new Button("settings");
         settingsButton.setOnAction(e -> window.setScene(SettingsPage.settingsScene(window)));
-        settingsButton.setToggleGroup(mainHamburgerGroup);
         gridHamburger.setConstraints(settingsButton,0,0);
 
-        ToggleButton leaderboardButton = new ToggleButton("Leaderboard");
+        Button leaderboardButton = new Button("Leaderboard");
         leaderboardButton.setOnAction(e -> {
             window.setScene(LeaderboardPage.leaderboardScene(window));
         });
-        leaderboardButton.setToggleGroup(mainHamburgerGroup);
         gridHamburger.setConstraints(leaderboardButton,0,1);
 
-        ToggleButton addActionButton = new ToggleButton("Add action");
-        addActionButton.setOnAction(e -> window.setScene(AddActionPage.addActionScene(window)));
+
+        Button addActionButton = new Button("Add action");
+        addActionButton.setOnAction(e-> window.setScene(AddActionPage.addActionScene(window)));
         gridHamburger.setConstraints(addActionButton,0,2);
 
         //add all previously created elements to the hamburger layout

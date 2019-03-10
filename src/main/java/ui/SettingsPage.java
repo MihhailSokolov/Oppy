@@ -2,11 +2,11 @@ package ui;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXToggleButton;
+import com.jfoenix.controls.JFXToggleButton;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -32,12 +32,10 @@ public class SettingsPage {
         gridCenter.setHgap(10);
 
         //here all the buttons normal buttons and labels are added
-        ToggleGroup settingsGroup = new ToggleGroup();
-
-        ToggleButton backButton = new ToggleButton("Back");
+        Button backButton = new Button("Back");
         GridPane.setConstraints(backButton, 0, 0);
         backButton.setOnAction(e -> window.setScene(MainPage.mainScene(window)));
-        backButton.setToggleGroup(settingsGroup);
+      
 
         //in this line the placeholder should be replaced with the actual profile picture
         Image profilePicture = new Image("placeholder 100x100.png");
@@ -61,40 +59,40 @@ public class SettingsPage {
         anonymousButton.setText("Anonymous");
 
 
-        ToggleButton changeEmailButton = new ToggleButton("Change email");
+        Button changeEmailButton = new Button("Change email");
         GridPane.setConstraints(changeEmailButton,1,4,2,1);
         changeEmailButton.setOnAction(e -> {
             //implements change email method
         });
-        changeEmailButton.setToggleGroup(settingsGroup);
 
-        ToggleButton changePasswordButton = new ToggleButton("Change password");
+
+        Button changePasswordButton = new Button("Change password");
         GridPane.setConstraints(changePasswordButton, 1,5,2,1);
         changePasswordButton.setOnAction(e -> {
             //implements change password method
         });
-        changePasswordButton.setToggleGroup(settingsGroup);
 
-        ToggleButton logOutButton = new ToggleButton("Log out");
+
+        Button logOutButton = new Button("Log out");
         GridPane.setConstraints(logOutButton,1,6,2,1);
         logOutButton.setOnAction(e -> {
             //implement log out method
         });
-        logOutButton.setToggleGroup(settingsGroup);
 
-        ToggleButton deleteAccountButton = new ToggleButton("Delete account");
+
+        Button deleteAccountButton = new Button("Delete account");
         GridPane.setConstraints(deleteAccountButton,1,7,2,1);
         deleteAccountButton.setOnAction(e -> {
             //implement delete account method
         });
-        deleteAccountButton.setToggleGroup(settingsGroup);
 
-        ToggleButton resetButton = new ToggleButton("Reset");
+
+        Button resetButton = new Button("Reset");
         GridPane.setConstraints(resetButton,1,8,2,1);
         resetButton.setOnAction(e -> {
             //implement reset method
         });
-        resetButton.setToggleGroup(settingsGroup);
+
 
 
 
