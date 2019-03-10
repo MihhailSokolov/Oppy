@@ -15,13 +15,17 @@ import javafx.stage.Stage;
 
 public class SettingsPage {
 
-    public static Scene SettingsScene(Stage primaryStage){
+    /**
+     * Method for creating settings page.
+     * @param primaryStage primary stage
+     * @return settings scene
+     */
+    public static Scene settingsScene(Stage primaryStage) {
         Stage window = primaryStage;
         window.setTitle("SettingsPage");
-        BorderPane centralPageLayout = new BorderPane();
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //CentralGrid////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////
+        //CentralGrid////////////////////////////////////////////////////////////////////
         GridPane gridCenter = new GridPane();
         gridCenter.setPadding(new Insets(10, 10, 10, 10));
         gridCenter.setVgap(8);
@@ -32,12 +36,11 @@ public class SettingsPage {
 
         ToggleButton backButton = new ToggleButton("Back");
         GridPane.setConstraints(backButton, 0, 0);
-        backButton.setOnAction(e->{
-            window.setScene(MainPage.MainScene(window));
-        });
+        backButton.setOnAction(e -> window.setScene(MainPage.mainScene(window)));
         backButton.setToggleGroup(settingsGroup);
 
-        Image profilePicture = new Image("placeholder 100x100.png"); //in this line the placeholder should be replaced with the actual profile picture
+        //in this line the placeholder should be replaced with the actual profile picture
+        Image profilePicture = new Image("placeholder 100x100.png");
         ImageView displayProfilePicture = new ImageView(profilePicture);
         JFXButton profilePictureButton = new JFXButton();
         profilePictureButton.setGraphic(displayProfilePicture);
@@ -60,44 +63,48 @@ public class SettingsPage {
 
         ToggleButton changeEmailButton = new ToggleButton("Change email");
         GridPane.setConstraints(changeEmailButton,1,4,2,1);
-        changeEmailButton.setOnAction(e->{
+        changeEmailButton.setOnAction(e -> {
             //implements change email method
         });
         changeEmailButton.setToggleGroup(settingsGroup);
 
         ToggleButton changePasswordButton = new ToggleButton("Change password");
         GridPane.setConstraints(changePasswordButton, 1,5,2,1);
-        changePasswordButton.setOnAction(e->{
+        changePasswordButton.setOnAction(e -> {
             //implements change password method
         });
         changePasswordButton.setToggleGroup(settingsGroup);
 
         ToggleButton logOutButton = new ToggleButton("Log out");
         GridPane.setConstraints(logOutButton,1,6,2,1);
-        logOutButton.setOnAction(e->{
+        logOutButton.setOnAction(e -> {
             //implement log out method
         });
         logOutButton.setToggleGroup(settingsGroup);
 
         ToggleButton deleteAccountButton = new ToggleButton("Delete account");
         GridPane.setConstraints(deleteAccountButton,1,7,2,1);
-        deleteAccountButton.setOnAction(e->{
+        deleteAccountButton.setOnAction(e -> {
             //implement delete account method
         });
         deleteAccountButton.setToggleGroup(settingsGroup);
 
         ToggleButton resetButton = new ToggleButton("Reset");
         GridPane.setConstraints(resetButton,1,8,2,1);
-        resetButton.setOnAction(e->{
+        resetButton.setOnAction(e -> {
             //implement reset method
         });
         resetButton.setToggleGroup(settingsGroup);
 
 
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ////central page layout/////////////////////////////////////////////////////////////////////////////////////////////////////
-        gridCenter.getChildren().addAll(backButton, username,email,changeEmailButton,changePasswordButton,logOutButton,deleteAccountButton,resetButton,pushNotificationsButton,anonymousButton,displayProfilePicture,profilePictureButton);
+        //////////////////////////////////////////////////////////////////////////////////////
+        ////central page layout///////////////////////////////////////////////////////////////
+        gridCenter.getChildren().addAll(backButton, username, email,
+                changeEmailButton, changePasswordButton,
+                logOutButton, deleteAccountButton, resetButton, pushNotificationsButton,
+                anonymousButton, displayProfilePicture, profilePictureButton);
+        BorderPane centralPageLayout = new BorderPane();
         centralPageLayout.setCenter(gridCenter);
 
         //here the create vieuw is made into a scene and returned when the method is called

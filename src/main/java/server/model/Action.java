@@ -14,6 +14,12 @@ public class Action {
     private String category;
     private int points;
 
+    /**
+     * Constructor for Action.
+     * @param actionName Name of the action
+     * @param category Category of the action
+     * @param points Number of points the action gives
+     */
     public Action(String actionName, String category, int points) {
         this.actionName = actionName;
         this.category = category;
@@ -46,20 +52,22 @@ public class Action {
 
     @Override
     public String toString() {
-        return "Action{" +
-                "actionName='" + actionName + '\'' +
-                ", category='" + category + '\'' +
-                ", points=" + points +
-                '}';
+        return String.format("Action{actionName='%s', category='%s', points=%s}",
+                getActionName(), getCategory(), String.valueOf(getCategory()));
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Action)) return false;
-        Action action = (Action) o;
-        return getPoints() == action.getPoints() &&
-                Objects.equals(getActionName(), action.getActionName()) &&
-                Objects.equals(getCategory(), action.getCategory());
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof Action)) {
+            return false;
+        }
+        Action action = (Action) other;
+        boolean equalPoints = getPoints() == action.getPoints();
+        boolean equalActions = Objects.equals(getActionName(), action.getActionName());
+        boolean equalCategory = Objects.equals(getCategory(), action.getCategory());
+        return equalPoints && equalActions && equalCategory;
     }
 }
