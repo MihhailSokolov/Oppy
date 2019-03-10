@@ -26,23 +26,23 @@ public class AddActionPage {
         gridCenter.setHgap(10);
 
         //adding the back, submit and save as buttons
-        ToggleGroup addActionGroup = new ToggleGroup();
 
-        ToggleButton backButton = new ToggleButton("Back");
+
+        Button backButton = new Button("Back");
         GridPane.setConstraints(backButton, 0, 0);
         backButton.setOnAction(e->{
             window.setScene(MainPage.MainScene(window));
         });
-        backButton.setToggleGroup(addActionGroup);
 
-        ToggleButton saveAsButton = new ToggleButton("Save as ...");
+
+        Button saveAsButton = new Button("Save as ...");
         GridPane.setConstraints(saveAsButton, 1,4);
         saveAsButton.setOnAction(e->{
             //inplement a save as method
         });
-        saveAsButton.setToggleGroup(addActionGroup);
 
-        ToggleButton submitButton = new ToggleButton("submit");
+
+        Button submitButton = new Button("submit");
         GridPane.setConstraints(submitButton, 2,4);
         submitButton.setOnAction(e->{
             for(int i=0; i<listCheckboxes.size(); i++){
@@ -52,7 +52,7 @@ public class AddActionPage {
             }
         });
 
-        submitButton.setToggleGroup(addActionGroup);
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //here the drop down menu transport is created ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         TitledPane transportCategory = new TitledPane();

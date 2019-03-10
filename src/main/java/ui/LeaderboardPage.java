@@ -6,7 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Button;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
@@ -43,9 +43,9 @@ public class LeaderboardPage {
         gridCenter.setHgap(10);
 
         //here all the buttons normal buttons and labels are added
-        ToggleGroup settingsGroup = new ToggleGroup();
 
-        ToggleButton backButton = new ToggleButton("Back");
+
+        Button backButton = new Button("Back");
         GridPane.setConstraints(backButton, 0, 0);
         backButton.setOnAction(e->{
             number1Player = new TableView<>(); //because number1Player is static it needs to be reset every time you close the page
@@ -53,7 +53,7 @@ public class LeaderboardPage {
             scoreOfuser = new TableView<>(); //same here
             window.setScene(MainPage.MainScene(window));
         });
-        backButton.setToggleGroup(settingsGroup);
+
 
 
 
