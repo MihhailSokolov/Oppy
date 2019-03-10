@@ -2,11 +2,15 @@ package clientside;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Class for client-side controller.
+ */
 public class ClientController {
     /**
      * Sends login request. Possibly deprecated class.
@@ -20,12 +24,18 @@ public class ClientController {
         }
     }
 
-    public static String executeGet(String targetURL, String urlParameters) {
+    /**
+     * Method for executing get requests.
+     * @param targetUrl the URL of the target server
+     * @param urlParameters URL parameters
+     * @return String server response
+     */
+    public static String executeGet(String targetUrl, String urlParameters) {
         HttpURLConnection connection = null;
 
         try {
             //Create connection
-            URL url = new URL(targetURL);
+            URL url = new URL(targetUrl);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setDoOutput(true);
@@ -47,7 +57,7 @@ public class ClientController {
             rd.close();
             System.out.println(response.toString());
             return response.toString();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return null;
         } finally {
