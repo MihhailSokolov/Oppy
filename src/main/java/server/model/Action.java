@@ -14,6 +14,8 @@ public class Action {
     private String category;
     private int points;
 
+    public Action(){};
+
     /**
      * Constructor for Action.
      * @param actionName Name of the action

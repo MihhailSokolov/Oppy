@@ -1,5 +1,6 @@
 package ui;
 
+import clientside.ActionHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,6 +13,7 @@ import javafx.stage.Stage;
 import server.model.Action;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class for adding the action page.
@@ -49,13 +51,27 @@ public class AddActionPage {
             //implement a save as method
         });
 
-
+        /*
+            Example of actionHandler below:
+         */
+        ActionHandler actionHandler = new ActionHandler(Main.userLog.getUsername());
+        actionHandler.updateActionList();
+        List<Action> actionList = actionHandler.getActionList();
+        for (Action act : actionList){
+            System.out.println(act.getActionName());
+        }
+        
         Button submitButton = new Button("submit");
         GridPane.setConstraints(submitButton, 2,4);
         submitButton.setOnAction(e -> {
             for (int i = 0; i < listCheckboxes.size(); i++) {
                 if (listCheckboxes.get(i).isSelected()) {
                     System.out.println(listCheckboxes.get(i).getText());
+                    /*
+                     Action handler submit new action, working filler code below
+                     */
+                    System.out.println(actionHandler
+                            .submitAction(new Action(listCheckboxes.get(i).getText(), "food", 20 )));
                 }
             }
         });
