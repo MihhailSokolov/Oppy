@@ -12,16 +12,16 @@ public class Main extends Application {
     }
 
     /**
-     * Start UI.
+     * Start ui.
      * @param primaryStage primStage
      */
     public void start(Stage primaryStage) {
         Stage window = primaryStage;
 
-        // window.setTitle("LoginPage");
-        // window.setScene(LoginPage.loginScene(window));
-        window.setTitle("MainPage");
-        window.setScene(MainPage.mainScene(window));
+         window.setTitle("LoginPage");
+         window.setScene(LoginPage.loginScene(window));
+//        window.setTitle("MainPage");
+//        window.setScene(MainPage.mainScene(window));
 
         window.show();
 

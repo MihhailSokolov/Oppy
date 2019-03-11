@@ -1,13 +1,10 @@
-package clientside;
+package clientSide;
 
 import com.google.common.hash.Hashing;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-
 import java.nio.charset.StandardCharsets;
 
-public class LoginHandler implements EventHandler<ActionEvent> {
+public class LoginHandler{
     String username;
     String password;
     boolean rememberMe;
@@ -28,12 +25,5 @@ public class LoginHandler implements EventHandler<ActionEvent> {
     public String toString() {
         return "/login?username=" + this.username + "&pass="
                 + Hashing.sha256().hashString(this.password, StandardCharsets.UTF_8).toString();
-    }
-
-
-    @Override
-    public void handle(ActionEvent event) {
-        System.out.println(this.toString());
-        ClientController.sendLogin(this.toString());
     }
 }
