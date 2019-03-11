@@ -40,10 +40,8 @@ public class AddActionPage {
 
         Button backButton = new Button("Back");
         GridPane.setConstraints(backButton, 0, 0);
-
         backButton.setOnAction(e -> window.setScene(MainPage.mainScene(window)));
         
-
 
         Button saveAsButton = new Button("Save as ...");
         GridPane.setConstraints(saveAsButton, 1,4);
@@ -77,6 +75,8 @@ public class AddActionPage {
         gridTransport.setHgap(10);
 
         //only here for testing
+        //a new List with the same name with all actions
+        //should be queried from the database
         ArrayList<Action> listOfActions = new ArrayList<Action>();
         Action firstAction = new Action("bike instead of car", "transport", 100);
         Action secondAction = new Action("train instead of car", "transport", 20);
@@ -88,7 +88,6 @@ public class AddActionPage {
         listOfActions.add(fifthAction);
         listOfActions.add(secondAction);
         listOfActions.add(fourthAction);
-
         // end of only here for testing part
 
         //gets all available actions and display's dem in the right category
