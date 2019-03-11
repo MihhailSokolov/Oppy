@@ -16,8 +16,6 @@
 
         <checkstyle.version>7.2</checkstyle.version>
         <checkstyle.plugin.version>2.17</checkstyle.plugin.version>
-
-        <jacoco-maven-plugin.version>0.7.8</jacoco-maven-plugin.version>
     </properties>
 
     <parent>
@@ -113,34 +111,23 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco-maven-plugin.version}</version>
+                <version>0.8.2</version>
                 <executions>
                     <execution>
-                        <id>default-prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
+                    <!-- attached to Maven test phase -->
                     <execution>
-                        <id>default-report</id>
-                        <phase>prepare-package</phase>
+                        <id>report</id>
+                        <phase>test</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
                     </execution>
-                    <execution>
-                        <id>default-check</id>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                            </rules>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -153,9 +140,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
-                </configuration>
             </plugin>
         </plugins>
     </build>
