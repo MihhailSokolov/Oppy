@@ -75,7 +75,9 @@ public class AddActionPage {
         gridTransport.setHgap(10);
 
         //only here for testing
-        ArrayList<Action> listOfActions = new ArrayList<Action>(); //a new List with the same name with all actions should be queried from the database
+        //a new List with the same name with all actions
+        //should be queried from the database
+        ArrayList<Action> listOfActions = new ArrayList<Action>();
         Action firstAction = new Action("bike instead of car", "transport", 100);
         Action secondAction = new Action("train instead of car", "transport", 20);
         Action thirdAction = new Action("vegetarian meal", "food", 20);

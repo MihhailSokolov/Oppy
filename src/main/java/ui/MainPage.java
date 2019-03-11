@@ -48,15 +48,18 @@ public class MainPage {
         gridCenter.setHgap(10);
 
         //here the logo is created
-        Image logo = new Image("placeholder 350x150.png"); //here the image of the planet needs to be placed
+        //here the image of the planet needs to be placed
+        Image logo = new Image("placeholder 350x150.png");
         ImageView displayLogo = new ImageView(logo);
         GridPane.setConstraints(displayLogo, 1, 2, 3, 1);
 
         //TotalPoints, daily point loss and timer fields
-        Text numberOfPoints = new Text(Integer.toString(100)); //here the number of points needs to be queried
+        //here the number of points needs to be queried
+        Text numberOfPoints = new Text(Integer.toString(100));
         GridPane.setConstraints(numberOfPoints, 2,0);
 
-        Text pointLoss = new Text(Integer.toString(100)); //here the daily point loss needs to be queried
+        //here the daily point loss needs to be queried
+        Text pointLoss = new Text(Integer.toString(100));
         GridPane.setConstraints(pointLoss, 4,1);
 
         // Here is the counter counting down until midnight
@@ -91,7 +94,8 @@ public class MainPage {
 
         //creating the buttons for settings, leaderboard and addAction
 
-        Image profilePicture = new Image("placeholder 100x100.png"); //Here your profile picture needs to be gotten from the database
+        //Here your profile picture needs to be gotten from the database
+        Image profilePicture = new Image("placeholder 100x100.png");
         ImageView displayProfilePicture = new ImageView(profilePicture);
         displayProfilePicture.setFitHeight(50);
         displayProfilePicture.setFitWidth(50);
