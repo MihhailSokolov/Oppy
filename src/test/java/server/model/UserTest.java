@@ -65,4 +65,10 @@ public class UserTest {
         u.setScore(200);
         assertEquals(200,u.getScore());
     }
+
+    @Test
+    public void getRegisterDate() {
+        User u = new User("hugo","pass","test@gmail.com",100, new Date());
+        assertEquals(new Date(), u.getRegisterDate());
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
+import server.db.DbDataController;
 import server.model.Action;
 import server.model.ActionRepository;
 import server.model.User;
@@ -16,6 +17,8 @@ import server.model.UserRepository;
 
 import javax.validation.constraints.NotNull;
 import java.nio.charset.Charset;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 import static org.hamcrest.Matchers.is;
@@ -44,19 +47,32 @@ public class ControllerTest {
     @Autowired
     ActionRepository actionRepository;
 
+    @Autowired
+    DbDataController dbDataController;
+
     @Before
     public void setup() {
         this.mockMvc = standaloneSetup(this.controller).build();
+        LocalDate nowDate = LocalDate.now().minusDays(1);
+        Date date = Date.from(nowDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         testUser = new User("oppy123",
                 "0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb",
                 "oppy%40gmail.com",
                 42
-                , new Date());
+                , date );
         if(userRepository.findFirstByUsername(testUser.getUsername())!=null)
             userRepository.delete(userRepository.findFirstByUsername(testUser.getUsername()));
         testAction = new Action("Recycle paper", "Recycling", 10);
         if(actionRepository.findFirstByActionName(testAction.getActionName()) != null)
             actionRepository.delete(actionRepository.findFirstByActionName(testAction.getActionName()));
+    }
+
+    @Test
+    public void actualPointsTest() {
+        userRepository.save(testUser);
+        int actualScore = dbDataController.getUserScore(testUser.getUsername());
+        assertEquals(testUser.getScore() - 50, actualScore);
+        userRepository.delete(testUser);
     }
 
     @Test
