@@ -73,6 +73,7 @@ public class LoginPage {
         CheckBox rememberMe = new CheckBox("remember me");
         GridPane.setConstraints(rememberMe, 1, 4);
 
+
         Button loginButton = new Button("Login");
         loginButton.setOnAction(e -> {
             LoginHandler log = new LoginHandler(usernameTextfield.getText(),
@@ -82,7 +83,8 @@ public class LoginPage {
             RestTemplate restTemplate = new RestTemplate();
             String result = restTemplate.getForObject(uri, String.class);
             if (result.equals("true")) { // go to main page, now set to register as example
-                window.setScene(RegisterPage.registerScene(window));
+                window.setScene(MainPage.mainScene(window));
+                Main.userLog = log;
             }
 
         });

@@ -17,8 +17,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import java.text.SimpleDateFormat;
 import javafx.util.Duration;
+import org.springframework.web.client.RestTemplate;
+
+import java.text.SimpleDateFormat;
+
 import java.util.Date;
 
 
@@ -56,11 +59,14 @@ public class MainPage {
 
         //TotalPoints, daily point loss and timer fields
         //here the number of points needs to be queried
-        Text numberOfPoints = new Text(Integer.toString(100));
+        final String uri = "http://oppy-project.herokuapp.com/score?username=" + Main.userLog.getUsername();
+        RestTemplate restTemplate = new RestTemplate();
+        String result = restTemplate.getForObject(uri, String.class);
+        Text numberOfPoints = new Text(result);
         GridPane.setConstraints(numberOfPoints, 2, 0);
 
         //here the daily point loss needs to be queried
-        Text pointLoss = new Text(Integer.toString(100));
+        Text pointLoss = new Text(Integer.toString(50));
         GridPane.setConstraints(pointLoss, 4, 1);
 
         // Here is the counter counting down until midnight
@@ -114,7 +120,7 @@ public class MainPage {
 
 
         Button addActionButton = new Button("Add action");
-        addActionButton.setOnAction(e-> window.setScene(AddActionPage.addActionScene(window)));
+        addActionButton.setOnAction(e -> window.setScene(AddActionPage.addActionScene(window)));
         gridHamburger.setConstraints(addActionButton,0,2,2,1);
 
         //add all previously created elements to the hamburger layout

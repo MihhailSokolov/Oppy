@@ -16,6 +16,7 @@ import server.model.UserRepository;
 
 import javax.validation.constraints.NotNull;
 import java.nio.charset.Charset;
+import java.util.Date;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
@@ -49,7 +50,8 @@ public class ControllerTest {
         testUser = new User("oppy123",
                 "0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb",
                 "oppy%40gmail.com",
-                42);
+                42
+                , new Date());
         if(userRepository.findFirstByUsername(testUser.getUsername())!=null)
             userRepository.delete(userRepository.findFirstByUsername(testUser.getUsername()));
         testAction = new Action("Recycle paper", "Recycling", 10);
