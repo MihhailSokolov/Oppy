@@ -9,6 +9,7 @@ public class LoginHandler {
     String password;
     boolean rememberMe;
 
+
     /**
      * Stores users entered information from the login page.
      *
@@ -20,6 +21,14 @@ public class LoginHandler {
         this.username = user;
         this.password = pwd;
         this.rememberMe = rem;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     @Override

@@ -7,7 +7,9 @@ import server.model.ActionRepository;
 import server.model.User;
 import server.model.UserRepository;
 
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 // Class which will contain all the methods for querying the database
 @Service
@@ -46,13 +48,26 @@ public class DbDataController {
         } else if (!isEmailAvailable(email)) {
             message = "Email address is already registered.";
         } else {
-            userRepository.save(new User(username, password, email, 0));
+            userRepository.save(new User(username, password, email, 0, new Date()));
         }
         return message;
     }
 
+    /**
+     * Method for getting the actual score of the user.
+     * @param username user's username
+     *      take the difference between the register date and current date and multiply that by 50.
+     * @return the score - 50 times the days since creation of account with minimum value of 0
+     */
     public int getUserScore(String username) {
-        return userRepository.findFirstByUsername(username).getScore();
+        User user = userRepository.findFirstByUsername(username);
+        int score = user.getScore();
+        Date currentDate = new Date();
+        Date registerDate = user.getRegisterDate();
+        long diff = currentDate.getTime() - registerDate.getTime();
+        int interval = Math.toIntExact(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+        int actualScore = score - 50 * interval;
+        return actualScore;
     }
 
     public boolean deleteUser(String username) {

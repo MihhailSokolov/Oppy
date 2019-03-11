@@ -13,6 +13,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import server.model.User;
 
+import java.util.Date;
+
 
 public class LeaderboardPage {
     //here the tables are created
@@ -24,7 +26,7 @@ public class LeaderboardPage {
     //Will be deleted once it can be replaced
     private static final ObservableList<User> data =
             FXCollections.observableArrayList(
-                    new User("hoi","hoihoi123","email@email.com",20)
+                    new User("hoi","hoihoi123","email@email.com",20, new Date())
             );
     //end of the testing part
 

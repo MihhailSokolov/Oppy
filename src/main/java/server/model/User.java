@@ -3,6 +3,8 @@ package server.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @Document(collection = "user")
 public class User {
 
@@ -12,6 +14,7 @@ public class User {
     private String password;
     private String email;
     private int score;
+    private Date registerDate;
 
     /**
      * Constructor for User object.
@@ -20,11 +23,16 @@ public class User {
      * @param email email address of the user
      * @param score score/pts of the user
      */
-    public User(String username, String password, String email, int score) {
+    public User(String username, String password, String email, int score, Date registerDate) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.score = score;
+        this.registerDate = registerDate;
+    }
+
+    public Date getRegisterDate() {
+        return registerDate;
     }
 
     public String getUsername() {
