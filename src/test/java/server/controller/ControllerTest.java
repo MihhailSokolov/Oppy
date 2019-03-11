@@ -8,22 +8,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 import server.db.DbDataController;
 import server.model.Action;
 import server.model.ActionRepository;
 import server.model.User;
 import server.model.UserRepository;
 
-import javax.validation.constraints.NotNull;
-import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
@@ -135,15 +131,6 @@ public class ControllerTest {
         mockMvc.perform(get(String.format("/login?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
                 .andExpect(status().isOk())
                 .andExpect(content().string("false"));
-    }
-
-    @Test
-    public void checkUserScore() throws Exception {
-        userRepository.save(testUser);
-        mockMvc.perform(get(String.format("/score?username=%s", testUser.getUsername())))
-                .andExpect(status().isOk())
-                .andExpect(content().string("42"));
-        userRepository.delete(testUser);
     }
 
     @Test
