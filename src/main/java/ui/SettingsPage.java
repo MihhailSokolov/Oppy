@@ -37,7 +37,7 @@ public class SettingsPage {
       
 
         //in this line the placeholder should be replaced with the actual profile picture
-        Image profilePicture = new Image("placeholder 100x100.png");
+        Image profilePicture = new Image("placeholder 100x100.png"); //Here your profile picture needs to be gotten from the database
         ImageView displayProfilePicture = new ImageView(profilePicture);
         JFXButton profilePictureButton = new JFXButton();
         profilePictureButton.setGraphic(displayProfilePicture);
@@ -52,11 +52,14 @@ public class SettingsPage {
         JFXToggleButton pushNotificationsButton = new JFXToggleButton();
         GridPane.setConstraints(pushNotificationsButton,1,2,2,1);
         pushNotificationsButton.setText("Push notifications");
+        pushNotificationsButton.setSelected(true);
+        pushNotificationsButton.setOnAction(e->System.out.println("testNotification")); //no priority to fix
 
         JFXToggleButton anonymousButton = new JFXToggleButton();
         GridPane.setConstraints(anonymousButton,1,3,2,1);
         anonymousButton.setText("Anonymous");
-
+        anonymousButton.setSelected(false);
+        anonymousButton.setOnAction(e->System.out.println("testAnonymous"));//no priority to fix
 
         Button changeEmailButton = new Button("Change email");
         GridPane.setConstraints(changeEmailButton,1,4,2,1);
