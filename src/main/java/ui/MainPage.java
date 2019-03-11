@@ -30,6 +30,7 @@ import java.util.Date;
 public class MainPage {
     /**
      * Method for main scene.
+     *
      * @param primaryStage Primary stage
      * @return Scene
      */
@@ -56,11 +57,11 @@ public class MainPage {
         //TotalPoints, daily point loss and timer fields
         //here the number of points needs to be queried
         Text numberOfPoints = new Text(Integer.toString(100));
-        GridPane.setConstraints(numberOfPoints, 2,0);
+        GridPane.setConstraints(numberOfPoints, 2, 0);
 
         //here the daily point loss needs to be queried
         Text pointLoss = new Text(Integer.toString(100));
-        GridPane.setConstraints(pointLoss, 4,1);
+        GridPane.setConstraints(pointLoss, 4, 1);
 
         // Here is the counter counting down until midnight
         Label timer = new Label();
@@ -144,7 +145,7 @@ public class MainPage {
             burgerTask.setRate(burgerTask.getRate() * -1);
             burgerTask.play();
         });
-        gridTop.setConstraints(hamburger,0,0);
+        gridTop.setConstraints(hamburger, 0, 0);
         gridTop.getChildren().addAll(hamburger);
         gridTop.setStyle("-fx-background-color: #4c4242;");
 

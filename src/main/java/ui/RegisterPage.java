@@ -1,10 +1,15 @@
 package ui;
 
-import clientSide.RegisterHandler;
+import clientside.RegisterHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -14,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 public class RegisterPage {
     /**
      * Register page.
+     *
      * @param primaryStage primStage
      * @return scene.
      */
@@ -80,14 +86,16 @@ public class RegisterPage {
         //Here the register button is created
         Button registerButton = new Button("Register");
         GridPane.setConstraints(registerButton, 2, 6);
-        registerButton.setOnAction(e->{
-            RegisterHandler register = new RegisterHandler(usernameTextfield.getText(), emailTextfield.getText(), passwordTextfield.getText());
+        registerButton.setOnAction(e -> {
+            RegisterHandler register = new RegisterHandler(usernameTextfield.getText(),
+                    emailTextfield.getText(), passwordTextfield.getText());
             final String uri = "http://oppy-project.herokuapp.com" + register.toString();
             RestTemplate restTemplate = new RestTemplate();
             String result = restTemplate.getForObject(uri, String.class);
-            if(result.equals("true")){
-                //We need to make a different UI page so that it can give a pop-up that tells us that either an account has been created successfully and that you will be redirected to
-                //the login page
+            if (result.equals("true")) {
+                //We need to make a different UI page so that it can give a pop-up that tells us
+                // that either an account has been created successfully and that you will be
+                // redirected the the login page
                 window.setScene(LoginPage.loginScene(window));
             }
         });
