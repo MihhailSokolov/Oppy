@@ -1,6 +1,7 @@
 package clientside;
 
 import com.google.common.hash.Hashing;
+import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.StandardCharsets;
 
@@ -19,7 +20,7 @@ public class LoginHandler {
      */
     public LoginHandler(String user, String pwd, boolean rem) {
         this.username = user;
-        this.password = pwd;
+        this.password = Hashing.sha256().hashString(pwd, StandardCharsets.UTF_8).toString();
         this.rememberMe = rem;
     }
 
@@ -31,9 +32,16 @@ public class LoginHandler {
         return password;
     }
 
+    public String sendLogin(){
+        final String uri = this.toString();
+        RestTemplate restTemplate = new RestTemplate();
+        String result = restTemplate.getForObject(uri, String.class);
+        return result;
+    }
+
     @Override
     public String toString() {
-        return "/login?username=" + this.username + "&pass="
-                + Hashing.sha256().hashString(this.password, StandardCharsets.UTF_8).toString();
+        return "http://oppy-project.herokuapp.com/login?username=" + this.username + "&pass=" + this.password;
     }
+
 }

@@ -79,9 +79,7 @@ public class LoginPage {
             LoginHandler log = new LoginHandler(usernameTextfield.getText(),
                     passwordTextfield.getText(), rememberMe.isSelected());
             // ClientController.sendLogin(log.toString());
-            final String uri = "http://oppy-project.herokuapp.com" + log.toString();
-            RestTemplate restTemplate = new RestTemplate();
-            String result = restTemplate.getForObject(uri, String.class);
+            String result = log.sendLogin();
             if (result.equals("true")) { // go to main page, now set to register as example
                 Main.userLog = log;
                 window.setScene(MainPage.mainScene(window));
