@@ -2,10 +2,14 @@ package ui;
 
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -13,6 +17,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import java.text.SimpleDateFormat;
+import javafx.util.Duration;
+import java.util.Date;
+
 
 //import javax.xml.soap.Text;
 
@@ -40,24 +48,36 @@ public class MainPage {
         gridCenter.setHgap(10);
 
         //here the logo is created
-        Image logo = new Image("placeholder 350x150.png");
+        Image logo = new Image("placeholder 350x150.png"); //here the image of the planet needs to be placed
         ImageView displayLogo = new ImageView(logo);
         GridPane.setConstraints(displayLogo, 1, 2, 3, 1);
 
         //TotalPoints, daily point loss and timer fields
-        //100 should be changed in reference to total point in the database
-        Text numberOfPoints = new Text(Integer.toString(100));
+        Text numberOfPoints = new Text(Integer.toString(100)); //here the number of points needs to be queried
         GridPane.setConstraints(numberOfPoints, 2,0);
 
-        Text pointLoss = new Text(Integer.toString(100));
+        Text pointLoss = new Text(Integer.toString(100)); //here the daily point loss needs to be queried
         GridPane.setConstraints(pointLoss, 4,1);
 
-        // number should be replaced with a counting down live timer
-        Text timer = new Text("12:12:12");
+        // Here is the counter counting down until midnight
+        Label timer = new Label();
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+            int hours = 23 - new Date().getHours();
+            int minutes = 59 - new Date().getMinutes();
+            int seconds = 59 - new Date().getSeconds();
+            //timer.setText(hours + ":"+ minutes+ ":" + seconds);
+            timer.setText(sdf.format(new Date(0,0,0,hours,minutes,seconds)));
+        }),
+                new KeyFrame(Duration.seconds(1))
+        );
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
         GridPane.setConstraints(timer, 4,0);
 
+
         //Here all elements previously created are added to the view and the view is center
-        gridCenter.getChildren().addAll(displayLogo, numberOfPoints, pointLoss, timer);
+        gridCenter.getChildren().addAll(displayLogo, numberOfPoints, pointLoss,timer);
         gridCenter.setAlignment(Pos.CENTER);
 
         ///////////////////////////////////////////////////////////////////////////////////////

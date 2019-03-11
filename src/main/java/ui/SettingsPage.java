@@ -53,11 +53,14 @@ public class SettingsPage {
         JFXToggleButton pushNotificationsButton = new JFXToggleButton();
         GridPane.setConstraints(pushNotificationsButton,1,2,2,1);
         pushNotificationsButton.setText("Push notifications");
+        pushNotificationsButton.setSelected(true);
+        pushNotificationsButton.setOnAction(e->System.out.println("testNotification")); //no priority to fix
 
         JFXToggleButton anonymousButton = new JFXToggleButton();
         GridPane.setConstraints(anonymousButton,1,3,2,1);
         anonymousButton.setText("Anonymous");
-
+        anonymousButton.setSelected(false);
+        anonymousButton.setOnAction(e->System.out.println("testAnonymous"));//no priority to fix
 
         Button changeEmailButton = new Button("Change email");
         GridPane.setConstraints(changeEmailButton,1,4,2,1);
