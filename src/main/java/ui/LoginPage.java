@@ -14,9 +14,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.springframework.web.client.RestTemplate;
 
 public class LoginPage {
     /**
+<<<<<<< HEAD
      * Method for creating the login page.
      *
      * @param primaryStage primary stage
@@ -41,6 +43,7 @@ public class LoginPage {
         fakeLoginButton.setSelected(true);
         fakeLoginButton.setDisable(true);
         GridPane.setConstraints(fakeLoginButton, 0, 1);
+
         ToggleGroup loginRegister = new ToggleGroup();
         fakeLoginButton.setToggleGroup(loginRegister);
 
@@ -70,9 +73,17 @@ public class LoginPage {
         GridPane.setConstraints(rememberMe, 1, 4);
 
         Button loginButton = new Button("Login");
-        //loginButton.setOnAction(classthatwillhandleactionsnshit);
-        //this will redirect you to the main page
-        //after sending the data in user and passwd fields to be authed
+        loginButton.setOnAction(e -> {
+            clientSide.LoginHandler log = new clientSide.LoginHandler(usernameTextfield.getText(), passwordTextfield.getText(), rememberMe.isSelected());
+            // ClientController.sendLogin(log.toString());
+            final String uri = "http://oppy-project.herokuapp.com" + log.toString();
+            RestTemplate restTemplate = new RestTemplate();
+            String result = restTemplate.getForObject(uri, String.class);
+            if (result.equals("true")) { // go to main page, now set to register as example
+                window.setScene(RegisterPage.registerScene(window));
+            }
+
+        });
         GridPane.setConstraints(loginButton, 2, 4);
 
         Button forgotPasswordButton = new Button("forgot password?");
