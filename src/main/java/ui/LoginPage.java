@@ -83,8 +83,8 @@ public class LoginPage {
             RestTemplate restTemplate = new RestTemplate();
             String result = restTemplate.getForObject(uri, String.class);
             if (result.equals("true")) { // go to main page, now set to register as example
-                window.setScene(MainPage.mainScene(window));
                 Main.userLog = log;
+                window.setScene(MainPage.mainScene(window));
             }
 
         });
