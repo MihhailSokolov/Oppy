@@ -89,11 +89,9 @@ public class RegisterPage {
         registerButton.setOnAction(e -> {
             RegisterHandler register = new RegisterHandler(usernameTextfield.getText(),
                     emailTextfield.getText(), passwordTextfield.getText());
-            final String uri = "http://oppy-project.herokuapp.com" + register.toString();
-            RestTemplate restTemplate = new RestTemplate();
-            String result = restTemplate.getForObject(uri, String.class);
+            String result = register.sendRegister();
             if (result.equals("true")) {
-                //We need to make a different UI page so that it can give a pop-up that tells us
+                // We need to make a different UI page so that it can give a pop-up that tells us
                 // that either an account has been created successfully and that you will be
                 // redirected the the login page
                 window.setScene(LoginPage.loginScene(window));
