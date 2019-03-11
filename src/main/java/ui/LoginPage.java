@@ -1,5 +1,6 @@
 package ui;
 
+import clientside.LoginHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -74,7 +75,8 @@ public class LoginPage {
 
         Button loginButton = new Button("Login");
         loginButton.setOnAction(e -> {
-            clientSide.LoginHandler log = new clientSide.LoginHandler(usernameTextfield.getText(), passwordTextfield.getText(), rememberMe.isSelected());
+            LoginHandler log = new LoginHandler(usernameTextfield.getText(),
+                    passwordTextfield.getText(), rememberMe.isSelected());
             // ClientController.sendLogin(log.toString());
             final String uri = "http://oppy-project.herokuapp.com" + log.toString();
             RestTemplate restTemplate = new RestTemplate();

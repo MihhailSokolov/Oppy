@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 public class MainPage {
     /**
      * Method for main scene.
+     *
      * @param primaryStage Primary stage
      * @return Scene
      */
@@ -47,14 +48,14 @@ public class MainPage {
         //TotalPoints, daily point loss and timer fields
         //100 should be changed in reference to total point in the database
         Text numberOfPoints = new Text(Integer.toString(100));
-        GridPane.setConstraints(numberOfPoints, 2,0);
+        GridPane.setConstraints(numberOfPoints, 2, 0);
 
         Text pointLoss = new Text(Integer.toString(100));
-        GridPane.setConstraints(pointLoss, 4,1);
+        GridPane.setConstraints(pointLoss, 4, 1);
 
         // number should be replaced with a counting down live timer
         Text timer = new Text("12:12:12");
-        GridPane.setConstraints(timer, 4,0);
+        GridPane.setConstraints(timer, 4, 0);
 
         //Here all elements previously created are added to the view and the view is center
         gridCenter.getChildren().addAll(displayLogo, numberOfPoints, pointLoss, timer);
@@ -73,21 +74,21 @@ public class MainPage {
 
         Button settingsButton = new Button("settings");
         settingsButton.setOnAction(e -> window.setScene(SettingsPage.settingsScene(window)));
-        gridHamburger.setConstraints(settingsButton,0,0);
+        gridHamburger.setConstraints(settingsButton, 0, 0);
 
         Button leaderboardButton = new Button("Leaderboard");
         leaderboardButton.setOnAction(e -> {
             window.setScene(LeaderboardPage.leaderboardScene(window));
         });
-        gridHamburger.setConstraints(leaderboardButton,0,1);
+        gridHamburger.setConstraints(leaderboardButton, 0, 1);
 
 
         Button addActionButton = new Button("Add action");
-        addActionButton.setOnAction(e-> window.setScene(AddActionPage.addActionScene(window)));
-        gridHamburger.setConstraints(addActionButton,0,2);
+        addActionButton.setOnAction(e -> window.setScene(AddActionPage.addActionScene(window)));
+        gridHamburger.setConstraints(addActionButton, 0, 2);
 
         //add all previously created elements to the hamburger layout
-        gridHamburger.getChildren().addAll(settingsButton,leaderboardButton,addActionButton);
+        gridHamburger.getChildren().addAll(settingsButton, leaderboardButton, addActionButton);
         gridHamburger.setAlignment(Pos.TOP_LEFT);
         gridHamburger.setStyle("-fx-background-color: #FFFFFF;");
 
@@ -114,7 +115,7 @@ public class MainPage {
             burgerTask.setRate(burgerTask.getRate() * -1);
             burgerTask.play();
         });
-        gridTop.setConstraints(hamburger,0,0);
+        gridTop.setConstraints(hamburger, 0, 0);
         gridTop.getChildren().addAll(hamburger);
         gridTop.setStyle("-fx-background-color: #4c4242;");
 
