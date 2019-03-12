@@ -1,5 +1,6 @@
 package server.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,10 +14,11 @@ import server.model.Action;
 import server.model.ActionRepository;
 import server.model.User;
 import server.model.UserRepository;
-
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
@@ -33,6 +35,8 @@ public class ControllerTest {
     User testUser;
 
     Action testAction;
+
+    Action additionalTestAction;
 
     @Autowired
     Controller controller;
@@ -61,6 +65,9 @@ public class ControllerTest {
         testAction = new Action("Recycle paper", "Recycling", 10);
         if(actionRepository.findFirstByActionName(testAction.getActionName()) != null)
             actionRepository.delete(actionRepository.findFirstByActionName(testAction.getActionName()));
+        additionalTestAction = new Action("Go by bike", "Transportation", 20);
+        if(actionRepository.findFirstByActionName(additionalTestAction.getActionName()) != null)
+            actionRepository.delete(actionRepository.findFirstByActionName(additionalTestAction.getActionName()));
     }
 
     @Test
@@ -204,5 +211,28 @@ public class ControllerTest {
         mockMvc.perform(get("/email?username="+testUser.getUsername()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(testUser.getEmail()));
+    }
+
+    @Test
+    public void checkMultipleActions() throws Exception {
+        userRepository.save(testUser);
+        actionRepository.save(testAction);
+        actionRepository.save(additionalTestAction);
+        List<Action> actionList = new ArrayList<>();
+        actionList.add(testAction);
+        actionList.add(additionalTestAction);
+        int oldPoints = testUser.getScore();
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBody = mapper.writeValueAsString(actionList);
+        System.out.println(jsonBody);
+        mockMvc.perform(get(String.format("/takeactions?username=%s",
+                testUser.getUsername())).contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+        testUser = userRepository.findFirstByUsername(testUser.getUsername());
+        assertEquals(oldPoints + testAction.getPoints() + additionalTestAction.getPoints(), testUser.getScore());
+        userRepository.delete(testUser);
+        actionRepository.delete(testAction);
+        actionRepository.delete(additionalTestAction);
     }
 }
