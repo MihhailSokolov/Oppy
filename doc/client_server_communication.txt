@@ -77,3 +77,11 @@ TAKE ACTION
     Response:
         200 OK
         Body: 'true' if taking action has been successfully recorded in db, 'false' otherwise
+
+GET EMAIL
+    To get user's email from db
+    Request:
+        /email?ysername=oppy123
+    Response:
+        200 OK
+        Body contains email as a string

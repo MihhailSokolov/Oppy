@@ -197,4 +197,12 @@ public class ControllerTest {
         userRepository.delete(testUser);
         actionRepository.delete(testAction);
     }
+
+    @Test
+    public void checkUserEmail() throws Exception {
+        userRepository.save(testUser);
+        mockMvc.perform(get("/email?username="+testUser.getUsername()))
+                .andExpect(status().isOk())
+                .andExpect(content().string(testUser.getEmail()));
+    }
 }
