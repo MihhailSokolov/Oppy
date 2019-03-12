@@ -14,7 +14,7 @@ public class Action {
     private String category;
     private int points;
 
-    public Action(){};
+    public Action(){}
 
     /**
      * Constructor for Action.

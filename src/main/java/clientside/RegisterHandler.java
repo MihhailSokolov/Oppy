@@ -1,6 +1,7 @@
 package clientside;
 
 import com.google.common.hash.Hashing;
+
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.StandardCharsets;
@@ -12,7 +13,7 @@ public class RegisterHandler {
     String password;
 
     /**
-     * Stores user's entered information from the login page.
+     * Stores user's entered information from the register page.
      *
      * @param email email address of user
      * @param pass  password
@@ -23,7 +24,11 @@ public class RegisterHandler {
         this.password = Hashing.sha256().hashString(pass, StandardCharsets.UTF_8).toString();
     }
 
-    public String sendRegister(){
+    /**
+     * Sends registration info to server.
+     * @return response body.
+     */
+    public String sendRegister() {
         final String uri = this.toString();
         RestTemplate restTemplate = new RestTemplate();
         String result = restTemplate.getForObject(uri, String.class);

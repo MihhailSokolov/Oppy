@@ -1,7 +1,10 @@
 package clientside;
 
 import com.google.common.hash.Hashing;
+
+
 import org.springframework.web.client.RestTemplate;
+
 
 import java.nio.charset.StandardCharsets;
 
@@ -32,7 +35,12 @@ public class LoginHandler {
         return password;
     }
 
-    public String sendLogin(){
+    /**
+     * Sends login info to server.
+     *
+     * @return response body
+     */
+    public String sendLogin() {
         final String uri = this.toString();
         RestTemplate restTemplate = new RestTemplate();
         String result = restTemplate.getForObject(uri, String.class);

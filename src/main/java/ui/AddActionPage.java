@@ -30,7 +30,6 @@ public class AddActionPage {
         Stage window = primaryStage;
         window.setTitle("AddActionPage");
 
-        /////////////////////////////////////////////////////////////////////////////////
         //CentralGrid////////////////////////////////////////////////////////////////////
         GridPane gridCenter = new GridPane();
         gridCenter.setPadding(new Insets(10, 10, 10, 10));
@@ -38,12 +37,9 @@ public class AddActionPage {
         gridCenter.setHgap(10);
 
         //adding the back, submit and save as buttons
-
-
         Button backButton = new Button("Back");
         GridPane.setConstraints(backButton, 0, 0);
         backButton.setOnAction(e -> window.setScene(MainPage.mainScene(window)));
-        
 
         Button saveAsButton = new Button("Save as ...");
         GridPane.setConstraints(saveAsButton, 1,4);
@@ -51,13 +47,11 @@ public class AddActionPage {
             //implement a save as method
         });
 
-        /*
-            Example of actionHandler below:
-         */
+        // ActionHandler example below:
         ActionHandler actionHandler = new ActionHandler(Main.userLog.getUsername());
         actionHandler.updateActionList();
         List<Action> actionList = actionHandler.getActionList();
-        for (Action act : actionList){
+        for (Action act : actionList) {
             System.out.println(act.getActionName());
         }
         
@@ -67,9 +61,7 @@ public class AddActionPage {
             for (int i = 0; i < listCheckboxes.size(); i++) {
                 if (listCheckboxes.get(i).isSelected()) {
                     System.out.println(listCheckboxes.get(i).getText());
-                    /*
-                     Action handler submit new action, working filler code below
-                     */
+                    //action handler submit new action
                     System.out.println(actionHandler
                             .submitAction(new Action(listCheckboxes.get(i).getText(), "food", 20 )));
                 }
@@ -77,7 +69,6 @@ public class AddActionPage {
         });
 
 
-        /////////////////////////////////////////////////////////////////////////////////
         //here the drop down menu transport is created //////////////////////////////////
         TitledPane transportCategory = new TitledPane();
         transportCategory.setText("Transport");
@@ -120,8 +111,6 @@ public class AddActionPage {
         }
         transportCategory.setContent(gridTransport);
 
-
-        /////////////////////////////////////////////////////////////////////////////////
         ///here the drop down menu Food is created///////////////////////////////////////
         TitledPane foodCategory = new TitledPane();
         foodCategory.setText("Food");
@@ -148,7 +137,6 @@ public class AddActionPage {
         }
         foodCategory.setContent(gridFood);
 
-        /////////////////////////////////////////////////////////////////////////////////
         ///////here the drop down menu Energy is created/////////////////////////////////
         TitledPane energyCategory = new TitledPane();
         energyCategory.setText("Energy");
