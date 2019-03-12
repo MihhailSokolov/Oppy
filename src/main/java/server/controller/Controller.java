@@ -62,6 +62,11 @@ public class Controller {
         return ResponseEntity.ok().body(dbDataController.getUserScore(username));
     }
 
+    @RequestMapping("/email")
+    public ResponseEntity<String> getEmail(@RequestParam(value = "username") String username) {
+        return ResponseEntity.ok().body(dbDataController.getUserEmail(username));
+    }
+
     /**
      * Delete user mapping.
      *
