@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.springframework.web.client.RestTemplate;
 
 public class SettingsPage {
 
@@ -43,10 +44,13 @@ public class SettingsPage {
         profilePictureButton.setGraphic(displayProfilePicture);
         GridPane.setConstraints(profilePictureButton,1,0,1,2);
 
-        Label username = new Label("username");
+        Label username = new Label(Main.userLog.getUsername());
         GridPane.setConstraints(username, 2,0);
 
-        Label email = new Label("email@email.com");
+        final String uri = "http://oppy-project.herokuapp.com/email?username=" + Main.userLog.getUsername();
+        RestTemplate restTemplate = new RestTemplate();
+        String userEmail = restTemplate.getForObject(uri, String.class);
+        Label email = new Label(userEmail);
         GridPane.setConstraints(email,2,1);
 
         JFXToggleButton pushNotificationsButton = new JFXToggleButton();
