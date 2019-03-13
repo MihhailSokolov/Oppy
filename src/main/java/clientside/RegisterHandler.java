@@ -1,6 +1,7 @@
 package clientside;
 
 import com.google.common.hash.Hashing;
+
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.StandardCharsets;
@@ -23,7 +24,11 @@ public class RegisterHandler {
         this.password = Hashing.sha256().hashString(pass, StandardCharsets.UTF_8).toString();
     }
 
-    public String sendRegister(){
+    /**
+     * Send login request.
+     * @return String response
+     */
+    public String sendRegister() {
         final String uri = this.toString();
         RestTemplate restTemplate = new RestTemplate();
         String result = restTemplate.getForObject(uri, String.class);
@@ -32,7 +37,7 @@ public class RegisterHandler {
 
     @Override
     public String toString() {
-        return String.format("http://oppy-project.herokuapp.com/register?username=%s&pass=%s&email=%s",
+        return String.format("https://oppy-project.herokuapp.com/register?username=%s&pass=%s&email=%s",
                 this.username,
                 this.password,
                 this.email);

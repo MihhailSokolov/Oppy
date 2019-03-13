@@ -47,7 +47,7 @@ public class SettingsPage {
         Label username = new Label(Main.userLog.getUsername());
         GridPane.setConstraints(username, 2,0);
 
-        final String uri = "http://oppy-project.herokuapp.com/email?username=" + Main.userLog.getUsername();
+        final String uri = "https://oppy-project.herokuapp.com/email?username=" + Main.userLog.getUsername();
         RestTemplate restTemplate = new RestTemplate();
         String userEmail = restTemplate.getForObject(uri, String.class);
         Label email = new Label(userEmail);

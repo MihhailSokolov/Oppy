@@ -78,6 +78,17 @@ TAKE ACTION
         200 OK
         Body: 'true' if taking action has been successfully recorded in db, 'false' otherwise
 
+TAKE MULTIPLE ACTIONS
+    To take several actions with one request by user
+    Request:
+        /takeactions?username=oppy123
+        Body should contain JSON list of all Actions to be taken
+        For example body could be the following:
+        [{"actionName":"Recycle paper","category":"Recycling","points":10},{"actionName":"Go by bike","category":"Transportation","points":20}]
+    Response:
+        200 OK
+        Body: 'true' if taking actions has been successfully recorded in db, 'false' otherwise
+
 GET EMAIL
     To get user's email from db
     Request:

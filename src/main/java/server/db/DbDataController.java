@@ -109,7 +109,12 @@ public class DbDataController {
      * @return number of points
      */
     public int getActionPoints(String actionName) {
-        return actionRepository.findFirstByActionName(actionName).getPoints();
+        Action action =  actionRepository.findFirstByActionName(actionName);
+        if (action != null) {
+            return action.getPoints();
+        } else {
+            return 0;
+        }
     }
 
     /**
