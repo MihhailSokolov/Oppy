@@ -2,7 +2,6 @@ package clientside;
 
 import com.google.common.hash.Hashing;
 
-
 import org.springframework.web.client.RestTemplate;
 
 
@@ -36,9 +35,8 @@ public class LoginHandler {
     }
 
     /**
-     * Sends login info to server.
-     *
-     * @return response body
+     * Method for sending login.
+     * @return String response
      */
     public String sendLogin() {
         final String uri = this.toString();
@@ -49,7 +47,7 @@ public class LoginHandler {
 
     @Override
     public String toString() {
-        return "http://oppy-project.herokuapp.com/login?username=" + this.username + "&pass=" + this.password;
+        return "https://oppy-project.herokuapp.com/login?username=" + this.username + "&pass=" + this.password;
     }
 
 }

@@ -1,5 +1,7 @@
 package server.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,7 +24,9 @@ public class Action {
      * @param category Category of the action
      * @param points Number of points the action gives
      */
-    public Action(String actionName, String category, int points) {
+    @JsonCreator
+    public Action(@JsonProperty("actionName") String actionName, @JsonProperty("category") String category,
+                  @JsonProperty("points") int points) {
         this.actionName = actionName;
         this.category = category;
         this.points = points;

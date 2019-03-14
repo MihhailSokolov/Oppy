@@ -70,6 +70,11 @@ public class DbDataController {
         return actualScore;
     }
 
+    public String getUserEmail(String username) {
+        User user = userRepository.findFirstByUsername(username);
+        return user.getEmail();
+    }
+
     public boolean deleteUser(String username) {
         return userRepository.deleteUserByUsername(username) == 1;
     }
@@ -104,7 +109,12 @@ public class DbDataController {
      * @return number of points
      */
     public int getActionPoints(String actionName) {
-        return actionRepository.findFirstByActionName(actionName).getPoints();
+        Action action =  actionRepository.findFirstByActionName(actionName);
+        if (action != null) {
+            return action.getPoints();
+        } else {
+            return 0;
+        }
     }
 
     /**

@@ -97,10 +97,27 @@ public class RegisterPage {
             }
         });
 
+        //The Check-availability button
+        Button checkA = new Button("Check Availability");
+        GridPane.setConstraints(checkA, 2, 3);
+        checkA.setOnAction(e -> {
+            if (!(usernameTextfield.getText().equals(""))) {
+                RegisterHandler availability = new RegisterHandler(usernameTextfield.getText());
+                String result = availability.sendAvailabilityCheck();
+                if (result.equals("true")) {
+                    checkA.setStyle("-fx-background-color: #00ff00");
+                } else {
+                    checkA.setStyle("-fx-background-color: #ff0000");
+                }
+            } else {
+                checkA.setStyle("-fx-background-color: #ff0000");
+            }
+        });
+
         //Here all elements previously created are added to the view and the view is centered
         grid.getChildren().addAll(email, username, password, confirmPassword, emailTextfield,
                 usernameTextfield, passwordTextfield, confirmPasswordTextfield,
-                registerButton, loginButton, fakeRegisterButton, displayLogo);
+                registerButton, loginButton, fakeRegisterButton, displayLogo, checkA);
         grid.setAlignment(Pos.CENTER);
 
         //here the create view is made into a scene and return when the method is called

@@ -24,9 +24,14 @@ public class RegisterHandler {
         this.password = Hashing.sha256().hashString(pass, StandardCharsets.UTF_8).toString();
     }
 
+    public RegisterHandler(String name) {
+        this.username = name;
+        System.out.println(name);
+    }
+
     /**
-     * Sends registration info to server.
-     * @return response body.
+     * Send login request.
+     * @return String response
      */
     public String sendRegister() {
         final String uri = this.toString();
@@ -37,9 +42,20 @@ public class RegisterHandler {
 
     @Override
     public String toString() {
-        return String.format("http://oppy-project.herokuapp.com/register?username=%s&pass=%s&email=%s",
+        return String.format("https://oppy-project.herokuapp.com/register?username=%s&pass=%s&email=%s",
                 this.username,
                 this.password,
                 this.email);
+    }
+
+    /**
+     * Send availability check.
+     * @return String response (always true)
+     */
+    public String sendAvailabilityCheck() {
+        final String uri = "https://oppy-project.herokuapp.com/nameavailable?username=" + this.username;
+        RestTemplate restTemplate = new RestTemplate();
+        String result = restTemplate.getForObject(uri, String.class);
+        return result;
     }
 }

@@ -3,6 +3,7 @@ package server.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,6 +63,11 @@ public class Controller {
         return ResponseEntity.ok().body(dbDataController.getUserScore(username));
     }
 
+    @RequestMapping("/email")
+    public ResponseEntity<String> getEmail(@RequestParam(value = "username") String username) {
+        return ResponseEntity.ok().body(dbDataController.getUserEmail(username));
+    }
+
     /**
      * Delete user mapping.
      *
@@ -117,6 +123,24 @@ public class Controller {
     public ResponseEntity<Boolean> takeAction(@RequestParam(value = "username") String username,
                                               @RequestParam(value = "action") String action) {
         int pointsToAdd = dbDataController.getActionPoints(action);
+        return ResponseEntity.ok().body(dbDataController.addToUserScore(username, pointsToAdd));
+    }
+
+    /**
+     * Method for taking multiple actions at once.
+     * @param username user's username
+     * @param actions json list of actions
+     * @return true if successful, false otherwise
+     */
+    @RequestMapping("/takeactions")
+    public ResponseEntity<Boolean> takeMultipleActions(@RequestParam("username") String username,
+                                                       @RequestBody List<Action> actions) {
+        int pointsToAdd = 0;
+        for (Action action : actions) {
+            if (action != null) {
+                pointsToAdd += dbDataController.getActionPoints(action.getActionName());
+            }
+        }
         return ResponseEntity.ok().body(dbDataController.addToUserScore(username, pointsToAdd));
     }
 }
