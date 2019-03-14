@@ -27,6 +27,7 @@ public class AddActionPage {
      */
     public static Scene addActionScene(Stage primaryStage) {
         ArrayList<CheckBox> listCheckboxes = new ArrayList<CheckBox>();
+        ArrayList<Action> listOfActions = new ArrayList<Action>();
         Stage window = primaryStage;
         window.setTitle("AddActionPage");
 
@@ -52,7 +53,7 @@ public class AddActionPage {
         actionHandler.updateActionList();
         List<Action> actionList = actionHandler.getActionList();
         for (Action act : actionList) {
-            System.out.println(act.getActionName());
+            listOfActions.add(act);
         }
         
         Button submitButton = new Button("submit");
@@ -60,10 +61,13 @@ public class AddActionPage {
         submitButton.setOnAction(e -> {
             for (int i = 0; i < listCheckboxes.size(); i++) {
                 if (listCheckboxes.get(i).isSelected()) {
-                    System.out.println(listCheckboxes.get(i).getText());
-                    //action handler submit new action
-                    System.out.println(actionHandler
-                            .submitAction(new Action(listCheckboxes.get(i).getText(), "food", 20 )));
+                    String nameOfSubmitedAction = listCheckboxes.get(i).getText();
+                   for(int j=0; j<listOfActions.size(); j++){
+                       if(listOfActions.get(j).getActionName() == nameOfSubmitedAction){
+                           actionHandler.submitAction(listOfActions.get(j));
+                       }
+                   }
+
                 }
             }
         });
@@ -84,7 +88,7 @@ public class AddActionPage {
         //only here for testing
         //a new List with the same name with all actions
         //should be queried from the database
-        ArrayList<Action> listOfActions = new ArrayList<Action>();
+       /* ArrayList<Action> listOfActions = new ArrayList<Action>();
         Action firstAction = new Action("bike instead of car", "transport", 100);
         Action secondAction = new Action("train instead of car", "transport", 20);
         Action thirdAction = new Action("vegetarian meal", "food", 20);
@@ -94,7 +98,7 @@ public class AddActionPage {
         listOfActions.add(firstAction);
         listOfActions.add(fifthAction);
         listOfActions.add(secondAction);
-        listOfActions.add(fourthAction);
+        listOfActions.add(fourthAction);*/
         // end of only here for testing part
 
         //gets all available actions and display's dem in the right category
