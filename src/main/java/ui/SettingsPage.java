@@ -82,7 +82,7 @@ public class SettingsPage {
         Button logOutButton = new Button("Log out");
         GridPane.setConstraints(logOutButton,1,6,2,1);
         logOutButton.setOnAction(e -> {
-            //implement log out method
+            window.setScene(LoginPage.loginScene(window));
         });
 
 
