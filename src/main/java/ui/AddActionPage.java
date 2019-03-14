@@ -43,7 +43,7 @@ public class AddActionPage {
         backButton.setOnAction(e -> window.setScene(MainPage.mainScene(window)));
 
         Button saveAsButton = new Button("Save as ...");
-        GridPane.setConstraints(saveAsButton, 1, 4);
+        GridPane.setConstraints(saveAsButton, 1, 5);
         saveAsButton.setOnAction(e -> {
             //implement a save as method
         });
@@ -57,7 +57,7 @@ public class AddActionPage {
         }
         
         Button submitButton = new Button("submit");
-        GridPane.setConstraints(submitButton, 2, 4);
+        GridPane.setConstraints(submitButton, 2, 5);
         submitButton.setOnAction(e -> {
             for (int i = 0; i < listCheckboxes.size(); i++) {
                 if (listCheckboxes.get(i).isSelected()) {
