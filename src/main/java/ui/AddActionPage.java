@@ -85,21 +85,6 @@ public class AddActionPage {
         gridTransport.setVgap(8);
         gridTransport.setHgap(10);
 
-        //only here for testing
-        //a new List with the same name with all actions
-        //should be queried from the database
-       /* ArrayList<Action> listOfActions = new ArrayList<Action>();
-        Action firstAction = new Action("bike instead of car", "transport", 100);
-        Action secondAction = new Action("train instead of car", "transport", 20);
-        Action thirdAction = new Action("vegetarian meal", "food", 20);
-        Action fourthAction = new Action("lights out", "energy", 30);
-        Action fifthAction = new Action("heating off", "energy", 50);
-        listOfActions.add(thirdAction);
-        listOfActions.add(firstAction);
-        listOfActions.add(fifthAction);
-        listOfActions.add(secondAction);
-        listOfActions.add(fourthAction);*/
-        // end of only here for testing part
 
         //gets all available actions and display's dem in the right category
         for (int i = 0; i < listOfActions.size(); i++) {
@@ -166,12 +151,38 @@ public class AddActionPage {
             }
         }
         energyCategory.setContent(gridEnergy);
+
+        ///here the drop down menu misc is created///////////////////////////////////////
+        TitledPane miscCategory = new TitledPane();
+        miscCategory.setText("Misc.");
+        GridPane.setConstraints(miscCategory, 1,4,2,1);
+        miscCategory.setExpanded(false);
+
+        //Set the layout for the TiteldPane's contents
+        GridPane gridMisc = new GridPane();
+        gridMisc.setPadding(new Insets(10, 10, 10, 10));
+        gridMisc.setVgap(8);
+        gridMisc.setHgap(10);
+
+        //gets all available actions and display's dem in the right category
+        for (int i = 0; i < listOfActions.size(); i++) {
+            if (listOfActions.get(i).getCategory().equals("misc")) {
+                CheckBox newCheckBox = new CheckBox(listOfActions.get(i).getActionName());
+                GridPane.setConstraints(newCheckBox, 1, i);
+                listCheckboxes.add(newCheckBox);
+                String strPoints = Integer.toString(listOfActions.get(i).getPoints());
+                Label newLabelPoints = new Label(strPoints);
+                GridPane.setConstraints(newLabelPoints,2, i);
+                gridMisc.getChildren().addAll(newCheckBox, newLabelPoints);
+            }
+        }
+        miscCategory.setContent(gridMisc);
         ////////////////////////////////////////////////////////////////////////////////////////
         ////central page layout/////////////////////////////////////////////////////////////////
 
         BorderPane centralPageLayout = new BorderPane();
         gridCenter.getChildren().addAll(backButton, saveAsButton,submitButton, transportCategory,
-                                                                    foodCategory, energyCategory);
+                                                     miscCategory, foodCategory, energyCategory);
         centralPageLayout.setCenter(gridCenter);
 
         //here the create view is made into a scene and returned when the method is called
