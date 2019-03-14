@@ -43,7 +43,7 @@ public class AddActionPage {
         backButton.setOnAction(e -> window.setScene(MainPage.mainScene(window)));
 
         Button saveAsButton = new Button("Save as ...");
-        GridPane.setConstraints(saveAsButton, 1,4);
+        GridPane.setConstraints(saveAsButton, 1, 4);
         saveAsButton.setOnAction(e -> {
             //implement a save as method
         });
@@ -57,13 +57,13 @@ public class AddActionPage {
         }
         
         Button submitButton = new Button("submit");
-        GridPane.setConstraints(submitButton, 2,4);
+        GridPane.setConstraints(submitButton, 2, 4);
         submitButton.setOnAction(e -> {
             for (int i = 0; i < listCheckboxes.size(); i++) {
                 if (listCheckboxes.get(i).isSelected()) {
                     String nameOfSubmitedAction = listCheckboxes.get(i).getText();
-                   for(int j=0; j<listOfActions.size(); j++){
-                       if(listOfActions.get(j).getActionName() == nameOfSubmitedAction){
+                   for (int j = 0; j < listOfActions.size(); j++) {
+                       if (listOfActions.get(j).getActionName() == nameOfSubmitedAction) {
                            actionHandler.submitAction(listOfActions.get(j));
                        }
                    }
@@ -76,7 +76,7 @@ public class AddActionPage {
         //here the drop down menu transport is created //////////////////////////////////
         TitledPane transportCategory = new TitledPane();
         transportCategory.setText("Transport");
-        GridPane.setConstraints(transportCategory, 1,1,2,1);
+        GridPane.setConstraints(transportCategory, 1, 1, 2, 1);
         transportCategory.setExpanded(false);
 
         //Set the layout for the TiteldPane's contents
@@ -90,11 +90,11 @@ public class AddActionPage {
         for (int i = 0; i < listOfActions.size(); i++) {
             if (listOfActions.get(i).getCategory().equals("transport")) {
                 CheckBox newCheckBox = new CheckBox(listOfActions.get(i).getActionName());
-                GridPane.setConstraints(newCheckBox, 1,i);
+                GridPane.setConstraints(newCheckBox, 1, i);
                 listCheckboxes.add(newCheckBox);
                 String strPoints = Integer.toString(listOfActions.get(i).getPoints());
                 Label  newLabelPoints = new Label(strPoints);
-                GridPane.setConstraints(newLabelPoints,2,i);
+                GridPane.setConstraints(newLabelPoints, 2, i);
                 gridTransport.getChildren().addAll(newCheckBox, newLabelPoints);
             }
         }
@@ -103,7 +103,7 @@ public class AddActionPage {
         ///here the drop down menu Food is created///////////////////////////////////////
         TitledPane foodCategory = new TitledPane();
         foodCategory.setText("Food");
-        GridPane.setConstraints(foodCategory, 1,2,2,1);
+        GridPane.setConstraints(foodCategory, 1, 2, 2, 1);
         foodCategory.setExpanded(false);
 
         //Set the layout for the TiteldPane's contents
@@ -120,7 +120,7 @@ public class AddActionPage {
                 listCheckboxes.add(newCheckBox);
                 String strPoints = Integer.toString(listOfActions.get(i).getPoints());
                 Label newLabelPoints = new Label(strPoints);
-                GridPane.setConstraints(newLabelPoints,2, i);
+                GridPane.setConstraints(newLabelPoints, 2, i);
                 gridFood.getChildren().addAll(newCheckBox, newLabelPoints);
             }
         }
@@ -129,7 +129,7 @@ public class AddActionPage {
         ///////here the drop down menu Energy is created/////////////////////////////////
         TitledPane energyCategory = new TitledPane();
         energyCategory.setText("Energy");
-        GridPane.setConstraints(energyCategory, 1,3,2,1);
+        GridPane.setConstraints(energyCategory, 1, 3, 2, 1);
         energyCategory.setExpanded(false);
 
         //Set the layout for the TiteldPane's contents
@@ -142,11 +142,11 @@ public class AddActionPage {
         for (int i = 0; i < listOfActions.size(); i++) {
             if (listOfActions.get(i).getCategory().equals("energy")) {
                 CheckBox newCheckBox = new CheckBox(listOfActions.get(i).getActionName());
-                GridPane.setConstraints(newCheckBox, 1,i);
+                GridPane.setConstraints(newCheckBox, 1, i);
                 listCheckboxes.add(newCheckBox);
                 String strPoints = Integer.toString(listOfActions.get(i).getPoints());
                 Label newLabelPoints = new Label(strPoints);
-                GridPane.setConstraints(newLabelPoints,2,i);
+                GridPane.setConstraints(newLabelPoints, 2, i);
                 gridEnergy.getChildren().addAll(newCheckBox, newLabelPoints);
             }
         }
@@ -155,7 +155,7 @@ public class AddActionPage {
         ///here the drop down menu misc is created///////////////////////////////////////
         TitledPane miscCategory = new TitledPane();
         miscCategory.setText("Misc.");
-        GridPane.setConstraints(miscCategory, 1,4,2,1);
+        GridPane.setConstraints(miscCategory,  1, 4, 2, 1);
         miscCategory.setExpanded(false);
 
         //Set the layout for the TiteldPane's contents
@@ -172,7 +172,7 @@ public class AddActionPage {
                 listCheckboxes.add(newCheckBox);
                 String strPoints = Integer.toString(listOfActions.get(i).getPoints());
                 Label newLabelPoints = new Label(strPoints);
-                GridPane.setConstraints(newLabelPoints,2, i);
+                GridPane.setConstraints(newLabelPoints, 2, i);
                 gridMisc.getChildren().addAll(newCheckBox, newLabelPoints);
             }
         }
@@ -181,7 +181,7 @@ public class AddActionPage {
         ////central page layout/////////////////////////////////////////////////////////////////
 
         BorderPane centralPageLayout = new BorderPane();
-        gridCenter.getChildren().addAll(backButton, saveAsButton,submitButton, transportCategory,
+        gridCenter.getChildren().addAll(backButton, saveAsButton, submitButton, transportCategory,
                                                      miscCategory, foodCategory, energyCategory);
         centralPageLayout.setCenter(gridCenter);
 
