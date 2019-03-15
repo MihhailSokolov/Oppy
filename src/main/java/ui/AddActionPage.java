@@ -22,6 +22,7 @@ public class AddActionPage {
 
     /**
      * Class for adding the action page.
+     *
      * @param primaryStage Primary stage
      * @return Scene
      */
@@ -55,18 +56,18 @@ public class AddActionPage {
         for (Action act : actionList) {
             listOfActions.add(act);
         }
-        
+
         Button submitButton = new Button("submit");
         GridPane.setConstraints(submitButton, 2, 5);
         submitButton.setOnAction(e -> {
             for (int i = 0; i < listCheckboxes.size(); i++) {
                 if (listCheckboxes.get(i).isSelected()) {
-                    String nameOfSubmitedAction = listCheckboxes.get(i).getText();
-                   for (int j = 0; j < listOfActions.size(); j++) {
-                       if (listOfActions.get(j).getActionName() == nameOfSubmitedAction) {
-                           actionHandler.submitAction(listOfActions.get(j));
-                       }
-                   }
+                    String nameOfSubmittedAction = listCheckboxes.get(i).getText();
+                    for (int j = 0; j < listOfActions.size(); j++) {
+                        if (listOfActions.get(j).getActionName() == nameOfSubmittedAction) {
+                            actionHandler.submitAction(listOfActions.get(j));
+                        }
+                    }
 
                 }
             }
@@ -93,7 +94,7 @@ public class AddActionPage {
                 GridPane.setConstraints(newCheckBox, 1, i);
                 listCheckboxes.add(newCheckBox);
                 String strPoints = Integer.toString(listOfActions.get(i).getPoints());
-                Label  newLabelPoints = new Label(strPoints);
+                Label newLabelPoints = new Label(strPoints);
                 GridPane.setConstraints(newLabelPoints, 2, i);
                 gridTransport.getChildren().addAll(newCheckBox, newLabelPoints);
             }
@@ -155,7 +156,7 @@ public class AddActionPage {
         ///here the drop down menu misc is created///////////////////////////////////////
         TitledPane miscCategory = new TitledPane();
         miscCategory.setText("Misc.");
-        GridPane.setConstraints(miscCategory,  1, 4, 2, 1);
+        GridPane.setConstraints(miscCategory, 1, 4, 2, 1);
         miscCategory.setExpanded(false);
 
         //Set the layout for the TiteldPane's contents
@@ -177,12 +178,11 @@ public class AddActionPage {
             }
         }
         miscCategory.setContent(gridMisc);
-        ////////////////////////////////////////////////////////////////////////////////////////
         ////central page layout/////////////////////////////////////////////////////////////////
 
         BorderPane centralPageLayout = new BorderPane();
         gridCenter.getChildren().addAll(backButton, saveAsButton, submitButton, transportCategory,
-                                                     miscCategory, foodCategory, energyCategory);
+                miscCategory, foodCategory, energyCategory);
         centralPageLayout.setCenter(gridCenter);
 
         //here the create view is made into a scene and returned when the method is called
