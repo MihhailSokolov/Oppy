@@ -10,7 +10,7 @@ public class ActionHandler {
     private String username;
     private List<Action> actionList;
     private final String submitParams = "takeaction?username=%s&action=%s";
-    private final String uri = "http://oppy-project.herokuapp.com/";
+    private String uri = "http://oppy-project.herokuapp.com/";
     private RestTemplate restTemplate;
 
     /**
@@ -43,4 +43,7 @@ public class ActionHandler {
         actionList = Arrays.asList(restTemplate.getForObject(this.uri + "actions", Action[].class));
     }
 
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
 }

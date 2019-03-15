@@ -1,22 +1,30 @@
 package clientside;
 
 
+import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.ok;
 import static org.junit.Assert.*;
 import org.springframework.web.client.RestTemplate;
 import server.model.Action;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 
 
 public class ActionHandlerTest {
-    private RestTemplate restTemplate;
-    private Action testAction;
-    private ActionHandler actionHandler;
+     RestTemplate restTemplate;
+     Action testAction;
+     ActionHandler actionHandler;
+
+    @Rule
+    public WireMockRule wireMockRule = new WireMockRule();
+
 
     @Before
     public void setup(){
@@ -26,15 +34,18 @@ public class ActionHandlerTest {
     }
     @Test
     public void submitActionTest() throws URISyntaxException {
-        String expected = restTemplate.getForObject(new URI("http://oppy-project.herokuapp.com/takeaction?username=Simba&action=vegetarian%20meal"), String.class);
-        assertEquals(expected, actionHandler.submitAction(testAction));
+        actionHandler.setUri("http://127.0.0.1:8080/");
+        wireMockRule.stubFor(get("/takeaction?username=Simba&action="+ testAction.getActionName().replaceAll(" ", "%20"))
+                .willReturn(ok("true")));
+        assertEquals("true", actionHandler.submitAction(testAction));
     }
 
     @Test
-    public void getActionList(){
+    public void updateActionListTest(){
+        actionHandler.setUri("http://oppy-project.herokuapp.com/");
         actionHandler.updateActionList();
         List<Action> expectedList = Arrays
                 .asList(restTemplate.getForObject("http://oppy-project.herokuapp.com/actions", Action[].class));
-                assertEquals(expectedList, actionHandler.getActionList());
+        assertEquals(expectedList, actionHandler.getActionList());
     }
 }
