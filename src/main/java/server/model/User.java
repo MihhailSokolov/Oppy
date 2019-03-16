@@ -1,4 +1,5 @@
 package server.model;
+import javafx.scene.image.Image;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,6 +16,9 @@ public class User {
     private String email;
     private int score;
     private Date registerDate;
+    private boolean anonymous;
+    private boolean pushNotifications;
+    private Image profilePicture;
 
     /**
      * Constructor for User object.
@@ -29,6 +33,9 @@ public class User {
         this.email = email;
         this.score = score;
         this.registerDate = registerDate;
+        this.anonymous = false;
+        this.pushNotifications = true;
+        this.profilePicture = new Image("placeholder 100x100.png");
     }
 
     public Date getRegisterDate() {
@@ -51,6 +58,18 @@ public class User {
         return this.score;
     }
 
+    public boolean getAnonymous() {
+        return  this.anonymous;
+    }
+
+    public boolean getPushNotifications() {
+        return this.pushNotifications;
+    }
+
+    public Image getProfilePicture() {
+        return profilePicture;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -67,11 +86,25 @@ public class User {
         this.score = score;
     }
 
+    public void setAnonymous(boolean anonymous) {
+        this.anonymous = anonymous;
+    }
+
+    public void setPushNotifications(boolean pushNotifications) {
+        this.pushNotifications = pushNotifications;
+    }
+
+    public void setProfilePicture(Image profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
     @Override
     public String toString() {
         return String.format(
-                "User[username=%s, password='%s', email='%s', score='%d']",
-                username, password, email, score);
+                "User[username=%s, password='%s', email='%s', score='%d', " +
+                        "anonymous='%c', pushNotifications'%c', profilePicture='%c']",
+                username, password, email, score, anonymous, pushNotifications, profilePicture);
+
     }
 
 }
