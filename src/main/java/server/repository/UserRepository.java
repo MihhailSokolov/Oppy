@@ -1,6 +1,9 @@
-package server.model;
+package server.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import server.model.User;
+
+import java.util.List;
 
 public interface UserRepository extends MongoRepository<User, String> {
 
@@ -12,4 +15,5 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     int deleteUserByUsername(String username);
 
+    List<User> findAll();
 }

@@ -96,3 +96,11 @@ GET EMAIL
     Response:
         200 OK
         Body contains email as a string
+
+GET TOP 50
+    To get top 50 players based on their score
+    Request:
+	/top50
+    Response:
+	200 OK
+	Body contains json list of users with all fields set to null except from username and score

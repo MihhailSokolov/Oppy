@@ -56,8 +56,8 @@ public class Action {
 
     @Override
     public String toString() {
-        return String.format("Action{actionName='%s', category='%s', points=%s}",
-                getActionName(), getCategory(), String.valueOf(getCategory()));
+        return String.format("Action[actionName='%s', category='%s', points='%s']",
+                getActionName(), getCategory(), String.valueOf(getPoints()));
     }
 
     @Override
