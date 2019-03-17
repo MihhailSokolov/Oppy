@@ -19,10 +19,8 @@ import java.util.List;
  * Class for adding the action page.
  */
 public class AddActionPage {
-
     /**
      * Class for adding the action page.
-     *
      * @param primaryStage Primary stage
      * @return Scene
      */
@@ -31,7 +29,6 @@ public class AddActionPage {
         ArrayList<Action> listOfActions = new ArrayList<Action>();
         Stage window = primaryStage;
         window.setTitle("AddActionPage");
-
         //CentralGrid////////////////////////////////////////////////////////////////////
         GridPane gridCenter = new GridPane();
         gridCenter.setPadding(new Insets(10, 10, 10, 10));
@@ -62,17 +59,10 @@ public class AddActionPage {
         submitButton.setOnAction(e -> {
             for (int i = 0; i < listCheckboxes.size(); i++) {
                 if (listCheckboxes.get(i).isSelected()) {
-                    String nameOfSubmittedAction = listCheckboxes.get(i).getText();
-                    for (int j = 0; j < listOfActions.size(); j++) {
-                        if (listOfActions.get(j).getActionName() == nameOfSubmittedAction) {
-                            actionHandler.submitAction(listOfActions.get(j));
-                        }
-                    }
-
+                    actionHandler.submitAction(listCheckboxes.get(i).getText());
                 }
             }
         });
-
 
         //here the drop down menu transport is created //////////////////////////////////
         TitledPane transportCategory = new TitledPane();
@@ -86,18 +76,17 @@ public class AddActionPage {
         gridTransport.setVgap(8);
         gridTransport.setHgap(10);
 
-
+        List<Action> transportList = actionHandler.getCategoryList("transport");
         //gets all available actions and display's dem in the right category
-        for (int i = 0; i < listOfActions.size(); i++) {
-            if (listOfActions.get(i).getCategory().equals("transport")) {
-                CheckBox newCheckBox = new CheckBox(listOfActions.get(i).getActionName());
-                GridPane.setConstraints(newCheckBox, 1, i);
-                listCheckboxes.add(newCheckBox);
-                String strPoints = Integer.toString(listOfActions.get(i).getPoints());
-                Label newLabelPoints = new Label(strPoints);
-                GridPane.setConstraints(newLabelPoints, 2, i);
-                gridTransport.getChildren().addAll(newCheckBox, newLabelPoints);
-            }
+        for (int i = 0; i < transportList.size(); i++) {
+            CheckBox newCheckBox = new CheckBox(transportList.get(i).getActionName());
+            GridPane.setConstraints(newCheckBox, 1, i);
+            listCheckboxes.add(newCheckBox);
+            String strPoints = Integer.toString(transportList.get(i).getPoints());
+            Label newLabelPoints = new Label(strPoints);
+            GridPane.setConstraints(newLabelPoints, 2, i);
+            gridTransport.getChildren().addAll(newCheckBox, newLabelPoints);
+
         }
         transportCategory.setContent(gridTransport);
 
@@ -114,16 +103,15 @@ public class AddActionPage {
         gridFood.setHgap(10);
 
         //gets all available actions and display's dem in the right category
-        for (int i = 0; i < listOfActions.size(); i++) {
-            if (listOfActions.get(i).getCategory().equals("food")) {
-                CheckBox newCheckBox = new CheckBox(listOfActions.get(i).getActionName());
-                GridPane.setConstraints(newCheckBox, 1, i);
-                listCheckboxes.add(newCheckBox);
-                String strPoints = Integer.toString(listOfActions.get(i).getPoints());
-                Label newLabelPoints = new Label(strPoints);
-                GridPane.setConstraints(newLabelPoints, 2, i);
-                gridFood.getChildren().addAll(newCheckBox, newLabelPoints);
-            }
+        List<Action> foodList = actionHandler.getCategoryList("food");
+        for (int i = 0; i < foodList.size(); i++) {
+            CheckBox newCheckBox = new CheckBox(foodList.get(i).getActionName());
+            GridPane.setConstraints(newCheckBox, 1, i);
+            listCheckboxes.add(newCheckBox);
+            String strPoints = Integer.toString(foodList.get(i).getPoints());
+            Label newLabelPoints = new Label(strPoints);
+            GridPane.setConstraints(newLabelPoints, 2, i);
+            gridFood.getChildren().addAll(newCheckBox, newLabelPoints);
         }
         foodCategory.setContent(gridFood);
 
@@ -140,16 +128,15 @@ public class AddActionPage {
         gridEnergy.setHgap(10);
 
         //gets all available actions and display's dem in the right category
-        for (int i = 0; i < listOfActions.size(); i++) {
-            if (listOfActions.get(i).getCategory().equals("energy")) {
-                CheckBox newCheckBox = new CheckBox(listOfActions.get(i).getActionName());
-                GridPane.setConstraints(newCheckBox, 1, i);
-                listCheckboxes.add(newCheckBox);
-                String strPoints = Integer.toString(listOfActions.get(i).getPoints());
-                Label newLabelPoints = new Label(strPoints);
-                GridPane.setConstraints(newLabelPoints, 2, i);
-                gridEnergy.getChildren().addAll(newCheckBox, newLabelPoints);
-            }
+        List<Action> energyList = actionHandler.getCategoryList("energy");
+        for (int i = 0; i < energyList.size(); i++) {
+            CheckBox newCheckBox = new CheckBox(energyList.get(i).getActionName());
+            GridPane.setConstraints(newCheckBox, 1, i);
+            listCheckboxes.add(newCheckBox);
+            String strPoints = Integer.toString(energyList.get(i).getPoints());
+            Label newLabelPoints = new Label(strPoints);
+            GridPane.setConstraints(newLabelPoints, 2, i);
+            gridEnergy.getChildren().addAll(newCheckBox, newLabelPoints);
         }
         energyCategory.setContent(gridEnergy);
 
@@ -166,25 +153,23 @@ public class AddActionPage {
         gridMisc.setHgap(10);
 
         //gets all available actions and display's dem in the right category
-        for (int i = 0; i < listOfActions.size(); i++) {
-            if (listOfActions.get(i).getCategory().equals("misc")) {
-                CheckBox newCheckBox = new CheckBox(listOfActions.get(i).getActionName());
-                GridPane.setConstraints(newCheckBox, 1, i);
-                listCheckboxes.add(newCheckBox);
-                String strPoints = Integer.toString(listOfActions.get(i).getPoints());
-                Label newLabelPoints = new Label(strPoints);
-                GridPane.setConstraints(newLabelPoints, 2, i);
-                gridMisc.getChildren().addAll(newCheckBox, newLabelPoints);
-            }
+        List<Action> miscList = actionHandler.getCategoryList("food");
+        for (int i = 0; i < miscList.size(); i++) {
+            CheckBox newCheckBox = new CheckBox(miscList.get(i).getActionName());
+            GridPane.setConstraints(newCheckBox, 1, i);
+            listCheckboxes.add(newCheckBox);
+            String strPoints = Integer.toString(miscList.get(i).getPoints());
+            Label newLabelPoints = new Label(strPoints);
+            GridPane.setConstraints(newLabelPoints, 2, i);
+            gridMisc.getChildren().addAll(newCheckBox, newLabelPoints);
+
         }
         miscCategory.setContent(gridMisc);
         ////central page layout/////////////////////////////////////////////////////////////////
-
         BorderPane centralPageLayout = new BorderPane();
         gridCenter.getChildren().addAll(backButton, saveAsButton, submitButton, transportCategory,
                 miscCategory, foodCategory, energyCategory);
         centralPageLayout.setCenter(gridCenter);
-
         //here the create view is made into a scene and returned when the method is called
         Scene scene = new Scene(centralPageLayout, 1000, 600);
         return scene;

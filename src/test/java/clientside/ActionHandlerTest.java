@@ -37,7 +37,7 @@ public class ActionHandlerTest {
         actionHandler.setUri("http://127.0.0.1:8080/");
         wireMockRule.stubFor(get("/takeaction?username=Simba&action="+ testAction.getActionName().replaceAll(" ", "%20"))
                 .willReturn(ok("true")));
-        assertEquals("true", actionHandler.submitAction(testAction));
+        assertEquals("true", actionHandler.submitAction(testAction.getActionName()));
     }
 
     @Test
@@ -47,5 +47,22 @@ public class ActionHandlerTest {
         List<Action> expectedList = Arrays
                 .asList(restTemplate.getForObject("http://oppy-project.herokuapp.com/actions", Action[].class));
         assertEquals(expectedList, actionHandler.getActionList());
+    }
+
+    @Test
+    public void getCategoryListTest(){
+        actionHandler.setUri("http://oppy-project.herokuapp.com/");
+        actionHandler.updateActionList();
+        boolean allInCorrectCategory = true;
+        List<Action> foodList = actionHandler.getCategoryList("food");
+        for(Action act : foodList){
+            System.out.println(act.getActionName() + " " + act.getCategory());
+            if(act.getCategory().equals("food") != true){
+                System.out.println(act.getActionName() + " " + act.getCategory() + " ***************8");
+                allInCorrectCategory = false;
+                break;
+            }
+        }
+        assertTrue (allInCorrectCategory);
     }
 }

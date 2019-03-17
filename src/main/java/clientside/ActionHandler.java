@@ -3,6 +3,7 @@ package clientside;
 import org.springframework.web.client.RestTemplate;
 import server.model.Action;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,17 +31,35 @@ public class ActionHandler {
     }
 
     /**
-     * Submits action to server.
-     * @param action the action to be submitted.
+     * Submits the given action to the server.
+     *
+     * @param actionName the action name to be submitted.
      * @return response body.
      */
-    public String submitAction(Action action) {
+    public String submitAction(String actionName) {
         return restTemplate.getForObject(this.uri
-                + String.format(submitParams, this.username, action.getActionName()), String.class);
+                + String.format(submitParams, this.username, actionName), String.class);
     }
 
     public void updateActionList() {
         actionList = Arrays.asList(restTemplate.getForObject(this.uri + "actions", Action[].class));
+    }
+
+    /**
+     * Subdivides and returns the action list in only the desired category.
+     * @param categoryName The category name of the desired list.
+     * @return the list of actions in the desired category
+     */
+    public List<Action> getCategoryList(String categoryName) {
+        List<Action> categoryList = new ArrayList<>();
+        if (this.actionList != null) {
+            for (Action act : actionList) {
+                if (act.getCategory().equals(categoryName)) {
+                    categoryList.add(act);
+                }
+            }
+        }
+        return categoryList;
     }
 
     public void setUri(String uri) {
