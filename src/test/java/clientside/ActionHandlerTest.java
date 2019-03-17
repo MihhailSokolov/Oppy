@@ -56,9 +56,7 @@ public class ActionHandlerTest {
         boolean allInCorrectCategory = true;
         List<Action> foodList = actionHandler.getCategoryList("food");
         for(Action act : foodList){
-            System.out.println(act.getActionName() + " " + act.getCategory());
             if(act.getCategory().equals("food") != true){
-                System.out.println(act.getActionName() + " " + act.getCategory() + " ***************8");
                 allInCorrectCategory = false;
                 break;
             }
