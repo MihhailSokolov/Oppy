@@ -19,7 +19,6 @@ import javafx.stage.Stage;
 
 public class LoginPage {
     /**
-<<<<<<< HEAD
      * Method for creating the login page.
      *
      * @param primaryStage primary stage
