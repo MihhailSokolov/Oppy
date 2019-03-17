@@ -2,6 +2,7 @@ package server.model;
 
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.junit.Assert.*;
@@ -67,8 +68,35 @@ public class UserTest {
     }
 
     @Test
+    public void setRegisterDate() {
+        User u = new User("hugo","pass","test@gmail.com",100, new Date());
+        u.setRegisterDate(new Date(123456789));
+        assertEquals(new Date(123456789),u.getRegisterDate());
+    }
+
+    @Test
     public void getRegisterDate() {
         User u = new User("hugo","pass","test@gmail.com",100, new Date());
         assertEquals(new Date(), u.getRegisterDate());
+    }
+
+    @Test
+    public void testToString() {
+        User u = new User("hugo","pass","test@gmail.com",100, new Date());
+        assertEquals("User[username='hugo', password='pass', email='test@gmail.com', score='100', registerDate='"
+                + new SimpleDateFormat("dd.MM.yyyy").format(new Date()) + "']", u.toString());
+    }
+
+    @Test
+    public void testEquals() {
+        User user1 = new User("hugo","pass","test@gmail.com",100, new Date());
+        User user2 = new User("hugo","pass","test@gmail.com",100, new Date());
+        User user3 = new User("nothugo","differentpass","mail@gmail.com",200, new Date());
+        assertEquals(user1, user2);
+        assertEquals(user1, user1);
+        assertNotEquals(user1, user3);
+        assertNotEquals(null, user1);
+        assertNotEquals("String test", user1);
+        assertNotEquals(new Action("name", "category", 10), user1);
     }
 }

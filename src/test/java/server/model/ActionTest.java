@@ -1,6 +1,9 @@
 package server.model;
 
 import org.junit.Test;
+
+import java.util.Date;
+
 import static org.junit.Assert.*;
 
 public class ActionTest {
@@ -48,5 +51,24 @@ public class ActionTest {
         Action action = new Action("recycle bottle","recycling",10);
         action.setPoints(20);
         assertEquals(20, action.getPoints());
+    }
+
+    @Test
+    public void testToString() {
+        Action action = new Action("recycle bottle","recycling",10);
+        assertEquals("Action[actionName='recycle bottle', category='recycling', points='10']", action.toString());
+    }
+
+    @Test
+    public void testEquals() {
+        Action action1 = new Action("recycle bottle","recycling",10);
+        Action action2 = new Action("recycle bottle","recycling",10);
+        Action action3 = new Action("vegetable meal","food",15);
+        assertEquals(action1, action2);
+        assertEquals(action1, action1);
+        assertNotEquals(action1, action3);
+        assertNotEquals(null, action1);
+        assertNotEquals("String test", action1);
+        assertNotEquals(new User("user", "pass", "mail", 10, new Date()), action1);
     }
 }

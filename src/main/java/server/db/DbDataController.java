@@ -3,11 +3,14 @@ package server.db;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import server.model.Action;
-import server.model.ActionRepository;
 import server.model.User;
-import server.model.UserRepository;
+import server.repository.ActionRepository;
+import server.repository.UserRepository;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -66,7 +69,7 @@ public class DbDataController {
         Date registerDate = user.getRegisterDate();
         long diff = currentDate.getTime() - registerDate.getTime();
         int interval = Math.toIntExact(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
-        int actualScore = score - 50 * interval;
+        int actualScore = score - 150 * interval;
         return actualScore;
     }
 
@@ -88,7 +91,11 @@ public class DbDataController {
     public boolean updatePassword(String username, String newpass) {
         User userToUpdate = userRepository.findFirstByUsername(username);
         userToUpdate.setPassword(newpass);
-        return userRepository.save(userToUpdate) != null;
+        if (userRepository.save(userToUpdate) == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -99,8 +106,19 @@ public class DbDataController {
         return actionRepository.findAll();
     }
 
+    /**
+     * Method to add an action to the db (for prepping the db).
+     * @param actionName name of action
+     * @param category category name of action
+     * @param points number of pts the action has
+     * @return true if successful
+     */
     public boolean addAction(String actionName, String category, int points) {
-        return actionRepository.save(new Action(actionName, category, points)) != null;
+        if (actionRepository.save(new Action(actionName, category, points)) == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -126,6 +144,40 @@ public class DbDataController {
     public boolean addToUserScore(String username, int points) {
         User user = userRepository.findFirstByUsername(username);
         user.setScore(user.getScore() + points);
-        return userRepository.save(user) != null;
+        if (userRepository.save(user) == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Method to get Top 50 users by their score.
+     * @return List of Users
+     */
+    public List<User> getTop50Users() {
+        List<User> users = userRepository.findAll();
+        List<User> top50Users = new ArrayList<>();
+        int limit = 50;
+        if (users.size() < 50) {
+            limit = users.size();
+        }
+        for (int i = 0; i < limit; i++) {
+            User user = users.get(i);
+            user.setPassword(null);
+            user.setEmail(null);
+            user.setRegisterDate(null);
+            user.setScore(getUserScore(user.getUsername()));
+            top50Users.add(user);
+        }
+        top50Users.sort(new ScoreComparator());
+        return top50Users;
+    }
+
+    private class ScoreComparator implements Comparator<User> {
+        @Override
+        public int compare(User user1, User user2) {
+            return -Integer.compare(user1.getScore(), user2.getScore());
+        }
     }
 }

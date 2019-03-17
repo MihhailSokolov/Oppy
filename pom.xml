@@ -91,6 +91,13 @@
             <artifactId>javafx-controls</artifactId>
             <version>12-ea+13</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.tomakehurst/wiremock -->
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock-jre8</artifactId>
+            <version>2.21.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
