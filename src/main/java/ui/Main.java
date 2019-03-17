@@ -22,7 +22,7 @@ public class Main extends Application {
         Stage window = primaryStage;
 
         window.setTitle("LoginPage");
-        window.setScene(ChangePasswordPage.ChangePasswordScene(window));
+        window.setScene(LoginPage.loginScene(window));
         window.show();
     }
 }

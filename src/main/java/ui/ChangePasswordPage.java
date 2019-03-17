@@ -33,7 +33,7 @@ public class ChangePasswordPage {
         GridPane.setConstraints(newPassword, 0, 3);
 
         PasswordField newPasswordTextfield = new PasswordField();
-        passwordTextfield.setPromptText("New Password");
+        newPasswordTextfield.setPromptText("New Password");
         GridPane.setConstraints(newPasswordTextfield, 1, 3);
 
         Button changeButton = new Button("Change Password");
@@ -42,7 +42,7 @@ public class ChangePasswordPage {
                     passwordTextfield.getText(), Main.userLog.getRememberMe());
             String result = log.sendLogin();
             if (result.equals("true")) { // go to login page, delete account
-                final String uri = "/updatepass?username=" + Main.userLog.getUsername() + "&pass=" + Main.userLog.hash(passwordTextfield.getText()) + "&newpass=" + Main.userLog.hash(newPasswordTextfield.getText());
+                final String uri = "https://oppy-project.herokuapp.com/updatepass?username=" + Main.userLog.getUsername() + "&pass=" + Main.userLog.hash(passwordTextfield.getText()) + "&newpass=" + Main.userLog.hash(newPasswordTextfield.getText());
                 RestTemplate restTemplate = new RestTemplate();
                 String status = restTemplate.getForObject(uri, String.class);
                 if(status.equals("true")) {
