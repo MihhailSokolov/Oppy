@@ -15,7 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-//import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestTemplate;
 
 public class LoginPage {
     /**
@@ -78,7 +78,7 @@ public class LoginPage {
         loginButton.setOnAction(e -> {
             LoginHandler log = new LoginHandler(usernameTextfield.getText(),
                     passwordTextfield.getText(), rememberMe.isSelected());
-            // ClientController.sendLogin(log.toString());
+            //ClientController.sendLogin(log.toString());
             String result = log.sendLogin();
             if (result.equals("true")) { // go to main page, now set to register as example
                 Main.userLog = log;

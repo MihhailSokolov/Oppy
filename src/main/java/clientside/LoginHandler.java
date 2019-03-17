@@ -33,6 +33,10 @@ public class LoginHandler {
         return password;
     }
 
+    public boolean getRememberMe() {
+        return rememberMe;
+    }
+
     /**
      * Method for sending login.
      * @return String response
@@ -48,5 +52,10 @@ public class LoginHandler {
     public String toString() {
         return "https://oppy-project.herokuapp.com/login?username=" + this.username + "&pass=" + this.password;
     }
+
+    public String hash(String pwd) {
+        return Hashing.sha256().hashString(pwd, StandardCharsets.UTF_8).toString();
+    }
+
 
 }

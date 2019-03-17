@@ -75,7 +75,7 @@ public class SettingsPage {
         Button changePasswordButton = new Button("Change password");
         GridPane.setConstraints(changePasswordButton, 1,5,2,1);
         changePasswordButton.setOnAction(e -> {
-            //implements change password method
+            window.setScene(ChangePasswordPage.ChangePasswordScene(window));
         });
 
 
@@ -89,7 +89,7 @@ public class SettingsPage {
         Button deleteAccountButton = new Button("Delete account");
         GridPane.setConstraints(deleteAccountButton,1,7,2,1);
         deleteAccountButton.setOnAction(e -> {
-            //implement delete account method
+            window.setScene(DeleteUserPage.DeleteUserScene(window));
         });
 
 
