@@ -20,10 +20,11 @@ public class User {
 
     /**
      * Constructor for User object.
+     *
      * @param username username of user
      * @param password pass of the user
-     * @param email email address of the user
-     * @param score score/pts of the user
+     * @param email    email address of the user
+     * @param score    score/pts of the user
      */
     public User(String username, String password, String email, int score, Date registerDate) {
         this.username = username;
@@ -82,13 +83,17 @@ public class User {
 
     @Override
     public boolean equals(Object other) {
-        if (this == other) return true;
-        if (other == null || getClass() != other.getClass()) return false;
+        if (this == other) {
+            return true;
+        }
+        if (other == null || getClass() != other.getClass()) {
+            return false;
+        }
         User user = (User) other;
-        return score == user.score &&
-                Objects.equals(username, user.username) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(registerDate, user.registerDate);
+        return score == user.score
+                && Objects.equals(username, user.username)
+                && Objects.equals(password, user.password)
+                && Objects.equals(email, user.email)
+                && Objects.equals(registerDate, user.registerDate);
     }
 }
