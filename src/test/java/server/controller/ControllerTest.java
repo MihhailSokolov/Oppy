@@ -183,6 +183,7 @@ public class ControllerTest {
         mockMvc.perform(get(String.format("/login?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
+        userRepository.delete(testUser);
     }
 
     @Test
@@ -258,11 +259,62 @@ public class ControllerTest {
     }
 
     @Test
+    public void checkUpdateEmail() throws Exception {
+        userRepository.save(testUser);
+        String newEmail = "new@new.new";
+        // wrong pass:
+        mockMvc.perform(get(String.format("/updateEmail?username=%s&pass=%s&newEmail=%s", testUser.getUsername() + "nuh-uh!", testUser.getPassword(), newEmail)))
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().string("false"));
+        // correct pass:
+        mockMvc.perform(get(String.format("/updateEmail?username=%s&pass=%s&newEmail=%s", testUser.getUsername(), testUser.getPassword(), newEmail)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+        testUser = userRepository.findFirstByUsername(testUser.getUsername());
+        // check to see if pass has indeed been changed
+        assertEquals(newEmail, testUser.getEmail());
+        userRepository.delete(testUser);
+    }
+
+    @Test
+    public void checkResetPoints() throws Exception {
+        userRepository.save(testUser);
+        // wrong pass:
+        mockMvc.perform(get(String.format("/reset?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword() + "hoi")))
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().string("false"));
+        // correct pass:
+        mockMvc.perform(get(String.format("/reset?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+        testUser = userRepository.findFirstByUsername(testUser.getUsername());
+        // check to see if pass has indeed been changed
+        assertEquals(0, testUser.getScore());
+        userRepository.delete(testUser);
+    }
     public void checkTop50Users() throws Exception {
         userRepository.save(testUser);
         mockMvc.perform(get("/top50"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"));
+        userRepository.delete(testUser);
+    }
+
+    @Test
+    public void checkChangeAnonymous() throws Exception {
+        userRepository.save(testUser);
+        boolean newAnonymous = true;
+        // wrong pass:
+        mockMvc.perform(get(String.format("/changeAnonymous?username=%s&pass=%s&anonymous=%s", testUser.getUsername() + "nuh-uh!", testUser.getPassword(), String.valueOf(newAnonymous))))
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().string("false"));
+        // correct pass :
+        mockMvc.perform(get(String.format("/changeAnonymous?username=%s&pass=%s&anonymous=%s", testUser.getUsername(), testUser.getPassword(), String.valueOf(newAnonymous))))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+        // check to see if anonymous has indeed been changed
+        testUser = userRepository.findFirstByUsername(testUser.getUsername());
+        assertEquals(newAnonymous, testUser.getAnonymous());
         userRepository.delete(testUser);
     }
 }

@@ -60,4 +60,9 @@ public class LoginHandler {
         return this.uri +  String.format(loginParams, this.username, this.password);
     }
 
+    public String hash(String pwd) {
+        return Hashing.sha256().hashString(pwd, StandardCharsets.UTF_8).toString();
+    }
+
+
 }

@@ -39,6 +39,7 @@ public class DbDataController {
 
     /**
      * User creation method: checks whether user exists - if not: user is created.
+     *
      * @param username of user to be checked if there are no duplicates and registering
      * @param password of user for registering
      * @param email    of user to be checked for duplicates and for registering
@@ -58,8 +59,9 @@ public class DbDataController {
 
     /**
      * Method for getting the actual score of the user.
+     *
      * @param username user's username
-     *      take the difference between the register date and current date and multiply that by 50.
+     *                 take the difference between the register date and current date and multiply that by 50.
      * @return the score - 50 times the days since creation of account with minimum value of 0
      */
     public int getUserScore(String username) {
@@ -84,8 +86,9 @@ public class DbDataController {
 
     /**
      * Method for updating user's password in db.
+     *
      * @param username user's username
-     * @param newpass user's new password
+     * @param newpass  user's new password
      * @return true is successful, false otherwise
      */
     public boolean updatePassword(String username, String newpass) {
@@ -100,17 +103,19 @@ public class DbDataController {
 
     /**
      * Method to get all the actions from db.
+     *
      * @return List of actions
      */
     public List<Action> getAllActions() {
         return actionRepository.findAll();
     }
 
-    /**
+    /**x
      * Method to add an action to the db (for prepping the db).
+     *
      * @param actionName name of action
-     * @param category category name of action
-     * @param points number of pts the action has
+     * @param category   category name of action
+     * @param points     number of pts the action has
      * @return true if successful
      */
     public boolean addAction(String actionName, String category, int points) {
@@ -123,11 +128,12 @@ public class DbDataController {
 
     /**
      * Method to get number of points a certain action is worth.
+     *
      * @param actionName name of the action
      * @return number of points
      */
     public int getActionPoints(String actionName) {
-        Action action =  actionRepository.findFirstByActionName(actionName);
+        Action action = actionRepository.findFirstByActionName(actionName);
         if (action != null) {
             return action.getPoints();
         } else {
@@ -137,8 +143,9 @@ public class DbDataController {
 
     /**
      * Method to increase user's score by certain amount of points.
+     *
      * @param username user's username
-     * @param points number of points to add to current user's score
+     * @param points   number of points to add to current user's score
      * @return true if successful, false otherwise
      */
     public boolean addToUserScore(String username, int points) {
@@ -153,10 +160,11 @@ public class DbDataController {
 
     /**
      * Method to get Top 50 users by their score.
+     *
      * @return List of Users
      */
     public List<User> getTop50Users() {
-        List<User> users = userRepository.findAll();
+        List<User> users = userRepository.findAllByAnonymous(false);
         List<User> top50Users = new ArrayList<>();
         int limit = 50;
         if (users.size() < 50) {
@@ -179,5 +187,47 @@ public class DbDataController {
         public int compare(User user1, User user2) {
             return -Integer.compare(user1.getScore(), user2.getScore());
         }
+    }
+
+    /**
+     * Method to change anonymous status in db.
+     *
+     * @param username  user's username
+     * @param anonymous new anonymous status
+     * @return true if successful, false otherwise
+     */
+    public boolean changeAnonymous(String username, boolean anonymous) {
+        User userToUpdate = userRepository.findFirstByUsername(username);
+        userToUpdate.setAnonymous(anonymous);
+        if (userRepository.save(userToUpdate) == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Method for updating user's password in db.
+     *
+     * @param username user's username
+     * @param newEmail user's new email
+     * @return true is successful, false otherwise
+     */
+    public boolean updateEmail(String username, String newEmail) {
+        User userToUpdate = userRepository.findFirstByUsername(username);
+        userToUpdate.setEmail(newEmail);
+        return userRepository.save(userToUpdate) != null;
+    }
+
+    /**
+     * Method to reset users points to 0.
+     *
+     * @param username user's username
+     * @return true if successful, false otherwise
+     */
+    public boolean resetScore(String username, String pass) {
+        User user = userRepository.findFirstByUsername(username);
+        user.setScore(0);
+        return userRepository.save(user) != null;
     }
 }
