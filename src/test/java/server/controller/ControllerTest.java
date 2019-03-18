@@ -235,4 +235,22 @@ public class ControllerTest {
         actionRepository.delete(testAction);
         actionRepository.delete(additionalTestAction);
     }
+
+    @Test
+    public void checkUpdateEmail() throws Exception {
+        userRepository.save(testUser);
+        String newEmail = "new@new.new";
+        // wrong pass:
+        mockMvc.perform(get(String.format("/updateEmail?username=%s&pass=%s&newEmail=%s", testUser.getUsername() + "nuh-uh!", testUser.getPassword(), newEmail)))
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().string("false"));
+        // correct pass:
+        mockMvc.perform(get(String.format("/updateEmail?username=%s&pass=%s&newEmail=%s", testUser.getUsername(), testUser.getPassword(), newEmail)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+        testUser = userRepository.findFirstByUsername(testUser.getUsername());
+        // check to see if pass has indeed been changed
+        assertEquals(newEmail, testUser.getEmail());
+        userRepository.delete(testUser);
+    }
 }

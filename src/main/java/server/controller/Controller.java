@@ -148,16 +148,16 @@ public class Controller {
      * Method for updating user's password.
      * @param username username
      * @param pass old password
-     * @param newpass new password
+     * @param newEmail new email
      * @return 'true' if successful and 'false' otherwise
      */
     @RequestMapping("/updateEmail")
     public ResponseEntity<Boolean> updateEmail(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "pass") String pass,
-            @RequestParam(value = "newEmail") String newpass) {
+            @RequestParam(value = "newEmail") String newEmail) {
         if (dbDataController.isUserAuthenticated(username, pass)) {
-            return ResponseEntity.ok().body(dbDataController.updatePassword(username, newpass));
+            return ResponseEntity.ok().body(dbDataController.updateEmail(username, newEmail));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
         }

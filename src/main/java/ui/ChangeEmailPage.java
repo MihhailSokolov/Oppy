@@ -37,15 +37,15 @@ public class ChangeEmailPage {
         newMailTextfield.setPromptText("New E-mail");
         GridPane.setConstraints(newMailTextfield, 1, 3);
 
-        Button changeButton = new Button("Change Password");
+        Button changeButton = new Button("Change Email");
         changeButton.setOnAction(e -> {
             LoginHandler log = new LoginHandler(Main.userLog.getUsername(),
                     passwordTextfield.getText(), Main.userLog.getRememberMe());
             String result = log.sendLogin();
             if (result.equals("true")) { // go to login page, delete account
-                final String uri = "https://oppy-project.herokuapp.com/updatepass?username=" +
+                final String uri = "https://oppy-project.herokuapp.com/updateEmail?username=" +
                         Main.userLog.getUsername() + "&pass=" + Main.userLog.hash(passwordTextfield.getText())
-                        + "&newpass=" + Main.userLog.hash(newMailTextfield.getText());
+                        + "&newEmail=" + newMailTextfield.getText();
                 RestTemplate restTemplate = new RestTemplate();
                 String status = restTemplate.getForObject(uri, String.class);
                 if(status.equals("true")) { // if true return to settings page

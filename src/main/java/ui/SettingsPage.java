@@ -68,7 +68,7 @@ public class SettingsPage {
         Button changeEmailButton = new Button("Change email");
         GridPane.setConstraints(changeEmailButton,1,4,2,1);
         changeEmailButton.setOnAction(e -> {
-            //implements change email method
+           window.setScene(ChangeEmailPage.ChangeEmailScene(window));
         });
 
 

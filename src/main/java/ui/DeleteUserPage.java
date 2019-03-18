@@ -45,8 +45,14 @@ public class DeleteUserPage {
         });
         GridPane.setConstraints(deleteButton, 2, 4);
 
+        Button cancelButton = new Button("cancel");
+        cancelButton.setOnAction(e -> {
+            window.setScene(SettingsPage.settingsScene(window));
+        });
+        GridPane.setConstraints(cancelButton, 1, 4);
+
         //Here all elements previously created are added to the view and the view is center
-        grid.getChildren().addAll(deleteButton, password, passwordTextfield);
+        grid.getChildren().addAll(deleteButton, password, passwordTextfield, cancelButton);
         grid.setAlignment(Pos.CENTER);
 
         //here the create view is made into a scene and return when the method is called

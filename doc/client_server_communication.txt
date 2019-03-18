@@ -96,3 +96,13 @@ GET EMAIL
     Response:
         200 OK
         Body contains email as a string
+
+UPDATE EMAIL
+     Required:
+        Username, password, new EMAIL
+     Request:
+        /updateEmail?username=usr&pass=Password&newEmail=newEmail
+     Response:
+        200 OK if user authorized to change pass
+        401 UNAUTHORIZED otherwise
+        Body: 'true' if account was successfully deleted, 'false' if user was not authorized or account could not be updated
