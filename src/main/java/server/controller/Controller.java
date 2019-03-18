@@ -143,6 +143,42 @@ public class Controller {
         return ResponseEntity.ok().body(dbDataController.addToUserScore(username, pointsToAdd));
     }
 
+
+    /**
+     * Method for updating user's password.
+     * @param username username
+     * @param pass old password
+     * @param newEmail new email
+     * @return 'true' if successful and 'false' otherwise
+     */
+    @RequestMapping("/updateEmail")
+    public ResponseEntity<Boolean> updateEmail(
+            @RequestParam(value = "username") String username,
+            @RequestParam(value = "pass") String pass,
+            @RequestParam(value = "newEmail") String newEmail) {
+        if (dbDataController.isUserAuthenticated(username, pass)) {
+            return ResponseEntity.ok().body(dbDataController.updateEmail(username, newEmail));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+        }
+    }
+
+    /**
+     * Method for resetting users points to 0.
+     * @param username username
+     * @param pass password
+     * @return 'true' if successful and 'false' otherwise
+     */
+    @RequestMapping("/reset")
+    public ResponseEntity<Boolean> resetScore(
+            @RequestParam(value = "username") String username,
+            @RequestParam(value = "pass") String pass) {
+        if (dbDataController.isUserAuthenticated(username, pass)) {
+            return ResponseEntity.ok().body(dbDataController.resetScore(username, pass));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+        }
+            }
     @RequestMapping("/top50")
     public ResponseEntity<List<User>> getTop50Users() {
         return ResponseEntity.ok().body(dbDataController.getTop50Users());
