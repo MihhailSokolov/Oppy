@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 public class LoginHandlerTest {
 
     LoginHandler l = new LoginHandler("oppy123", "passwd", true);
+
     @Test
     public void constructorTestNEP(){
         LoginHandler local = new LoginHandler("oppy123", "passwd", true);
@@ -34,6 +35,6 @@ public class LoginHandlerTest {
 
     @Test
     public void sendLoginTest(){
-        
+
     }
 }
