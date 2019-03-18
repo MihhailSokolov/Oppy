@@ -11,11 +11,12 @@ public class LoginHandler {
     String username;
     String password;
     boolean rememberMe;
+    private String uri;
+    private String loginParams = "login?username=%s&pass=%s";
 
 
     /**
      * Stores users entered information from the login page.
-     *
      * @param user text entered in the username box
      * @param pwd  plain text entered in the password box
      * @param rem  rememberMe checkbox
@@ -24,6 +25,7 @@ public class LoginHandler {
         this.username = user;
         this.password = Hashing.sha256().hashString(pwd, StandardCharsets.UTF_8).toString();
         this.rememberMe = rem;
+        this.uri = "https://oppy-project.herokuapp.com/";
     }
 
     public String getUsername() {
@@ -34,8 +36,12 @@ public class LoginHandler {
         return password;
     }
 
-    public boolean getRememberMe() {
-        return rememberMe;
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public String getLoginParams() {
+        return loginParams;
     }
 
     /**
@@ -51,7 +57,7 @@ public class LoginHandler {
 
     @Override
     public String toString() {
-        return "https://oppy-project.herokuapp.com/login?username=" + this.username + "&pass=" + this.password;
+        return this.uri +  String.format(loginParams, this.username, this.password);
     }
 
     public String hash(String pwd) {

@@ -1,39 +1,31 @@
 package clientside;
 
+import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.ok;
+import static org.junit.Assert.assertEquals;
 
 public class LoginHandlerTest {
+    LoginHandler loginHandler;
 
-    LoginHandler l = new LoginHandler("oppy123", "passwd", true);
+    @Rule
+    public WireMockRule wireMockRule = new WireMockRule();
 
-    @Test
-    public void constructorTestNEP(){
-        LoginHandler local = new LoginHandler("oppy123", "passwd", true);
-        assertNotNull(local);
+    @Before
+    public void setup() {
+        loginHandler = new LoginHandler("test", "passwd", true);
     }
 
     @Test
-    public void getUsernameTest(){
-        assertEquals("oppy123", l.getUsername());
-    }
-
-    @Test
-    public void getPasswordTest(){
-        assertNotEquals("passwd", l.getPassword());
-    }
-
-    @Test
-    public void toStringTest(){
-        String result = l.toString();
-        assertEquals("https://oppy-project.herokuapp.com/login?username=oppy123" +
-                "&pass=0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb",
-                result);
-    }
-
-    @Test
-    public void sendLoginTest(){
-
+    public void sendLoginTest() {
+        loginHandler.setUri("http://127.0.0.1:8080/");
+        wireMockRule.stubFor(get(String.format("/" + loginHandler.getLoginParams(), loginHandler.getUsername(), loginHandler.getPassword()))
+                .willReturn(ok("true")));
+        assertEquals("true", loginHandler.sendLogin());
     }
 }

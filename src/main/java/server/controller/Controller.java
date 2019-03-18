@@ -89,9 +89,10 @@ public class Controller {
 
     /**
      * Method for updating user's password.
+     *
      * @param username username
-     * @param pass old password
-     * @param newpass new password
+     * @param pass     old password
+     * @param newpass  new password
      * @return 'true' if successful and 'false' otherwise
      */
     @RequestMapping("/updatepass")
@@ -129,8 +130,9 @@ public class Controller {
 
     /**
      * Method for taking multiple actions at once.
+     *
      * @param username user's username
-     * @param actions json list of actions
+     * @param actions  json list of actions
      * @return true if successful, false otherwise
      */
     @RequestMapping("/takeactions")
@@ -146,8 +148,9 @@ public class Controller {
 
     /**
      * Method for updating user's password.
+     *
      * @param username username
-     * @param pass old password
+     * @param pass     old password
      * @param newEmail new email
      * @return 'true' if successful and 'false' otherwise
      */
@@ -165,8 +168,9 @@ public class Controller {
 
     /**
      * Method for resetting users points to 0.
+     *
      * @param username username
-     * @param pass password
+     * @param pass     password
      * @return 'true' if successful and 'false' otherwise
      */
     @RequestMapping("/reset")
@@ -178,7 +182,8 @@ public class Controller {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
         }
-            }
+    }
+
     @RequestMapping("/top50")
     public ResponseEntity<List<User>> getTop50Users() {
         return ResponseEntity.ok().body(dbDataController.getTop50Users());
@@ -186,8 +191,9 @@ public class Controller {
 
     /**
      * Mapping for changing user's anonymous status.
-     * @param username user's username
-     * @param pass user's password
+     *
+     * @param username     user's username
+     * @param pass         user's password
      * @param strAnonymous new anonymous status
      * @return 'true' is successful, 'false' otherwise
      */
