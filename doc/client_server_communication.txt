@@ -98,9 +98,17 @@ GET EMAIL
         Body contains email as a string
 
 GET TOP 50
-    To get top 50 players based on their score
+    To get top 50 players based on their score (anonymous users are not returned)
     Request:
 	/top50
     Response:
 	200 OK
 	Body contains json list of users with all fields set to null except from username and score
+
+CHANGE ANONYMOUS
+    To change anonymous status of the user in db
+    Request:
+    /changeAnonymous?username=oppy123&pass=0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb&anonymous=true
+    Response:
+    200 OK if user is authorized. Body contains 'true' if anonymous status was changed successfully, 'false' otherwise
+    401 UNAUTHORIZED if user is not authorized. Body contains 'false'.

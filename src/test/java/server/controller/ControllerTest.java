@@ -183,6 +183,7 @@ public class ControllerTest {
         mockMvc.perform(get(String.format("/login?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
+        userRepository.delete(testUser);
     }
 
     @Test
@@ -263,6 +264,24 @@ public class ControllerTest {
         mockMvc.perform(get("/top50"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"));
+        userRepository.delete(testUser);
+    }
+
+    @Test
+    public void checkChangeAnonymous() throws Exception {
+        userRepository.save(testUser);
+        boolean newAnonymous = true;
+        // wrong pass:
+        mockMvc.perform(get(String.format("/changeAnonymous?username=%s&pass=%s&anonymous=%s", testUser.getUsername() + "nuh-uh!", testUser.getPassword(), String.valueOf(newAnonymous))))
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().string("false"));
+        // correct pass :
+        mockMvc.perform(get(String.format("/changeAnonymous?username=%s&pass=%s&anonymous=%s", testUser.getUsername(), testUser.getPassword(), String.valueOf(newAnonymous))))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+        // check to see if anonymous has indeed been changed
+        testUser = userRepository.findFirstByUsername(testUser.getUsername());
+        assertEquals(newAnonymous, testUser.getAnonymous());
         userRepository.delete(testUser);
     }
 }
