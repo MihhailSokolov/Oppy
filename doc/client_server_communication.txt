@@ -97,6 +97,16 @@ GET EMAIL
         200 OK
         Body contains email as a string
 
+UPDATE EMAIL
+     Required:
+        Username, password, new EMAIL
+     Request:
+        /updateEmail?username=usr&pass=Password&newEmail=newEmail
+     Response:
+        200 OK if user authorized to change pass
+        401 UNAUTHORIZED otherwise
+        Body: 'true' if account was successfully deleted, 'false' if user was not authorized or account could not be updated
+
 GET TOP 50
     To get top 50 players based on their score
     Request:
@@ -104,3 +114,4 @@ GET TOP 50
     Response:
 	200 OK
 	Body contains json list of users with all fields set to null except from username and score
+

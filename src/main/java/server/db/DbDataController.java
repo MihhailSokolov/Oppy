@@ -180,4 +180,27 @@ public class DbDataController {
             return -Integer.compare(user1.getScore(), user2.getScore());
         }
     }
+
+    /**
+     * Method for updating user's password in db.
+     * @param username user's username
+     * @param newEmail user's new email
+     * @return true is successful, false otherwise
+     */
+    public boolean updateEmail(String username, String newEmail) {
+        User userToUpdate = userRepository.findFirstByUsername(username);
+        userToUpdate.setEmail(newEmail);
+        return userRepository.save(userToUpdate) != null;
+    }
+
+    /**
+     * Method to reset users points to 0.
+     * @param username user's username
+     * @return true if successful, false otherwise
+     */
+    public boolean resetScore(String username, String pass) {
+        User user = userRepository.findFirstByUsername(username);
+        user.setScore(0);
+        return userRepository.save(user) != null;
+    }
 }
