@@ -15,7 +15,7 @@ REGISTRATION
         /register?username=oppy123&pass=0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb&email=oppy%40gmail.com
     Response:
         200 OK if user has been successfully registered. Body contains "true"
-        500 ERROR if could not register this user. Body contains message explaining the error
+        Body contains explaining massage if user was not registered successfully
 
 LOGIN
     To login with existing user whose username is "oppy123" and password "passwd" (which after SHA256 hash becomes "0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb")
@@ -106,3 +106,12 @@ UPDATE EMAIL
         200 OK if user authorized to change pass
         401 UNAUTHORIZED otherwise
         Body: 'true' if account was successfully deleted, 'false' if user was not authorized or account could not be updated
+
+GET TOP 50
+    To get top 50 players based on their score
+    Request:
+	/top50
+    Response:
+	200 OK
+	Body contains json list of users with all fields set to null except from username and score
+

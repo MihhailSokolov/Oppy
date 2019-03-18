@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import server.db.DbDataController;
 import server.model.Action;
 import server.model.Response;
+import server.model.User;
 
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class Controller {
         if (msg.isEmpty()) {
             return ResponseEntity.ok().body("true");
         } else {
-            return ResponseEntity.status(500).body(msg);
+            return ResponseEntity.ok().body(msg);
         }
     }
 
@@ -137,12 +138,11 @@ public class Controller {
                                                        @RequestBody List<Action> actions) {
         int pointsToAdd = 0;
         for (Action action : actions) {
-            if (action != null) {
-                pointsToAdd += dbDataController.getActionPoints(action.getActionName());
-            }
+            pointsToAdd += dbDataController.getActionPoints(action.getActionName());
         }
         return ResponseEntity.ok().body(dbDataController.addToUserScore(username, pointsToAdd));
     }
+
 
     /**
      * Method for updating user's password.
@@ -178,5 +178,10 @@ public class Controller {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
         }
+            }
+    @RequestMapping("/top50")
+    public ResponseEntity<List<User>> getTop50Users() {
+        return ResponseEntity.ok().body(dbDataController.getTop50Users());
     }
+}
 }
