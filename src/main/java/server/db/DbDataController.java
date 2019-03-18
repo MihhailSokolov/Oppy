@@ -106,6 +106,13 @@ public class DbDataController {
         return actionRepository.findAll();
     }
 
+    /**
+     * Method to add an action to the db.
+     * @param actionName name of the action.
+     * @param category category of the action.
+     * @param points # of pts the action is worth.
+     * @return if insert was successful.
+     */
     public boolean addAction(String actionName, String category, int points) {
         if (actionRepository.save(new Action(actionName, category, points)) == null) {
             return false;

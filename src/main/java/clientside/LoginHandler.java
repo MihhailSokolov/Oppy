@@ -17,7 +17,6 @@ public class LoginHandler {
 
     /**
      * Stores users entered information from the login page.
-     *
      * @param user text entered in the username box
      * @param pwd  plain text entered in the password box
      * @param rem  rememberMe checkbox
