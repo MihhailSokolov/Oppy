@@ -4,11 +4,11 @@
 Not enough work done.
 
 
-# Adjustments from previous sprints:
+## Adjustments from previous sprints:
 Better time management:
 - This was achieved.
 
-# Next week:
+## Next week:
 Get more work done.
 
 
