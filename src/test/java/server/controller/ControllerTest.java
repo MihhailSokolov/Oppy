@@ -11,9 +11,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import server.db.DbDataController;
 import server.model.Action;
-import server.model.ActionRepository;
+import server.repository.ActionRepository;
 import server.model.User;
-import server.model.UserRepository;
+import server.repository.UserRepository;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ public class ControllerTest {
                 "0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb",
                 "oppy%40gmail.com",
                 42
-                , date );
+                , date);
         if(userRepository.findFirstByUsername(testUser.getUsername())!=null)
             userRepository.delete(userRepository.findFirstByUsername(testUser.getUsername()));
         testAction = new Action("Recycle paper", "Recycling", 10);
@@ -74,7 +74,7 @@ public class ControllerTest {
     public void actualPointsTest() {
         userRepository.save(testUser);
         int actualScore = dbDataController.getUserScore(testUser.getUsername());
-        assertEquals(testUser.getScore() - 50, actualScore);
+        assertEquals(testUser.getScore() - 150, actualScore);
         userRepository.delete(testUser);
     }
 
@@ -83,6 +83,14 @@ public class ControllerTest {
         mockMvc.perform(get("/check").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message", is("Server: Successful server response")));
+    }
+
+    @Test
+    public void checkScore() throws Exception {
+        userRepository.save(testUser);
+        mockMvc.perform(get("/score?username="+testUser.getUsername()))
+                .andExpect(status().isOk())
+                .andExpect(content().string(String.valueOf(dbDataController.getUserScore(testUser.getUsername()))));
     }
 
     @Test
@@ -123,8 +131,12 @@ public class ControllerTest {
 
         mockMvc.perform(get(String.format("/register?username=%s&pass=%s&email=%soppy%%40gmail.com",
                 testUser.getUsername(), testUser.getPassword(), testUser.getEmail())))
-                .andExpect(status().is(500));
-
+                .andExpect(status().is(500))
+                .andExpect(content().string("Username is already taken. Try another username."));
+        mockMvc.perform(get(String.format("/register?username=%s&pass=%s&email=%soppy%%40gmail.com",
+                testUser.getUsername()+"1", testUser.getPassword(), testUser.getEmail())))
+                .andExpect(status().is(500))
+                .andExpect(content().string( "Email address is already registered."));
         userRepository.delete(userRepository.findFirstByUsername(testUser.getUsername()));
     }
 
@@ -172,6 +184,8 @@ public class ControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
     }
+
+    @Test
     public void checkGetAllActions() throws Exception {
         actionRepository.save(testAction);
         mockMvc.perform(get("/actions"))
@@ -211,6 +225,7 @@ public class ControllerTest {
         mockMvc.perform(get("/email?username="+testUser.getUsername()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(testUser.getEmail()));
+        userRepository.delete(testUser);
     }
 
     @Test
@@ -219,20 +234,35 @@ public class ControllerTest {
         actionRepository.save(testAction);
         actionRepository.save(additionalTestAction);
         List<Action> actionList = new ArrayList<>();
+        List<Action> nullList = new ArrayList<>();
+        nullList.add(null);
         actionList.add(testAction);
         actionList.add(additionalTestAction);
         int oldPoints = testUser.getScore();
         ObjectMapper mapper = new ObjectMapper();
         String jsonBody = mapper.writeValueAsString(actionList);
-        System.out.println(jsonBody);
+        String nullJsonBody = mapper.writeValueAsString(nullList);
         mockMvc.perform(get(String.format("/takeactions?username=%s",
                 testUser.getUsername())).contentType(MediaType.APPLICATION_JSON).content(jsonBody))
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
         testUser = userRepository.findFirstByUsername(testUser.getUsername());
         assertEquals(oldPoints + testAction.getPoints() + additionalTestAction.getPoints(), testUser.getScore());
+        /*mockMvc.perform(get(String.format("/takeactions?username=%s",
+                testUser.getUsername())).contentType(MediaType.APPLICATION_JSON).content(nullJsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().string("false"));*/
         userRepository.delete(testUser);
         actionRepository.delete(testAction);
         actionRepository.delete(additionalTestAction);
+    }
+
+    @Test
+    public void checkTop50Users() throws Exception {
+        userRepository.save(testUser);
+        mockMvc.perform(get("/top50"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"));
+        userRepository.delete(testUser);
     }
 }

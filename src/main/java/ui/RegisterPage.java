@@ -4,6 +4,7 @@ import clientside.RegisterHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -14,7 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-//import org.springframework.web.client.RestTemplate;
 
 public class RegisterPage {
     /**
@@ -91,17 +91,42 @@ public class RegisterPage {
                     emailTextfield.getText(), passwordTextfield.getText());
             String result = register.sendRegister();
             if (result.equals("true")) {
-                // We need to make a different UI page so that it can give a pop-up that tells us
-                // that either an account has been created successfully and that you will be
-                // redirected the the login page
+                Alert success = new Alert(Alert.AlertType.INFORMATION);
+                success.setHeaderText("Success!");
+                success.setContentText("You have successfully registered!");
+                success.setTitle("Notification");
+                success.show();
                 window.setScene(LoginPage.loginScene(window));
+            } else {
+                Alert failed = new Alert(Alert.AlertType.ERROR);
+                failed.setHeaderText("Failed.");
+                failed.setContentText("Registration failed with the following message: " + result);
+                failed.setTitle("Notification");
+                failed.show();
+            }
+        });
+
+        //The Check-availability button
+        Button checkA = new Button("Check Availability");
+        GridPane.setConstraints(checkA, 2, 3);
+        checkA.setOnAction(e -> {
+            if (!(usernameTextfield.getText().equals(""))) {
+                RegisterHandler availability = new RegisterHandler(usernameTextfield.getText());
+                String result = availability.sendAvailabilityCheck();
+                if (result.equals("true")) {
+                    checkA.setStyle("-fx-background-color: #00ff00");
+                } else {
+                    checkA.setStyle("-fx-background-color: #ff0000");
+                }
+            } else {
+                checkA.setStyle("-fx-background-color: #ff0000");
             }
         });
 
         //Here all elements previously created are added to the view and the view is centered
         grid.getChildren().addAll(email, username, password, confirmPassword, emailTextfield,
                 usernameTextfield, passwordTextfield, confirmPasswordTextfield,
-                registerButton, loginButton, fakeRegisterButton, displayLogo);
+                registerButton, loginButton, fakeRegisterButton, displayLogo, checkA);
         grid.setAlignment(Pos.CENTER);
 
         //here the create view is made into a scene and return when the method is called
