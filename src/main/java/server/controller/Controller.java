@@ -162,4 +162,15 @@ public class Controller {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
         }
     }
+
+    @RequestMapping("/reset")
+    public ResponseEntity<Boolean> resetScore(
+            @RequestParam(value = "username") String username,
+            @RequestParam(value = "pass") String pass){
+        if (dbDataController.isUserAuthenticated(username, pass)) {
+            return ResponseEntity.ok().body(dbDataController.resetScore(username, pass));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+        }
+    }
 }

@@ -93,7 +93,7 @@ public class SettingsPage {
         });
 
 
-        Button resetButton = new Button("Reset");
+        Button resetButton = new Button("Reset Points");
         GridPane.setConstraints(resetButton,1,8,2,1);
         resetButton.setOnAction(e -> {
             //implement reset method

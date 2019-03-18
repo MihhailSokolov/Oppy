@@ -140,4 +140,15 @@ public class DbDataController {
         userToUpdate.setEmail(newEmail);
         return userRepository.save(userToUpdate) != null;
     }
+
+    /**
+     * Method to reset users points to 0.
+     * @param username user's username
+     * @return true if successful, false otherwise
+     */
+    public boolean resetScore(String username, String pass) {
+        User user = userRepository.findFirstByUsername(username);
+        user.setScore(0);
+        return userRepository.save(user) != null;
+    }
 }

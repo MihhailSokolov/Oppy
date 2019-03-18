@@ -253,4 +253,21 @@ public class ControllerTest {
         assertEquals(newEmail, testUser.getEmail());
         userRepository.delete(testUser);
     }
+
+    @Test
+    public void checkResetPoints() throws Exception {
+        userRepository.save(testUser);
+        // wrong pass:
+        mockMvc.perform(get(String.format("/reset?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword() + "hoi")))
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().string("false"));
+        // correct pass:
+        mockMvc.perform(get(String.format("/reset?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+        testUser = userRepository.findFirstByUsername(testUser.getUsername());
+        // check to see if pass has indeed been changed
+        assertEquals(0, testUser.getScore());
+        userRepository.delete(testUser);
+    }
 }
