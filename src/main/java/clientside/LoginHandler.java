@@ -44,6 +44,10 @@ public class LoginHandler {
         return loginParams;
     }
 
+    public boolean getRememberMe() {
+        return rememberMe;
+    }
+
     /**
      * Method for sending login.
      * @return String response

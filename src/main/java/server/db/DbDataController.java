@@ -40,19 +40,19 @@ public class DbDataController {
     /**
      * User creation method: checks whether user exists - if not: user is created.
      *
-     * @param username of user to be checked if there are no duplicates and registering
-     * @param password of user for registering
-     * @param email    of user to be checked for duplicates and for registering
+     * @param user User to be registered
      * @return an empty msg if all went well otherwise fill the msg with the error
      */
-    public String createNewUser(String username, String password, String email) {
+    public String createNewUser(User user) {
         String message = "";
-        if (!isUsernameAvailable(username)) {
+        if (!isUsernameAvailable(user.getUsername())) {
             message = "Username is already taken. Try another username.";
-        } else if (!isEmailAvailable(email)) {
+        } else if (!isEmailAvailable(user.getEmail())) {
             message = "Email address is already registered.";
         } else {
-            userRepository.save(new User(username, password, email, 0, new Date()));
+            user.setScore(0);
+            user.setRegisterDate(new Date());
+            userRepository.save(user);
         }
         return message;
     }

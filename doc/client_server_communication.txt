@@ -1,7 +1,8 @@
 New test user in db:
 username:Simba
 plain pass: TigerBoy
-REGISTRATION
+
+CHECK USERNAME AVAILABILITY
     To check if username "oppy123" is available for registration
     Request:
         /nameavailable?username=oppy123
@@ -9,48 +10,55 @@ REGISTRATION
         200 OK
         Body: 'true' if is available, 'false' otherwise
 
+REGISTRATION
     To register a new user with username "oppy123", password "passwd" (which after SHA256 hash becomes "0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb")
     and email "oppy@gmail.com" (which should become oppy%40gmail.com because '@' should be represented as '%40' in UTF-8 encoding)
     Request:
-        /register?username=oppy123&pass=0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb&email=oppy%40gmail.com
+        /register
+        Body should contain JSON object of User with username, password and email (everything else can/should be null)
     Response:
-        200 OK if user has been successfully registered. Body contains "true"
-        Body contains explaining massage if user was not registered successfully
+        200 OK if user has been successfully registered. Body contains JSON Response object with message "true"
+        JSON Response object contains explaining massage if user was not registered successfully
 
 LOGIN
     To login with existing user whose username is "oppy123" and password "passwd" (which after SHA256 hash becomes "0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb")
     Request:
-        /login?username=oppy123&pass=0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb
+        /login
+        Body should contain JSON object of User with username and password (everything else can be null)
     Response:
         200 OK
-        Body: 'true' if username and password are correct, 'false' otherwise
+        Body contains JSON Response object with message 'true' if username and password are correct, 'false' otherwise
 
 GET POINTS
     To get the score for certain user
     Request:
         /score?username=oppy
     Response:
-        200 OK Body: 42 (Integer score)
+        200 OK Body contains JSON Response object with message with the score
         500 ERROR if could not get points/find user
 
 DELETE ACCOUNT
     To delete account for certain username. Also provide password in order to make sure nobody else can delete it.
     Request:
-        /delete?username=oppy123&pass=0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb
+        /delete
+        Body should contain JSON object of User with username and password (everything else can be null)
     Response:
         200 OK if user is authorized with provided username and password
         401 UNAUTHORIZED if user could not be authorized
-        Body: 'true' if account was successfully deleted, 'false' if user was not authorized or account could not be deleted
+        Body contains JSON Response object with message 'true' if account was successfully deleted,
+            'false' if user was not authorized or account could not be deleted
 
 UPDATE PASSWORD
     Required:
         Username, old password, new password
     Request:
-        /updatepass?username=usr&pass=oldPass&newpass=newPass
+        /updatepass?newpass=myNewAwesomePass
+        Body should contain JSON object of User with username and password (everything else can be null)
     Response:
         200 OK if user authorized to change pass
         401 UNAUTHORIZED otherwise
-        Body: 'true' if account was successfully deleted, 'false' if user was not authorized or account could not be updated
+        Body contains JSON Response object with message 'true' if account was successfully deleted,
+            'false' if user was not authorized or account could not be updated
 
 GET ACTIONS
     To get all the actions from the database
@@ -60,65 +68,61 @@ GET ACTIONS
         200 OK
         Body contains list of json action objects
 
-ADD NEW ACTION
-    To add a new action to the list of existing actions in the database
-    Example: want to add action with name "Recycle bottle", category "Recycling" and which gives 10 points
-    Request:
-        /addaction?name=Recycle%20bottle&category=Recycling&points=10
-    Response:
-        200 OK
-        Body contains 'true' if action was successfully added to the db, 'false' otherwise
-
-
 TAKE ACTION
     To take an action by user (like oppy123 recycled bottled)
     Request:
-        /takeaction?username=oppy123&action=recycle%20bottle
+        /takeaction?username=oppy123
+        Body should contain JSON object of Action with actionName (everything else can be null)
     Response:
         200 OK
-        Body: 'true' if taking action has been successfully recorded in db, 'false' otherwise
+        Body contains JSON Response object with message 'true' if taking action has been successfully recorded in db, 'false' otherwise
 
 TAKE MULTIPLE ACTIONS
     To take several actions with one request by user
     Request:
         /takeactions?username=oppy123
-        Body should contain JSON list of all Actions to be taken
+        Body should contain JSON list of all Actions to be taken. Each action is only required to have actionName, everything else can be null.
         For example body could be the following:
         [{"actionName":"Recycle paper","category":"Recycling","points":10},{"actionName":"Go by bike","category":"Transportation","points":20}]
     Response:
         200 OK
-        Body: 'true' if taking actions has been successfully recorded in db, 'false' otherwise
+        Body contains JSON Response object with message 'true' if taking actions has been successfully recorded in db, 'false' otherwise
 
 GET EMAIL
     To get user's email from db
     Request:
-        /email?ysername=oppy123
+        /email?username=oppy123
     Response:
         200 OK
-        Body contains email as a string
+        Body contains JSON Response object with user's email as a message
 
 UPDATE EMAIL
      Required:
         Username, password, new EMAIL
      Request:
-        /updateEmail?username=usr&pass=Password&newEmail=newEmail
+        /updateEmail?newEmail=myNewCoolEmail
+        Body should contain JSON object of User with username and password (everything else can be null)
      Response:
         200 OK if user authorized to change pass
         401 UNAUTHORIZED otherwise
-        Body: 'true' if account was successfully deleted, 'false' if user was not authorized or account could not be updated
+        Body contains JSON Response object with message 'true' if account was successfully deleted,
+            'false' if user was not authorized or account could not be updated
 
 GET TOP 50
     To get top 50 players based on their score (anonymous users are not returned)
     Request:
-	/top50
+	    /top50
     Response:
-	200 OK
-	Body contains json list of users with all fields set to null except from username and score
+	    200 OK
+	    Body contains json list of users with all fields set to null except from username and score
 
 CHANGE ANONYMOUS
     To change anonymous status of the user in db
     Request:
-    /changeAnonymous?username=oppy123&pass=0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb&anonymous=true
+        /changeAnonymous?anonymous=true
+        Body should contain JSON object of User with username and password (everything else can be null)
     Response:
-    200 OK if user is authorized. Body contains 'true' if anonymous status was changed successfully, 'false' otherwise
-    401 UNAUTHORIZED if user is not authorized. Body contains 'false'.
+        200 OK if user is authorized
+        401 UNAUTHORIZED if user is not authorized
+        Body contains JSON Response object with message 'true' if anonymous status was changed successfully,
+            'false' if user was not authenticated or anonymous status could not be changed

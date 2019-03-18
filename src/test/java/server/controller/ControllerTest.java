@@ -88,9 +88,11 @@ public class ControllerTest {
     @Test
     public void checkScore() throws Exception {
         userRepository.save(testUser);
+        String strScore = String.valueOf(dbDataController.getUserScore(testUser.getUsername()));
         mockMvc.perform(get("/score?username="+testUser.getUsername()))
                 .andExpect(status().isOk())
-                .andExpect(content().string(String.valueOf(dbDataController.getUserScore(testUser.getUsername()))));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is(strScore)));
     }
 
     @Test
@@ -108,13 +110,15 @@ public class ControllerTest {
             userRepository.delete(userRepository.findFirstByUsername(testUser.getUsername()));
         mockMvc.perform(get(String.format("/nameavailable?username=%s", testUser.getUsername())))
                 .andExpect(status().isOk())
-                .andExpect(content().string("true"));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("true")));
 
         // and username in db
         userRepository.save(testUser);
         mockMvc.perform(get("/nameavailable?username=" + testUser.getUsername()))
                 .andExpect(status().isOk())
-                .andExpect(content().string("false"));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("false")));
 
         userRepository.delete(testUser);
 
@@ -124,65 +128,109 @@ public class ControllerTest {
     public void checkUserRegister() throws Exception {
         if(userRepository.findFirstByUsername(testUser.getUsername())!=null)
             userRepository.delete(userRepository.findFirstByUsername(testUser.getUsername()));
-        mockMvc.perform(get(String.format("/register?username=%s&pass=%s&email=%soppy%%40gmail.com",
-                testUser.getUsername(), testUser.getPassword(), testUser.getEmail())))
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBody = mapper.writeValueAsString(testUser);
+        User wrongTestUser = new User(testUser.getUsername(), testUser.getPassword(), testUser.getEmail(),
+                testUser.getScore(), testUser.getRegisterDate());
+        wrongTestUser.setUsername("newUsernameWhichWasNotUsedYet");
+        String wrongJsonBody = mapper.writeValueAsString(wrongTestUser);
+        mockMvc.perform(get("/register").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
                 .andExpect(status().isOk())
-                .andExpect(content().string("true"));
-
-        mockMvc.perform(get(String.format("/register?username=%s&pass=%s&email=%soppy%%40gmail.com",
-                testUser.getUsername(), testUser.getPassword(), testUser.getEmail())))
-                .andExpect(status().is(200))
-                .andExpect(content().string("Username is already taken. Try another username."));
-        mockMvc.perform(get(String.format("/register?username=%s&pass=%s&email=%soppy%%40gmail.com",
-                testUser.getUsername()+"1", testUser.getPassword(), testUser.getEmail())))
-                .andExpect(status().is(200))
-                .andExpect(content().string( "Email address is already registered."));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("true")));
+        mockMvc.perform(get("/register").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("Username is already taken. Try another username.")));
+        mockMvc.perform(get("/register").contentType(MediaType.APPLICATION_JSON).content(wrongJsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("Email address is already registered.")));
         userRepository.delete(userRepository.findFirstByUsername(testUser.getUsername()));
     }
 
     @Test
     public void checkUserLogin() throws Exception {
         userRepository.save(testUser);
-        mockMvc.perform(get(String.format("/login?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBody = mapper.writeValueAsString(testUser);
+        User wrongTestUser = new User(testUser.getUsername(), testUser.getPassword(), testUser.getEmail(),
+                testUser.getScore(), testUser.getRegisterDate());
+        wrongTestUser.setPassword("inc0rrectP@ssw0rd");
+        String wrongJsonBody = mapper.writeValueAsString(wrongTestUser);
+        // wrong pass
+        mockMvc.perform(get("/login").contentType(MediaType.APPLICATION_JSON).content(wrongJsonBody))
                 .andExpect(status().isOk())
-                .andExpect(content().string("true"));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("false")));
+        // correct pass
+        mockMvc.perform(get("/login").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("true")));
         userRepository.delete(testUser);
-        mockMvc.perform(get(String.format("/login?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
+        // user does not exist
+        mockMvc.perform(get("/login").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
                 .andExpect(status().isOk())
-                .andExpect(content().string("false"));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("false")));
     }
 
     @Test
     public void checkDelete() throws Exception {
         userRepository.save(testUser);
-        mockMvc.perform(get(String.format("/delete?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword() + "oops")))
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBody = mapper.writeValueAsString(testUser);
+        User wrongTestUser = new User(testUser.getUsername(), testUser.getPassword(), testUser.getEmail(),
+                testUser.getScore(), testUser.getRegisterDate());
+        wrongTestUser.setPassword("inc0rrectP@ssw0rd");
+        String wrongJsonBody = mapper.writeValueAsString(wrongTestUser);
+        // wrong pass
+        mockMvc.perform(get("/delete").contentType(MediaType.APPLICATION_JSON).content(wrongJsonBody))
                 .andExpect(status().isUnauthorized())
-                .andExpect(content().string("false"));
-        mockMvc.perform(get(String.format("/delete?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("false")));
+        // correct pass
+        mockMvc.perform(get("/delete").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
                 .andExpect(status().isOk())
-                .andExpect(content().string("true"));
-        mockMvc.perform(get(String.format("/delete?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
-                .andExpect(status().isUnauthorized())
-                .andExpect(content().string("false"));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("true")));
+        // check user is really deleted
+        mockMvc.perform(get("/login").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("false")));
     }
 
     @Test
     public void checkUpdatePass() throws Exception {
         userRepository.save(testUser);
+        ObjectMapper mapper = new ObjectMapper();
+        User wrongTestUser = new User(testUser.getUsername(), testUser.getPassword(), testUser.getEmail(),
+                testUser.getScore(), testUser.getRegisterDate());
+        wrongTestUser.setPassword("inc0rrectP@ssw0rd");
+        String wrongJsonBody = mapper.writeValueAsString(wrongTestUser);
+        String jsonBody = mapper.writeValueAsString(testUser);
         String newpass = "newpass";
         // wrong oldpass:
-        mockMvc.perform(get(String.format("/updatepass?username=%s&pass=%s&newpass=%s", testUser.getUsername() + "nuh-uh!", testUser.getPassword(), newpass)))
+        mockMvc.perform(get(String.format("/updatepass?newpass=%s", newpass))
+                .contentType(MediaType.APPLICATION_JSON).content(wrongJsonBody))
                 .andExpect(status().isUnauthorized())
-                .andExpect(content().string("false"));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("false")));
         // correct oldpass :
-        mockMvc.perform(get(String.format("/updatepass?username=%s&pass=%s&newpass=%s", testUser.getUsername(), testUser.getPassword(), newpass)))
+        mockMvc.perform(get(String.format("/updatepass?newpass=%s", newpass))
+                .contentType(MediaType.APPLICATION_JSON).content(jsonBody))
                 .andExpect(status().isOk())
-                .andExpect(content().string("true"));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("true")));
         // check to see if pass has indeed been changed
         testUser.setPassword(newpass);
-        mockMvc.perform(get(String.format("/login?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
+        jsonBody = mapper.writeValueAsString(testUser);
+        mockMvc.perform(get("/login").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
                 .andExpect(status().isOk())
-                .andExpect(content().string("true"));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("true")));
         userRepository.delete(testUser);
     }
 
@@ -196,24 +244,17 @@ public class ControllerTest {
     }
 
     @Test
-    public void checkAddAction() throws Exception {
-        mockMvc.perform(get(String.format("/addaction?name=%s&category=%s&points=%s",
-                testAction.getActionName(), testAction.getCategory(), String.valueOf(testAction.getPoints()))))
-                .andExpect(status().isOk())
-                .andExpect(content().string("true"));
-        assertEquals(testAction, actionRepository.findFirstByActionName(testAction.getActionName()));
-        actionRepository.delete(actionRepository.findFirstByActionName(testAction.getActionName()));
-    }
-
-    @Test
     public void checkTakeAction() throws Exception {
         userRepository.save(testUser);
         actionRepository.save(testAction);
         int oldPoints = testUser.getScore();
-        mockMvc.perform(get(String.format("/takeaction?username=%s&action=%s",
-                testUser.getUsername(), testAction.getActionName())))
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBody = mapper.writeValueAsString(testAction);
+        mockMvc.perform(get(String.format("/takeaction?username=%s",
+                testUser.getUsername())).contentType(MediaType.APPLICATION_JSON).content(jsonBody))
                 .andExpect(status().isOk())
-                .andExpect(content().string("true"));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("true")));
         testUser = userRepository.findFirstByUsername(testUser.getUsername());
         assertEquals(oldPoints + testAction.getPoints(), testUser.getScore());
         userRepository.delete(testUser);
@@ -225,7 +266,8 @@ public class ControllerTest {
         userRepository.save(testUser);
         mockMvc.perform(get("/email?username="+testUser.getUsername()))
                 .andExpect(status().isOk())
-                .andExpect(content().string(testUser.getEmail()));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is(testUser.getEmail())));
         userRepository.delete(testUser);
     }
 
@@ -235,24 +277,18 @@ public class ControllerTest {
         actionRepository.save(testAction);
         actionRepository.save(additionalTestAction);
         List<Action> actionList = new ArrayList<>();
-        List<Action> nullList = new ArrayList<>();
-        nullList.add(null);
         actionList.add(testAction);
         actionList.add(additionalTestAction);
         int oldPoints = testUser.getScore();
         ObjectMapper mapper = new ObjectMapper();
         String jsonBody = mapper.writeValueAsString(actionList);
-        String nullJsonBody = mapper.writeValueAsString(nullList);
         mockMvc.perform(get(String.format("/takeactions?username=%s",
                 testUser.getUsername())).contentType(MediaType.APPLICATION_JSON).content(jsonBody))
                 .andExpect(status().isOk())
-                .andExpect(content().string("true"));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("true")));
         testUser = userRepository.findFirstByUsername(testUser.getUsername());
         assertEquals(oldPoints + testAction.getPoints() + additionalTestAction.getPoints(), testUser.getScore());
-        /*mockMvc.perform(get(String.format("/takeactions?username=%s",
-                testUser.getUsername())).contentType(MediaType.APPLICATION_JSON).content(nullJsonBody))
-                .andExpect(status().isOk())
-                .andExpect(content().string("false"));*/
         userRepository.delete(testUser);
         actionRepository.delete(testAction);
         actionRepository.delete(additionalTestAction);
@@ -261,15 +297,25 @@ public class ControllerTest {
     @Test
     public void checkUpdateEmail() throws Exception {
         userRepository.save(testUser);
+        ObjectMapper mapper = new ObjectMapper();
+        User wrongTestUser = new User(testUser.getUsername(), testUser.getPassword(), testUser.getEmail(),
+                testUser.getScore(), testUser.getRegisterDate());
+        wrongTestUser.setPassword("inc0rrectP@ssw0rd");
+        String wrongJsonBody = mapper.writeValueAsString(wrongTestUser);
+        String jsonBody = mapper.writeValueAsString(testUser);
         String newEmail = "new@new.new";
         // wrong pass:
-        mockMvc.perform(get(String.format("/updateEmail?username=%s&pass=%s&newEmail=%s", testUser.getUsername() + "nuh-uh!", testUser.getPassword(), newEmail)))
+        mockMvc.perform(get(String.format("/updateEmail?newEmail=%s", newEmail))
+                .contentType(MediaType.APPLICATION_JSON).content(wrongJsonBody))
                 .andExpect(status().isUnauthorized())
-                .andExpect(content().string("false"));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("false")));
         // correct pass:
-        mockMvc.perform(get(String.format("/updateEmail?username=%s&pass=%s&newEmail=%s", testUser.getUsername(), testUser.getPassword(), newEmail)))
+        mockMvc.perform(get(String.format("/updateEmail?newEmail=%s", newEmail))
+                .contentType(MediaType.APPLICATION_JSON).content(jsonBody))
                 .andExpect(status().isOk())
-                .andExpect(content().string("true"));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("true")));
         testUser = userRepository.findFirstByUsername(testUser.getUsername());
         // check to see if pass has indeed been changed
         assertEquals(newEmail, testUser.getEmail());
@@ -279,14 +325,22 @@ public class ControllerTest {
     @Test
     public void checkResetPoints() throws Exception {
         userRepository.save(testUser);
+        ObjectMapper mapper = new ObjectMapper();
+        User wrongTestUser = new User(testUser.getUsername(), testUser.getPassword(), testUser.getEmail(),
+                testUser.getScore(), testUser.getRegisterDate());
+        wrongTestUser.setPassword("inc0rrectP@ssw0rd");
+        String wrongJsonBody = mapper.writeValueAsString(wrongTestUser);
+        String jsonBody = mapper.writeValueAsString(testUser);
         // wrong pass:
-        mockMvc.perform(get(String.format("/reset?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword() + "hoi")))
+        mockMvc.perform(get("/reset").contentType(MediaType.APPLICATION_JSON).content(wrongJsonBody))
                 .andExpect(status().isUnauthorized())
-                .andExpect(content().string("false"));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("false")));
         // correct pass:
-        mockMvc.perform(get(String.format("/reset?username=%s&pass=%s", testUser.getUsername(), testUser.getPassword())))
+        mockMvc.perform(get("/reset").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
                 .andExpect(status().isOk())
-                .andExpect(content().string("true"));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("true")));
         testUser = userRepository.findFirstByUsername(testUser.getUsername());
         // check to see if pass has indeed been changed
         assertEquals(0, testUser.getScore());
@@ -303,18 +357,28 @@ public class ControllerTest {
     @Test
     public void checkChangeAnonymous() throws Exception {
         userRepository.save(testUser);
-        boolean newAnonymous = true;
+        ObjectMapper mapper = new ObjectMapper();
+        User wrongTestUser = new User(testUser.getUsername(), testUser.getPassword(), testUser.getEmail(),
+                testUser.getScore(), testUser.getRegisterDate());
+        wrongTestUser.setPassword("inc0rrectP@ssw0rd");
+        String wrongJsonBody = mapper.writeValueAsString(wrongTestUser);
+        String jsonBody = mapper.writeValueAsString(testUser);
+        String newAnonymous = "true";
         // wrong pass:
-        mockMvc.perform(get(String.format("/changeAnonymous?username=%s&pass=%s&anonymous=%s", testUser.getUsername() + "nuh-uh!", testUser.getPassword(), String.valueOf(newAnonymous))))
+        mockMvc.perform(get(String.format("/changeAnonymous?anonymous=%s", newAnonymous))
+                .contentType(MediaType.APPLICATION_JSON).content(wrongJsonBody))
                 .andExpect(status().isUnauthorized())
-                .andExpect(content().string("false"));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("false")));
         // correct pass :
-        mockMvc.perform(get(String.format("/changeAnonymous?username=%s&pass=%s&anonymous=%s", testUser.getUsername(), testUser.getPassword(), String.valueOf(newAnonymous))))
+        mockMvc.perform(get(String.format("/changeAnonymous?anonymous=%s", newAnonymous))
+                .contentType(MediaType.APPLICATION_JSON).content(jsonBody))
                 .andExpect(status().isOk())
-                .andExpect(content().string("true"));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("true")));
         // check to see if anonymous has indeed been changed
         testUser = userRepository.findFirstByUsername(testUser.getUsername());
-        assertEquals(newAnonymous, testUser.getAnonymous());
+        assertEquals(newAnonymous, String.valueOf(testUser.getAnonymous()));
         userRepository.delete(testUser);
     }
 }

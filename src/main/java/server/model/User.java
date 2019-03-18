@@ -1,5 +1,7 @@
 package server.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javafx.scene.image.Image;
 
 import org.springframework.data.annotation.Id;
@@ -31,7 +33,10 @@ public class User {
      * @param email    email address of the user
      * @param score    score/pts of the user
      */
-    public User(String username, String password, String email, int score, Date registerDate) {
+    @JsonCreator
+    public User(@JsonProperty("username") String username, @JsonProperty("password") String password,
+                @JsonProperty("email") String email, @JsonProperty("score") int score,
+                @JsonProperty("registerDate") Date registerDate) {
         this.username = username;
         this.password = password;
         this.email = email;

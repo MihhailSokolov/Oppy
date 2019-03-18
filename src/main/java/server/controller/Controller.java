@@ -26,94 +26,79 @@ public class Controller {
         return ResponseEntity.ok().body(new Response("Server: " + msg));
     }
 
+    /**
+     * Mapping to login user.
+     * @param user User object to login
+     * @return Response object with message 'true' if user is successfully logged in, 'false' otherwise
+     */
     @RequestMapping("/login")
-    public ResponseEntity<Boolean> login(
-            @RequestParam(value = "username") String username,
-            @RequestParam(value = "pass") String pass) {
-        return ResponseEntity.ok().body(dbDataController.isUserAuthenticated(username, pass));
+    public ResponseEntity<Response> login(@RequestBody User user) {
+        String name = user.getUsername();
+        String pass = user.getPassword();
+        return ResponseEntity.ok().body(new Response(dbDataController.isUserAuthenticated(name, pass)));
     }
 
     @RequestMapping("/nameavailable")
-    public ResponseEntity<Boolean> isUsernameAvailable(
+    public ResponseEntity<Response> isUsernameAvailable(
             @RequestParam(value = "username") String username) {
-        return ResponseEntity.ok().body(dbDataController.isUsernameAvailable(username));
+        return ResponseEntity.ok().body(new Response(dbDataController.isUsernameAvailable(username)));
     }
 
     /**
      * Mapping for registering a user.
-     *
-     * @param username of user to be checked if there are no duplicates and registering
-     * @param pass     of user for registering
-     * @param email    of user to be checked for duplicates and for registering
-     * @return an empty msg if all went well otherwise fill the msg with the error
+     * @param user User object to be added to db
+     * @return Response object with 'true' message if successful and explaining message if not
      */
     @RequestMapping("/register")
-    public ResponseEntity<String> register(@RequestParam(value = "username") String username,
-                                           @RequestParam(value = "pass") String pass,
-                                           @RequestParam(value = "email") String email) {
-        String msg = dbDataController.createNewUser(username, pass, email);
+    public ResponseEntity<Response> register(@RequestBody User user) {
+        String msg = dbDataController.createNewUser(user);
         if (msg.isEmpty()) {
-            return ResponseEntity.ok().body("true");
+            return ResponseEntity.ok().body(new Response("true"));
         } else {
-            return ResponseEntity.ok().body(msg);
+            return ResponseEntity.ok().body(new Response(msg));
         }
     }
 
     @RequestMapping("/score")
-    public ResponseEntity<Integer> getPoints(@RequestParam(value = "username") String username) {
-        return ResponseEntity.ok().body(dbDataController.getUserScore(username));
+    public ResponseEntity<Response> getPoints(@RequestParam(value = "username") String username) {
+        return ResponseEntity.ok().body(new Response(dbDataController.getUserScore(username)));
     }
 
     @RequestMapping("/email")
-    public ResponseEntity<String> getEmail(@RequestParam(value = "username") String username) {
-        return ResponseEntity.ok().body(dbDataController.getUserEmail(username));
+    public ResponseEntity<Response> getEmail(@RequestParam(value = "username") String username) {
+        return ResponseEntity.ok().body(new Response(dbDataController.getUserEmail(username)));
     }
 
     /**
      * Delete user mapping.
-     *
-     * @param username to delete
-     * @param pass     to confirm the action is requested by correct user.
-     * @return returns status code.
+     * @param user User to be deleted
+     * @return Response object with message 'true' if successful and 'false otherwise
      */
     @RequestMapping("/delete")
-    public ResponseEntity<Boolean> delete(
-            @RequestParam(value = "username") String username,
-            @RequestParam(value = "pass") String pass) {
-        if (dbDataController.isUserAuthenticated(username, pass)) {
-            return ResponseEntity.ok().body(dbDataController.deleteUser(username));
+    public ResponseEntity<Response> delete(@RequestBody User user) {
+        if (dbDataController.isUserAuthenticated(user.getUsername(), user.getPassword())) {
+            return ResponseEntity.ok().body(new Response(dbDataController.deleteUser(user.getUsername())));
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Response(false));
         }
     }
 
     /**
      * Method for updating user's password.
-     *
-     * @param username username
-     * @param pass     old password
+     * @param user User who wants to change password
      * @param newpass  new password
-     * @return 'true' if successful and 'false' otherwise
+     * @return Response object with message'true' if successful and 'false' otherwise
      */
     @RequestMapping("/updatepass")
-    public ResponseEntity<Boolean> updatepass(
-            @RequestParam(value = "username") String username,
-            @RequestParam(value = "pass") String pass,
-            @RequestParam(value = "newpass") String newpass) {
-        if (dbDataController.isUserAuthenticated(username, pass)) {
-            return ResponseEntity.ok().body(dbDataController.updatePassword(username, newpass));
+    public ResponseEntity<Response> updatepass(@RequestBody User user,
+                                              @RequestParam(value = "newpass") String newpass) {
+        String name = user.getUsername();
+        String oldpass = user.getPassword();
+        if (dbDataController.isUserAuthenticated(name, oldpass)) {
+            return ResponseEntity.ok().body(new Response(dbDataController.updatePassword(name, newpass)));
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Response(false));
         }
-    }
-
-    @RequestMapping("/addaction")
-    public ResponseEntity<Boolean> addNewAction(
-            @RequestParam(value = "name") String name,
-            @RequestParam(value = "category") String category,
-            @RequestParam(value = "points") String strPoints) {
-        int points = Integer.parseInt(strPoints);
-        return ResponseEntity.ok().body(dbDataController.addAction(name, category, points));
     }
 
     @RequestMapping("/actions")
@@ -122,10 +107,10 @@ public class Controller {
     }
 
     @RequestMapping("/takeaction")
-    public ResponseEntity<Boolean> takeAction(@RequestParam(value = "username") String username,
-                                              @RequestParam(value = "action") String action) {
-        int pointsToAdd = dbDataController.getActionPoints(action);
-        return ResponseEntity.ok().body(dbDataController.addToUserScore(username, pointsToAdd));
+    public ResponseEntity<Response> takeAction(@RequestParam(value = "username") String username,
+                                              @RequestBody Action action) {
+        int pointsToAdd = dbDataController.getActionPoints(action.getActionName());
+        return ResponseEntity.ok().body(new Response(dbDataController.addToUserScore(username, pointsToAdd)));
     }
 
     /**
@@ -133,54 +118,49 @@ public class Controller {
      *
      * @param username user's username
      * @param actions  json list of actions
-     * @return true if successful, false otherwise
+     * @return Response object with message 'true' if successful, 'false' otherwise
      */
     @RequestMapping("/takeactions")
-    public ResponseEntity<Boolean> takeMultipleActions(@RequestParam("username") String username,
+    public ResponseEntity<Response> takeMultipleActions(@RequestParam("username") String username,
                                                        @RequestBody List<Action> actions) {
         int pointsToAdd = 0;
         for (Action action : actions) {
             pointsToAdd += dbDataController.getActionPoints(action.getActionName());
         }
-        return ResponseEntity.ok().body(dbDataController.addToUserScore(username, pointsToAdd));
+        return ResponseEntity.ok().body(new Response(dbDataController.addToUserScore(username, pointsToAdd)));
     }
 
-
     /**
-     * Method for updating user's password.
-     *
-     * @param username username
-     * @param pass     old password
+     * Method for updating user's email.
+     * @param user User who wants to update email
      * @param newEmail new email
-     * @return 'true' if successful and 'false' otherwise
+     * @return Response object with message 'true' if successful and 'false' otherwise
      */
     @RequestMapping("/updateEmail")
-    public ResponseEntity<Boolean> updateEmail(
-            @RequestParam(value = "username") String username,
-            @RequestParam(value = "pass") String pass,
+    public ResponseEntity<Response> updateEmail(@RequestBody User user,
             @RequestParam(value = "newEmail") String newEmail) {
-        if (dbDataController.isUserAuthenticated(username, pass)) {
-            return ResponseEntity.ok().body(dbDataController.updateEmail(username, newEmail));
+        String name = user.getUsername();
+        String pass = user.getPassword();
+        if (dbDataController.isUserAuthenticated(name, pass)) {
+            return ResponseEntity.ok().body(new Response(dbDataController.updateEmail(name, newEmail)));
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Response(false));
         }
     }
 
     /**
      * Method for resetting users points to 0.
-     *
-     * @param username username
-     * @param pass     password
-     * @return 'true' if successful and 'false' otherwise
+     * @param user User who wants to reset
+     * @return Response object with message 'true' if successful and 'false' otherwise
      */
     @RequestMapping("/reset")
-    public ResponseEntity<Boolean> resetScore(
-            @RequestParam(value = "username") String username,
-            @RequestParam(value = "pass") String pass) {
-        if (dbDataController.isUserAuthenticated(username, pass)) {
-            return ResponseEntity.ok().body(dbDataController.resetScore(username, pass));
+    public ResponseEntity<Response> resetScore(@RequestBody User user) {
+        String name = user.getUsername();
+        String pass = user.getPassword();
+        if (dbDataController.isUserAuthenticated(name, pass)) {
+            return ResponseEntity.ok().body(new Response(dbDataController.resetScore(name, pass)));
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Response(false));
         }
     }
 
@@ -191,21 +171,20 @@ public class Controller {
 
     /**
      * Mapping for changing user's anonymous status.
-     *
-     * @param username     user's username
-     * @param pass         user's password
+     * @param user User who wants to change anonymous status
      * @param strAnonymous new anonymous status
-     * @return 'true' is successful, 'false' otherwise
+     * @return Response object with message 'true' is successful, 'false' otherwise
      */
     @RequestMapping("/changeAnonymous")
-    public ResponseEntity<Boolean> changeAnonymous(@RequestParam("username") String username,
-                                                   @RequestParam("pass") String pass,
+    public ResponseEntity<Response> changeAnonymous(@RequestBody User user,
                                                    @RequestParam("anonymous") String strAnonymous) {
         boolean anonymous = Boolean.parseBoolean(strAnonymous);
-        if (dbDataController.isUserAuthenticated(username, pass)) {
-            return ResponseEntity.ok().body(dbDataController.changeAnonymous(username, anonymous));
+        String name = user.getUsername();
+        String pass = user.getPassword();
+        if (dbDataController.isUserAuthenticated(name, pass)) {
+            return ResponseEntity.ok().body(new Response(dbDataController.changeAnonymous(name, anonymous)));
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Response(false));
         }
     }
 }
