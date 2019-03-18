@@ -55,7 +55,6 @@ public class LoginHandler {
         return result;
     }
 
-
     @Override
     public String toString() {
         return this.uri +  String.format(loginParams, this.username, this.password);
