@@ -12,8 +12,14 @@ import javafx.stage.Stage;
 import org.springframework.web.client.RestTemplate;
 
 public class DeleteUserPage {
-
-    public static Scene DeleteUserScene(Stage primaryStage) {
+    /**
+     <<<<<<< HEAD
+     * Method for creating the delete user page.
+     *
+     * @param primaryStage primary stage
+     * @return scene
+     */
+    public static Scene deleteUserScene(Stage primaryStage) {
         Stage window = primaryStage;
         window.setTitle("Delete account");
 
@@ -38,7 +44,7 @@ public class DeleteUserPage {
                 final String uri = "https://oppy-project.herokuapp.com/delete?username=" + Main.userLog.getUsername() + "&pass=" + Main.userLog.getPassword();
                 RestTemplate restTemplate = new RestTemplate();
                 String status = restTemplate.getForObject(uri, String.class);
-                if(status.equals("true")) {
+                if (status.equals("true")) {
                     window.setScene(LoginPage.loginScene(window));
                 }
             }

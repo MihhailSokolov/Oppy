@@ -68,14 +68,14 @@ public class SettingsPage {
         Button changeEmailButton = new Button("Change email");
         GridPane.setConstraints(changeEmailButton,1,4,2,1);
         changeEmailButton.setOnAction(e -> {
-           window.setScene(ChangeEmailPage.ChangeEmailScene(window));
+            window.setScene(ChangeEmailPage.changeEmailScene(window));
         });
 
 
         Button changePasswordButton = new Button("Change password");
         GridPane.setConstraints(changePasswordButton, 1,5,2,1);
         changePasswordButton.setOnAction(e -> {
-            window.setScene(ChangePasswordPage.ChangePasswordScene(window));
+            window.setScene(ChangePasswordPage.changePasswordScene(window));
         });
 
 
@@ -89,14 +89,14 @@ public class SettingsPage {
         Button deleteAccountButton = new Button("Delete account");
         GridPane.setConstraints(deleteAccountButton,1,7,2,1);
         deleteAccountButton.setOnAction(e -> {
-            window.setScene(DeleteUserPage.DeleteUserScene(window));
+            window.setScene(DeleteUserPage.deleteUserScene(window));
         });
 
 
         Button resetButton = new Button("Reset Points");
         GridPane.setConstraints(resetButton,1,8,2,1);
         resetButton.setOnAction(e -> {
-            //implement reset method
+            window.setScene(ResetPointsPage.resetPointsScene(window));
         });
 
 

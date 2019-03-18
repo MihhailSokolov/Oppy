@@ -12,8 +12,14 @@ import javafx.stage.Stage;
 import org.springframework.web.client.RestTemplate;
 
 public class ChangePasswordPage {
-
-    public static Scene ChangePasswordScene(Stage primaryStage) {
+    /**
+     <<<<<<< HEAD
+     * Method for creating the change password page.
+     *
+     * @param primaryStage primary stage
+     * @return scene
+     */
+    public static Scene changePasswordScene(Stage primaryStage) {
         Stage window = primaryStage;
         window.setTitle("Change Password");
 
@@ -42,12 +48,12 @@ public class ChangePasswordPage {
                     passwordTextfield.getText(), Main.userLog.getRememberMe());
             String result = log.sendLogin();
             if (result.equals("true")) { // change password
-                final String uri = "https://oppy-project.herokuapp.com/updatepass?username=" +
-                        Main.userLog.getUsername() + "&pass=" + Main.userLog.hash(passwordTextfield.getText()) +
-                        "&newpass=" + Main.userLog.hash(newPasswordTextfield.getText());
+                final String uri = "https://oppy-project.herokuapp.com/updatepass?username="
+                        + Main.userLog.getUsername() + "&pass=" + Main.userLog.hash(passwordTextfield.getText())
+                        + "&newpass=" + Main.userLog.hash(newPasswordTextfield.getText());
                 RestTemplate restTemplate = new RestTemplate();
                 String status = restTemplate.getForObject(uri, String.class);
-                if(status.equals("true")) { // if true return to login page
+                if (status.equals("true")) { // if true return to login page
                     window.setScene(LoginPage.loginScene(window));
                 }
             }
@@ -61,11 +67,12 @@ public class ChangePasswordPage {
         GridPane.setConstraints(cancelButton, 1, 4);
 
         //Here all elements previously created are added to the view and the view is center
-        grid.getChildren().addAll(changeButton, password, passwordTextfield, newPassword, newPasswordTextfield, cancelButton);
+        grid.getChildren().addAll(changeButton, password, passwordTextfield, newPassword,
+                newPasswordTextfield, cancelButton);
         grid.setAlignment(Pos.CENTER);
 
         //here the create view is made into a scene and return when the method is called
         Scene scene = new Scene(grid, 500, 325);
         return scene;
-        }
+    }
 }

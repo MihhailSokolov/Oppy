@@ -163,10 +163,16 @@ public class Controller {
         }
     }
 
+    /**
+     * Method for resetting users points to 0.
+     * @param username username
+     * @param pass password
+     * @return 'true' if successful and 'false' otherwise
+     */
     @RequestMapping("/reset")
     public ResponseEntity<Boolean> resetScore(
             @RequestParam(value = "username") String username,
-            @RequestParam(value = "pass") String pass){
+            @RequestParam(value = "pass") String pass) {
         if (dbDataController.isUserAuthenticated(username, pass)) {
             return ResponseEntity.ok().body(dbDataController.resetScore(username, pass));
         } else {

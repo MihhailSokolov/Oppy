@@ -12,8 +12,12 @@ import javafx.stage.Stage;
 import org.springframework.web.client.RestTemplate;
 
 public class ResetPointsPage {
-
-    public static Scene DeleteUserScene(Stage primaryStage) {
+    /**
+     * Method for creating reset points page.
+     * @param primaryStage primary stage
+     * @return settings scene
+     */
+    public static Scene resetPointsScene(Stage primaryStage) {
         Stage window = primaryStage;
         window.setTitle("Reset Points");
 
@@ -35,11 +39,11 @@ public class ResetPointsPage {
                     passwordTextfield.getText(), Main.userLog.getRememberMe());
             String result = log.sendLogin();
             if (result.equals("true")) { // go to login page, delete account
-                final String uri = "https://oppy-project.herokuapp.com/reset?username=" + Main.userLog.getUsername() +
-                        "&pass=" + Main.userLog.hash(passwordTextfield.getText());
+                final String uri = "https://oppy-project.herokuapp.com/reset?username=" + Main.userLog.getUsername()
+                        + "&pass=" + Main.userLog.hash(passwordTextfield.getText());
                 RestTemplate restTemplate = new RestTemplate();
                 String status = restTemplate.getForObject(uri, String.class);
-                if(status.equals("true")) {
+                if (status.equals("true")) {
                     window.setScene(LoginPage.loginScene(window));
                 }
             }
