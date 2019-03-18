@@ -184,4 +184,3 @@ public class Controller {
         return ResponseEntity.ok().body(dbDataController.getTop50Users());
     }
 }
-}
