@@ -197,7 +197,7 @@ public class DbDataController {
         }
     }
 
-     * Method for updating user's password in db.
+     /** Method for updating user's password in db.
      * @param username user's username
      * @param newEmail user's new email
      * @return true is successful, false otherwise
