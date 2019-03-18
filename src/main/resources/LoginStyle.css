@@ -1,0 +1,10 @@
+.root{
+    -fx-background-image: url("nature.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 2000 1200;
+    -fx-background-position: center center;
+}
+
+.button{
+    -fx-background-color: #000000;
+}
