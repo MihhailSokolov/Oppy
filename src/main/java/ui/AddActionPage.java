@@ -153,7 +153,7 @@ public class AddActionPage {
         gridMisc.setHgap(10);
 
         //gets all available actions and display's dem in the right category
-        List<Action> miscList = actionHandler.getCategoryList("food");
+        List<Action> miscList = actionHandler.getCategoryList("misc");
         for (int i = 0; i < miscList.size(); i++) {
             CheckBox newCheckBox = new CheckBox(miscList.get(i).getActionName());
             GridPane.setConstraints(newCheckBox, 1, i);
