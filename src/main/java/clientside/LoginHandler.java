@@ -11,6 +11,8 @@ public class LoginHandler {
     String username;
     String password;
     boolean rememberMe;
+    private String uri;
+    private String loginParams = "login?username=%s&pass=%s";
 
 
     /**
@@ -24,6 +26,7 @@ public class LoginHandler {
         this.username = user;
         this.password = Hashing.sha256().hashString(pwd, StandardCharsets.UTF_8).toString();
         this.rememberMe = rem;
+        this.uri = "https://oppy-project.herokuapp.com/";
     }
 
     public String getUsername() {
@@ -32,6 +35,14 @@ public class LoginHandler {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public String getLoginParams() {
+        return loginParams;
     }
 
     /**
@@ -45,9 +56,10 @@ public class LoginHandler {
         return result;
     }
 
+
     @Override
     public String toString() {
-        return "https://oppy-project.herokuapp.com/login?username=" + this.username + "&pass=" + this.password;
+        return this.uri +  String.format(loginParams, this.username, this.password);
     }
 
 }
