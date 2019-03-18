@@ -156,7 +156,7 @@ public class DbDataController {
      * @return List of Users
      */
     public List<User> getTop50Users() {
-        List<User> users = userRepository.findAll();
+        List<User> users = userRepository.findAllByAnonymous(false);
         List<User> top50Users = new ArrayList<>();
         int limit = 50;
         if (users.size() < 50) {
@@ -182,6 +182,21 @@ public class DbDataController {
     }
 
     /**
+     * Method to change anonymous status in db.
+     * @param username user's username
+     * @param anonymous new anonymous status
+     * @return true if successful, false otherwise
+     */
+    public boolean changeAnonymous(String username, boolean anonymous) {
+        User userToUpdate = userRepository.findFirstByUsername(username);
+        userToUpdate.setAnonymous(anonymous);
+        if (userRepository.save(userToUpdate) == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
      * Method for updating user's password in db.
      * @param username user's username
      * @param newEmail user's new email

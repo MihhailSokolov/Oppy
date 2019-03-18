@@ -1,6 +1,5 @@
-package clientSide;
+package clientside;
 
-import clientside.LoginHandler;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

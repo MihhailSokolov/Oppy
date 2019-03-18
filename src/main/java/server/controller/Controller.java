@@ -183,4 +183,23 @@ public class Controller {
     public ResponseEntity<List<User>> getTop50Users() {
         return ResponseEntity.ok().body(dbDataController.getTop50Users());
     }
+
+    /**
+     * Mapping for changing user's anonymous status.
+     * @param username user's username
+     * @param pass user's password
+     * @param strAnonymous new anonymous status
+     * @return 'true' is successful, 'false' otherwise
+     */
+    @RequestMapping("/changeAnonymous")
+    public ResponseEntity<Boolean> changeAnonymous(@RequestParam("username") String username,
+                                                   @RequestParam("pass") String pass,
+                                                   @RequestParam("anonymous") String strAnonymous) {
+        boolean anonymous = Boolean.parseBoolean(strAnonymous);
+        if (dbDataController.isUserAuthenticated(username, pass)) {
+            return ResponseEntity.ok().body(dbDataController.changeAnonymous(username, anonymous));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+        }
+    }
 }

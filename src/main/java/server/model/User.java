@@ -1,5 +1,7 @@
 package server.model;
 
+import javafx.scene.image.Image;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,6 +19,9 @@ public class User {
     private String email;
     private int score;
     private Date registerDate;
+    private boolean anonymous;
+    private boolean pushNotifications;
+    private Image profilePicture;
 
     /**
      * Constructor for User object.
@@ -32,6 +37,9 @@ public class User {
         this.email = email;
         this.score = score;
         this.registerDate = registerDate;
+        this.anonymous = false;
+        this.pushNotifications = true;
+        this.profilePicture = null; //new Image("placeholder 100x100.png");
     }
 
     public Date getRegisterDate() {
@@ -58,6 +66,18 @@ public class User {
         return this.score;
     }
 
+    public boolean getAnonymous() {
+        return  this.anonymous;
+    }
+
+    public boolean getPushNotifications() {
+        return this.pushNotifications;
+    }
+
+    public Image getProfilePicture() {
+        return profilePicture;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -74,18 +94,30 @@ public class User {
         this.score = score;
     }
 
+    public void setAnonymous(boolean anonymous) {
+        this.anonymous = anonymous;
+    }
+
+    public void setPushNotifications(boolean pushNotifications) {
+        this.pushNotifications = pushNotifications;
+    }
+
+    public void setProfilePicture(Image profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
     @Override
     public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         return String.format(
-                "User[username='%s', password='%s', email='%s', score='%d', registerDate='%s']",
-                username, password, email, score, new SimpleDateFormat("dd.MM.yyyy").format(registerDate));
+                "User[username='%s', password='%s', email='%s', score='%d', registerDate='%s', "
+                        + "anonymous='%b', pushNotifications='%b', profilePicture='%s']",
+                username, password, email, score, dateFormat.format(registerDate), anonymous,
+                pushNotifications, profilePicture);
     }
 
     @Override
     public boolean equals(Object other) {
-        if (this == other) {
-            return true;
-        }
         if (other == null || getClass() != other.getClass()) {
             return false;
         }
@@ -94,6 +126,9 @@ public class User {
                 && Objects.equals(username, user.username)
                 && Objects.equals(password, user.password)
                 && Objects.equals(email, user.email)
-                && Objects.equals(registerDate, user.registerDate);
+                && Objects.equals(registerDate, user.registerDate)
+                && Objects.equals(anonymous, user.anonymous)
+                && Objects.equals(pushNotifications, user.pushNotifications)
+                && Objects.equals(profilePicture, user.profilePicture);
     }
 }

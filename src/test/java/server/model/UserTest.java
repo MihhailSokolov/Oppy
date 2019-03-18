@@ -84,7 +84,8 @@ public class UserTest {
     public void testToString() {
         User u = new User("hugo","pass","test@gmail.com",100, new Date());
         assertEquals("User[username='hugo', password='pass', email='test@gmail.com', score='100', registerDate='"
-                + new SimpleDateFormat("dd.MM.yyyy").format(new Date()) + "']", u.toString());
+                + new SimpleDateFormat("dd.MM.yyyy").format(new Date()) + "', anonymous='false'," +
+                " pushNotifications='true', profilePicture='null']", u.toString());
     }
 
     @Test

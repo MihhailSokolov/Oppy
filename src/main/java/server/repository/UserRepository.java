@@ -16,4 +16,6 @@ public interface UserRepository extends MongoRepository<User, String> {
     int deleteUserByUsername(String username);
 
     List<User> findAll();
+
+    List<User> findAllByAnonymous(boolean isAnonymous);
 }
