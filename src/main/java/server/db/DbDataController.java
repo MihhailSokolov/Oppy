@@ -216,6 +216,7 @@ public class DbDataController {
     public boolean resetScore(String username, String pass) {
         User user = userRepository.findFirstByUsername(username);
         user.setScore(0);
+        user.setRegisterDate(new Date());
         return userRepository.save(user) != null;
     }
 }

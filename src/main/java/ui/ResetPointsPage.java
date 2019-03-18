@@ -44,7 +44,7 @@ public class ResetPointsPage {
                 RestTemplate restTemplate = new RestTemplate();
                 String status = restTemplate.getForObject(uri, String.class);
                 if (status.equals("true")) {
-                    window.setScene(LoginPage.loginScene(window));
+                    window.setScene(SettingsPage.settingsScene(window));
                 }
             }
         });
