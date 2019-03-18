@@ -107,11 +107,11 @@ public class DbDataController {
     }
 
     /**
-     * Method to add an action to the db.
-     * @param actionName name of the action.
-     * @param category category of the action.
-     * @param points # of pts the action is worth.
-     * @return if insert was successful.
+     * Method to add an action to the db (for prepping the db).
+     * @param actionName name of action
+     * @param category category name of action
+     * @param points number of pts the action has
+     * @return true if successful
      */
     public boolean addAction(String actionName, String category, int points) {
         if (actionRepository.save(new Action(actionName, category, points)) == null) {

@@ -131,11 +131,11 @@ public class ControllerTest {
 
         mockMvc.perform(get(String.format("/register?username=%s&pass=%s&email=%soppy%%40gmail.com",
                 testUser.getUsername(), testUser.getPassword(), testUser.getEmail())))
-                .andExpect(status().is(500))
+                .andExpect(status().is(200))
                 .andExpect(content().string("Username is already taken. Try another username."));
         mockMvc.perform(get(String.format("/register?username=%s&pass=%s&email=%soppy%%40gmail.com",
                 testUser.getUsername()+"1", testUser.getPassword(), testUser.getEmail())))
-                .andExpect(status().is(500))
+                .andExpect(status().is(200))
                 .andExpect(content().string( "Email address is already registered."));
         userRepository.delete(userRepository.findFirstByUsername(testUser.getUsername()));
     }

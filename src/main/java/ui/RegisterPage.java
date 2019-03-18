@@ -4,6 +4,7 @@ import clientside.RegisterHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -90,10 +91,18 @@ public class RegisterPage {
                     emailTextfield.getText(), passwordTextfield.getText());
             String result = register.sendRegister();
             if (result.equals("true")) {
-                // We need to make a different UI page so that it can give a pop-up that tells us
-                // that either an account has been created successfully and that you will be
-                // redirected the the login page
+                Alert success = new Alert(Alert.AlertType.INFORMATION);
+                success.setHeaderText("Success!");
+                success.setContentText("You have successfully registered!");
+                success.setTitle("Notification");
+                success.show();
                 window.setScene(LoginPage.loginScene(window));
+            } else {
+                Alert failed = new Alert(Alert.AlertType.ERROR);
+                failed.setHeaderText("Failed.");
+                failed.setContentText("Registration failed with the following message: " + result);
+                failed.setTitle("Notification");
+                failed.show();
             }
         });
 

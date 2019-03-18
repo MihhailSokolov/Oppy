@@ -55,7 +55,7 @@ public class Controller {
         if (msg.isEmpty()) {
             return ResponseEntity.ok().body("true");
         } else {
-            return ResponseEntity.status(500).body(msg);
+            return ResponseEntity.ok().body(msg);
         }
     }
 

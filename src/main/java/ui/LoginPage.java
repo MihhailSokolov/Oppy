@@ -4,6 +4,7 @@ import clientside.LoginHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -82,6 +83,12 @@ public class LoginPage {
             if (result.equals("true")) { // go to main page, now set to register as example
                 Main.userLog = log;
                 window.setScene(MainPage.mainScene(window));
+            } else {
+                Alert failed = new Alert(Alert.AlertType.ERROR);
+                failed.setContentText("That was not a valid username/email and password combination.");
+                failed.setHeaderText("Failure.");
+                failed.setTitle("Notification");
+                failed.show();
             }
 
         });
