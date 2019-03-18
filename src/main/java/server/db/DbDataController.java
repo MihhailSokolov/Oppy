@@ -128,4 +128,16 @@ public class DbDataController {
         user.setScore(user.getScore() + points);
         return userRepository.save(user) != null;
     }
+
+    /**
+     * Method for updating user's password in db.
+     * @param username user's username
+     * @param newEmail user's new email
+     * @return true is successful, false otherwise
+     */
+    public boolean updateEmail(String username, String newEmail) {
+        User userToUpdate = userRepository.findFirstByUsername(username);
+        userToUpdate.setEmail(newEmail);
+        return userRepository.save(userToUpdate) != null;
+    }
 }

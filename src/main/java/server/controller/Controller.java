@@ -143,4 +143,23 @@ public class Controller {
         }
         return ResponseEntity.ok().body(dbDataController.addToUserScore(username, pointsToAdd));
     }
+
+    /**
+     * Method for updating user's password.
+     * @param username username
+     * @param pass old password
+     * @param newpass new password
+     * @return 'true' if successful and 'false' otherwise
+     */
+    @RequestMapping("/updateEmail")
+    public ResponseEntity<Boolean> updateEmail(
+            @RequestParam(value = "username") String username,
+            @RequestParam(value = "pass") String pass,
+            @RequestParam(value = "newEmail") String newpass) {
+        if (dbDataController.isUserAuthenticated(username, pass)) {
+            return ResponseEntity.ok().body(dbDataController.updatePassword(username, newpass));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+        }
+    }
 }
