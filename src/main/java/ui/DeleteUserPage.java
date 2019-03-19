@@ -36,19 +36,19 @@ public class DeleteUserPage {
         GridPane.setConstraints(passwordTextfield, 1, 2);
 
         Button deleteButton = new Button("Delete my account");
-        deleteButton.setOnAction(e -> {
-            LoginHandler log = new LoginHandler(Main.userLog.getUsername(),
-                    passwordTextfield.getText(), Main.userLog.getRememberMe());
-            String result = log.sendLogin();
-            if (result.equals("true")) { // go to login page, delete account
-                final String uri = "https://oppy-project.herokuapp.com/delete?username=" + Main.userLog.getUsername() + "&pass=" + Main.userLog.getPassword();
-                RestTemplate restTemplate = new RestTemplate();
-                String status = restTemplate.getForObject(uri, String.class);
-                if (status.equals("true")) {
-                    window.setScene(LoginPage.loginScene(window));
-                }
-            }
-        });
+//        deleteButton.setOnAction(e -> {
+//            LoginHandler log = new LoginHandler(Main.userLog.getUsername(),
+//                    passwordTextfield.getText(), Main.userLog.getRememberMe());
+//            String result = log.sendLogin();
+//            if (result.equals("true")) { // go to login page, delete account
+//                final String uri = "https://oppy-project.herokuapp.com/delete?username=" + Main.userLog.getUsername() + "&pass=" + Main.userLog.getPassword();
+//                RestTemplate restTemplate = new RestTemplate();
+//                String status = restTemplate.getForObject(uri, String.class);
+//                if (status.equals("true")) {
+//                    window.setScene(LoginPage.loginScene(window));
+//                }
+//            }
+//        });
         GridPane.setConstraints(deleteButton, 2, 4);
 
         Button cancelButton = new Button("cancel");

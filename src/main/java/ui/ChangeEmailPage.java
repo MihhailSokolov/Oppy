@@ -44,21 +44,21 @@ public class ChangeEmailPage {
         GridPane.setConstraints(newMailTextfield, 1, 3);
 
         Button changeButton = new Button("Change Email");
-        changeButton.setOnAction(e -> {
-            LoginHandler log = new LoginHandler(Main.userLog.getUsername(),
-                    passwordTextfield.getText(), Main.userLog.getRememberMe());
-            String result = log.sendLogin();
-            if (result.equals("true")) { // go to login page, delete account
-                final String uri = "https://oppy-project.herokuapp.com/updateEmail?username="
-                        + Main.userLog.getUsername() + "&pass=" + Main.userLog.hash(passwordTextfield.getText())
-                        + "&newEmail=" + newMailTextfield.getText();
-                RestTemplate restTemplate = new RestTemplate();
-                String status = restTemplate.getForObject(uri, String.class);
-                if (status.equals("true")) { // if true return to settings page
-                    window.setScene(SettingsPage.settingsScene(window));
-                }
-            }
-        });
+//        changeButton.setOnAction(e -> {
+//            LoginHandler log = new LoginHandler(Main.userLog.getUsername(),
+//                    passwordTextfield.getText(), Main.userLog.getRememberMe());
+//            String result = log.sendLogin();
+//            if (result.equals("true")) { // go to login page, delete account
+//                final String uri = "https://oppy-project.herokuapp.com/updateEmail?username="
+//                        + Main.userLog.getUsername() + "&pass=" + Main.userLog.hash(passwordTextfield.getText())
+//                        + "&newEmail=" + newMailTextfield.getText();
+//                RestTemplate restTemplate = new RestTemplate();
+//                String status = restTemplate.getForObject(uri, String.class);
+//                if (status.equals("true")) { // if true return to settings page
+//                    window.setScene(SettingsPage.settingsScene(window));
+//                }
+//            }
+//        });
         GridPane.setConstraints(changeButton, 2, 4);
 
         Button cancelButton = new Button("cancel");

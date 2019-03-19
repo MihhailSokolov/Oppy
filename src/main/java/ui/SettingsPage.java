@@ -44,10 +44,10 @@ public class SettingsPage {
         profilePictureButton.setGraphic(displayProfilePicture);
         GridPane.setConstraints(profilePictureButton,1,0,1,2);
 
-        Label username = new Label(Main.userLog.getUsername());
+        Label username = new Label(Main.clientHandler.getUser().getUsername());
         GridPane.setConstraints(username, 2,0);
 
-        final String uri = "https://oppy-project.herokuapp.com/email?username=" + Main.userLog.getUsername();
+        final String uri = "https://oppy-project.herokuapp.com/email?username=" + Main.clientHandler.getUser().getUsername();
         RestTemplate restTemplate = new RestTemplate();
         String userEmail = restTemplate.getForObject(uri, String.class);
         Label email = new Label(userEmail);

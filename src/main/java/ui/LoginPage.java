@@ -1,5 +1,6 @@
 package ui;
 
+import clientside.ClientHandler;
 import clientside.LoginHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,6 +17,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import server.model.User;
+
+import java.util.Date;
 
 public class LoginPage {
     /**
@@ -75,12 +79,15 @@ public class LoginPage {
 
         Button loginButton = new Button("Login");
         loginButton.setOnAction(e -> {
-            LoginHandler log = new LoginHandler(usernameTextfield.getText(),
-                    passwordTextfield.getText(), rememberMe.isSelected());
+            User user = new User (usernameTextfield.getText(), passwordTextfield.getText(), "", 0, new Date());
+//            LoginHandler log = new LoginHandler(usernameTextfield.getText(),
+//                    passwordTextfield.getText(), rememberMe.isSelected());
             //ClientController.sendLogin(log.toString());
-            String result = log.sendLogin();
+            ClientHandler clientHandler = new ClientHandler(user);
+            String result = clientHandler.login();
+//            String result = log.sendLogin();
             if (result.equals("true")) { // go to main page, now set to register as example
-                Main.userLog = log;
+                Main.clientHandler = clientHandler;
                 window.setScene(MainPage.mainScene(window));
             } else {
                 Alert failed = new Alert(Alert.AlertType.ERROR);

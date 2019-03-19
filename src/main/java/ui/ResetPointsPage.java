@@ -34,20 +34,20 @@ public class ResetPointsPage {
         GridPane.setConstraints(passwordTextfield, 1, 2);
 
         Button resetButton = new Button("Reset my Points");
-        resetButton.setOnAction(e -> {
-            LoginHandler log = new LoginHandler(Main.userLog.getUsername(),
-                    passwordTextfield.getText(), Main.userLog.getRememberMe());
-            String result = log.sendLogin();
-            if (result.equals("true")) { // go to login page, delete account
-                final String uri = "https://oppy-project.herokuapp.com/reset?username=" + Main.userLog.getUsername()
-                        + "&pass=" + Main.userLog.hash(passwordTextfield.getText());
-                RestTemplate restTemplate = new RestTemplate();
-                String status = restTemplate.getForObject(uri, String.class);
-                if (status.equals("true")) {
-                    window.setScene(SettingsPage.settingsScene(window));
-                }
-            }
-        });
+//        resetButton.setOnAction(e -> {
+//            LoginHandler log = new LoginHandler(Main.userLog.getUsername(),
+//                    passwordTextfield.getText(), Main.userLog.getRememberMe());
+//            String result = log.sendLogin();
+//            if (result.equals("true")) { // go to login page, delete account
+//                final String uri = "https://oppy-project.herokuapp.com/reset?username=" + Main.userLog.getUsername()
+//                        + "&pass=" + Main.userLog.hash(passwordTextfield.getText());
+//                RestTemplate restTemplate = new RestTemplate();
+//                String status = restTemplate.getForObject(uri, String.class);
+//                if (status.equals("true")) {
+//                    window.setScene(SettingsPage.settingsScene(window));
+//                }
+//            }
+//        });
         GridPane.setConstraints(resetButton, 2, 4);
 
         Button cancelButton = new Button("cancel");

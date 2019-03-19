@@ -1,5 +1,7 @@
 package ui;
 
+import ch.qos.logback.core.net.server.Client;
+import clientside.ClientHandler;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import javafx.animation.Animation;
@@ -59,9 +61,10 @@ public class MainPage {
 
         //TotalPoints, daily point loss and timer fields
         //here the number of points needs to be queried
-        final String uri = "https://oppy-project.herokuapp.com/score?username=" + Main.userLog.getUsername();
-        RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject(uri, String.class);
+//        final String uri = "https://oppy-project.herokuapp.com/score?username=" + Main.userLog.getUsername();
+//        RestTemplate restTemplate = new RestTemplate();
+//        String result = restTemplate.getForObject(uri, String.class);
+        String result = Main.clientHandler.getScore();
         Text numberOfPoints = new Text(result);
         GridPane.setConstraints(numberOfPoints, 2, 0);
 
