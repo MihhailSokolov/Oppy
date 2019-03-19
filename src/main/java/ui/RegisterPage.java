@@ -1,5 +1,7 @@
 package ui;
 
+import ch.qos.logback.core.net.server.Client;
+import clientside.ClientHandler;
 import clientside.RegisterHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,6 +17,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+import server.model.User;
+
+import java.util.Date;
 
 public class RegisterPage {
     /**
@@ -82,14 +89,13 @@ public class RegisterPage {
         confirmPasswordTextfield.setPromptText("Confirm password");
         GridPane.setConstraints(confirmPasswordTextfield, 1, 5);
 
-
         //Here the register button is created
         Button registerButton = new Button("Register");
         GridPane.setConstraints(registerButton, 2, 6);
         registerButton.setOnAction(e -> {
-            RegisterHandler register = new RegisterHandler(usernameTextfield.getText(),
-                    emailTextfield.getText(), passwordTextfield.getText());
-            String result = register.sendRegister();
+            ClientHandler clientHandler = new ClientHandler(new User(usernameTextfield.getText(),
+                    passwordTextfield.getText(), emailTextfield.getText(), 0, new Date()));
+            String result = clientHandler.register();
             if (result.equals("true")) {
                 Alert success = new Alert(Alert.AlertType.INFORMATION);
                 success.setHeaderText("Success!");
@@ -111,8 +117,7 @@ public class RegisterPage {
         GridPane.setConstraints(checkA, 2, 3);
         checkA.setOnAction(e -> {
             if (!(usernameTextfield.getText().equals(""))) {
-                RegisterHandler availability = new RegisterHandler(usernameTextfield.getText());
-                String result = availability.sendAvailabilityCheck();
+                String result = new ClientHandler().checkAvailability(usernameTextfield.getText());
                 if (result.equals("true")) {
                     checkA.setStyle("-fx-background-color: #00ff00");
                 } else {
