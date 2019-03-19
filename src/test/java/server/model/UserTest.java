@@ -3,7 +3,9 @@ package server.model;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -83,9 +85,9 @@ public class UserTest {
     @Test
     public void testToString() {
         User u = new User("hugo","pass","test@gmail.com",100, new Date());
-        assertEquals("User[username='hugo', password='pass', email='test@gmail.com', score='100', registerDate='"
-                + new SimpleDateFormat("dd.MM.yyyy").format(new Date()) + "', anonymous='false'," +
-                " pushNotifications='true', profilePicture='null']", u.toString());
+        assertEquals("User[username='hugo', password='pass', email='test@gmail.com', score=100, registerDate='"
+                + new SimpleDateFormat("dd.MM.yyyy").format(new Date()) + "', anonymous=false," +
+                " pushNotifications=true, profilePicture=null, presets=[]]", u.toString());
     }
 
     @Test
@@ -99,5 +101,21 @@ public class UserTest {
         assertNotEquals(null, user1);
         assertNotEquals("String test", user1);
         assertNotEquals(new Action("name", "category", 10), user1);
+    }
+
+    @Test
+    public void getPresets() {
+        User user = new User("hugo","pass","test@gmail.com",100, new Date());
+        assertNotNull(user.getPresets());
+    }
+
+    @Test
+    public void setPresets() {
+        User user = new User("hugo","pass","test@gmail.com",100, new Date());
+        Preset preset = new Preset("myPreset");
+        List<Preset> presets = new ArrayList<>();
+        presets.add(preset);
+        user.setPresets(presets);
+        assertEquals(presets, user.getPresets());
     }
 }

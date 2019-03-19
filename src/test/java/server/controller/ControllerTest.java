@@ -381,4 +381,24 @@ public class ControllerTest {
         assertEquals(newAnonymous, String.valueOf(testUser.getAnonymous()));
         userRepository.delete(testUser);
     }
+
+    @Test
+    public void checkGetPresets() throws Exception {
+        //TODO
+    }
+
+    @Test
+    public void checkAddPreset() throws Exception {
+        //TODO
+    }
+
+    @Test
+    public void checkDeletePreset() throws Exception {
+        //TODO
+    }
+
+    @Test
+    public void checkExecutePreset() throws Exception {
+        //TODO
+    }
 }

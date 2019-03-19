@@ -126,3 +126,38 @@ CHANGE ANONYMOUS
         401 UNAUTHORIZED if user is not authorized
         Body contains JSON Response object with message 'true' if anonymous status was changed successfully,
             'false' if user was not authenticated or anonymous status could not be changed
+
+GET PRESETS
+    To get user's presets from db
+    Request:
+        /presets?username=oppy123
+    Response:
+        200 OK
+        Body contains JSON list of Preset objects
+
+ADD PRESET
+    To add a new preset to the list of user's presets
+    Request:
+        /addpreset?username=oppy123
+        Body should contain JSON object of Preset
+    Response:
+        200 OK
+        Body contains JSON Response object with message 'true' if preset was successfully added, 'false' otherwise
+
+DELETE PRESET
+    To delete a preset from the list of user's presets
+    Request:
+        /addpreset?username=oppy123
+        Body should contain JSON object of Preset with its name (everything else can be null)
+    Response:
+        200 OK
+        Body contains JSON Response object with message 'true' if preset was successfully deleted, 'false' otherwise
+
+EXECUTE PRESET
+    To execute a list of actions defined in user's preset
+    Request:
+        /executepreset?username=oppy123
+        Body should contain JSON Preset object with preset name (everything else can be null)
+    Response:
+        200 OK
+        Body contains JSON Response object with message 'true' if preset was successfully executed, 'false' otherwise

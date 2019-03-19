@@ -2,14 +2,16 @@ package server.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.Objects;
 import javafx.scene.image.Image;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Objects;
+import java.util.List;
 
 @Document(collection = "user")
 public class User {
@@ -24,6 +26,7 @@ public class User {
     private boolean anonymous;
     private boolean pushNotifications;
     private Image profilePicture;
+    private List<Preset> presets;
 
     /**
      * Constructor for User object.
@@ -45,6 +48,7 @@ public class User {
         this.anonymous = false;
         this.pushNotifications = true;
         this.profilePicture = null; //new Image("placeholder 100x100.png");
+        this.presets = new ArrayList<>();
     }
 
     public Date getRegisterDate() {
@@ -111,29 +115,47 @@ public class User {
         this.profilePicture = profilePicture;
     }
 
+    public List<Preset> getPresets() {
+        return presets;
+    }
+
+    public void setPresets(List<Preset> presets) {
+        this.presets = presets;
+    }
+
     @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        return String.format(
-                "User[username='%s', password='%s', email='%s', score='%d', registerDate='%s', "
-                        + "anonymous='%b', pushNotifications='%b', profilePicture='%s']",
-                username, password, email, score, dateFormat.format(registerDate), anonymous,
-                pushNotifications, profilePicture);
+        return "User[" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", score=" + score +
+                ", registerDate='" + dateFormat.format(registerDate) + '\'' +
+                ", anonymous=" + anonymous +
+                ", pushNotifications=" + pushNotifications +
+                ", profilePicture=" + profilePicture +
+                ", presets=" + presets +
+                ']';
     }
 
     @Override
     public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
         if (other == null || getClass() != other.getClass()) {
             return false;
         }
         User user = (User) other;
-        return score == user.score
-                && Objects.equals(username, user.username)
-                && Objects.equals(password, user.password)
-                && Objects.equals(email, user.email)
-                && Objects.equals(registerDate, user.registerDate)
-                && Objects.equals(anonymous, user.anonymous)
-                && Objects.equals(pushNotifications, user.pushNotifications)
-                && Objects.equals(profilePicture, user.profilePicture);
+        return score == user.score &&
+                anonymous == user.anonymous &&
+                pushNotifications == user.pushNotifications &&
+                Objects.equal(username, user.username) &&
+                Objects.equal(password, user.password) &&
+                Objects.equal(email, user.email) &&
+                Objects.equal(registerDate, user.registerDate) &&
+                Objects.equal(profilePicture, user.profilePicture) &&
+                Objects.equal(presets, user.presets);
     }
 }
