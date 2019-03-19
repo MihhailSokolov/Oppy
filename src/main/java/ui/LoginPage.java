@@ -1,7 +1,6 @@
 package ui;
 
-import clientside.ClientHandler;
-import clientside.LoginHandler;
+import clientside.ClientController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -83,11 +82,11 @@ public class LoginPage {
 //            LoginHandler log = new LoginHandler(usernameTextfield.getText(),
 //                    passwordTextfield.getText(), rememberMe.isSelected());
             //ClientController.sendLogin(log.toString());
-            ClientHandler clientHandler = new ClientHandler(user);
+            ClientController clientHandler = new ClientController(user);
             String result = clientHandler.login();
 //            String result = log.sendLogin();
             if (result.equals("true")) { // go to main page, now set to register as example
-                Main.clientHandler = clientHandler;
+                Main.clientController = clientHandler;
                 window.setScene(MainPage.mainScene(window));
             } else {
                 Alert failed = new Alert(Alert.AlertType.ERROR);

@@ -1,13 +1,13 @@
 package ui;
 
-import clientside.ClientHandler;
+import clientside.ClientController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 
 public class Main extends Application {
 
-    public static ClientHandler clientHandler;
+    public static ClientController clientController;
 
     public static void main(String[] args) {
         launch(args);

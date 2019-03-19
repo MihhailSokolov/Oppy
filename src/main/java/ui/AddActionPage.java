@@ -46,8 +46,8 @@ public class AddActionPage {
         });
 
 
-        Main.clientHandler.updateActionList();
-        List<Action> actionList = Main.clientHandler.getActionList();
+        Main.clientController.updateActionList();
+        List<Action> actionList = Main.clientController.getActionList();
 //        List<Action> actionList = actionHandler.getActionList();
         for (Action act : actionList) {
             listOfActions.add(act);
@@ -58,7 +58,7 @@ public class AddActionPage {
         submitButton.setOnAction(e -> {
             for (int i = 0; i < listCheckboxes.size(); i++) {
                 if (listCheckboxes.get(i).isSelected()) {
-                    Main.clientHandler.takeAction(listCheckboxes.get(i).getText());
+                    Main.clientController.takeAction(listCheckboxes.get(i).getText());
                 }
             }
         });
@@ -75,7 +75,7 @@ public class AddActionPage {
         gridTransport.setVgap(8);
         gridTransport.setHgap(10);
 
-        List<Action> transportList = Main.clientHandler.getCategoryList("transport");
+        List<Action> transportList = Main.clientController.getCategoryList("transport");
         //gets all available actions and display's dem in the right category
         for (int i = 0; i < transportList.size(); i++) {
             CheckBox newCheckBox = new CheckBox(transportList.get(i).getActionName());
@@ -102,7 +102,7 @@ public class AddActionPage {
         gridFood.setHgap(10);
 
         //gets all available actions and display's dem in the right category
-        List<Action> foodList = Main.clientHandler.getCategoryList("food");
+        List<Action> foodList = Main.clientController.getCategoryList("food");
         for (int i = 0; i < foodList.size(); i++) {
             CheckBox newCheckBox = new CheckBox(foodList.get(i).getActionName());
             GridPane.setConstraints(newCheckBox, 1, i);
@@ -127,7 +127,7 @@ public class AddActionPage {
         gridEnergy.setHgap(10);
 
         //gets all available actions and display's dem in the right category
-        List<Action> energyList = Main.clientHandler.getCategoryList("energy");
+        List<Action> energyList = Main.clientController.getCategoryList("energy");
         for (int i = 0; i < energyList.size(); i++) {
             CheckBox newCheckBox = new CheckBox(energyList.get(i).getActionName());
             GridPane.setConstraints(newCheckBox, 1, i);
@@ -152,7 +152,7 @@ public class AddActionPage {
         gridMisc.setHgap(10);
 
         //gets all available actions and display's dem in the right category
-        List<Action> miscList = Main.clientHandler.getCategoryList("misc");
+        List<Action> miscList = Main.clientController.getCategoryList("misc");
         for (int i = 0; i < miscList.size(); i++) {
             CheckBox newCheckBox = new CheckBox(miscList.get(i).getActionName());
             GridPane.setConstraints(newCheckBox, 1, i);

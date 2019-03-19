@@ -1,7 +1,5 @@
 package ui;
 
-import ch.qos.logback.core.net.server.Client;
-import clientside.ClientHandler;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import javafx.animation.Animation;
@@ -20,7 +18,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
 
@@ -64,7 +61,7 @@ public class MainPage {
 //        final String uri = "https://oppy-project.herokuapp.com/score?username=" + Main.userLog.getUsername();
 //        RestTemplate restTemplate = new RestTemplate();
 //        String result = restTemplate.getForObject(uri, String.class);
-        String result = Main.clientHandler.getScore();
+        String result = Main.clientController.getScore();
         Text numberOfPoints = new Text(result);
         GridPane.setConstraints(numberOfPoints, 2, 0);
 

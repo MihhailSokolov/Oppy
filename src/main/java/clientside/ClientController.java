@@ -12,24 +12,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ClientHandler {
+public class ClientController {
     private User user;
     private String baseUrl =  "https://oppy-project.herokuapp.com/";
     private RestTemplate restTemplate = new RestTemplate();
-    ResponseEntity<String> responseEntity = null;
     private List<Action> actionList = null;
+    ResponseEntity<String> responseEntity = null;
 
-//    private final String loginParams = "login?username=%s&pass=%s";
-//    private final String registerParams = "register?username=%s&pass=%s&email=%s";
-//    private final String availabilityParams = "nameavailable?username=%s";
-
-
-    public ClientHandler(User user){
+    public ClientController(User user){
         this.user = user;
         user.setPassword(hash(user.getPassword()));
     }
 
-    public ClientHandler(){ }
+    public ClientController(){ }
 
     public enum Path{
         REGISTER{
@@ -103,6 +98,10 @@ public class ClientHandler {
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
+    public String getEmail(){
+        responseEntity = this.getRequest(this.baseUrl + String.format(Path.EMAIL.toString()));
+        return new JSONObject(responseEntity.getBody()).getString("message");
+    }
 
     public List<Action> getActionList() {
         return this.actionList;
@@ -119,6 +118,13 @@ public class ClientHandler {
     public String deleteAcount(){
         if(this.user != null){
             responseEntity = this.postRequest(this.baseUrl + Path.DELETE.toString(), user);
+        }
+        return new JSONObject(responseEntity.getBody()).getString("message");
+    }
+
+    public String updateEmail(String newEmail, String pass){
+        if(this.user != null && hash(pass) == this.user.getPassword()) {
+            responseEntity = this.postRequest(this.baseUrl + Path.UPDATEEMAIL.toString(), user);
         }
         return new JSONObject(responseEntity.getBody()).getString("message");
     }

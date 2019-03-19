@@ -1,8 +1,6 @@
 package ui;
 
-import ch.qos.logback.core.net.server.Client;
-import clientside.ClientHandler;
-import clientside.RegisterHandler;
+import clientside.ClientController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,8 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 import server.model.User;
 
 import java.util.Date;
@@ -93,7 +89,7 @@ public class RegisterPage {
         Button registerButton = new Button("Register");
         GridPane.setConstraints(registerButton, 2, 6);
         registerButton.setOnAction(e -> {
-            ClientHandler clientHandler = new ClientHandler(new User(usernameTextfield.getText(),
+            ClientController clientHandler = new ClientController(new User(usernameTextfield.getText(),
                     passwordTextfield.getText(), emailTextfield.getText(), 0, new Date()));
             String result = clientHandler.register();
             if (result.equals("true")) {
@@ -117,7 +113,7 @@ public class RegisterPage {
         GridPane.setConstraints(checkA, 2, 3);
         checkA.setOnAction(e -> {
             if (!(usernameTextfield.getText().equals(""))) {
-                String result = new ClientHandler().checkAvailability(usernameTextfield.getText());
+                String result = new ClientController().checkAvailability(usernameTextfield.getText());
                 if (result.equals("true")) {
                     checkA.setStyle("-fx-background-color: #00ff00");
                 } else {
