@@ -1,6 +1,5 @@
 package ui;
 
-import clientside.LoginHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import org.springframework.web.client.RestTemplate;
 
 public class ResetPointsPage {
     /**
