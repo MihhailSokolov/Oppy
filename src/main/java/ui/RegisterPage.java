@@ -89,9 +89,9 @@ public class RegisterPage {
         Button registerButton = new Button("Register");
         GridPane.setConstraints(registerButton, 2, 6);
         registerButton.setOnAction(e -> {
-            ClientController clientHandler = new ClientController(new User(usernameTextfield.getText(),
+            ClientController clientController = new ClientController(new User(usernameTextfield.getText(),
                     passwordTextfield.getText(), emailTextfield.getText(), 0, new Date()));
-            String result = clientHandler.register();
+            String result = clientController.register();
             if (result.equals("true")) {
                 Alert success = new Alert(Alert.AlertType.INFORMATION);
                 success.setHeaderText("Success!");

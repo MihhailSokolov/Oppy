@@ -77,8 +77,10 @@ public class ClientController {
             }
         }, CHANGEANON{
             public String toString(){
-                return "/changeAnonymous?anonymous=%s";
+                return "changeAnonymous?anonymous=%s";
             }
+        }, RESET{
+            public String toString() { return "reset";};
         }
 
     }
@@ -86,6 +88,14 @@ public class ClientController {
     public String register(){
         if(this.user != null){
             responseEntity = this.postRequest(this.baseUrl + Path.REGISTER.toString(), user);
+        }
+        return new JSONObject(responseEntity.getBody()).getString("message");
+    }
+
+    public String updatePass(String newPass){
+        if(this.user != null){
+            responseEntity = this.postRequest(this.baseUrl
+                    + String.format(Path.UPDATEPASS.toString(), hash(newPass)), user);
         }
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
@@ -115,7 +125,7 @@ public class ClientController {
         }
     }
 
-    public String deleteAcount(){
+    public String deleteAccount(){
         if(this.user != null){
             responseEntity = this.postRequest(this.baseUrl + Path.DELETE.toString(), user);
         }
@@ -124,7 +134,15 @@ public class ClientController {
 
     public String updateEmail(String newEmail, String pass){
         if(this.user != null && hash(pass) == this.user.getPassword()) {
-            responseEntity = this.postRequest(this.baseUrl + Path.UPDATEEMAIL.toString(), user);
+            responseEntity = this.postRequest(this.baseUrl
+                    + String.format(Path.UPDATEEMAIL.toString(), newEmail), user);
+        }
+        return new JSONObject(responseEntity.getBody()).getString("message");
+    }
+
+    public String reset(){
+        if(this.user != null){
+            responseEntity = this.postRequest(this.baseUrl + Path.RESET, this.user);
         }
         return new JSONObject(responseEntity.getBody()).getString("message");
     }

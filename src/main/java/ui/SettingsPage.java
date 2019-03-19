@@ -11,7 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import org.springframework.web.client.RestTemplate;
 
 public class SettingsPage {
 
@@ -47,9 +46,9 @@ public class SettingsPage {
         Label username = new Label(Main.clientController.getUser().getUsername());
         GridPane.setConstraints(username, 2,0);
 
-        final String uri = "https://oppy-project.herokuapp.com/email?username=" + Main.clientController.getUser().getUsername();
-        RestTemplate restTemplate = new RestTemplate();
-        String userEmail = restTemplate.getForObject(uri, String.class);
+//        final String uri = "https://oppy-project.herokuapp.com/email?username=" + Main.clientController.getUser().getUsername();
+//        RestTemplate restTemplate = new RestTemplate();
+        String userEmail = Main.clientController.getEmail();
         Label email = new Label(userEmail);
         GridPane.setConstraints(email,2,1);
 
