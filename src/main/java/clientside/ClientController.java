@@ -1,9 +1,14 @@
 package clientside;
+
 import com.google.common.hash.Hashing;
 import com.google.gson.Gson;
+
 import org.json.JSONObject;
+
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.client.RestTemplate;
+
 import server.model.Action;
 import server.model.User;
 
@@ -12,165 +17,241 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
+
 public class ClientController {
     private User user;
-    private String baseUrl =  "https://oppy-project.herokuapp.com/";
+    private String baseUrl = "https://oppy-project.herokuapp.com/";
     private RestTemplate restTemplate = new RestTemplate();
     private List<Action> actionList = null;
-    ResponseEntity<String> responseEntity = null;
+    private ResponseEntity<String> responseEntity = null;
 
-    public ClientController(User user){
+    public ClientController(User user) {
         this.user = user;
         user.setPassword(hash(user.getPassword()));
     }
 
-    public ClientController(){ }
+    public ClientController() {
+    }
 
-    public enum Path{
-        REGISTER{
-            public String toString(){
+    public enum Path {
+        REGISTER {
+            public String toString() {
                 return "register";
             }
-        }, AVAILABILITY{
-            public String toString(){
+        }, AVAILABILITY {
+            public String toString() {
                 return "nameavailable?username=%s";
             }
-        }, LOGIN{
+        }, LOGIN {
             public String toString() {
                 return "login";
             }
-        }, SCORE{
+        }, SCORE {
             public String toString() {
                 return "score?username=%s";
             }
-        }, ACTIONS{
-            public String toString(){
+        }, ACTIONS {
+            public String toString() {
                 return "actions";
             }
         }, TAKEACTION {
-            public String toString(){
+            public String toString() {
                 return "takeaction?username=%s";
             }
-        }, DELETE{
-            public String toString(){
+        }, DELETE {
+            public String toString() {
                 return "delete";
             }
-        }, UPDATEPASS{
-            public String toString(){
+        }, UPDATEPASS {
+            public String toString() {
                 return "updatepass?newpass=%s";
             }
-        }, EMAIL{
-            public String toString(){
+        }, EMAIL {
+            public String toString() {
                 return "email?username=%s";
             }
-        }, TAKEACTIONS{
-            public String toString(){
+        }, TAKEACTIONS {
+            public String toString() {
                 return "takeactions?username=%s";
             }
-        }, UPDATEEMAIL{
-            public String toString(){
+        }, UPDATEEMAIL {
+            public String toString() {
                 return "updateEmail?newEmail=%s";
             }
         }, TOP50 {
-            public String toString(){
+            public String toString() {
                 return "TOP50";
             }
-        }, CHANGEANON{
-            public String toString(){
+        }, CHANGEANON {
+            public String toString() {
                 return "changeAnonymous?anonymous=%s";
             }
-        }, RESET{
-            public String toString() { return "reset";};
+        }, RESET {
+            public String toString() {
+                return "reset";
+            }
+
+            ;
         }
 
     }
 
-    public String register(){
-        if(this.user != null){
+    /**
+     * Sends a new user registration request to server.
+     * @return String response message ("true"/"false").
+     */
+    public String register() {
+        if (this.user != null) {
             responseEntity = this.postRequest(this.baseUrl + Path.REGISTER.toString(), user);
         }
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
-    public String updatePass(String newPass){
-        if(this.user != null){
+    /**
+     * Sends an "update user pass" request to the server.
+     * @param newPass the new password for the user.
+     * @return String response message ("true"/"false").
+     */
+    public String updatePass(String newPass) {
+        if (this.user != null) {
             responseEntity = this.postRequest(this.baseUrl
                     + String.format(Path.UPDATEPASS.toString(), hash(newPass)), user);
         }
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
-    public String takeAction(String actionName){
-        if(this.user != null){
+    /**
+     * Sends a "take action request" to the server.
+     * @param actionName action name to be sent.
+     * @return String response msg ("true"/"false").
+     */
+    public String takeAction(String actionName) {
+        if (this.user != null) {
             responseEntity = this.postRequest(this.baseUrl + String.format(Path.TAKEACTION.toString(),
                     user.getUsername()), new Action(actionName, "", 0));
         }
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
-    public String getEmail(){
+    /**
+     * Sends a "get email request" to the server.
+     * @return String response msg containing user's email addy.
+     */
+    public String getEmail() {
         responseEntity = this.getRequest(this.baseUrl + String.format(Path.EMAIL.toString()));
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
+    /**
+     * Returns the list of actions.
+     * @return actionList.
+     */
     public List<Action> getActionList() {
         return this.actionList;
     }
 
-    public void updateActionList(){
+    /**
+     * Updates the list of actions by downloading the action list from the server.
+     */
+    public void updateActionList() {
         responseEntity = this.getRequest(this.baseUrl + String.format(Path.ACTIONS.toString()));
-        if(responseEntity.getBody() != null) {
+        if (responseEntity.getBody() != null) {
             Gson gson = new Gson();
             actionList = Arrays.asList(gson.fromJson(responseEntity.getBody(), Action[].class));
         }
     }
 
-    public String deleteAccount(){
-        if(this.user != null){
+    /**
+     * Sends a "delete acct request" to the server
+     * @return String response msg ("true"/"false"), implying success or failure.
+     */
+    public String deleteAccount() {
+        if (this.user != null) {
             responseEntity = this.postRequest(this.baseUrl + Path.DELETE.toString(), user);
         }
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
-    public String updateEmail(String newEmail, String pass){
-        if(this.user != null && hash(pass) == this.user.getPassword()) {
+    /**
+     * Sends an "update email addy request" to the server.
+     * @param newEmail the new email addy.
+     * @param pass current password.
+     * @return String response msg ("true"/"false").
+     */
+    public String updateEmail(String newEmail, String pass) {
+        if (this.user != null && hash(pass) == this.user.getPassword()) {
             responseEntity = this.postRequest(this.baseUrl
                     + String.format(Path.UPDATEEMAIL.toString(), newEmail), user);
         }
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
-    public String reset(){
-        if(this.user != null){
+    /**
+     * Sends a "reset request" to the server.
+     * @return String resposne msg ("true"/"false").
+     */
+    public String reset() {
+        if (this.user != null) {
             responseEntity = this.postRequest(this.baseUrl + Path.RESET, this.user);
         }
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
-    public String login(){
-        if(this.user != null){
+    /**
+     * Sends a "login request" to the server.
+     * @return String response msg "true"/"false"
+     */
+    public String login() {
+        if (this.user != null) {
             responseEntity = this.postRequest(this.baseUrl + Path.LOGIN.toString(), user);
         }
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
-    public String getScore(){
+    /**
+     * Sends a request to server to get user's score.
+     * @return user's score contained in content body.
+     */
+    public String getScore() {
         responseEntity = this.getRequest(this.baseUrl + String.format(Path.SCORE.toString(), user.getUsername()));
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
-    public String checkAvailability(String username){
+
+    /**
+     * Sends a request to the server checking the availability of a username.
+     * @param username username to be checked.
+     * @return availability "true"/"false" contained in response msg.
+     */
+    public String checkAvailability(String username) {
         responseEntity = this.getRequest(this.baseUrl + String.format(Path.AVAILABILITY.toString(), username));
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
-    private ResponseEntity<String> postRequest(String url, Object obj){
+    /**
+     * Post request method.
+     * @param url url to point at.
+     * @param obj object to send.
+     * @return ResponseEntity containing status code/body.
+     */
+    private ResponseEntity<String> postRequest(String url, Object obj) {
         return restTemplate.postForEntity(url, obj, String.class);
     }
 
-    private ResponseEntity<String> getRequest(String url){
+    /**
+     * Get request method.
+     * @param url to point at.
+     * @return ResponseEntity containing status code/body.
+     */
+    private ResponseEntity<String> getRequest(String url) {
         return restTemplate.getForEntity(url, String.class);
     }
 
+    /**
+     * Method to subdivide list of actions according to given cat name.
+     * @param categoryName cat name to subdivide.
+     * @return return list of actions from only that category.
+     */
     public List<Action> getCategoryList(String categoryName) {
         List<Action> categoryList = new ArrayList<>();
         if (this.actionList != null) {
@@ -183,7 +264,7 @@ public class ClientController {
         return categoryList;
     }
 
-    public User getUser(){
+    public User getUser() {
         return this.user;
     }
 

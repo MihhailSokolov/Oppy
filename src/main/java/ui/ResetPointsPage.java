@@ -33,10 +33,11 @@ public class ResetPointsPage {
 
         Button resetButton = new Button("Reset my Points");
         resetButton.setOnAction(e -> {
+
             // Again, ask if they're sure first?
             String result = Main.clientController.reset();
             if (result.equals("true")) { // go to login page, delete account
-                    window.setScene(SettingsPage.settingsScene(window));
+                window.setScene(SettingsPage.settingsScene(window));
             }
         });
         GridPane.setConstraints(resetButton, 2, 4);

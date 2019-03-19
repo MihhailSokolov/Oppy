@@ -58,9 +58,6 @@ public class MainPage {
 
         //TotalPoints, daily point loss and timer fields
         //here the number of points needs to be queried
-//        final String uri = "https://oppy-project.herokuapp.com/score?username=" + Main.userLog.getUsername();
-//        RestTemplate restTemplate = new RestTemplate();
-//        String result = restTemplate.getForObject(uri, String.class);
         String result = Main.clientController.getScore();
         Text numberOfPoints = new Text(result);
         GridPane.setConstraints(numberOfPoints, 2, 0);

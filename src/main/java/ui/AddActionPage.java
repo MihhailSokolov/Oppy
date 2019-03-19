@@ -48,7 +48,6 @@ public class AddActionPage {
 
         Main.clientController.updateActionList();
         List<Action> actionList = Main.clientController.getActionList();
-//        List<Action> actionList = actionHandler.getActionList();
         for (Action act : actionList) {
             listOfActions.add(act);
         }
