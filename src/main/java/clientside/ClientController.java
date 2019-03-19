@@ -34,7 +34,7 @@ public class ClientController {
     public ClientController() {
     }
 
-    public enum Path {
+    private enum Path {
         REGISTER {
             public String toString() {
                 return "register";
