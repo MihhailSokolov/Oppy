@@ -91,8 +91,6 @@ public class ClientController {
             public String toString() {
                 return "reset";
             }
-
-            ;
         }
 
     }
