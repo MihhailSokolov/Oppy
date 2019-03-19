@@ -1,6 +1,5 @@
 package ui;
 
-import clientside.LoginHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import org.springframework.web.client.RestTemplate;
 
 public class ChangePasswordPage {
     /**
@@ -44,18 +42,10 @@ public class ChangePasswordPage {
 
         Button changeButton = new Button("Change Password");
         changeButton.setOnAction(e -> {
-            LoginHandler log = new LoginHandler(Main.userLog.getUsername(),
-                    passwordTextfield.getText(), Main.userLog.getRememberMe());
-            String result = log.sendLogin();
+            String result = Main.clientController.updatePass(newPasswordTextfield.getText());
             if (result.equals("true")) { // change password
-                final String uri = "https://oppy-project.herokuapp.com/updatepass?username="
-                        + Main.userLog.getUsername() + "&pass=" + Main.userLog.hash(passwordTextfield.getText())
-                        + "&newpass=" + Main.userLog.hash(newPasswordTextfield.getText());
-                RestTemplate restTemplate = new RestTemplate();
-                String status = restTemplate.getForObject(uri, String.class);
-                if (status.equals("true")) { // if true return to login page
-                    window.setScene(LoginPage.loginScene(window));
-                }
+
+                window.setScene(LoginPage.loginScene(window));
             }
         });
         GridPane.setConstraints(changeButton, 2, 4);

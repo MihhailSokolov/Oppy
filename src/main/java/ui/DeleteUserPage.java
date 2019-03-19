@@ -1,6 +1,5 @@
 package ui;
 
-import clientside.LoginHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import org.springframework.web.client.RestTemplate;
 
 public class DeleteUserPage {
     /**
@@ -37,17 +35,12 @@ public class DeleteUserPage {
 
         Button deleteButton = new Button("Delete my account");
         deleteButton.setOnAction(e -> {
-            LoginHandler log = new LoginHandler(Main.userLog.getUsername(),
-                    passwordTextfield.getText(), Main.userLog.getRememberMe());
-            String result = log.sendLogin();
-            if (result.equals("true")) { // go to login page, delete account
-                final String uri = "https://oppy-project.herokuapp.com/delete?username=" + Main.userLog.getUsername() + "&pass=" + Main.userLog.getPassword();
-                RestTemplate restTemplate = new RestTemplate();
-                String status = restTemplate.getForObject(uri, String.class);
-                if (status.equals("true")) {
-                    window.setScene(LoginPage.loginScene(window));
-                }
+            // Maybe a pop up or the like asking the user if they're sure they want to delete?
+            String result = Main.clientController.deleteAccount();
+            if (result.equals("true")) {
+                window.setScene(LoginPage.loginScene(window));
             }
+
         });
         GridPane.setConstraints(deleteButton, 2, 4);
 

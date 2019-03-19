@@ -1,6 +1,5 @@
 package ui;
 
-import clientside.LoginHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -10,7 +9,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import org.springframework.web.client.RestTemplate;
 
 public class ChangeEmailPage {
     /**
@@ -45,18 +43,9 @@ public class ChangeEmailPage {
 
         Button changeButton = new Button("Change Email");
         changeButton.setOnAction(e -> {
-            LoginHandler log = new LoginHandler(Main.userLog.getUsername(),
-                    passwordTextfield.getText(), Main.userLog.getRememberMe());
-            String result = log.sendLogin();
+            String result = Main.clientController.updateEmail(newMailTextfield.getText(), passwordTextfield.getText());
             if (result.equals("true")) { // go to login page, delete account
-                final String uri = "https://oppy-project.herokuapp.com/updateEmail?username="
-                        + Main.userLog.getUsername() + "&pass=" + Main.userLog.hash(passwordTextfield.getText())
-                        + "&newEmail=" + newMailTextfield.getText();
-                RestTemplate restTemplate = new RestTemplate();
-                String status = restTemplate.getForObject(uri, String.class);
-                if (status.equals("true")) { // if true return to settings page
-                    window.setScene(SettingsPage.settingsScene(window));
-                }
+                window.setScene(SettingsPage.settingsScene(window));
             }
         });
         GridPane.setConstraints(changeButton, 2, 4);
