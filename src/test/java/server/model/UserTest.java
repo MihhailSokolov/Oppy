@@ -112,7 +112,7 @@ public class UserTest {
     @Test
     public void setPresets() {
         User user = new User("hugo","pass","test@gmail.com",100, new Date());
-        Preset preset = new Preset("myPreset");
+        Preset preset = new Preset("myPreset", new ArrayList<>());
         List<Preset> presets = new ArrayList<>();
         presets.add(preset);
         user.setPresets(presets);

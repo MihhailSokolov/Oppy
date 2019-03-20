@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import server.db.DbDataController;
 import server.model.Action;
+import server.model.Preset;
 import server.repository.ActionRepository;
 import server.model.User;
 import server.repository.UserRepository;
@@ -21,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
@@ -33,6 +34,8 @@ public class ControllerTest {
     MockMvc mockMvc;
 
     User testUser;
+
+    List<Preset> presets;
 
     Action testAction;
 
@@ -60,6 +63,18 @@ public class ControllerTest {
                 "oppy%40gmail.com",
                 42
                 , date);
+        List<String> actionList1 = new ArrayList<>();
+        actionList1.add("vegetarian meal");
+        actionList1.add("Recycle plastic bottle");
+        List<String> actionList2 = new ArrayList<>();
+        actionList2.add("use bike");
+        actionList2.add("lower temperature");
+        Preset preset1 = new Preset("preset1", actionList1);
+        Preset preset2 = new Preset("preset2", actionList2);
+        presets = new ArrayList<>();
+        presets.add(preset1);
+        presets.add(preset2);
+        testUser.setPresets(presets);
         if(userRepository.findFirstByUsername(testUser.getUsername())!=null)
             userRepository.delete(userRepository.findFirstByUsername(testUser.getUsername()));
         testAction = new Action("Recycle paper", "Recycling", 10);
@@ -264,7 +279,7 @@ public class ControllerTest {
     @Test
     public void checkUserEmail() throws Exception {
         userRepository.save(testUser);
-        mockMvc.perform(get("/email?username="+testUser.getUsername()))
+        mockMvc.perform(get("/email?username=" + testUser.getUsername()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$.message", is(testUser.getEmail())));
@@ -384,21 +399,63 @@ public class ControllerTest {
 
     @Test
     public void checkGetPresets() throws Exception {
-        //TODO
+        userRepository.save(testUser);
+        mockMvc.perform(get("/presets?username=" + testUser.getUsername()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"));
+        userRepository.delete(testUser);
     }
 
     @Test
     public void checkAddPreset() throws Exception {
-        //TODO
+        userRepository.save(testUser);
+        List<String> newActionList = new ArrayList<>();
+        newActionList.add("turning off lights");
+        newActionList.add("sorting trash");
+        Preset newPreset = new Preset("new preset", newActionList);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBody = mapper.writeValueAsString(newPreset);
+        mockMvc.perform(get("/addpreset?username=" + testUser.getUsername())
+                .contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("true")));
+        testUser = userRepository.findFirstByUsername(testUser.getUsername());
+        assertTrue(testUser.getPresets().contains(newPreset));
+        userRepository.delete(testUser);
     }
 
     @Test
     public void checkDeletePreset() throws Exception {
-        //TODO
+        userRepository.save(testUser);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBody = mapper.writeValueAsString(presets.get(0));
+        mockMvc.perform(get("/deletepreset?username=" + testUser.getUsername())
+                .contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("true")));
+        testUser = userRepository.findFirstByUsername(testUser.getUsername());
+        assertFalse(testUser.getPresets().contains(presets.get(0)));
+        userRepository.delete(testUser);
+        testUser.setPresets(presets);
     }
 
     @Test
     public void checkExecutePreset() throws Exception {
-        //TODO
+        userRepository.save(testUser);
+        int pointsToBeAdded = 20 + 10;
+        int oldScore = testUser.getScore();
+        Preset preset = testUser.getPresets().get(0);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBody = mapper.writeValueAsString(preset);
+        mockMvc.perform(get("/executepreset?username=" + testUser.getUsername())
+                .contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("true")));
+        testUser = userRepository.findFirstByUsername(testUser.getUsername());
+        assertEquals(oldScore + pointsToBeAdded, testUser.getScore());
+        userRepository.delete(testUser);
     }
 }

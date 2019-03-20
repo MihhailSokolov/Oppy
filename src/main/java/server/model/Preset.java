@@ -1,6 +1,8 @@
 package server.model;
 
-import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -9,12 +11,8 @@ public class Preset {
     private String name;
     private List<String> actionList;
 
-    public Preset(String name) {
-        this.name = name;
-        actionList = new ArrayList<>();
-    }
-
-    public Preset(String name, List<String> actionList) {
+    @JsonCreator
+    public Preset(@JsonProperty("name") String name, @JsonProperty("actionList") List<String> actionList) {
         this.name = name;
         this.actionList = actionList;
     }
@@ -36,15 +34,15 @@ public class Preset {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object other) {
+        if (this == other) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (other == null || getClass() != other.getClass()) {
             return false;
         }
-        Preset preset = (Preset) o;
-        return Objects.equals(name, preset.name) &&
-                Objects.equals(actionList, preset.actionList);
+        Preset preset = (Preset) other;
+        return Objects.equals(name, preset.name)
+                && Objects.equals(actionList, preset.actionList);
     }
 }

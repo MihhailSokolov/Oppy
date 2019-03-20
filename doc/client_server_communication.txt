@@ -147,7 +147,7 @@ ADD PRESET
 DELETE PRESET
     To delete a preset from the list of user's presets
     Request:
-        /addpreset?username=oppy123
+        /deletepreset?username=oppy123
         Body should contain JSON object of Preset with its name (everything else can be null)
     Response:
         200 OK

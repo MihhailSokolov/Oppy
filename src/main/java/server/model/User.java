@@ -1,8 +1,9 @@
 package server.model;
 
+import com.google.common.base.Objects;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.base.Objects;
 import javafx.scene.image.Image;
 
 import org.springframework.data.annotation.Id;
@@ -126,36 +127,32 @@ public class User {
     @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        return "User[" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", score=" + score +
-                ", registerDate='" + dateFormat.format(registerDate) + '\'' +
-                ", anonymous=" + anonymous +
-                ", pushNotifications=" + pushNotifications +
-                ", profilePicture=" + profilePicture +
-                ", presets=" + presets +
-                ']';
+        return "User["
+                + "username='" + username + '\''
+                + ", password='" + password + '\''
+                + ", email='" + email + '\''
+                + ", score=" + score
+                + ", registerDate='" + dateFormat.format(registerDate) + '\''
+                + ", anonymous=" + anonymous
+                + ", pushNotifications=" + pushNotifications
+                + ", profilePicture=" + profilePicture
+                + ", presets=" + presets + ']';
     }
 
     @Override
     public boolean equals(Object other) {
-        if (this == other) {
-            return true;
-        }
         if (other == null || getClass() != other.getClass()) {
             return false;
         }
         User user = (User) other;
-        return score == user.score &&
-                anonymous == user.anonymous &&
-                pushNotifications == user.pushNotifications &&
-                Objects.equal(username, user.username) &&
-                Objects.equal(password, user.password) &&
-                Objects.equal(email, user.email) &&
-                Objects.equal(registerDate, user.registerDate) &&
-                Objects.equal(profilePicture, user.profilePicture) &&
-                Objects.equal(presets, user.presets);
+        return score == user.score
+                && anonymous == user.anonymous
+                && pushNotifications == user.pushNotifications
+                && Objects.equal(username, user.username)
+                && Objects.equal(password, user.password)
+                && Objects.equal(email, user.email)
+                && Objects.equal(registerDate, user.registerDate)
+                && Objects.equal(profilePicture, user.profilePicture)
+                && Objects.equal(presets, user.presets);
     }
 }

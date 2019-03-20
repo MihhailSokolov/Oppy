@@ -179,7 +179,9 @@ Checkstyle configurartion that checks the Google coding conventions (https://goo
     <module name="MissingSwitchDefault"/>
     <module name="StringLiteralEquality"/>
     <module name="UnnecessaryParentheses"/>
-    <module name="CyclomaticComplexity"/>
+    <module name="CyclomaticComplexity">
+      <property name="max" value="15"/>
+    </module>
   </module>
   <module name="FileTabCharacter">
     <property name="eachLine" value="true"/>

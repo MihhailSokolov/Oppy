@@ -12,7 +12,7 @@ public class PresetTest {
 
     @Test
     public void constructorTest1() {
-        Preset preset = new Preset("my preset");
+        Preset preset = new Preset("my preset", new ArrayList<>());
         assertNotNull(preset);
     }
 
@@ -27,19 +27,19 @@ public class PresetTest {
 
     @Test
     public void getName() {
-        Preset preset = new Preset("my preset");
+        Preset preset = new Preset("my preset", new ArrayList<>());
         assertEquals("my preset", preset.getName());
     }
 
     @Test
     public void getActionList() {
-        Preset preset = new Preset("my preset");
+        Preset preset = new Preset("my preset", new ArrayList<>());
         assertNotNull(preset.getActionList());
     }
 
     @Test
     public void setActionList() {
-        Preset preset = new Preset("my preset");
+        Preset preset = new Preset("my preset", new ArrayList<>());
         List<String> list = new ArrayList<>();
         list.add("vegetable meal");
         list.add("reuse bottle");
@@ -54,7 +54,7 @@ public class PresetTest {
         list.add("reuse bottle");
         Preset preset1 = new Preset("preset", list);
         Preset preset2 = new Preset("preset", list);
-        Preset preset3 = new Preset("different preset");
+        Preset preset3 = new Preset("different preset", new ArrayList<>());
         assertEquals(preset1, preset2);
         assertEquals(preset1, preset1);
         assertNotEquals(preset1, preset3);

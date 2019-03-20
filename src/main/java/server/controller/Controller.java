@@ -12,10 +12,7 @@ import server.model.Action;
 import server.model.Preset;
 import server.model.Response;
 import server.model.User;
-import server.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -203,7 +200,8 @@ public class Controller {
     }
 
     @RequestMapping("/deletepreset")
-    public ResponseEntity<Response> deletePreset(@RequestParam("username") String username, @RequestBody Preset preset) {
+    public ResponseEntity<Response> deletePreset(@RequestParam("username") String username,
+                                                 @RequestBody Preset preset) {
         return ResponseEntity.ok().body(new Response(dbDataController.deletePreset(username, preset)));
     }
 
