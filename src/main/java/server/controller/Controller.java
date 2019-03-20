@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import server.db.DbDataController;
 import server.model.Action;
+import server.model.Preset;
 import server.model.Response;
 import server.model.User;
 
@@ -158,7 +159,7 @@ public class Controller {
         String name = user.getUsername();
         String pass = user.getPassword();
         if (dbDataController.isUserAuthenticated(name, pass)) {
-            return ResponseEntity.ok().body(new Response(dbDataController.resetScore(name, pass)));
+            return ResponseEntity.ok().body(new Response(dbDataController.resetScore(name)));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Response(false));
         }
@@ -186,5 +187,27 @@ public class Controller {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Response(false));
         }
+    }
+
+    @RequestMapping("/presets")
+    public ResponseEntity<List<Preset>> getPresets(@RequestParam("username") String username) {
+        return ResponseEntity.ok().body(dbDataController.getPresets(username));
+    }
+
+    @RequestMapping("/addpreset")
+    public ResponseEntity<Response> addPreset(@RequestParam("username") String username, @RequestBody Preset preset) {
+        return ResponseEntity.ok().body(new Response(dbDataController.addPresetToUser(username, preset)));
+    }
+
+    @RequestMapping("/deletepreset")
+    public ResponseEntity<Response> deletePreset(@RequestParam("username") String username,
+                                                 @RequestBody Preset preset) {
+        return ResponseEntity.ok().body(new Response(dbDataController.deletePreset(username, preset)));
+    }
+
+    @RequestMapping("executepreset")
+    public ResponseEntity<Response> executePreset(@RequestParam("username") String username,
+                                                  @RequestBody Preset preset) {
+        return ResponseEntity.ok().body(new Response(dbDataController.executePreset(username, preset)));
     }
 }

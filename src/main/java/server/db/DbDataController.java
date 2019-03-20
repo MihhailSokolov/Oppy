@@ -3,6 +3,7 @@ package server.db;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import server.model.Action;
+import server.model.Preset;
 import server.model.User;
 import server.repository.ActionRepository;
 import server.repository.UserRepository;
@@ -110,22 +111,6 @@ public class DbDataController {
         return actionRepository.findAll();
     }
 
-    /**x
-     * Method to add an action to the db (for prepping the db).
-     *
-     * @param actionName name of action
-     * @param category   category name of action
-     * @param points     number of pts the action has
-     * @return true if successful
-     */
-    public boolean addAction(String actionName, String category, int points) {
-        if (actionRepository.save(new Action(actionName, category, points)) == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     /**
      * Method to get number of points a certain action is worth.
      *
@@ -225,10 +210,76 @@ public class DbDataController {
      * @param username user's username
      * @return true if successful, false otherwise
      */
-    public boolean resetScore(String username, String pass) {
+    public boolean resetScore(String username) {
         User user = userRepository.findFirstByUsername(username);
         user.setScore(0);
         user.setRegisterDate(new Date());
         return userRepository.save(user) != null;
+    }
+
+    public List<Preset> getPresets(String username) {
+        return userRepository.findFirstByUsername(username).getPresets();
+    }
+
+    /**
+     * Method to add new preset to the list of user's presets.
+     * @param username user's username
+     * @param preset a new preset to add
+     * @return true if successful, false otherwise
+     */
+    public boolean addPresetToUser(String username, Preset preset) {
+        User user = userRepository.findFirstByUsername(username);
+        List<Preset> presetList = user.getPresets();
+        presetList.add(preset);
+        user.setPresets(presetList);
+        return userRepository.save(user) != null;
+    }
+
+    /**
+     * Method to delete a preset from the list of user's presets.
+     * @param username user's username
+     * @param preset Preset to be deleted
+     * @return true of successful, false otherwise
+     */
+    public boolean deletePreset(String username, Preset preset) {
+        User user = userRepository.findFirstByUsername(username);
+        List<Preset> presetList = user.getPresets();
+        boolean deleted = presetList.remove(preset);
+        user.setPresets(presetList);
+        return deleted && userRepository.save(user) != null;
+    }
+
+    /**
+     * Method to execute provided preset.
+     * @param username user's username
+     * @param preset Preset to be executed
+     * @return true if successfully executed, false otherwise
+     */
+    public boolean executePreset(String username, Preset preset) {
+        List<Preset> presets = getPresets(username);
+        int index = findIndexByPresetName(presets, preset.getName());
+        if (index == -1) {
+            return false;
+        }
+        int pointsToAdd = 0;
+        for (String actionName : presets.get(index).getActionList()) {
+            pointsToAdd += getActionPoints(actionName);
+        }
+        return addToUserScore(username, pointsToAdd);
+    }
+
+    /**
+     * Private method to help find the index of the preset in the list only by name.
+     * @param list List of presets
+     * @param presetName preset name to be found
+     * @return index of the preset or -1 if not found
+     */
+    private int findIndexByPresetName(List<Preset> list, String presetName) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getName().equals(presetName)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
