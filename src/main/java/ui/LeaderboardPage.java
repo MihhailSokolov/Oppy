@@ -24,9 +24,14 @@ public class LeaderboardPage {
 
     //this part is only here for testing and showing how the tables work.
     //Will be deleted once it can be replaced
-    private static final ObservableList<User> data =
+    private static final ObservableList<User> user =
             FXCollections.observableArrayList(
-                    new User("hoi","hoihoi123","email@email.com",20, new Date())
+                    Main.clientController.getUser()
+            );
+
+    private static final ObservableList<User> number1 =
+            FXCollections.observableArrayList(
+                    Main.clientController.getUser()
             );
     //end of the testing part
 
@@ -77,7 +82,7 @@ public class LeaderboardPage {
 
         //here the columns and content are added to the tables and settings of the tables are set
         //data needs tp be replaced with an ObservableList<User> only containing the number 1 player
-        number1Player.setItems(data);
+        number1Player.setItems(number1);
         number1Player.getColumns().addAll(rank, name, score);
         number1Player.setPrefHeight(60);
         number1Player.setPrefWidth(300);
@@ -92,7 +97,7 @@ public class LeaderboardPage {
         GridPane.setConstraints(bestPlayers,1,1);
 
         //data needs tp be replaced with an ObservableList<User> only containing the current User
-        scoreOfuser.setItems(data);
+        scoreOfuser.setItems(user);
         scoreOfuser.getColumns().addAll(rank, name, score);
         scoreOfuser.setPrefHeight(60);
         scoreOfuser.setPrefWidth(300);

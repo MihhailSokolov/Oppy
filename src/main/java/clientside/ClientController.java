@@ -25,6 +25,7 @@ public class ClientController {
     private RestTemplate restTemplate = new RestTemplate();
     private List<Action> actionList = null;
     private ResponseEntity<String> responseEntity = null;
+    private List<User> top50 = null;
 
     public ClientController(User user) {
         this.user = user;
@@ -81,7 +82,7 @@ public class ClientController {
             }
         }, TOP50 {
             public String toString() {
-                return "TOP50";
+                return "top50";
             }
         }, CHANGEANON {
             public String toString() {
@@ -268,5 +269,17 @@ public class ClientController {
 
     private String hash(String pwd) {
         return Hashing.sha256().hashString(pwd, StandardCharsets.UTF_8).toString();
+    }
+
+    public void updateTop50(){
+        responseEntity = this.getRequest(this.baseUrl + String.format(Path.TOP50.toString()));
+        if (responseEntity.getBody() != null) {
+            Gson gson = new Gson();
+            top50 = Arrays.asList(gson.fromJson(responseEntity.getBody(), User[].class));
+        }
+    }
+
+    public List<User> getTop50() {
+        return top50;
     }
 }
