@@ -137,7 +137,7 @@ public class ClientController {
      * @return String response msg containing user's email addy.
      */
     public String getEmail() {
-        responseEntity = this.getRequest(this.baseUrl + String.format(Path.EMAIL.toString()));
+        responseEntity = this.getRequest(this.baseUrl + String.format(Path.EMAIL.toString(), user.getUsername()));
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
