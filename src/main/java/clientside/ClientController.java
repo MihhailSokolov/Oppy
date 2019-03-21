@@ -178,7 +178,7 @@ public class ClientController {
      * @return String response msg ("true"/"false").
      */
     public String updateEmail(String newEmail, String pass) {
-        if (this.user != null && hash(pass) == this.user.getPassword()) {
+        if (this.user != null && hash(pass).equals(this.user.getPassword())) {
             responseEntity = this.postRequest(this.baseUrl
                     + String.format(Path.UPDATEEMAIL.toString(), newEmail), user);
         }
