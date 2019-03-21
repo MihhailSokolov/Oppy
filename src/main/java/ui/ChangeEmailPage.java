@@ -1,5 +1,6 @@
 package ui;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -44,7 +45,7 @@ public class ChangeEmailPage {
         Button changeButton = new Button("Change Email");
         changeButton.setOnAction(e -> {
             String result = Main.clientController.updateEmail(newMailTextfield.getText(), passwordTextfield.getText());
-            if (result.equals("true")) { // go to login page, delete account
+            if (result.equals("true")) { // go to Settings page when email is changed
                 window.setScene(SettingsPage.settingsScene(window));
             }
         });
