@@ -282,4 +282,40 @@ public class DbDataController {
         }
         return -1;
     }
+
+    public List<User> getFriends(String username) {
+        return userRepository.findFirstByUsername(username).getFriends();
+    }
+
+    /**
+     * Method to add a new friend to the user's friend list.
+     * @param username user's username
+     * @param friend new friend (User) to be added
+     * @return true if successfully added, false otherwise
+     */
+    public boolean addNewFriend(String username, User friend) {
+        User user = userRepository.findFirstByUsername(username);
+        List<User> friends = user.getFriends();
+        friends.add(friend);
+        user.setFriends(friends);
+        return userRepository.save(user) != null;
+    }
+
+    /**
+     * Method to delete a friend from user's list of friends.
+     * @param username user's username
+     * @param friend User to be deleted
+     * @return true if successfully deleted, false otherwise
+     */
+    public boolean deleteFriend(String username, User friend) {
+        User user = userRepository.findFirstByUsername(username);
+        List<User> friends = user.getFriends();
+        for (User user1 : friends) {
+            if (user1.getUsername().equals(friend.getUsername())) {
+                friends.remove(user1);
+            }
+        }
+        user.setFriends(friends);
+        return userRepository.save(user) != null;
+    }
 }

@@ -205,9 +205,24 @@ public class Controller {
         return ResponseEntity.ok().body(new Response(dbDataController.deletePreset(username, preset)));
     }
 
-    @RequestMapping("executepreset")
+    @RequestMapping("/executepreset")
     public ResponseEntity<Response> executePreset(@RequestParam("username") String username,
                                                   @RequestBody Preset preset) {
         return ResponseEntity.ok().body(new Response(dbDataController.executePreset(username, preset)));
+    }
+
+    @RequestMapping("/friends")
+    public ResponseEntity<List<User>> getFriends(@RequestParam("username") String username) {
+        return ResponseEntity.ok().body(dbDataController.getFriends(username));
+    }
+
+    @RequestMapping("/addfriend")
+    public ResponseEntity<Response> addFriend(@RequestParam("username") String username, @RequestBody User friend) {
+        return ResponseEntity.ok().body(new Response(dbDataController.addNewFriend(username, friend)));
+    }
+
+    @RequestMapping("/deletefriend")
+    public ResponseEntity<Response> deleteFriend(@RequestParam("username") String username, @RequestBody User friend) {
+        return ResponseEntity.ok().body(new Response(dbDataController.deleteFriend(username, friend)));
     }
 }
