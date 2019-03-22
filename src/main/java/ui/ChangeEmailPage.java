@@ -1,6 +1,5 @@
 package ui;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

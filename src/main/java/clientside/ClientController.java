@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
-
 public class ClientController {
     private User user;
     private String baseUrl = "https://oppy-project.herokuapp.com/";
@@ -30,6 +28,7 @@ public class ClientController {
         this.user = user;
         user.setPassword(hash(user.getPassword()));
     }
+
 
     public ClientController() {
     }
@@ -81,7 +80,7 @@ public class ClientController {
             }
         }, TOP50 {
             public String toString() {
-                return "TOP50";
+                return "top50";
             }
         }, CHANGEANON {
             public String toString() {
@@ -97,43 +96,46 @@ public class ClientController {
 
     /**
      * Sends a new user registration request to server.
+     *
      * @return String response message ("true"/"false").
      */
     public String register() {
-        if (this.user != null) {
-            responseEntity = this.postRequest(this.baseUrl + Path.REGISTER.toString(), user);
-        }
+        responseEntity = this.postRequest(this.baseUrl + Path.REGISTER.toString(), user);
+
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
     /**
      * Sends an "update user pass" request to the server.
+     *
      * @param newPass the new password for the user.
      * @return String response message ("true"/"false").
      */
     public String updatePass(String newPass) {
-        if (this.user != null) {
-            responseEntity = this.postRequest(this.baseUrl
-                    + String.format(Path.UPDATEPASS.toString(), hash(newPass)), user);
+        responseEntity = this.postRequest(this.baseUrl
+                + String.format(Path.UPDATEPASS.toString(), hash(newPass)), user);
+        String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
+        if (responseMsg.equals("true")) {
+            this.user.setPassword(hash(newPass));
         }
-        return new JSONObject(responseEntity.getBody()).getString("message");
+        return responseMsg;
     }
 
     /**
      * Sends a "take action request" to the server.
+     *
      * @param actionName action name to be sent.
      * @return String response msg ("true"/"false").
      */
     public String takeAction(String actionName) {
-        if (this.user != null) {
-            responseEntity = this.postRequest(this.baseUrl + String.format(Path.TAKEACTION.toString(),
-                    user.getUsername()), new Action(actionName, "", 0));
-        }
+        responseEntity = this.postRequest(this.baseUrl + String.format(Path.TAKEACTION.toString(),
+                user.getUsername()), new Action(actionName, "", 0));
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
     /**
      * Sends a "get email request" to the server.
+     *
      * @return String response msg containing user's email addy.
      */
     public String getEmail() {
@@ -143,6 +145,7 @@ public class ClientController {
 
     /**
      * Returns the list of actions.
+     *
      * @return actionList.
      */
     public List<Action> getActionList() {
@@ -154,61 +157,64 @@ public class ClientController {
      */
     public void updateActionList() {
         responseEntity = this.getRequest(this.baseUrl + String.format(Path.ACTIONS.toString()));
-        if (responseEntity.getBody() != null) {
-            Gson gson = new Gson();
-            actionList = Arrays.asList(gson.fromJson(responseEntity.getBody(), Action[].class));
-        }
+        Gson gson = new Gson();
+        actionList = Arrays.asList(gson.fromJson(responseEntity.getBody(), Action[].class));
     }
 
     /**
      * Sends a "delete acct request" to the server
+     *
      * @return String response msg ("true"/"false"), implying success or failure.
      */
     public String deleteAccount() {
-        if (this.user != null) {
-            responseEntity = this.postRequest(this.baseUrl + Path.DELETE.toString(), user);
-        }
+        responseEntity = this.postRequest(this.baseUrl + Path.DELETE.toString(), user);
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
     /**
      * Sends an "update email addy request" to the server.
+     *
      * @param newEmail the new email addy.
-     * @param pass current password.
+     * @param pass     current password.
      * @return String response msg ("true"/"false").
      */
     public String updateEmail(String newEmail, String pass) {
-        if (this.user != null && hash(pass).equals(this.user.getPassword())) {
+        if (hash(pass).equals(this.user.getPassword())) {
             responseEntity = this.postRequest(this.baseUrl
                     + String.format(Path.UPDATEEMAIL.toString(), newEmail), user);
+            String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
+            if (responseMsg.equals("true")) {
+                this.user.setEmail(newEmail);
+            }
+            return responseMsg;
+        } else {
+            return "false";
         }
-        return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
     /**
      * Sends a "reset request" to the server.
+     *
      * @return String resposne msg ("true"/"false").
      */
     public String reset() {
-        if (this.user != null) {
-            responseEntity = this.postRequest(this.baseUrl + Path.RESET, this.user);
-        }
+        responseEntity = this.postRequest(this.baseUrl + Path.RESET, this.user);
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
     /**
      * Sends a "login request" to the server.
+     *
      * @return String response msg "true"/"false"
      */
     public String login() {
-        if (this.user != null) {
-            responseEntity = this.postRequest(this.baseUrl + Path.LOGIN.toString(), user);
-        }
+        responseEntity = this.postRequest(this.baseUrl + Path.LOGIN.toString(), user);
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
     /**
      * Sends a request to server to get user's score.
+     *
      * @return user's score contained in content body.
      */
     public String getScore() {
@@ -218,6 +224,7 @@ public class ClientController {
 
     /**
      * Sends a request to the server checking the availability of a username.
+     *
      * @param username username to be checked.
      * @return availability "true"/"false" contained in response msg.
      */
@@ -228,6 +235,7 @@ public class ClientController {
 
     /**
      * Post request method.
+     *
      * @param url url to point at.
      * @param obj object to send.
      * @return ResponseEntity containing status code/body.
@@ -238,6 +246,7 @@ public class ClientController {
 
     /**
      * Get request method.
+     *
      * @param url to point at.
      * @return ResponseEntity containing status code/body.
      */
@@ -247,6 +256,7 @@ public class ClientController {
 
     /**
      * Method to subdivide list of actions according to given cat name.
+     *
      * @param categoryName cat name to subdivide.
      * @return return list of actions from only that category.
      */
@@ -258,15 +268,24 @@ public class ClientController {
                     categoryList.add(act);
                 }
             }
+            return categoryList;
         }
-        return categoryList;
+        return null;
     }
 
     public User getUser() {
         return this.user;
     }
 
-    private String hash(String pwd) {
+    public String hash(String pwd) {
         return Hashing.sha256().hashString(pwd, StandardCharsets.UTF_8).toString();
+    }
+
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
+    }
+
+    public void setActionList(List<Action> actionList) {
+        this.actionList = actionList;
     }
 }
