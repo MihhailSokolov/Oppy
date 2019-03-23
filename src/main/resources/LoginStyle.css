@@ -3,13 +3,13 @@
     -fx-background-repeat: stretch;
     -fx-background-size: 2000 1200;
     -fx-background-position: center center;
-
 }
 
 .button{
     -fx-min-height: 100px;
     -fx-min-width: 200px;
 }
+
 #grid{
     -fx-max-height: 475px;
     -fx-min-height: 475px;
@@ -20,6 +20,7 @@
     -fx-border-color: #789149;
     -fx-background-color: radial-gradient(center 50% 50%, radius 60%, reflect, #ADFF2F, black );
 }
+
 .label{
     -fx-min-width: 200px;
     -fx-min-height: 20px;
@@ -28,6 +29,7 @@
     -fx-hgap: 50px;
     -fx-translate-x: 50px;
 }
+
 .text-field{
     -fx-min-width: 400px;
     -fx-max-width: 400px;
@@ -39,6 +41,7 @@
     -fx-border-width: 2px;
     -fx-border-color: #789149;
 }
+
 .check-box{
     -fx-min-width: 200px;
     -fx-min-height: 40px;
@@ -73,11 +76,13 @@
     -fx-min-height: 100px;
     -fx-max-height: 100px;
 }
+
 #topGrid{
     -fx-max-height: 200px;
     -fx-min-height: 200px;
     -fx-min-width: 100%;
 }
+
 #forgotPasswordButton{
     -fx-min-height: 40px;
     -fx-max-height: 40px;
@@ -90,6 +95,7 @@
     -fx-text-fill: blue;
     -fx-underline: true;
 }
+
 #loginButton{
     -fx-background-color:
             #090a0c,
@@ -100,11 +106,9 @@
     -fx-background-insets: 0,1,2,0;
     -fx-text-fill: white;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
-    -fx-font-family: "Arial";
     -fx-text-fill: linear-gradient(white, #d0d0d0);
     -fx-font-size: 12px;
     -fx-padding: 10 20 10 20;
-
     -fx-min-width: 400px;
     -fx-max-width: 400px;
     -fx-min-height: 50px;

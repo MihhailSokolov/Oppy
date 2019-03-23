@@ -4,7 +4,14 @@ import clientside.ClientController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -64,7 +71,7 @@ public class LoginPage {
 
         PasswordField passwordTextfield = new PasswordField();
         passwordTextfield.setPromptText("Password");
-        GridPane.setConstraints(passwordTextfield, 0, 6,2, 1);
+        GridPane.setConstraints(passwordTextfield, 0, 6, 2,  1);
 
         //remember forgot login
         CheckBox rememberMe = new CheckBox("remember me");
@@ -89,7 +96,7 @@ public class LoginPage {
             }
 
         });
-        GridPane.setConstraints(loginButton, 0, 9,2,1 );
+        GridPane.setConstraints(loginButton, 0, 9, 2, 1);
 
         Button forgotPasswordButton = new Button("forgot password?");
         forgotPasswordButton.setId("forgotPasswordButton");
@@ -118,7 +125,7 @@ public class LoginPage {
 
 
         ////////////////////////////////////////////////////////////////
-        ////Row size thingies////////////////////////////////////////////
+        ////setting the sizes of the rows///////////////////////////////
         RowConstraints row0 = new RowConstraints();
         row0.setMinHeight(100);
         row0.setMaxHeight(100);
@@ -150,10 +157,8 @@ public class LoginPage {
         RowConstraints row10 = new RowConstraints();
         row10.setMinHeight(100);
 
-
-
         grid.getRowConstraints().addAll(row0, row1, row2, row3, row4, row5, row6, row7, row8, row9, row10);
-        ////end of row size ing/////////////////////////////////////////////////////////////
+        ////end of setting row sizes////////////////////////////////////
         ////////////////////////////////////////////////////////////////
 
         //here the create view is made into a scene and return when the method is called
