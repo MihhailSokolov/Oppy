@@ -15,10 +15,10 @@
     -fx-min-height: 475px;
     -fx-max-width: 500px;
     -fx-min-width: 500px;
-   /* -fx-background-color: #004000;*/
     -fx-border-width: 2px;
     -fx-border-color: #789149;
     -fx-background-color: radial-gradient(center 50% 50%, radius 60%, reflect, #ADFF2F, black );
+    /*-fx-background-color: #004000;*/
 }
 
 .label{
@@ -107,7 +107,8 @@
     -fx-text-fill: white;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
     -fx-text-fill: linear-gradient(white, #d0d0d0);
-    -fx-font-size: 12px;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
     -fx-padding: 10 20 10 20;
     -fx-min-width: 400px;
     -fx-max-width: 400px;
