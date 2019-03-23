@@ -1,10 +1,114 @@
 .root{
-    -fx-background-image: url("nature.jpg");
+    -fx-background-image: url("nature.jpg"); /* image form https://www.pexels.com/search/forest/ */
     -fx-background-repeat: stretch;
     -fx-background-size: 2000 1200;
     -fx-background-position: center center;
+
 }
 
 .button{
-    -fx-background-color: #000000;
+    -fx-min-height: 100px;
+    -fx-min-width: 200px;
+}
+#grid{
+    -fx-max-height: 475px;
+    -fx-min-height: 475px;
+    -fx-max-width: 500px;
+    -fx-min-width: 500px;
+   /* -fx-background-color: #004000;*/
+    -fx-border-width: 2px;
+    -fx-border-color: #789149;
+    -fx-background-color: radial-gradient(center 50% 50%, radius 60%, reflect, #ADFF2F, black );
+}
+.label{
+    -fx-min-width: 200px;
+    -fx-min-height: 20px;
+    -fx-max-height: 20px;
+    -fx-text-fill: white;
+    -fx-hgap: 50px;
+    -fx-translate-x: 50px;
+}
+.text-field{
+    -fx-min-width: 400px;
+    -fx-max-width: 400px;
+    -fx-min-height: 50px;
+    -fx-max-height: 50px;
+    -fx-translate-x: 50px;
+    -fx-background-color: #006000;
+    -fx-text-fill: white;
+    -fx-border-width: 2px;
+    -fx-border-color: #789149;
+}
+.check-box{
+    -fx-min-width: 200px;
+    -fx-min-height: 40px;
+    -fx-translate-x: 50px;
+    -fx-text-fill: white;
+}
+.check-box .box{
+    -fx-background-color: #006000;
+    -fx-text-fill: white;
+    -fx-border-width: 2px;
+    -fx-border-color: #789149;
+}
+.check-box:selected .mark {
+    -fx-font-weight: bold;
+    -fx-background-color: white;
+}
+
+#login-register{
+    -fx-min-width: 250px;
+    -fx-min-height: 100px;
+    -fx-max-height: 100px;
+    -fx-font-size: 20;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-color:  rgba(255, 255, 255, 0.2);
+    -fx-border-width: 2px;
+    -fx-border-color: #789149;
+}
+#login-register:selected{
+    -fx-background-color: none;
+    -fx-border-width: 0px;
+    -fx-min-height: 100px;
+    -fx-max-height: 100px;
+}
+#topGrid{
+    -fx-max-height: 200px;
+    -fx-min-height: 200px;
+    -fx-min-width: 100%;
+}
+#forgotPasswordButton{
+    -fx-min-height: 40px;
+    -fx-max-height: 40px;
+    -fx-min-width: 200px;
+    -fx-background-color: none;
+    -fx-text-fill: #b2e100;
+    -fx-translate-x: 40px;
+}
+#forgotPasswordButton:hover {
+    -fx-text-fill: blue;
+    -fx-underline: true;
+}
+#loginButton{
+    -fx-background-color:
+            #090a0c,
+            linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 12px;
+    -fx-padding: 10 20 10 20;
+
+    -fx-min-width: 400px;
+    -fx-max-width: 400px;
+    -fx-min-height: 50px;
+    -fx-max-height: 50px;
+    -fx-translate-x: 50px;
+    -fx-translate-y: 15px;
 }
