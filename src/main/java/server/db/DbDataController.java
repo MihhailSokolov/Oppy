@@ -3,6 +3,7 @@ package server.db;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import server.model.Action;
+import server.model.Preset;
 import server.model.User;
 import server.repository.ActionRepository;
 import server.repository.UserRepository;
@@ -39,27 +40,29 @@ public class DbDataController {
 
     /**
      * User creation method: checks whether user exists - if not: user is created.
-     * @param username of user to be checked if there are no duplicates and registering
-     * @param password of user for registering
-     * @param email    of user to be checked for duplicates and for registering
+     *
+     * @param user User to be registered
      * @return an empty msg if all went well otherwise fill the msg with the error
      */
-    public String createNewUser(String username, String password, String email) {
+    public String createNewUser(User user) {
         String message = "";
-        if (!isUsernameAvailable(username)) {
+        if (!isUsernameAvailable(user.getUsername())) {
             message = "Username is already taken. Try another username.";
-        } else if (!isEmailAvailable(email)) {
+        } else if (!isEmailAvailable(user.getEmail())) {
             message = "Email address is already registered.";
         } else {
-            userRepository.save(new User(username, password, email, 0, new Date()));
+            user.setScore(0);
+            user.setRegisterDate(new Date());
+            userRepository.save(user);
         }
         return message;
     }
 
     /**
      * Method for getting the actual score of the user.
+     *
      * @param username user's username
-     *      take the difference between the register date and current date and multiply that by 50.
+     *                 take the difference between the register date and current date and multiply that by 50.
      * @return the score - 50 times the days since creation of account with minimum value of 0
      */
     public int getUserScore(String username) {
@@ -84,8 +87,9 @@ public class DbDataController {
 
     /**
      * Method for updating user's password in db.
+     *
      * @param username user's username
-     * @param newpass user's new password
+     * @param newpass  user's new password
      * @return true is successful, false otherwise
      */
     public boolean updatePassword(String username, String newpass) {
@@ -100,6 +104,7 @@ public class DbDataController {
 
     /**
      * Method to get all the actions from db.
+     *
      * @return List of actions
      */
     public List<Action> getAllActions() {
@@ -107,27 +112,13 @@ public class DbDataController {
     }
 
     /**
-     * Method to add an action to the db (for prepping the db).
-     * @param actionName name of action
-     * @param category category name of action
-     * @param points number of pts the action has
-     * @return true if successful
-     */
-    public boolean addAction(String actionName, String category, int points) {
-        if (actionRepository.save(new Action(actionName, category, points)) == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
      * Method to get number of points a certain action is worth.
+     *
      * @param actionName name of the action
      * @return number of points
      */
     public int getActionPoints(String actionName) {
-        Action action =  actionRepository.findFirstByActionName(actionName);
+        Action action = actionRepository.findFirstByActionName(actionName);
         if (action != null) {
             return action.getPoints();
         } else {
@@ -137,8 +128,9 @@ public class DbDataController {
 
     /**
      * Method to increase user's score by certain amount of points.
+     *
      * @param username user's username
-     * @param points number of points to add to current user's score
+     * @param points   number of points to add to current user's score
      * @return true if successful, false otherwise
      */
     public boolean addToUserScore(String username, int points) {
@@ -153,10 +145,11 @@ public class DbDataController {
 
     /**
      * Method to get Top 50 users by their score.
+     *
      * @return List of Users
      */
     public List<User> getTop50Users() {
-        List<User> users = userRepository.findAll();
+        List<User> users = userRepository.findAllByAnonymous(false);
         List<User> top50Users = new ArrayList<>();
         int limit = 50;
         if (users.size() < 50) {
@@ -179,5 +172,114 @@ public class DbDataController {
         public int compare(User user1, User user2) {
             return -Integer.compare(user1.getScore(), user2.getScore());
         }
+    }
+
+    /**
+     * Method to change anonymous status in db.
+     *
+     * @param username  user's username
+     * @param anonymous new anonymous status
+     * @return true if successful, false otherwise
+     */
+    public boolean changeAnonymous(String username, boolean anonymous) {
+        User userToUpdate = userRepository.findFirstByUsername(username);
+        userToUpdate.setAnonymous(anonymous);
+        if (userRepository.save(userToUpdate) == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Method for updating user's password in db.
+     *
+     * @param username user's username
+     * @param newEmail user's new email
+     * @return true is successful, false otherwise
+     */
+    public boolean updateEmail(String username, String newEmail) {
+        User userToUpdate = userRepository.findFirstByUsername(username);
+        userToUpdate.setEmail(newEmail);
+        return userRepository.save(userToUpdate) != null;
+    }
+
+    /**
+     * Method to reset users points to 0.
+     *
+     * @param username user's username
+     * @return true if successful, false otherwise
+     */
+    public boolean resetScore(String username) {
+        User user = userRepository.findFirstByUsername(username);
+        user.setScore(0);
+        user.setRegisterDate(new Date());
+        return userRepository.save(user) != null;
+    }
+
+    public List<Preset> getPresets(String username) {
+        return userRepository.findFirstByUsername(username).getPresets();
+    }
+
+    /**
+     * Method to add new preset to the list of user's presets.
+     * @param username user's username
+     * @param preset a new preset to add
+     * @return true if successful, false otherwise
+     */
+    public boolean addPresetToUser(String username, Preset preset) {
+        User user = userRepository.findFirstByUsername(username);
+        List<Preset> presetList = user.getPresets();
+        presetList.add(preset);
+        user.setPresets(presetList);
+        return userRepository.save(user) != null;
+    }
+
+    /**
+     * Method to delete a preset from the list of user's presets.
+     * @param username user's username
+     * @param preset Preset to be deleted
+     * @return true of successful, false otherwise
+     */
+    public boolean deletePreset(String username, Preset preset) {
+        User user = userRepository.findFirstByUsername(username);
+        List<Preset> presetList = user.getPresets();
+        boolean deleted = presetList.remove(preset);
+        user.setPresets(presetList);
+        return deleted && userRepository.save(user) != null;
+    }
+
+    /**
+     * Method to execute provided preset.
+     * @param username user's username
+     * @param preset Preset to be executed
+     * @return true if successfully executed, false otherwise
+     */
+    public boolean executePreset(String username, Preset preset) {
+        List<Preset> presets = getPresets(username);
+        int index = findIndexByPresetName(presets, preset.getName());
+        if (index == -1) {
+            return false;
+        }
+        int pointsToAdd = 0;
+        for (String actionName : presets.get(index).getActionList()) {
+            pointsToAdd += getActionPoints(actionName);
+        }
+        return addToUserScore(username, pointsToAdd);
+    }
+
+    /**
+     * Private method to help find the index of the preset in the list only by name.
+     * @param list List of presets
+     * @param presetName preset name to be found
+     * @return index of the preset or -1 if not found
+     */
+    private int findIndexByPresetName(List<Preset> list, String presetName) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getName().equals(presetName)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

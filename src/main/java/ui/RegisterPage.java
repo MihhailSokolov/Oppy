@@ -1,6 +1,6 @@
 package ui;
 
-import clientside.RegisterHandler;
+import clientside.ClientController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -15,6 +15,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import server.model.User;
+
+import java.util.Date;
 
 public class RegisterPage {
     /**
@@ -82,14 +85,13 @@ public class RegisterPage {
         confirmPasswordTextfield.setPromptText("Confirm password");
         GridPane.setConstraints(confirmPasswordTextfield, 1, 5);
 
-
         //Here the register button is created
         Button registerButton = new Button("Register");
         GridPane.setConstraints(registerButton, 2, 6);
         registerButton.setOnAction(e -> {
-            RegisterHandler register = new RegisterHandler(usernameTextfield.getText(),
-                    emailTextfield.getText(), passwordTextfield.getText());
-            String result = register.sendRegister();
+            ClientController clientController = new ClientController(new User(usernameTextfield.getText(),
+                    passwordTextfield.getText(), emailTextfield.getText(), 0, new Date()));
+            String result = clientController.register();
             if (result.equals("true")) {
                 Alert success = new Alert(Alert.AlertType.INFORMATION);
                 success.setHeaderText("Success!");
@@ -111,8 +113,7 @@ public class RegisterPage {
         GridPane.setConstraints(checkA, 2, 3);
         checkA.setOnAction(e -> {
             if (!(usernameTextfield.getText().equals(""))) {
-                RegisterHandler availability = new RegisterHandler(usernameTextfield.getText());
-                String result = availability.sendAvailabilityCheck();
+                String result = new ClientController().checkAvailability(usernameTextfield.getText());
                 if (result.equals("true")) {
                     checkA.setStyle("-fx-background-color: #00ff00");
                 } else {

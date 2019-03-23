@@ -1,6 +1,6 @@
 package ui;
 
-import clientside.LoginHandler;
+import clientside.ClientController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,7 +11,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
-//import org.springframework.web.client.RestTemplate;
+import server.model.User;
+
+import java.util.Date;
 
 public class LoginPage {
     /**
@@ -72,12 +74,11 @@ public class LoginPage {
         Button loginButton = new Button("Login");
         loginButton.setId("loginButton");
         loginButton.setOnAction(e -> {
-            LoginHandler log = new LoginHandler(usernameTextfield.getText(),
-                    passwordTextfield.getText(), rememberMe.isSelected());
-            // ClientController.sendLogin(log.toString());
-            String result = log.sendLogin();
+            User user = new User(usernameTextfield.getText(), passwordTextfield.getText(), "", 0, new Date());
+            ClientController clientHandler = new ClientController(user);
+            String result = clientHandler.login();
             if (result.equals("true")) { // go to main page, now set to register as example
-                Main.userLog = log;
+                Main.clientController = clientHandler;
                 window.setScene(MainPage.mainScene(window));
             } else {
                 Alert failed = new Alert(Alert.AlertType.ERROR);
