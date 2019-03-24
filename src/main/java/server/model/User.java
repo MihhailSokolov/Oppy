@@ -28,6 +28,7 @@ public class User {
     private boolean pushNotifications;
     private Image profilePicture;
     private List<Preset> presets;
+    private List<User> friends;
 
     /**
      * Constructor for User object.
@@ -50,6 +51,7 @@ public class User {
         this.pushNotifications = true;
         this.profilePicture = null; //new Image("placeholder 100x100.png");
         this.presets = new ArrayList<>();
+        this.friends = new ArrayList<>();
     }
 
     public Date getRegisterDate() {
@@ -124,6 +126,14 @@ public class User {
         this.presets = presets;
     }
 
+    public List<User> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<User> friends) {
+        this.friends = friends;
+    }
+
     @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -136,7 +146,8 @@ public class User {
                 + ", anonymous=" + anonymous
                 + ", pushNotifications=" + pushNotifications
                 + ", profilePicture=" + profilePicture
-                + ", presets=" + presets + ']';
+                + ", presets=" + presets
+                + ", friends=" + friends + ']';
     }
 
     @Override
@@ -153,6 +164,7 @@ public class User {
                 && Objects.equal(email, user.email)
                 && Objects.equal(registerDate, user.registerDate)
                 && Objects.equal(profilePicture, user.profilePicture)
-                && Objects.equal(presets, user.presets);
+                && Objects.equal(presets, user.presets)
+                && Objects.equal(friends, user.friends);
     }
 }

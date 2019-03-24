@@ -37,6 +37,8 @@ public class ControllerTest {
 
     List<Preset> presets;
 
+    List<User> friends;
+
     Action testAction;
 
     Action additionalTestAction;
@@ -75,6 +77,12 @@ public class ControllerTest {
         presets.add(preset1);
         presets.add(preset2);
         testUser.setPresets(presets);
+        User friend1 = new User("friend1", "pass1", "friend1@gmail.com", 100, new Date());
+        User friend2 = new User("friend2", "pass2", "friend2@gmail.com", 200, new Date());
+        friends = new ArrayList<>();
+        friends.add(friend1);
+        friends.add(friend2);
+        testUser.setFriends(friends);
         if(userRepository.findFirstByUsername(testUser.getUsername())!=null)
             userRepository.delete(userRepository.findFirstByUsername(testUser.getUsername()));
         testAction = new Action("Recycle paper", "Recycling", 10);
@@ -457,5 +465,47 @@ public class ControllerTest {
         testUser = userRepository.findFirstByUsername(testUser.getUsername());
         assertEquals(oldScore + pointsToBeAdded, testUser.getScore());
         userRepository.delete(testUser);
+    }
+
+    @Test
+    public void checkGetFriends() throws Exception {
+        userRepository.save(testUser);
+        mockMvc.perform(get("/friends?username=" + testUser.getUsername()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"));
+        userRepository.delete(testUser);
+    }
+
+    @Test
+    public void checkAddFriend() throws Exception {
+        userRepository.save(testUser);
+        User newFriend = new User("friend3", "pass3", "friend3@gmail.com", 300, new Date());
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBody = mapper.writeValueAsString(newFriend);
+        mockMvc.perform(get("/addfriend?username=" + testUser.getUsername())
+                .contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("true")));
+        testUser = userRepository.findFirstByUsername(testUser.getUsername());
+        assertTrue(testUser.getFriends().contains(newFriend));
+        userRepository.delete(testUser);
+        testUser.setFriends(friends);
+    }
+
+    @Test
+    public void checkDeleteFriend() throws Exception {
+        userRepository.save(testUser);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBody = mapper.writeValueAsString(friends.get(0));
+        mockMvc.perform(get("/deletefriend?username=" + testUser.getUsername())
+                .contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("true")));
+        testUser = userRepository.findFirstByUsername(testUser.getUsername());
+        assertFalse(testUser.getFriends().contains(friends.get(0)));
+        userRepository.delete(testUser);
+        testUser.setFriends(friends);
     }
 }
