@@ -132,7 +132,6 @@ public class User {
                 + ", password='" + password + '\''
                 + ", email='" + email + '\''
                 + ", score=" + score
-                + ", registerDate='" + dateFormat.format(registerDate) + '\''
                 + ", anonymous=" + anonymous
                 + ", pushNotifications=" + pushNotifications
                 + ", profilePicture=" + profilePicture

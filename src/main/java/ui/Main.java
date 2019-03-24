@@ -3,6 +3,9 @@ package ui;
 import clientside.ClientController;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import server.model.User;
+
+import java.util.List;
 
 
 public class Main extends Application {

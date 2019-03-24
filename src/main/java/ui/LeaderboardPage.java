@@ -1,5 +1,6 @@
 package ui;
 
+import clientside.ClientController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 import server.model.User;
 
 import java.util.Date;
+import java.util.List;
 
 
 public class LeaderboardPage {
@@ -22,16 +24,21 @@ public class LeaderboardPage {
     private static  TableView<User> bestPlayers = new TableView<>();
     private static  TableView<User> scoreOfuser = new TableView<>();
 
+    public void update() {
+        Main.clientController.updateTop50();
+    }
+
     //this part is only here for testing and showing how the tables work.
-    //Will be deleted once it can be replaced
+    //Will be deleted once it can be replaced\
+
     private static final ObservableList<User> user =
             FXCollections.observableArrayList(
                     Main.clientController.getUser()
             );
 
-    private static final ObservableList<User> number1 =
+    private static final ObservableList<User> data =
             FXCollections.observableArrayList(
-                    Main.clientController.getUser()
+                    Main.clientController.getTop50()
             );
     //end of the testing part
 
@@ -66,7 +73,7 @@ public class LeaderboardPage {
 
 
 
-
+        System.out.println("the list: "+Main.clientController.getTop50());
 
         //here the columns for the tables are created
         TableColumn rank = new TableColumn("rank");
@@ -82,7 +89,7 @@ public class LeaderboardPage {
 
         //here the columns and content are added to the tables and settings of the tables are set
         //data needs tp be replaced with an ObservableList<User> only containing the number 1 player
-        number1Player.setItems(number1);
+        number1Player.setItems(user);
         number1Player.getColumns().addAll(rank, name, score);
         number1Player.setPrefHeight(60);
         number1Player.setPrefWidth(300);
