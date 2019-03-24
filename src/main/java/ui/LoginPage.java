@@ -36,9 +36,6 @@ public class LoginPage {
         BorderPane borderPane = new BorderPane();
 
         GridPane grid = new GridPane();
-       // grid.setPadding(new Insets(10, 10, 10, 10));
-        //grid.setVgap(8);
-        //grid.setHgap(10);
         grid.setId("grid");
 
         //fake login button at the top
@@ -79,7 +76,7 @@ public class LoginPage {
 
 
         Button loginButton = new Button("Login");
-        loginButton.setId("loginButton");
+        loginButton.setId("loginRegisterButton");
         loginButton.setOnAction(e -> {
             User user = new User(usernameTextfield.getText(), passwordTextfield.getText(), "", 0, new Date());
             ClientController clientHandler = new ClientController(user);
@@ -164,8 +161,8 @@ public class LoginPage {
         //here the create view is made into a scene and return when the method is called
         borderPane.setCenter(grid);
         borderPane.setTop(topGrid);
-        Scene scene = new Scene(borderPane, 500, 325);
-        scene.getStylesheets().add("LoginStyle.css");
+        Scene scene = new Scene(borderPane);
+        scene.getStylesheets().add("LoginRegisterStyle.css");
         return scene;
     }
 
