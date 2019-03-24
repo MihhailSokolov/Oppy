@@ -32,6 +32,7 @@ public class RegisterPage {
         Stage window = primaryStage;
         window.setTitle("RegisterPage");
         window.setMaximized(true);
+        window.setFullScreen(true);
         BorderPane borderPane = new BorderPane();
 
         GridPane grid = new GridPane();
@@ -87,7 +88,7 @@ public class RegisterPage {
         //Here the register button is created
         Button registerButton = new Button("Register");
         registerButton.setId("loginRegisterButton");
-        GridPane.setConstraints(registerButton, 0, 15,2,1 );
+        GridPane.setConstraints(registerButton, 0, 15, 2, 1);
         registerButton.setOnAction(e -> {
             ClientController clientController = new ClientController(new User(usernameTextfield.getText(),
                     passwordTextfield.getText(), emailTextfield.getText(), 0, new Date()));
@@ -196,7 +197,8 @@ public class RegisterPage {
         RowConstraints row16 = new RowConstraints();
         row16.setMinHeight(100);
 
-        grid.getRowConstraints().addAll(row0, row1, row2, row3, row4, row5, row6, row7, row8, row9, row10, row11, row12, row13, row14, row15, row16);
+        grid.getRowConstraints().addAll(row0, row1, row2, row3, row4, row5, row6, row7, row8, row9,
+                row10, row11, row12, row13, row14, row15, row16);
         ////end of setting row sizes////////////////////////////////////
         ////////////////////////////////////////////////////////////////
 
