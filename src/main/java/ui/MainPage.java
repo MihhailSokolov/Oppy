@@ -59,22 +59,23 @@ public class MainPage {
         //Username, TotalPoints, daily point loss and timer fields
         //here the username label is created
         String username = Main.clientController.getUser().getUsername();
+        if (username.equals("") || username == null) {
+            username = "lazy ass cunt";  //just here to troll people
+        }
         Label usernameLabel = new Label(username);
         usernameLabel.setId("username");
-        GridPane.setConstraints(usernameLabel, 0,1);
+        GridPane.setConstraints(usernameLabel, 0, 1);
 
         //here the number of points needs to be queried
         String result = Main.clientController.getScore();
         Label numberOfPoints = new Label(result);
         numberOfPoints.setId("yourPoints");
         Tooltip.install(numberOfPoints, new Tooltip("Your current number of points"));
-        if(Integer.parseInt(result) < 0) {
+        if (Integer.parseInt(result) < 0) {
             numberOfPoints.setStyle("-fx-text-fill: red");
-        }
-        else if (Integer.parseInt(result) > 0){
+        } else if (Integer.parseInt(result) > 0) {
             numberOfPoints.setStyle("-fx-text-fill: green");
-        }
-        else{
+        } else {
             numberOfPoints.setStyle("-fx-text-fill: yellow");
         }
         GridPane.setConstraints(numberOfPoints, 0, 2);
@@ -93,7 +94,7 @@ public class MainPage {
             int minutes = 59 - new Date().getMinutes();
             int seconds = 59 - new Date().getSeconds();
             //timer.setText(hours + ":"+ minutes+ ":" + seconds);
-            timer.setText(sdf.format(new Date(0,0,0,hours,minutes,seconds)));
+            timer.setText(sdf.format(new Date(0, 0, 0, hours, minutes, seconds)));
         }),
                 new KeyFrame(Duration.seconds(1))
         );
@@ -101,11 +102,11 @@ public class MainPage {
         clock.play();
         Tooltip.install(timer, new Tooltip("Time before daily point-loss occurs"));
         timer.setId("timeTillPointLoss");
-        GridPane.setConstraints(timer, 2,1);
+        GridPane.setConstraints(timer, 2, 1);
 
 
         //Here all elements previously created are added to the view and the view is center
-        gridCenter.getChildren().addAll(displayLogo, numberOfPoints, pointLoss,timer, usernameLabel);
+        gridCenter.getChildren().addAll(displayLogo, numberOfPoints, pointLoss, timer, usernameLabel);
         gridCenter.setAlignment(Pos.CENTER);
 
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -123,28 +124,28 @@ public class MainPage {
         displayProfilePicture.setFitHeight(100);
         displayProfilePicture.setFitWidth(100);
         displayProfilePicture.setId("profilePicture");
-        gridHamburger.setConstraints(displayProfilePicture,0,0,1,1);
+        gridHamburger.setConstraints(displayProfilePicture, 0, 0, 1, 1);
 
         Button settingsButton = new Button("settings");
         settingsButton.setId("settingsButton");
         settingsButton.setOnAction(e -> window.setScene(SettingsPage.settingsScene(window)));
-        gridHamburger.setConstraints(settingsButton,1,0,1,1);
+        gridHamburger.setConstraints(settingsButton, 1, 0, 1, 1);
 
         Button leaderboardButton = new Button("Leaderboard");
         leaderboardButton.setId("leaderActionButton");
         leaderboardButton.setOnAction(e -> {
             window.setScene(LeaderboardPage.leaderboardScene(window));
         });
-        gridHamburger.setConstraints(leaderboardButton,0,1,2,1);
+        gridHamburger.setConstraints(leaderboardButton, 0, 1, 2, 1);
 
 
         Button addActionButton = new Button("Add action");
         addActionButton.setId("leaderActionButton");
         addActionButton.setOnAction(e -> window.setScene(AddActionPage.addActionScene(window)));
-        gridHamburger.setConstraints(addActionButton,0,2,2,1);
+        gridHamburger.setConstraints(addActionButton, 0, 2, 2, 1);
 
         //add all previously created elements to the hamburger layout
-        gridHamburger.getChildren().addAll(settingsButton,leaderboardButton,addActionButton, displayProfilePicture);
+        gridHamburger.getChildren().addAll(settingsButton, leaderboardButton, addActionButton, displayProfilePicture);
         gridHamburger.setAlignment(Pos.TOP_CENTER);
         gridHamburger.setStyle("-fx-background-color: #FFFFFF;");
 
