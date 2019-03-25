@@ -95,6 +95,7 @@
 }
 #login-register:hover{
     -fx-background-color:  rgba(255, 255, 255, 0.25);
+    -fx-cursor: HAND;
 }
 #login-register:pressed{
     -fx-background-color:  rgba(0, 0, 0, 0.50);
@@ -118,6 +119,7 @@
 #forgotPasswordButton:hover {
     -fx-text-fill: blue;
     -fx-underline: true;
+    -fx-cursor: hand;
 }
 #forgotPasswordButton:pressed{
     -fx-text-fill: darkblue;
@@ -151,6 +153,7 @@
             linear-gradient(#38424b 10%, #1f2429 30%, #191d22 110%),
             linear-gradient(#20262b, #191d22),
             radial-gradient(center 50% 0%, radius 110%, rgba(114,131,148,1), rgba(255,255,255,0.1));
+    -fx-cursor: hand;
 }
 #loginRegisterButton:pressed{
     -fx-background-color:
@@ -171,6 +174,7 @@
 #checkAvailability:hover {
     -fx-text-fill: blue;
     -fx-underline: true;
+    -fx-cursor: hand;
 }
 #checkAvailability:pressed{
     -fx-text-fill: darkblue;

@@ -63,6 +63,7 @@ public class MainPage {
             username = "lazy ass cunt";  //just here to troll people
         }
         Label usernameLabel = new Label(username);
+        Tooltip.install(usernameLabel, new Tooltip("this is the most hated person in the world"));
         usernameLabel.setId("username");
         GridPane.setConstraints(usernameLabel, 0, 1);
 
@@ -161,6 +162,7 @@ public class MainPage {
         //here the hamburger icon is created and and functions are attached
         //so that by clicking it it opens and closes the side menu
         JFXHamburger hamburger = new JFXHamburger();
+        hamburger.setId("hamburgerButton");
         HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburger);
         burgerTask.setRate(-1);
         hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
