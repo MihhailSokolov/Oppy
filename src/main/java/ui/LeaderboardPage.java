@@ -56,7 +56,6 @@ public class LeaderboardPage {
         gridCenter.setPadding(new Insets(10, 10, 10, 10));
         gridCenter.setVgap(8);
         gridCenter.setHgap(10);
-        List<User> top50 = Main.clientController.getTop50();
 
         //here all the buttons normal buttons and labels are added
 
