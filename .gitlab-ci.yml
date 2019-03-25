@@ -4,10 +4,10 @@ stages:
   - build
   - test
   - install
+  - site
 
 cache:
   paths:
-    - .m2/repository/
     - target/
 
 build:
@@ -24,3 +24,9 @@ install:
   stage: install
   script:
     - mvn clean install
+
+
+site:
+  stage: site
+  script:
+    - mvn site
