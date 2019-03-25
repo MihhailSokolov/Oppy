@@ -86,25 +86,25 @@ public class LeaderboardPage {
         //here the columns for the tables are created
         TableColumn rank2 = new TableColumn("rank");
         //needs to be linked to rank later
-        rank.setCellValueFactory(new PropertyValueFactory<>("email"));
+        rank2.setCellValueFactory(new PropertyValueFactory<>("email"));
 
         TableColumn name2 = new TableColumn("name");
-        name.setCellValueFactory(new PropertyValueFactory<>("username"));
+        name2.setCellValueFactory(new PropertyValueFactory<>("username"));
 
         TableColumn score2 = new TableColumn("score");
-        score.setCellValueFactory(new PropertyValueFactory<>("score"));
+        score2.setCellValueFactory(new PropertyValueFactory<>("score"));
         //TableColumn profilePicture = new TableColumn("pf");
 
         //here the columns for the tables are created
         TableColumn rank3 = new TableColumn("rank");
         //needs to be linked to rank later
-        rank.setCellValueFactory(new PropertyValueFactory<>("email"));
+        rank3.setCellValueFactory(new PropertyValueFactory<>("email"));
 
         TableColumn name3 = new TableColumn("name");
-        name.setCellValueFactory(new PropertyValueFactory<>("username"));
+        name3.setCellValueFactory(new PropertyValueFactory<>("username"));
 
         TableColumn score3 = new TableColumn("score");
-        score.setCellValueFactory(new PropertyValueFactory<>("score"));
+        score3.setCellValueFactory(new PropertyValueFactory<>("score"));
         //TableColumn profilePicture = new TableColumn("pf");
 
 
