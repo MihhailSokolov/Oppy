@@ -139,18 +139,6 @@ public class User {
                 + ", presets=" + presets + ']';
     }
 
-    public String toStringTop50() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        return "User["
-                + "username='" + username + '\''
-                + ", password='" + password + '\''
-                + ", score=" + score
-                + ", anonymous=" + anonymous
-                + ", pushNotifications=" + pushNotifications
-                + ", profilePicture=" + profilePicture
-                + ", presets=" + presets + ']';
-    }
-
     @Override
     public boolean equals(Object other) {
         if (other == null || getClass() != other.getClass()) {

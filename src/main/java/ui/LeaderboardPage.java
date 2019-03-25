@@ -47,6 +47,8 @@ public class LeaderboardPage {
      * @return scene
      */
     public static Scene leaderboardScene(Stage primaryStage) {
+        Main.clientController.updateTop50();
+        Main.clientController.updateUser();
         Stage window = primaryStage;
         window.setTitle("LeaderboardPage");
 

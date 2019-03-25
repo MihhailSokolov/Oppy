@@ -458,4 +458,6 @@ public class ControllerTest {
         assertEquals(oldScore + pointsToBeAdded, testUser.getScore());
         userRepository.delete(testUser);
     }
+
+    
 }

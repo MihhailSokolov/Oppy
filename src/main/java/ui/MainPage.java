@@ -114,8 +114,6 @@ public class MainPage {
         Button leaderboardButton = new Button("Leaderboard");
         leaderboardButton.setOnAction(e -> {
             Main.clientController.updateTop50();
-            List<User> list = Main.clientController.getTop50();
-            System.out.println(list.get(0).getUsername());
             window.setScene(LeaderboardPage.leaderboardScene(window));
         });
         gridHamburger.setConstraints(leaderboardButton,0,1,2,1);

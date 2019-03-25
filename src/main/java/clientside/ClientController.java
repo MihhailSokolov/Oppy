@@ -129,6 +129,7 @@ public class ClientController {
         if (this.user != null) {
             responseEntity = this.postRequest(this.baseUrl + String.format(Path.TAKEACTION.toString(),
                     user.getUsername()), new Action(actionName, "", 0));
+            user.setScore(Integer.parseInt(this.getScore()));
         }
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
@@ -271,7 +272,7 @@ public class ClientController {
         return Hashing.sha256().hashString(pwd, StandardCharsets.UTF_8).toString();
     }
 
-    public void updateTop50(){
+    public void updateTop50() {
         responseEntity = this.getRequest(this.baseUrl + String.format(Path.TOP50.toString()));
         if (responseEntity.getBody() != null) {
             Gson gson = new Gson();
@@ -282,4 +283,9 @@ public class ClientController {
     public List<User> getTop50() {
         return top50;
     }
+
+    public void updateUser() {
+        user.setScore(Integer.parseInt(this.getScore()));
+    }
+
 }
