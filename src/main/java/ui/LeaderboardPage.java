@@ -23,11 +23,7 @@ public class LeaderboardPage {
     private static  TableView<User> number1Player = new TableView<>();
     private static  TableView<User> bestPlayers = new TableView<>();
     private static  TableView<User> scoreOfuser = new TableView<>();
-
-    public void update() {
-        Main.clientController.updateTop50();
-    }
-
+    static User number1 = Main.clientController.getTop50().get(0);
     //this part is only here for testing and showing how the tables work.
     //Will be deleted once it can be replaced\
 
@@ -39,6 +35,11 @@ public class LeaderboardPage {
     private static final ObservableList<User> data =
             FXCollections.observableArrayList(
                     Main.clientController.getTop50()
+            );
+
+    private static final ObservableList<User> num1 =
+            FXCollections.observableArrayList(
+                    number1
             );
     //end of the testing part
 
@@ -57,6 +58,7 @@ public class LeaderboardPage {
         gridCenter.setPadding(new Insets(10, 10, 10, 10));
         gridCenter.setVgap(8);
         gridCenter.setHgap(10);
+        List<User> top50 = Main.clientController.getTop50();
 
         //here all the buttons normal buttons and labels are added
 
@@ -70,10 +72,6 @@ public class LeaderboardPage {
             scoreOfuser = new TableView<>(); //same here
             window.setScene(MainPage.mainScene(window));
         });
-
-
-
-        System.out.println("the list: "+Main.clientController.getTop50());
 
         //here the columns for the tables are created
         TableColumn rank = new TableColumn("rank");
@@ -89,7 +87,7 @@ public class LeaderboardPage {
 
         //here the columns and content are added to the tables and settings of the tables are set
         //data needs tp be replaced with an ObservableList<User> only containing the number 1 player
-        number1Player.setItems(user);
+        number1Player.setItems(num1);
         number1Player.getColumns().addAll(rank, name, score);
         number1Player.setPrefHeight(60);
         number1Player.setPrefWidth(300);
