@@ -162,6 +162,7 @@ public class MainPage {
         //here the hamburger icon is created and and functions are attached
         //so that by clicking it it opens and closes the side menu
         JFXHamburger hamburger = new JFXHamburger();
+        Tooltip.install(hamburger, new Tooltip("Options menu"));
         hamburger.setId("hamburgerButton");
         HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburger);
         burgerTask.setRate(-1);
