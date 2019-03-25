@@ -195,3 +195,20 @@ GET YOUR POSITION
     Response:
         200 OK
         Body contains JSON Response object with message string containing integer of your position (-1 if couldn't find you).
+
+GET PROFILE PICTURE
+    To get user's profile picture as a binary string from the database
+    Request:
+        /getprofilepic?username=oppy123
+    Response:
+        200 OK
+        Body contains JSON Response object with message string containing binary representation of profile picture. Message will be empty if couldn't find the user.
+
+SET PROFILE PICTURE
+    To set/update user's profile picture in db
+    Request:
+        /setprofilepic
+        Body contains JSON User object with username and new profilePicture we want to set (everything else can be null)
+    Response:
+        200 OK
+        Body contains JSON Response object with message 'true' if profile picture was successfully changed, 'false' otherwise (if could not find user for example)

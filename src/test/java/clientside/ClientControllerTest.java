@@ -17,7 +17,6 @@ import java.util.List;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class ClientControllerTest {
 
@@ -114,7 +113,7 @@ public class ClientControllerTest {
                 .withRequestBody(equalToJson(testUserJson))
                 .willReturn(ok(trueResponse)));
         assertEquals("true", clientController.updatePass("newpaws"));
-        assertTrue(testUser.getPassword().equals(clientController.hash("newpaws")));
+        assertEquals(testUser.getPassword(), clientController.hash("newpaws"));
 
         wireMockRule.stubFor(any(urlPathEqualTo("/updatepass"))
                 .withQueryParam("newpass", equalTo(clientController.hash("newpaws")))
@@ -139,7 +138,7 @@ public class ClientControllerTest {
                 .willReturn(ok(trueResponse)));
         assertEquals("true", clientController.updateEmail("ewmail", testUser.getPassword()));
         assertEquals("false", clientController.updateEmail("ewmail", "123456"));
-        assertTrue(clientController.getUser().getEmail().equals("ewmail"));
+        assertEquals("ewmail", clientController.getUser().getEmail());
     }
 
     @Test

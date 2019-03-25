@@ -230,4 +230,14 @@ public class Controller {
     public ResponseEntity<Response> getYourPositions(@RequestParam("username") String username) {
         return ResponseEntity.ok().body(new Response(dbDataController.getYourPostionInList(username)));
     }
+
+    @RequestMapping("/getprofilepic")
+    public ResponseEntity<Response> getProfilePic(@RequestParam("username") String username) {
+        return ResponseEntity.ok().body(new Response(dbDataController.getProfilePicture(username)));
+    }
+
+    @RequestMapping("/setprofilepic")
+    public ResponseEntity<Response> setProfilePic(@RequestBody User user) {
+        return ResponseEntity.ok().body(new Response(dbDataController.setProfilePicture(user)));
+    }
 }

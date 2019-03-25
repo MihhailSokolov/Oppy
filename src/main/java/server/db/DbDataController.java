@@ -338,4 +338,35 @@ public class DbDataController {
         }
         return -1;
     }
+
+    /**
+     * Method to get profile picture of the user from db.
+     * @param username user's username
+     * @return binary representation of profile picture as a String
+     *          or empty string of couldn't find the user
+     */
+    public String getProfilePicture(String username) {
+        User user = userRepository.findFirstByUsername(username);
+        if (user == null) {
+            return "";
+        }
+        return user.getProfilePicture();
+    }
+
+    /**
+     * Method to change user's profile picture in db.
+     * @param user User who wants to set profile picture
+     * @return true if succeeded, false otherwise
+     */
+    public boolean setProfilePicture(User user) {
+        String username = user.getUsername();
+        String pic = user.getProfilePicture();
+        user = userRepository.findFirstByUsername(username);
+        if (user == null) {
+            return false;
+        }
+        user.setProfilePicture(pic);
+        userRepository.save(user);
+        return true;
+    }
 }
