@@ -95,11 +95,8 @@ public class DbDataController {
     public boolean updatePassword(String username, String newpass) {
         User userToUpdate = userRepository.findFirstByUsername(username);
         userToUpdate.setPassword(newpass);
-        if (userRepository.save(userToUpdate) == null) {
-            return false;
-        } else {
-            return true;
-        }
+        userRepository.save(userToUpdate);
+        return true;
     }
 
     /**
@@ -136,11 +133,8 @@ public class DbDataController {
     public boolean addToUserScore(String username, int points) {
         User user = userRepository.findFirstByUsername(username);
         user.setScore(user.getScore() + points);
-        if (userRepository.save(user) == null) {
-            return false;
-        } else {
-            return true;
-        }
+        userRepository.save(user);
+        return true;
     }
 
     /**
@@ -184,11 +178,8 @@ public class DbDataController {
     public boolean changeAnonymous(String username, boolean anonymous) {
         User userToUpdate = userRepository.findFirstByUsername(username);
         userToUpdate.setAnonymous(anonymous);
-        if (userRepository.save(userToUpdate) == null) {
-            return false;
-        } else {
-            return true;
-        }
+        userRepository.save(userToUpdate);
+        return true;
     }
 
     /**
@@ -201,7 +192,8 @@ public class DbDataController {
     public boolean updateEmail(String username, String newEmail) {
         User userToUpdate = userRepository.findFirstByUsername(username);
         userToUpdate.setEmail(newEmail);
-        return userRepository.save(userToUpdate) != null;
+        userRepository.save(userToUpdate);
+        return true;
     }
 
     /**
@@ -214,7 +206,8 @@ public class DbDataController {
         User user = userRepository.findFirstByUsername(username);
         user.setScore(0);
         user.setRegisterDate(new Date());
-        return userRepository.save(user) != null;
+        userRepository.save(user);
+        return true;
     }
 
     public List<Preset> getPresets(String username) {
@@ -232,7 +225,8 @@ public class DbDataController {
         List<Preset> presetList = user.getPresets();
         presetList.add(preset);
         user.setPresets(presetList);
-        return userRepository.save(user) != null;
+        userRepository.save(user);
+        return true;
     }
 
     /**
@@ -246,7 +240,11 @@ public class DbDataController {
         List<Preset> presetList = user.getPresets();
         boolean deleted = presetList.remove(preset);
         user.setPresets(presetList);
-        return deleted && userRepository.save(user) != null;
+        if (!deleted) {
+            return false;
+        }
+        userRepository.save(user);
+        return true;
     }
 
     /**
@@ -298,7 +296,8 @@ public class DbDataController {
         List<User> friends = user.getFriends();
         friends.add(friend);
         user.setFriends(friends);
-        return userRepository.save(user) != null;
+        userRepository.save(user);
+        return true;
     }
 
     /**
@@ -316,6 +315,7 @@ public class DbDataController {
             }
         }
         user.setFriends(friends);
-        return userRepository.save(user) != null;
+        userRepository.save(user);
+        return true;
     }
 }
