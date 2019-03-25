@@ -86,6 +86,7 @@ public class ControllerTest {
         friends.add(friend1);
         friends.add(friend2);
         testUser.setFriends(friends);
+        testUser.setProfilePicture("010101010111101000100101000101101101010101010101010100011111101000101000010110101000010111111010010");
         if(userRepository.findFirstByUsername(testUser.getUsername())!=null)
             userRepository.delete(userRepository.findFirstByUsername(testUser.getUsername()));
         testAction = new Action("Recycle paper", "Recycling", 10);
@@ -521,9 +522,8 @@ public class ControllerTest {
                 .andReturn();
         ObjectMapper mapper = new ObjectMapper();
         String msg = mapper.readValue(result.getResponse().getContentAsString(), Response.class).getMessage();
-        Pattern pattern = Pattern.compile("-?\\d+");
-        assertTrue(pattern.matcher(msg).matches());
-        assertNotEquals(msg, "-1");
+        assertTrue(msg.matches("-?\\d+"));
+        assertNotEquals("-1", msg);
         userRepository.delete(testUser);
     }
 
@@ -536,9 +536,69 @@ public class ControllerTest {
                 .andReturn();
         ObjectMapper mapper = new ObjectMapper();
         String msg = mapper.readValue(result.getResponse().getContentAsString(), Response.class).getMessage();
-        Pattern pattern = Pattern.compile("-?\\d+");
-        assertTrue(pattern.matcher(msg).matches());
-        assertEquals(msg, "-1");
+        assertTrue(msg.matches("-?\\d+"));
+        assertEquals("-1", msg);
+        userRepository.delete(testUser);
+    }
+
+    @Test
+    public void checkGetProfilePicture() throws Exception {
+        userRepository.save(testUser);
+        MvcResult result = mockMvc.perform(get("/getprofilepic?username=" + testUser.getUsername()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn();
+        ObjectMapper mapper = new ObjectMapper();
+        String msg = mapper.readValue(result.getResponse().getContentAsString(), Response.class).getMessage();
+        assertTrue(msg.matches("[01]+"));
+        assertEquals(testUser.getProfilePicture(), msg);
+        userRepository.delete(testUser);
+    }
+
+    @Test
+    public void checkGetProfilePictureError() throws Exception {
+        userRepository.save(testUser);
+        MvcResult result = mockMvc.perform(get("/getprofilepic?username=" + testUser.getUsername() + "nope-wrong-user"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn();
+        ObjectMapper mapper = new ObjectMapper();
+        String msg = mapper.readValue(result.getResponse().getContentAsString(), Response.class).getMessage();
+        assertEquals("", msg);
+        userRepository.delete(testUser);
+    }
+
+    @Test
+    public void checkSetProfilePicture() throws Exception {
+        userRepository.save(testUser);
+        String newProfilePic = "110101011000001010101010010010010010111010010100100100010101110010101101010101010101010101010110100";
+        User user = new User(testUser.getUsername(), null, null, 0, null);
+        user.setProfilePicture(newProfilePic);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBody = mapper.writeValueAsString(user);
+        mockMvc.perform(get("/setprofilepic").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("true")));
+        testUser = userRepository.findFirstByUsername(testUser.getUsername());
+        assertEquals(newProfilePic, testUser.getProfilePicture());
+        userRepository.delete(testUser);
+    }
+
+    @Test
+    public void checkSetProfilePictureError() throws Exception {
+        userRepository.save(testUser);
+        String newProfilePic = "110101011000001010101010010010010010111010010100100100010101110010101101010101010101010101010110100";
+        User user = new User(testUser.getUsername() + "nope-wrong-user", null, null, 0, null);
+        user.setProfilePicture(newProfilePic);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBody = mapper.writeValueAsString(user);
+        mockMvc.perform(get("/setprofilepic").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("false")));
+        testUser = userRepository.findFirstByUsername(testUser.getUsername());
+        assertNotEquals(newProfilePic, testUser.getProfilePicture());
         userRepository.delete(testUser);
     }
 }
