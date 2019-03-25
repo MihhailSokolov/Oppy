@@ -13,15 +13,12 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import server.model.User;
 
-import java.util.List;
-
 
 public class LeaderboardPage {
     //here the tables are created
     private static  TableView<User> number1Player = new TableView<>();
     private static  TableView<User> bestPlayers = new TableView<>();
     private static  TableView<User> scoreOfuser = new TableView<>();
-    static User number1 = Main.clientController.getTop50().get(0);
     //this part is only here for testing and showing how the tables work.
     //Will be deleted once it can be replaced\
 

@@ -272,6 +272,9 @@ public class ClientController {
         return Hashing.sha256().hashString(pwd, StandardCharsets.UTF_8).toString();
     }
 
+    /**
+     * Method to update the top50 arraylist with the users who have the most points.
+     */
     public void updateTop50() {
         responseEntity = this.getRequest(this.baseUrl + String.format(Path.TOP50.toString()));
         if (responseEntity.getBody() != null) {

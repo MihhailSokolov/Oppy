@@ -18,12 +18,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import server.model.User;
 
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
-import java.util.List;
 
 
 //import javax.xml.soap.Text;
