@@ -318,4 +318,24 @@ public class DbDataController {
         userRepository.save(user);
         return true;
     }
+
+    public int getYourPostionInList(String username) {
+        List<User> users = userRepository.findAllByAnonymousOrUsernameOrderByScore(false, username);
+        return findIndexByUsername(users, username);
+    }
+
+    /**
+     * Private method to help find the index of the user in the list only by name.
+     * @param list List of users
+     * @param username username to be found
+     * @return index of the user or -1 if not found
+     */
+    private int findIndexByUsername(List<User> list, String username) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getUsername().equals(username)) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }

@@ -33,7 +33,6 @@ public class LoginPage {
         Stage window = primaryStage;
         window.setTitle("LoginPage");
         window.setMaximized(true);
-        BorderPane borderPane = new BorderPane();
 
         GridPane grid = new GridPane();
         grid.setId("grid");
@@ -159,6 +158,7 @@ public class LoginPage {
         ////////////////////////////////////////////////////////////////
 
         //here the create view is made into a scene and return when the method is called
+        BorderPane borderPane = new BorderPane();
         borderPane.setCenter(grid);
         borderPane.setTop(topGrid);
         Scene scene = new Scene(borderPane);

@@ -32,7 +32,6 @@ public class RegisterPage {
         Stage window = primaryStage;
         window.setTitle("RegisterPage");
         window.setMaximized(true);
-        BorderPane borderPane = new BorderPane();
 
         GridPane grid = new GridPane();
         grid.setId("grid2");
@@ -116,8 +115,8 @@ public class RegisterPage {
             if (!(usernameTextfield.getText().equals(""))) {
                 String result = new ClientController().checkAvailability(usernameTextfield.getText());
                 if (result.equals("true")) {
-                    usernameTextfield.setStyle("-fx-background-color: #00ff00;" +
-                            "-fx-text-fill: #000000");
+                    usernameTextfield.setStyle("-fx-background-color: #00ff00;"
+                            + "-fx-text-fill: #000000");
                 } else {
                     usernameTextfield.setStyle("-fx-background-color: #ff0000");
                 }
@@ -204,6 +203,7 @@ public class RegisterPage {
 
 
         //here the create view is made into a scene and return when the method is called
+        BorderPane borderPane = new BorderPane();
         borderPane.setCenter(grid);
         borderPane.setTop(topGrid);
         Scene scene = new Scene(borderPane);

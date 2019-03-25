@@ -9,9 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import server.db.DbDataController;
 import server.model.Action;
 import server.model.Preset;
+import server.model.Response;
 import server.repository.ActionRepository;
 import server.model.User;
 import server.repository.UserRepository;
@@ -20,6 +22,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -507,5 +510,35 @@ public class ControllerTest {
         assertFalse(testUser.getFriends().contains(friends.get(0)));
         userRepository.delete(testUser);
         testUser.setFriends(friends);
+    }
+
+    @Test
+    public void checkGetPosition() throws Exception {
+        userRepository.save(testUser);
+        MvcResult result = mockMvc.perform(get("/position?username=" + testUser.getUsername()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn();
+        ObjectMapper mapper = new ObjectMapper();
+        String msg = mapper.readValue(result.getResponse().getContentAsString(), Response.class).getMessage();
+        Pattern pattern = Pattern.compile("-?\\d+");
+        assertTrue(pattern.matcher(msg).matches());
+        assertNotEquals(msg, "-1");
+        userRepository.delete(testUser);
+    }
+
+    @Test
+    public void checkGetNonExistingPosition() throws Exception {
+        userRepository.save(testUser);
+        MvcResult result = mockMvc.perform(get("/position?username=" + testUser.getUsername()+"blah-blah"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn();
+        ObjectMapper mapper = new ObjectMapper();
+        String msg = mapper.readValue(result.getResponse().getContentAsString(), Response.class).getMessage();
+        Pattern pattern = Pattern.compile("-?\\d+");
+        assertTrue(pattern.matcher(msg).matches());
+        assertEquals(msg, "-1");
+        userRepository.delete(testUser);
     }
 }
