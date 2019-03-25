@@ -27,7 +27,7 @@ public class LeaderboardPage {
 
     private static final ObservableList<User> user =
             FXCollections.observableArrayList(
-                    Main.clientController.getTop50()
+                    Main.clientController.getUser()
             );
 
     private static final ObservableList<User> data =
@@ -37,7 +37,7 @@ public class LeaderboardPage {
 
     private static final ObservableList<User> num1 =
             FXCollections.observableArrayList(
-                    Main.clientController.getTop50()
+                    Main.clientController.getTop50().get(0)
             );
     //end of the testing part
 
@@ -83,6 +83,31 @@ public class LeaderboardPage {
         score.setCellValueFactory(new PropertyValueFactory<>("score"));
         //TableColumn profilePicture = new TableColumn("pf");
 
+        //here the columns for the tables are created
+        TableColumn rank2 = new TableColumn("rank");
+        //needs to be linked to rank later
+        rank.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+        TableColumn name2 = new TableColumn("name");
+        name.setCellValueFactory(new PropertyValueFactory<>("username"));
+
+        TableColumn score2 = new TableColumn("score");
+        score.setCellValueFactory(new PropertyValueFactory<>("score"));
+        //TableColumn profilePicture = new TableColumn("pf");
+
+        //here the columns for the tables are created
+        TableColumn rank3 = new TableColumn("rank");
+        //needs to be linked to rank later
+        rank.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+        TableColumn name3 = new TableColumn("name");
+        name.setCellValueFactory(new PropertyValueFactory<>("username"));
+
+        TableColumn score3 = new TableColumn("score");
+        score.setCellValueFactory(new PropertyValueFactory<>("score"));
+        //TableColumn profilePicture = new TableColumn("pf");
+
+
         //here the columns and content are added to the tables and settings of the tables are set
         //data needs tp be replaced with an ObservableList<User> only containing the number 1 player
         number1Player.setItems(num1);
@@ -94,14 +119,14 @@ public class LeaderboardPage {
 
         //data needs to be replaced with an ObservableList<User> containing the best 50 players
         bestPlayers.setItems(data);
-        bestPlayers.getColumns().addAll(rank, name, score);
+        bestPlayers.getColumns().addAll(rank2, name2, score2);
         bestPlayers.setPrefHeight(400);
         bestPlayers.setPrefWidth(300);
         GridPane.setConstraints(bestPlayers,1,1);
 
         //data needs tp be replaced with an ObservableList<User> only containing the current User
         scoreOfuser.setItems(user);
-        scoreOfuser.getColumns().addAll(rank, name, score);
+        scoreOfuser.getColumns().addAll(rank3, name3, score3);
         scoreOfuser.setPrefHeight(60);
         scoreOfuser.setPrefWidth(300);
         scoreOfuser.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
