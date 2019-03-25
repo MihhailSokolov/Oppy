@@ -225,4 +225,9 @@ public class Controller {
     public ResponseEntity<Response> deleteFriend(@RequestParam("username") String username, @RequestBody User friend) {
         return ResponseEntity.ok().body(new Response(dbDataController.deleteFriend(username, friend)));
     }
+
+    @RequestMapping("/position")
+    public ResponseEntity<Response> getYourPositions(@RequestParam("username") String username) {
+        return ResponseEntity.ok().body(new Response(dbDataController.getYourPostionInList(username)));
+    }
 }

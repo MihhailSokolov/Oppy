@@ -59,7 +59,7 @@ public class MainPage {
         //Username, TotalPoints, daily point loss and timer fields
         //here the username label is created
         String username = Main.clientController.getUser().getUsername();
-        if (username.equals("") || username == null) {
+        if (username == null || username.equals("")) {
             username = "lazy ass cunt";  //just here to troll people
         }
         Label usernameLabel = new Label(username);

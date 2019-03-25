@@ -187,3 +187,11 @@ DELETE FRIEND
     Response:
         200 OK
         Body contains JSON Response object with message 'true' if friend was successfully deleted, 'false' otherwise
+
+GET YOUR POSITION
+    To get your position in the list of users based on score
+    Request:
+        /position?username=oppy123
+    Response:
+        200 OK
+        Body contains JSON Response object with message string containing integer of your position (-1 if couldn't find you).
