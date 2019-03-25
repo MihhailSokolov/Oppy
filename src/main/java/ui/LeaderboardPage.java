@@ -1,6 +1,5 @@
 package ui;
 
-import clientside.ClientController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -14,7 +13,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import server.model.User;
 
-import java.util.Date;
 import java.util.List;
 
 
@@ -29,7 +27,7 @@ public class LeaderboardPage {
 
     private static final ObservableList<User> user =
             FXCollections.observableArrayList(
-                    Main.clientController.getUser()
+                    Main.clientController.getTop50()
             );
 
     private static final ObservableList<User> data =
@@ -39,7 +37,7 @@ public class LeaderboardPage {
 
     private static final ObservableList<User> num1 =
             FXCollections.observableArrayList(
-                    number1
+                    Main.clientController.getTop50()
             );
     //end of the testing part
 
