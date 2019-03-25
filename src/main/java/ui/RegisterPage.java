@@ -32,7 +32,6 @@ public class RegisterPage {
         Stage window = primaryStage;
         window.setTitle("RegisterPage");
         window.setMaximized(true);
-        window.setFullScreen(true);
         BorderPane borderPane = new BorderPane();
 
         GridPane grid = new GridPane();
