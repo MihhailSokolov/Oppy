@@ -27,6 +27,7 @@ public class AddActionPage {
         ArrayList<CheckBox> listCheckboxes = new ArrayList<CheckBox>();
         ArrayList<Action> listOfActions = new ArrayList<Action>();
         Stage window = primaryStage;
+        window.setMaximized(true);
         window.setTitle("AddActionPage");
         //CentralGrid////////////////////////////////////////////////////////////////////
         GridPane gridCenter = new GridPane();
@@ -169,7 +170,8 @@ public class AddActionPage {
                 miscCategory, foodCategory, energyCategory);
         centralPageLayout.setCenter(gridCenter);
         //here the create view is made into a scene and returned when the method is called
-        Scene scene = new Scene(centralPageLayout, 1000, 600);
+        Scene scene = new Scene(centralPageLayout);
+        scene.getStylesheets().add("addActionStyle.css");
         return scene;
     }
 }

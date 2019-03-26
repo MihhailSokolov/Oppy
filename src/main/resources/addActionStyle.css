@@ -1,0 +1,9 @@
+.root{
+    -fx-min-height: 1080;
+    -fx-min-width: 1920;
+    /* Images from https://www.pexels.com/photo/alternative-alternative-energy-clouds-eco-energy-433308/*/
+    -fx-background-image: url("naturalEnergie.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 2000 1200;
+    -fx-background-position: center center;
+}
