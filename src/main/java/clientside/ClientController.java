@@ -129,16 +129,8 @@ public class ClientController {
      * @return String response msg ("true"/"false").
      */
     public String takeAction(String actionName) {
-<<<<<<< src/main/java/clientside/ClientController.java
-        if (this.user != null) {
-            responseEntity = this.postRequest(this.baseUrl + String.format(Path.TAKEACTION.toString(),
-                    user.getUsername()), new Action(actionName, "", 0));
-            user.setScore(Integer.parseInt(this.getScore()));
-        }
-=======
         responseEntity = this.postRequest(this.baseUrl + String.format(Path.TAKEACTION.toString(),
                 user.getUsername()), new Action(actionName, "", 0));
->>>>>>> src/main/java/clientside/ClientController.java
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
