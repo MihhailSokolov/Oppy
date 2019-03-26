@@ -261,6 +261,7 @@ public class MainPage {
         Button leaderboardButton = new Button("Leaderboard");
         leaderboardButton.setId("leaderActionButton");
         leaderboardButton.setOnAction(e -> {
+            Main.clientController.updateTop50();
             window.setScene(LeaderboardPage.leaderboardScene(window));
         });
         gridHamburger.setConstraints(leaderboardButton, 0, 1, 2, 1);
