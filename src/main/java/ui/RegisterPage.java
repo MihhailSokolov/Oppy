@@ -19,6 +19,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import server.model.User;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class RegisterPage {
@@ -147,6 +148,21 @@ public class RegisterPage {
 
         ////////////////////////////////////////////////////////////////
         ////setting the sizes of the rows///////////////////////////////
+
+        grid.getRowConstraints().addAll(gridRowConstraints());
+        ////end of setting row sizes////////////////////////////////////
+        ////////////////////////////////////////////////////////////////
+
+        //here the create view is made into a scene and return when the method is called
+        BorderPane borderPane = new BorderPane();
+        borderPane.setCenter(grid);
+        borderPane.setTop(topGrid);
+        Scene scene = new Scene(borderPane);
+        scene.getStylesheets().add("LoginRegisterStyle.css");
+        return scene;
+    }
+
+    public static ArrayList<RowConstraints> gridRowConstraints() {
         RowConstraints row0 = new RowConstraints();
         row0.setMinHeight(100);
         row0.setMaxHeight(100);
@@ -183,7 +199,6 @@ public class RegisterPage {
         RowConstraints row12 = new RowConstraints();
         row12.setMinHeight(50);
         row12.setMaxHeight(50);
-
         RowConstraints row13 = new RowConstraints();
         row13.setMinHeight(40);
         row13.setMaxHeight(40);
@@ -194,20 +209,24 @@ public class RegisterPage {
         row15.setMaxHeight(65);
         RowConstraints row16 = new RowConstraints();
         row16.setMinHeight(100);
-
-        grid.getRowConstraints().addAll(row0, row1, row2, row3, row4, row5, row6, row7, row8, row9,
-                row10, row11, row12, row13, row14, row15, row16);
-        ////end of setting row sizes////////////////////////////////////
-        ////////////////////////////////////////////////////////////////
-
-
-
-        //here the create view is made into a scene and return when the method is called
-        BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(grid);
-        borderPane.setTop(topGrid);
-        Scene scene = new Scene(borderPane);
-        scene.getStylesheets().add("LoginRegisterStyle.css");
-        return scene;
+        ArrayList<RowConstraints> rows = new ArrayList<RowConstraints>();
+        rows.add(row0);
+        rows.add(row1);
+        rows.add(row2);
+        rows.add(row3);
+        rows.add(row4);
+        rows.add(row5);
+        rows.add(row6);
+        rows.add(row7);
+        rows.add(row8);
+        rows.add(row9);
+        rows.add(row10);
+        rows.add(row11);
+        rows.add(row12);
+        rows.add(row13);
+        rows.add(row14);
+        rows.add(row15);
+        rows.add(row16);
+        return rows;
     }
 }
