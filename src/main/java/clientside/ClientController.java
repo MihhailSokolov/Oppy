@@ -23,6 +23,7 @@ public class ClientController {
     private RestTemplate restTemplate = new RestTemplate();
     private List<Action> actionList = null;
     private ResponseEntity<String> responseEntity = null;
+    private List<User> top50 = null;
 
     public ClientController(User user) {
         this.user = user;
@@ -281,6 +282,26 @@ public class ClientController {
         return Hashing.sha256().hashString(pwd, StandardCharsets.UTF_8).toString();
     }
 
+    /**
+     * Method to update the top50 arraylist with the users who have the most points.
+     */
+    public void updateTop50() {
+        responseEntity = this.getRequest(this.baseUrl + String.format(Path.TOP50.toString()));
+        if (responseEntity.getBody() != null) {
+            Gson gson = new Gson();
+            top50 = Arrays.asList(gson.fromJson(responseEntity.getBody(), User[].class));
+        }
+    }
+
+    public List<User> getTop50() {
+        return top50;
+    }
+
+    public void updateUser() {
+        user.setScore(Integer.parseInt(this.getScore()));
+    }
+
+
     public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
     }
@@ -288,4 +309,5 @@ public class ClientController {
     public void setActionList(List<Action> actionList) {
         this.actionList = actionList;
     }
+
 }

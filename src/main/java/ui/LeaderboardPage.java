@@ -13,20 +13,28 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import server.model.User;
 
-import java.util.Date;
-
 
 public class LeaderboardPage {
     //here the tables are created
     private static  TableView<User> number1Player = new TableView<>();
     private static  TableView<User> bestPlayers = new TableView<>();
     private static  TableView<User> scoreOfuser = new TableView<>();
-
     //this part is only here for testing and showing how the tables work.
-    //Will be deleted once it can be replaced
+    //Will be deleted once it can be replaced\
+
+    private static final ObservableList<User> user =
+            FXCollections.observableArrayList(
+                    Main.clientController.getUser()
+            );
+
     private static final ObservableList<User> data =
             FXCollections.observableArrayList(
-                    new User("hoi","hoihoi123","email@email.com",20, new Date())
+                    Main.clientController.getTop50()
+            );
+
+    private static final ObservableList<User> num1 =
+            FXCollections.observableArrayList(
+                    Main.clientController.getTop50().get(0)
             );
     //end of the testing part
 
@@ -36,6 +44,8 @@ public class LeaderboardPage {
      * @return scene
      */
     public static Scene leaderboardScene(Stage primaryStage) {
+        Main.clientController.updateTop50();
+        Main.clientController.updateUser();
         Stage window = primaryStage;
         window.setTitle("LeaderboardPage");
 
@@ -59,10 +69,6 @@ public class LeaderboardPage {
             window.setScene(MainPage.mainScene(window));
         });
 
-
-
-
-
         //here the columns for the tables are created
         TableColumn rank = new TableColumn("rank");
         //needs to be linked to rank later
@@ -75,9 +81,34 @@ public class LeaderboardPage {
         score.setCellValueFactory(new PropertyValueFactory<>("score"));
         //TableColumn profilePicture = new TableColumn("pf");
 
+        //here the columns for the tables are created
+        TableColumn rank2 = new TableColumn("rank");
+        //needs to be linked to rank later
+        rank2.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+        TableColumn name2 = new TableColumn("name");
+        name2.setCellValueFactory(new PropertyValueFactory<>("username"));
+
+        TableColumn score2 = new TableColumn("score");
+        score2.setCellValueFactory(new PropertyValueFactory<>("score"));
+        //TableColumn profilePicture = new TableColumn("pf");
+
+        //here the columns for the tables are created
+        TableColumn rank3 = new TableColumn("rank");
+        //needs to be linked to rank later
+        rank3.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+        TableColumn name3 = new TableColumn("name");
+        name3.setCellValueFactory(new PropertyValueFactory<>("username"));
+
+        TableColumn score3 = new TableColumn("score");
+        score3.setCellValueFactory(new PropertyValueFactory<>("score"));
+        //TableColumn profilePicture = new TableColumn("pf");
+
+
         //here the columns and content are added to the tables and settings of the tables are set
         //data needs tp be replaced with an ObservableList<User> only containing the number 1 player
-        number1Player.setItems(data);
+        number1Player.setItems(num1);
         number1Player.getColumns().addAll(rank, name, score);
         number1Player.setPrefHeight(60);
         number1Player.setPrefWidth(300);
@@ -86,14 +117,14 @@ public class LeaderboardPage {
 
         //data needs to be replaced with an ObservableList<User> containing the best 50 players
         bestPlayers.setItems(data);
-        bestPlayers.getColumns().addAll(rank, name, score);
+        bestPlayers.getColumns().addAll(rank2, name2, score2);
         bestPlayers.setPrefHeight(400);
         bestPlayers.setPrefWidth(300);
         GridPane.setConstraints(bestPlayers,1,1);
 
         //data needs tp be replaced with an ObservableList<User> only containing the current User
-        scoreOfuser.setItems(data);
-        scoreOfuser.getColumns().addAll(rank, name, score);
+        scoreOfuser.setItems(user);
+        scoreOfuser.getColumns().addAll(rank3, name3, score3);
         scoreOfuser.setPrefHeight(60);
         scoreOfuser.setPrefWidth(300);
         scoreOfuser.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
