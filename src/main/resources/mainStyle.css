@@ -30,6 +30,9 @@
     -fx-cursor: OPEN_HAND;
 }
 
+.tooltip{
+}
+
 #hamburgerMenu{
     -fx-min-width: 300px;
     -fx-max-width: 300px;
@@ -144,4 +147,6 @@
 #hamburgerButton:hover{
     -fx-cursor: HAND;
 }
+
+
 

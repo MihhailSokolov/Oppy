@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -40,7 +41,7 @@ public class MainPage {
     public static Scene mainScene(Stage primaryStage) {
         Stage window = primaryStage;
         window.setTitle("MainPage");
-        window.setMaximized(true);
+        window.setFullScreen(true);
         BorderPane centralPageLayout = new BorderPane();
 
         //////////////////////////////////////////////////////////////////////////////////////
@@ -110,10 +111,135 @@ public class MainPage {
         gridCenter.getChildren().addAll(displayLogo, numberOfPoints, pointLoss, timer, usernameLabel);
         gridCenter.setAlignment(Pos.CENTER);
 
-        ///////////////////////////////////////////////////////////////////////////////////////
-        // ///hamburger contents////////////////////////////////////////////////////////
+        //here the hamburger menu is initialized
+        GridPane gridHamburger = gridHamburger(window);
 
+        //////////////////////////////////////////////////////////////////////////////////
+        //TopGrid/////////////////////////////////////////////////////////////////////////
+
+        // creating a new grid for the top field of the BorderPane
+        GridPane gridTop = new GridPane();
+        gridTop.setPadding(new Insets(10, 10, 10, 10));
+        gridTop.setVgap(8);
+        gridTop.setHgap(10);
+
+        //here the hamburger icon is created and and functions are attached
+        //so that by clicking it it opens and closes the side menu
+        JFXHamburger hamburger = new JFXHamburger();
+        Tooltip.install(hamburger, new Tooltip("Options menu"));
+        hamburger.setId("hamburgerButton");
+        HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburger);
+        burgerTask.setRate(-1);
+        hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+            if (burgerTask.getRate() == -1) {
+                centralPageLayout.setLeft(gridHamburger);
+            } else {
+                centralPageLayout.setLeft(null);
+            }
+            burgerTask.setRate(burgerTask.getRate() * -1);
+            burgerTask.play();
+        });
+        gridTop.setConstraints(hamburger, 0, 0);
+        gridTop.getChildren().addAll(hamburger);
+        gridTop.setStyle("-fx-background-color: #4c4242;");
+
+        ////////////////////////////////////////////////////////////////
+        ////setting the sizes of the rows///////////////////////////////
+        gridCenter.getRowConstraints().addAll(gridRowconstraints());
+        gridCenter.getColumnConstraints().addAll(gridColumnConstraints());
+        gridHamburger.getRowConstraints().addAll(hamburgerRowconstraints());
+        gridHamburger.getColumnConstraints().addAll(hamburgerColumnConstraints());
+        /////////////////////////////////////////////////////////////////////////
+        ////CentralPageLayout/////////////////////////////////////////////////////
+
+        centralPageLayout.setCenter(gridCenter);
+        centralPageLayout.setTop(gridTop);
+
+        //here the create view is made into a scene and returned when the method is called
+        Scene scene = new Scene(centralPageLayout);
+        scene.getStylesheets().add("mainStyle.css");
+        return scene;
+    }
+
+    public static ArrayList<RowConstraints> gridRowconstraints() {
+        RowConstraints row0 = new RowConstraints();
+        row0.setMinHeight(0);
+        row0.setMaxHeight(0);
+        RowConstraints row1 = new RowConstraints();
+        row1.setMinHeight(45);
+        row1.setMaxHeight(45);
+        RowConstraints row2 = new RowConstraints();
+        row2.setMinHeight(45);
+        row2.setMaxHeight(45);
+        RowConstraints row3 = new RowConstraints();
+        row3.setMinHeight(700);
+        row3.setMaxHeight(700);
+        RowConstraints row4 = new RowConstraints();
+        row4.setMinHeight(0);
+        RowConstraints row5 = new RowConstraints();
+        row5.setMinHeight(0);
+        row5.setMaxHeight(0);
+        RowConstraints row6 = new RowConstraints();
+        row6.setMinHeight(0);
+        row6.setMaxHeight(0);
+        ArrayList<RowConstraints> rows = new ArrayList<RowConstraints>();
+        rows.add(row0);
+        rows.add(row1);
+        rows.add(row2);
+        rows.add(row3);
+        rows.add(row4);
+        rows.add(row5);
+        rows.add(row6);
+        return rows;
+    }
+
+    public static ArrayList<ColumnConstraints> gridColumnConstraints() {
+        ColumnConstraints column0 = new ColumnConstraints();
+        column0.setMinWidth(200);
+        column0.setMaxWidth(200);
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setMinWidth(700);
+        column1.setMaxWidth(700);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setMinWidth(200);
+        column2.setMaxWidth(200);
+        ArrayList<ColumnConstraints> columns = new ArrayList<ColumnConstraints>();
+        columns.add(column0);
+        columns.add(column1);
+        columns.add(column2);
+        return columns;
+    }
+
+    public static ArrayList<RowConstraints> hamburgerRowconstraints() {
+        RowConstraints row0 = new RowConstraints();
+        row0.setMinHeight(100);
+        RowConstraints row1 = new RowConstraints();
+        row1.setMinHeight(100);
+        RowConstraints row2 = new RowConstraints();
+        row2.setMinHeight(100);
+        ArrayList<RowConstraints> rows = new ArrayList<RowConstraints>();
+        rows.add(row0);
+        rows.add(row1);
+        rows.add(row2);
+        return rows;
+    }
+
+    public static ArrayList<ColumnConstraints> hamburgerColumnConstraints() {
+        ColumnConstraints column0 = new ColumnConstraints();
+        column0.setMinWidth(100);
+        column0.setMaxWidth(100);
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setMinWidth(200);
+        column1.setMaxWidth(200);
+        ArrayList<ColumnConstraints> columns = new ArrayList<ColumnConstraints>();
+        columns.add(column0);
+        columns.add(column1);
+        return columns;
+    }
+
+    public static GridPane gridHamburger(Stage primaryStage) {
         //creating the layout of the hamburger menu
+        Stage window = primaryStage;
         GridPane gridHamburger = new GridPane();
         gridHamburger.setId("hamburgerMenu");
 
@@ -148,96 +274,8 @@ public class MainPage {
         //add all previously created elements to the hamburger layout
         gridHamburger.getChildren().addAll(settingsButton, leaderboardButton, addActionButton, displayProfilePicture);
         gridHamburger.setAlignment(Pos.TOP_CENTER);
-        gridHamburger.setStyle("-fx-background-color: #FFFFFF;");
-
-        //////////////////////////////////////////////////////////////////////////////////
-        //TopGrid/////////////////////////////////////////////////////////////////////////
-
-        // creating a new grid for the top field of the BorderPane
-        GridPane gridTop = new GridPane();
-        gridTop.setPadding(new Insets(10, 10, 10, 10));
-        gridTop.setVgap(8);
-        gridTop.setHgap(10);
-
-        //here the hamburger icon is created and and functions are attached
-        //so that by clicking it it opens and closes the side menu
-        JFXHamburger hamburger = new JFXHamburger();
-        Tooltip.install(hamburger, new Tooltip("Options menu"));
-        hamburger.setId("hamburgerButton");
-        HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburger);
-        burgerTask.setRate(-1);
-        hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
-            if (burgerTask.getRate() == -1) {
-                centralPageLayout.setLeft(gridHamburger);
-            } else {
-                centralPageLayout.setLeft(null);
-            }
-            burgerTask.setRate(burgerTask.getRate() * -1);
-            burgerTask.play();
-        });
-        gridTop.setConstraints(hamburger, 0, 0);
-        gridTop.getChildren().addAll(hamburger);
-        gridTop.setStyle("-fx-background-color: #4c4242;");
-
-        ////////////////////////////////////////////////////////////////
-        ////setting the sizes of the rows///////////////////////////////
-        RowConstraints row0 = new RowConstraints();
-        row0.setMinHeight(0);
-        row0.setMaxHeight(0);
-        RowConstraints row1 = new RowConstraints();
-        row1.setMinHeight(45);
-        row1.setMaxHeight(45);
-        RowConstraints row2 = new RowConstraints();
-        row2.setMinHeight(45);
-        row2.setMaxHeight(45);
-        RowConstraints row3 = new RowConstraints();
-        row3.setMinHeight(700);
-        row3.setMaxHeight(700);
-        RowConstraints row4 = new RowConstraints();
-        row4.setMinHeight(0);
-        RowConstraints row5 = new RowConstraints();
-        row5.setMinHeight(0);
-        row5.setMaxHeight(0);
-        RowConstraints row6 = new RowConstraints();
-        row6.setMinHeight(0);
-        row6.setMaxHeight(0);
-        gridCenter.getRowConstraints().addAll(row0, row1, row2, row3, row4, row5, row6);
-
-        ColumnConstraints column0 = new ColumnConstraints();
-        column0.setMinWidth(200);
-        column0.setMaxWidth(200);
-        ColumnConstraints column1 = new ColumnConstraints();
-        column1.setMinWidth(700);
-        column1.setMaxWidth(700);
-        ColumnConstraints column2 = new ColumnConstraints();
-        column2.setMinWidth(200);
-        column2.setMaxWidth(200);
-        gridCenter.getColumnConstraints().addAll(column0, column1, column2);
-
-        ColumnConstraints hamColumn0 = new ColumnConstraints();
-        hamColumn0.setMinWidth(100);
-        hamColumn0.setMaxWidth(100);
-        ColumnConstraints hamColumn1 = new ColumnConstraints();
-        hamColumn1.setMinWidth(200);
-        hamColumn1.setMaxWidth(200);
-        gridHamburger.getColumnConstraints().addAll(hamColumn0, hamColumn1);
-
-        RowConstraints hamRow0 = new RowConstraints();
-        hamRow0.setMinHeight(100);
-        RowConstraints hamRow1 = new RowConstraints();
-        hamRow1.setMinHeight(100);
-        RowConstraints hamRow2 = new RowConstraints();
-        hamRow2.setMinHeight(100);
-        gridHamburger.getRowConstraints().addAll(hamRow0, hamRow1, hamRow2);
-        /////////////////////////////////////////////////////////////////////////
-        ////CentralPageLayout/////////////////////////////////////////////////////
-
-        centralPageLayout.setCenter(gridCenter);
-        centralPageLayout.setTop(gridTop);
-
-        //here the create view is made into a scene and returned when the method is called
-        Scene scene = new Scene(centralPageLayout);
-        scene.getStylesheets().add("mainStyle.css");
-        return scene;
+        return gridHamburger;
     }
+
+
 }
