@@ -5,8 +5,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import server.model.User;
 import server.repository.ActionRepository;
 import server.repository.UserRepository;
+
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 @SpringBootTest
@@ -22,7 +26,6 @@ public class DbDataControllerTest {
     @Autowired
     DbDataController dbDataController;
 
-
     @Test
     public void testGetActionPoints() {
         assertEquals(0, dbDataController.getActionPoints("actionthatdoesnotactuallyexist"));
@@ -36,5 +39,11 @@ public class DbDataControllerTest {
     @Test
     public void testDeleteUser() {
         assertFalse(dbDataController.deleteUser("thisusershouldnotexist"));
+    }
+
+    @Test
+    public void testGetTop50() {
+        List<User> users = dbDataController.getTop50Users();
+        assertNotNull(users);
     }
 }
