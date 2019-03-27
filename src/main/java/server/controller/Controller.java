@@ -228,7 +228,7 @@ public class Controller {
 
     @RequestMapping("/position")
     public ResponseEntity<Response> getYourPositions(@RequestParam("username") String username) {
-        return ResponseEntity.ok().body(new Response(dbDataController.getYourPostionInList(username)));
+        return ResponseEntity.ok().body(new Response(dbDataController.getYourPositionInList(username)));
     }
 
     @RequestMapping("/getprofilepic")
@@ -244,5 +244,20 @@ public class Controller {
     @RequestMapping("/search")
     public ResponseEntity<User> searchForUser(@RequestParam("username") String username) {
         return ResponseEntity.ok().body(dbDataController.searchUser(username));
+    }
+    
+    /**
+     * Mapping to get your user information.
+     * @param user User object with username and password
+     * @return Complete User object
+     */
+    @RequestMapping("/userinfo")
+    public ResponseEntity<User> getUserInfo(@RequestBody User user) {
+        String name = user.getUsername();
+        String pass = user.getPassword();
+        if (dbDataController.isUserAuthenticated(name, pass)) {
+            return ResponseEntity.ok().body(dbDataController.getUser(name));
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }
 }

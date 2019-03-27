@@ -1,5 +1,6 @@
 package server.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +23,6 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -377,10 +377,14 @@ public class ControllerTest {
     @Test
     public void checkTop50Users() throws Exception {
         userRepository.save(testUser);
-        mockMvc.perform(get("/top50"))
+        MvcResult result = mockMvc.perform(get("/top50"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json;charset=UTF-8"));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn();
         userRepository.delete(testUser);
+        ObjectMapper mapper = new ObjectMapper();
+        List<User> top50Users = mapper.readValue(result.getResponse().getContentAsString(), new TypeReference<List<User>>(){});
+        assertFalse(top50Users.isEmpty());
     }
 
     @Test
@@ -614,5 +618,29 @@ public class ControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         User user = mapper.readValue(result.getResponse().getContentAsString(), User.class);
         assertEquals(testUser, user);
+    }
+
+    @Test
+    public void checkGetUserInfo() throws Exception {
+        userRepository.save(testUser);
+        User user = new User(testUser.getUsername(), testUser.getPassword(), null, 0, null);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBody = mapper.writeValueAsString(user);
+        MvcResult result = mockMvc.perform(get("/userinfo").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn();
+        User receivedUser = mapper.readValue(result.getResponse().getContentAsString(), User.class);
+        assertEquals(testUser, receivedUser);
+    }
+
+    @Test
+    public void checkGetWrongUserInfo() throws Exception {
+        userRepository.save(testUser);
+        User user = new User(testUser.getUsername(), testUser.getPassword() + "should-have-wrong-pass", null, 0, null);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBody = mapper.writeValueAsString(user);
+        mockMvc.perform(get("/userinfo").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isUnauthorized());
     }
 }

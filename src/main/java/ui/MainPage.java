@@ -147,7 +147,7 @@ public class MainPage {
         ////setting the sizes of the rows///////////////////////////////
         gridCenter.getRowConstraints().addAll(gridRowconstraints());
         gridCenter.getColumnConstraints().addAll(gridColumnConstraints());
-        gridHamburger.getRowConstraints().addAll(hamburgerRowconstraints());
+        gridHamburger.getRowConstraints().addAll(hamburgerRowConstraints());
         gridHamburger.getColumnConstraints().addAll(hamburgerColumnConstraints());
         /////////////////////////////////////////////////////////////////////////
         ////CentralPageLayout/////////////////////////////////////////////////////
@@ -161,6 +161,10 @@ public class MainPage {
         return scene;
     }
 
+    /**
+     * Method for setting grid row constraints.
+     * @return ArrayList of column constraints
+     */
     public static ArrayList<RowConstraints> gridRowconstraints() {
         RowConstraints row0 = new RowConstraints();
         row0.setMinHeight(0);
@@ -193,6 +197,10 @@ public class MainPage {
         return rows;
     }
 
+    /**
+     * Method for setting grid column constraints.
+     * @return ArrayList of column constraints
+     */
     public static ArrayList<ColumnConstraints> gridColumnConstraints() {
         ColumnConstraints column0 = new ColumnConstraints();
         column0.setMinWidth(200);
@@ -210,7 +218,11 @@ public class MainPage {
         return columns;
     }
 
-    public static ArrayList<RowConstraints> hamburgerRowconstraints() {
+    /**
+     * Method for setting hamburger row constraints.
+     * @return ArrayList of row constraints
+     */
+    public static ArrayList<RowConstraints> hamburgerRowConstraints() {
         RowConstraints row0 = new RowConstraints();
         row0.setMinHeight(100);
         RowConstraints row1 = new RowConstraints();
@@ -224,6 +236,10 @@ public class MainPage {
         return rows;
     }
 
+    /**
+     * Method for setting hamburger column constraints.
+     * @return ArrayList of column constraints
+     */
     public static ArrayList<ColumnConstraints> hamburgerColumnConstraints() {
         ColumnConstraints column0 = new ColumnConstraints();
         column0.setMinWidth(100);
@@ -237,9 +253,13 @@ public class MainPage {
         return columns;
     }
 
+    /**
+     * Method setting up and returning Hamburger GridPane.
+     * @param primaryStage Primary stage
+     * @return GridPane
+     */
     public static GridPane gridHamburger(Stage primaryStage) {
         //creating the layout of the hamburger menu
-        Stage window = primaryStage;
         GridPane gridHamburger = new GridPane();
         gridHamburger.setId("hamburgerMenu");
 
@@ -253,6 +273,7 @@ public class MainPage {
         displayProfilePicture.setId("profilePicture");
         gridHamburger.setConstraints(displayProfilePicture, 0, 0, 1, 1);
 
+        Stage window = primaryStage;
         Button settingsButton = new Button("settings");
         settingsButton.setId("settingsButton");
         settingsButton.setOnAction(e -> window.setScene(SettingsPage.settingsScene(window)));

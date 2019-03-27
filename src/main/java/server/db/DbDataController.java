@@ -319,7 +319,7 @@ public class DbDataController {
         return true;
     }
 
-    public int getYourPostionInList(String username) {
+    public int getYourPositionInList(String username) {
         List<User> users = userRepository.findAllByAnonymousOrUsernameOrderByScore(false, username);
         return findIndexByUsername(users, username);
     }
@@ -333,7 +333,7 @@ public class DbDataController {
     private int findIndexByUsername(List<User> list, String username) {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getUsername().equals(username)) {
-                return i;
+                return i + 1;
             }
         }
         return -1;
@@ -383,5 +383,9 @@ public class DbDataController {
             }
         }
         return null;
+    }
+    
+    public User getUser(String username) {
+        return userRepository.findFirstByUsername(username);
     }
 }
