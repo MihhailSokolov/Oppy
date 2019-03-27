@@ -459,5 +459,14 @@ public class ControllerTest {
         userRepository.delete(testUser);
     }
 
-    
+    @Test
+    public void checkUpdateTop50() throws Exception {
+        mockMvc.perform(get("/top50"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("true")));
+    }
+
+
+
 }
