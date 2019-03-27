@@ -1,6 +1,6 @@
 .root{
-    -fx-min-height: 1080;
-    -fx-min-width: 1920;
+    /*-fx-min-height: 1080;
+    -fx-min-width: 1920;*/
     -fx-background-image: url("nightSky.jpg"); /*https://www.pexels.com/search/universe/*/
     -fx-background-repeat: stretch;
     -fx-background-size: 2000 1200;
@@ -31,6 +31,13 @@
 }
 
 .tooltip{
+    -fx-max-width: 400px;
+    -fx-min-width: 400px;
+    -fx-max-height: 50px;
+    -fx-min-height: 50px;
+    -fx-text-fill: red;
+    -fx-display-caret: inline-block;;
+
 }
 
 #hamburgerMenu{
@@ -147,6 +154,8 @@
 #hamburgerButton:hover{
     -fx-cursor: HAND;
 }
+
+
 
 
 

@@ -156,7 +156,7 @@ public class MainPage {
         centralPageLayout.setTop(gridTop);
 
         //here the create view is made into a scene and returned when the method is called
-        Scene scene = new Scene(centralPageLayout);
+        Scene scene = new Scene(centralPageLayout, 1920, 1080);
         scene.getStylesheets().add("mainStyle.css");
         return scene;
     }
