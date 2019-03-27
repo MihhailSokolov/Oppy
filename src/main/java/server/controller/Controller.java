@@ -240,4 +240,9 @@ public class Controller {
     public ResponseEntity<Response> setProfilePic(@RequestBody User user) {
         return ResponseEntity.ok().body(new Response(dbDataController.setProfilePicture(user)));
     }
+
+    @RequestMapping("/search")
+    public ResponseEntity<User> searchForUser(@RequestParam("username") String username) {
+        return ResponseEntity.ok().body(dbDataController.searchUser(username));
+    }
 }
