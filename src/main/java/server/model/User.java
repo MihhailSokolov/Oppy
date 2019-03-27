@@ -4,7 +4,6 @@ import com.google.common.base.Objects;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import javafx.scene.image.Image;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -25,9 +24,9 @@ public class User {
     private int score;
     private Date registerDate;
     private boolean anonymous;
-    private boolean pushNotifications;
-    private Image profilePicture;
+    private String profilePicture;
     private List<Preset> presets;
+    private List<User> friends;
 
     /**
      * Constructor for User object.
@@ -47,9 +46,9 @@ public class User {
         this.score = score;
         this.registerDate = registerDate;
         this.anonymous = false;
-        this.pushNotifications = true;
-        this.profilePicture = null; //new Image("placeholder 100x100.png");
+        this.profilePicture = "";
         this.presets = new ArrayList<>();
+        this.friends = new ArrayList<>();
     }
 
     public Date getRegisterDate() {
@@ -80,11 +79,7 @@ public class User {
         return  this.anonymous;
     }
 
-    public boolean getPushNotifications() {
-        return this.pushNotifications;
-    }
-
-    public Image getProfilePicture() {
+    public String getProfilePicture() {
         return profilePicture;
     }
 
@@ -108,11 +103,7 @@ public class User {
         this.anonymous = anonymous;
     }
 
-    public void setPushNotifications(boolean pushNotifications) {
-        this.pushNotifications = pushNotifications;
-    }
-
-    public void setProfilePicture(Image profilePicture) {
+    public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
     }
 
@@ -122,6 +113,14 @@ public class User {
 
     public void setPresets(List<Preset> presets) {
         this.presets = presets;
+    }
+
+    public List<User> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<User> friends) {
+        this.friends = friends;
     }
 
     @Override
@@ -134,9 +133,9 @@ public class User {
                 + ", score=" + score
                 + ", registerDate='" + dateFormat.format(registerDate) + '\''
                 + ", anonymous=" + anonymous
-                + ", pushNotifications=" + pushNotifications
-                + ", profilePicture=" + profilePicture
-                + ", presets=" + presets + ']';
+                + ", profilePicture='" + profilePicture + '\''
+                + ", presets=" + presets
+                + ", friends=" + friends + ']';
     }
 
     @Override
@@ -147,12 +146,12 @@ public class User {
         User user = (User) other;
         return score == user.score
                 && anonymous == user.anonymous
-                && pushNotifications == user.pushNotifications
                 && Objects.equal(username, user.username)
                 && Objects.equal(password, user.password)
                 && Objects.equal(email, user.email)
                 && Objects.equal(registerDate, user.registerDate)
                 && Objects.equal(profilePicture, user.profilePicture)
-                && Objects.equal(presets, user.presets);
+                && Objects.equal(presets, user.presets)
+                && Objects.equal(friends, user.friends);
     }
 }

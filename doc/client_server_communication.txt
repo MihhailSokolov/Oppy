@@ -161,3 +161,54 @@ EXECUTE PRESET
     Response:
         200 OK
         Body contains JSON Response object with message 'true' if preset was successfully executed, 'false' otherwise
+
+GET FRIENDS
+    To get a list of user's friends from db
+    Request:
+        /friends?username=oppy123
+    Response:
+        200 OK
+        Body contains JSON List of User objects who are user's friends
+
+ADD FRIEND
+    To add a new friend/user to the list of user's friends
+    Request:
+        /addfriend?username=oppy123
+        Body should contain JSON User object that will be added to the friend list (must contain username, rest is optional)
+    Response:
+        200 OK
+        Body contains JSON Response object with message 'true' if friend was successfully added, 'false' otherwise
+
+DELETE FRIEND
+    To delete a friend/user from the list of user's friends
+    Request:
+        /deletefriend?username=oppy123
+        Body should contain JSON User object to be deleted from the list with username (everything else can be null)
+    Response:
+        200 OK
+        Body contains JSON Response object with message 'true' if friend was successfully deleted, 'false' otherwise
+
+GET YOUR POSITION
+    To get your position in the list of users based on score
+    Request:
+        /position?username=oppy123
+    Response:
+        200 OK
+        Body contains JSON Response object with message string containing integer of your position (-1 if couldn't find you).
+
+GET PROFILE PICTURE
+    To get user's profile picture as a binary string from the database
+    Request:
+        /getprofilepic?username=oppy123
+    Response:
+        200 OK
+        Body contains JSON Response object with message string containing binary representation of profile picture. Message will be empty if couldn't find the user.
+
+SET PROFILE PICTURE
+    To set/update user's profile picture in db
+    Request:
+        /setprofilepic
+        Body contains JSON User object with username and new profilePicture we want to set (everything else can be null)
+    Response:
+        200 OK
+        Body contains JSON Response object with message 'true' if profile picture was successfully changed, 'false' otherwise (if could not find user for example)

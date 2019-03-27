@@ -95,11 +95,8 @@ public class DbDataController {
     public boolean updatePassword(String username, String newpass) {
         User userToUpdate = userRepository.findFirstByUsername(username);
         userToUpdate.setPassword(newpass);
-        if (userRepository.save(userToUpdate) == null) {
-            return false;
-        } else {
-            return true;
-        }
+        userRepository.save(userToUpdate);
+        return true;
     }
 
     /**
@@ -136,11 +133,8 @@ public class DbDataController {
     public boolean addToUserScore(String username, int points) {
         User user = userRepository.findFirstByUsername(username);
         user.setScore(user.getScore() + points);
-        if (userRepository.save(user) == null) {
-            return false;
-        } else {
-            return true;
-        }
+        userRepository.save(user);
+        return true;
     }
 
     /**
@@ -184,11 +178,8 @@ public class DbDataController {
     public boolean changeAnonymous(String username, boolean anonymous) {
         User userToUpdate = userRepository.findFirstByUsername(username);
         userToUpdate.setAnonymous(anonymous);
-        if (userRepository.save(userToUpdate) == null) {
-            return false;
-        } else {
-            return true;
-        }
+        userRepository.save(userToUpdate);
+        return true;
     }
 
     /**
@@ -201,7 +192,8 @@ public class DbDataController {
     public boolean updateEmail(String username, String newEmail) {
         User userToUpdate = userRepository.findFirstByUsername(username);
         userToUpdate.setEmail(newEmail);
-        return userRepository.save(userToUpdate) != null;
+        userRepository.save(userToUpdate);
+        return true;
     }
 
     /**
@@ -214,7 +206,8 @@ public class DbDataController {
         User user = userRepository.findFirstByUsername(username);
         user.setScore(0);
         user.setRegisterDate(new Date());
-        return userRepository.save(user) != null;
+        userRepository.save(user);
+        return true;
     }
 
     public List<Preset> getPresets(String username) {
@@ -232,7 +225,8 @@ public class DbDataController {
         List<Preset> presetList = user.getPresets();
         presetList.add(preset);
         user.setPresets(presetList);
-        return userRepository.save(user) != null;
+        userRepository.save(user);
+        return true;
     }
 
     /**
@@ -246,7 +240,11 @@ public class DbDataController {
         List<Preset> presetList = user.getPresets();
         boolean deleted = presetList.remove(preset);
         user.setPresets(presetList);
-        return deleted && userRepository.save(user) != null;
+        if (!deleted) {
+            return false;
+        }
+        userRepository.save(user);
+        return true;
     }
 
     /**
@@ -281,5 +279,94 @@ public class DbDataController {
             }
         }
         return -1;
+    }
+
+    public List<User> getFriends(String username) {
+        return userRepository.findFirstByUsername(username).getFriends();
+    }
+
+    /**
+     * Method to add a new friend to the user's friend list.
+     * @param username user's username
+     * @param friend new friend (User) to be added
+     * @return true if successfully added, false otherwise
+     */
+    public boolean addNewFriend(String username, User friend) {
+        User user = userRepository.findFirstByUsername(username);
+        List<User> friends = user.getFriends();
+        friends.add(friend);
+        user.setFriends(friends);
+        userRepository.save(user);
+        return true;
+    }
+
+    /**
+     * Method to delete a friend from user's list of friends.
+     * @param username user's username
+     * @param friend User to be deleted
+     * @return true if successfully deleted, false otherwise
+     */
+    public boolean deleteFriend(String username, User friend) {
+        User user = userRepository.findFirstByUsername(username);
+        List<User> friends = user.getFriends();
+        for (User user1 : friends) {
+            if (user1.getUsername().equals(friend.getUsername())) {
+                friends.remove(user1);
+            }
+        }
+        user.setFriends(friends);
+        userRepository.save(user);
+        return true;
+    }
+
+    public int getYourPostionInList(String username) {
+        List<User> users = userRepository.findAllByAnonymousOrUsernameOrderByScore(false, username);
+        return findIndexByUsername(users, username);
+    }
+
+    /**
+     * Private method to help find the index of the user in the list only by name.
+     * @param list List of users
+     * @param username username to be found
+     * @return index of the user or -1 if not found
+     */
+    private int findIndexByUsername(List<User> list, String username) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getUsername().equals(username)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Method to get profile picture of the user from db.
+     * @param username user's username
+     * @return binary representation of profile picture as a String
+     *          or empty string of couldn't find the user
+     */
+    public String getProfilePicture(String username) {
+        User user = userRepository.findFirstByUsername(username);
+        if (user == null) {
+            return "";
+        }
+        return user.getProfilePicture();
+    }
+
+    /**
+     * Method to change user's profile picture in db.
+     * @param user User who wants to set profile picture
+     * @return true if succeeded, false otherwise
+     */
+    public boolean setProfilePicture(User user) {
+        String username = user.getUsername();
+        String pic = user.getProfilePicture();
+        user = userRepository.findFirstByUsername(username);
+        if (user == null) {
+            return false;
+        }
+        user.setProfilePicture(pic);
+        userRepository.save(user);
+        return true;
     }
 }
