@@ -146,7 +146,7 @@ public class MainPage {
         gridTop.setConstraints(hamburgerLeft, 0, 0);
 
         JFXHamburger hamburgerRight = new JFXHamburger();
-        Tooltip.install(hamburgerRight, new Tooltip("Options menu"));
+        Tooltip.install(hamburgerRight, new Tooltip("Achievements/Friends menu"));
         hamburgerRight.setId("hamburgerButton");
         HamburgerSlideCloseTransition burgerTaskRight = new HamburgerSlideCloseTransition(hamburgerRight);
         burgerTaskRight.setRate(-1);
@@ -181,7 +181,7 @@ public class MainPage {
         centralPageLayout.setTop(gridTop);
 
         //here the create view is made into a scene and returned when the method is called
-        Scene scene = new Scene(centralPageLayout);
+        Scene scene = new Scene(centralPageLayout, 1920, 1080);
         scene.getStylesheets().add("mainStyle.css");
         return scene;
     }
@@ -368,37 +368,43 @@ public class MainPage {
         //Date date = Main.clientController.getDate();   //Still needs to be inplemented
 
         Image preAcivement1 = new Image("placeholder 100x100.png");//inplement acievemnt not unlocked skin
-        if(Integer.parseInt(result) >= 1000){
+        if(Integer.parseInt(result) >= 10000){
             preAcivement1 = new Image("placeholder2 100x100.png");//inplement acievemnt Image
         }
         ImageView acivement1 = new ImageView(preAcivement1);
         GridPane.setConstraints(acivement1, 0,0);
+        Tooltip.install(acivement1, new Tooltip("Achievement for reaching 10,000 points"));
 
         Image preAcivement2 = new Image("placeholder 100x100.png");
-        if(Integer.parseInt(result) >= 10000){
+        if(Integer.parseInt(result) >= 100000){
             preAcivement2 = new Image("placeholder2 100x100.png");
         }
         ImageView acivement2 = new ImageView(preAcivement2);
         GridPane.setConstraints(acivement2, 0,2);
+        Tooltip.install(acivement2, new Tooltip("Achievement for reaching 100,000 points"));
 
         Image preAcivement3 = new Image("placeholder 100x100.png");
-        if(Integer.parseInt(result) >= 100000){
+        if(Integer.parseInt(result) >= 1000000){
             preAcivement3 = new Image("placeholder2 100x100.png");
         }
         ImageView acivement3 = new ImageView(preAcivement3);
         GridPane.setConstraints(acivement3, 0,4);
+        Tooltip.install(acivement3, new Tooltip("Achievement for reaching 1,000,000 points"));
 
         Image preAcivement4 = new Image("placeholder 100x100.png");
         ImageView acivement4 = new ImageView(preAcivement4);
         GridPane.setConstraints(acivement4, 1,0);
+        Tooltip.install(acivement4, new Tooltip("Achievement for playing for 1 week"));
 
         Image preAcivement5 = new Image("placeholder 100x100.png");
         ImageView acivement5 = new ImageView(preAcivement5);
         GridPane.setConstraints(acivement5, 1,2);
+        Tooltip.install(acivement5, new Tooltip("Achievement for playing for 1 month"));
 
         Image preAcivement6 = new Image("placeholder 100x100.png");
         ImageView acivement6 = new ImageView(preAcivement6);
         GridPane.setConstraints(acivement6, 1,4);
+        Tooltip.install(acivement6, new Tooltip("Achievement for playing for 1 year"));
 
         //here the followingList is displayed and the follow option is created
         Label followLabel = new Label("people you follow:");
@@ -429,6 +435,9 @@ public class MainPage {
 
         Button followButton = new Button("follow");
         followButton.setId("followButton");
+        followButton.setOnAction(e->{
+            //here needs to be the action to start following ome if he exists ^ NOT anonymous
+        });
         GridPane.setConstraints(followButton, 0, 9, 3, 1);
 
 

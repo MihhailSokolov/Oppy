@@ -1,6 +1,4 @@
 .root{
-    -fx-min-height: 1080;
-    -fx-min-width: 1920;
     -fx-background-image: url("nightSky.jpg"); /*https://www.pexels.com/search/universe/*/
     -fx-background-repeat: stretch;
     -fx-background-size: 2000 1200;
@@ -43,7 +41,7 @@
     -fx-translate-x: 25px;
     -fx-background-color: #2a3039;
 }
-.table-view.column-header{
+.table-view .column-header{
     -fx-text-fill: white;
     -fx-font-size: 15px;
     -fx-border-width: 0px;
@@ -60,16 +58,6 @@
     -fx-background-color: #2a3039;
     -fx-alignment: center;
 }
-.table-view .arrow{
-    -fx-text-fill: white;
-    -fx-font-size: 15px;
-    -fx-border-width: 0px;
-    -fx-max-width: 250px;
-    -fx-max-height: 50px;
-    -fx-background-color: #2a3039,#2a3039, #2a3039;
-}
-
-
 .table-row-cell:odd {
     -fx-background-color: #38424b;
 }
@@ -78,6 +66,9 @@
 }
 .table-row-cell .text {
     -fx-fill: white;
+}
+.table-view .filler{
+    -fx-background-color: #2a3039;
 }
 
 .text-field{
