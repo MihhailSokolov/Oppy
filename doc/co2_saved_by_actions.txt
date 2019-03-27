@@ -14,3 +14,4 @@ carpooling 2.5 people avg saves 5.2k (assuming 20km)
 0.17k for keeping devices turned off when not needed assuming averages of the EU
 160k co2 saved for planting an average tree
 2.05k co2 saved by recycling 
+3.64k co2 saved by driving electric over petrol.
