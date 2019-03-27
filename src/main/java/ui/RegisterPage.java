@@ -162,6 +162,10 @@ public class RegisterPage {
         return scene;
     }
 
+    /**
+     * Method for setting grid row constraints.
+     * @return ArrayList of row constraints
+     */
     public static ArrayList<RowConstraints> gridRowConstraints() {
         RowConstraints row0 = new RowConstraints();
         row0.setMinHeight(100);
