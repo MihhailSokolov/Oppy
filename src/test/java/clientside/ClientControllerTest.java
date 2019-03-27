@@ -3,6 +3,7 @@ package clientside;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.tomakehurst.wiremock.common.Json;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import org.junit.Before;
 import org.junit.Rule;
@@ -132,7 +133,7 @@ public class ClientControllerTest {
     }
 
     @Test
-    public void updateEmailTest(){
+    public void updateEmailTest() {
         this.testUser = new User("user", "pass", "email", 0, new Date());
         wireMockRule.stubFor(any(urlPathEqualTo("/updateEmail"))
                 .withQueryParam("newEmail", equalTo("ewmail"))
@@ -156,14 +157,49 @@ public class ClientControllerTest {
 
         List<Action> actionList = new ArrayList<>();
         assertEquals(null, clientController.getCategoryList("5"));
-        for(int i=0; i<10; i++){
-            actionList.add(new Action("somename" + i, String.valueOf(i), i*100));
+        for (int i = 0; i < 10; i++) {
+            actionList.add(new Action("somename" + i, String.valueOf(i), i * 100));
         }
         List<Action> cat5actionList = new ArrayList<>();
         Action cat5action = new Action("somename5", "5", 500);
         cat5actionList.add(cat5action);
         clientController.setActionList(actionList);
         assertEquals(cat5actionList, clientController.getCategoryList("5"));
+    }
+
+    @Test
+    public void updateFriendListTest() throws IOException {
+        List<User> testFriendList = new ArrayList<>();
+        testFriendList.add(new User("BillGates99", null, null, 0, new Date()));
+        testFriendList.add(new User("ElonMusk24", null, null, 0, new Date()));
+        String testFriendListJson = objectMapper.writeValueAsString(testFriendList);
+        wireMockRule.stubFor(get(urlPathEqualTo("/friends"))
+                .withQueryParam("username", equalTo(testUser.getUsername()))
+                .willReturn(ok(testFriendListJson)));
+        clientController.updateFriendList();
+        assertEquals(testFriendList, testUser.getFriends());
+    }
+
+    @Test
+    public void addFriendTest() throws JsonProcessingException {
+        User friend = new User("Jesus", "", "", 0, new Date());
+        String friendJson = objectMapper.writeValueAsString(friend);
+        wireMockRule.stubFor(any(urlPathEqualTo("/addfriend"))
+                .withQueryParam("username", equalTo(testUser.getUsername()))
+                .withRequestBody(equalToJson(friendJson))
+                .willReturn(ok(trueResponse)));
+        assertEquals("true", clientController.addFriend(friend));
+    }
+
+    @Test
+    public void deleteFriendTest() throws JsonProcessingException {
+        User friend = new User("Jesus", "", "", 0, new Date());
+        String friendJson = objectMapper.writeValueAsString(friend);
+        wireMockRule.stubFor(any(urlPathEqualTo("/deletefriend"))
+                .withQueryParam("username", equalTo(testUser.getUsername()))
+                .withRequestBody(equalToJson(friendJson))
+                .willReturn(ok(trueResponse)));
+        assertEquals("true", clientController.deleteFriend(friend));
     }
 
     @Test
