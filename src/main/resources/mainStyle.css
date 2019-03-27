@@ -35,8 +35,9 @@
     -fx-min-width: 400px;
     -fx-max-height: 50px;
     -fx-min-height: 50px;
-    -fx-text-fill: red;
+    -fx-text-fill: white;
     -fx-display-caret: inline-block;;
+    -fx-font-size: 20;
 
 }
 
