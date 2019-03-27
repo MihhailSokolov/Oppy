@@ -1,8 +1,9 @@
 package clientside;
 
+import com.google.common.hash.Hashing;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.hash.Hashing;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -253,7 +254,7 @@ public class ClientController {
     }
 
     /**
-     * Sends a "delete acct request" to the server
+     * Sends a "delete acct request" to the server.
      *
      * @return String response msg ("true"/"false"), implying success or failure.
      */
@@ -408,11 +409,11 @@ public class ClientController {
     public String updateAnonymous(boolean trueOrFalse) {
         responseEntity = this.postRequest(this.baseUrl
                 + String.format(Path.CHANGEANON.toString(), trueOrFalse), user);
-            String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
-            if (responseMsg.equals("true")) {
-                this.user.setAnonymous(trueOrFalse);
-            }
-            return responseMsg;
+        String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
+        if (responseMsg.equals("true")) {
+            this.user.setAnonymous(trueOrFalse);
+        }
+        return responseMsg;
     }
 
 
