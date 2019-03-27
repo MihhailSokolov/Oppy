@@ -471,7 +471,6 @@ public class ControllerTest {
         userRepository.delete(testUser);
     }
 
-    @Test
     public void checkGetFriends() throws Exception {
         userRepository.save(testUser);
         mockMvc.perform(get("/friends?username=" + testUser.getUsername()))
