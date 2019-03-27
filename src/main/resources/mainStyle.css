@@ -29,6 +29,7 @@
 }
 
 .tooltip{
+    -fx-font-size: 20px;
 }
 
 .image-view{

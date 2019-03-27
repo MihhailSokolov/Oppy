@@ -10,7 +10,12 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,6 +32,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+//import javafx.scene.control.;
+
 
 //import javax.xml.soap.Text;
 
@@ -35,6 +42,7 @@ import java.util.Date;
  */
 public class MainPage {
     private static TableView<User> folowingList = new TableView<>();
+
     /**
      * Method for main scene.
      *
@@ -44,8 +52,8 @@ public class MainPage {
     public static Scene mainScene(Stage primaryStage) {
         Stage window = primaryStage;
         window.setTitle("MainPage");
-        window.setFullScreen(true);
-        BorderPane centralPageLayout = new BorderPane();
+        window.setMaximized(true);
+        final BorderPane centralPageLayout = new BorderPane();
 
         //////////////////////////////////////////////////////////////////////////////////////
         ///centerPage contents////////////////////////////////////////////////////////////////
@@ -67,7 +75,7 @@ public class MainPage {
             username = "lazy ass cunt";  //just here to troll people
         }
         Label usernameLabel = new Label(username);
-        Tooltip.install(usernameLabel, new Tooltip("this is the most hated person in the world"));
+        Tooltip.install(usernameLabel, new Tooltip("Your username"));
         usernameLabel.setId("username");
         GridPane.setConstraints(usernameLabel, 0, 1);
 
@@ -115,8 +123,8 @@ public class MainPage {
         gridCenter.setAlignment(Pos.CENTER);
 
         //here the hamburger menu is initialized
-        GridPane gridHamburgerLeft = gridHamburgerLeft(window);
-        GridPane gridHamburgerRight = gridHamburgerRight(window);
+        final GridPane gridHamburgerLeft = gridHamburgerLeft(window);
+        final GridPane gridHamburgerRight = gridHamburgerRight(window);
 
         //////////////////////////////////////////////////////////////////////////////////
         //TopGrid/////////////////////////////////////////////////////////////////////////
@@ -186,6 +194,12 @@ public class MainPage {
         return scene;
     }
 
+    /**
+     * Method for Row constraints of the central grid.
+     *
+     *
+     * @return ArrayList of RowConstraints
+     */
     public static ArrayList<RowConstraints> gridRowConstraints() {
         RowConstraints row0 = new RowConstraints();
         row0.setMinHeight(0);
@@ -218,6 +232,12 @@ public class MainPage {
         return rows;
     }
 
+
+    /**
+     * Method for column constraints of the central grid.
+     *
+     * @return ArrayList of ColumnConstraints
+     */
     public static ArrayList<ColumnConstraints> gridColumnConstraints() {
         ColumnConstraints column0 = new ColumnConstraints();
         column0.setMinWidth(200);
@@ -235,6 +255,12 @@ public class MainPage {
         return columns;
     }
 
+
+    /**
+     * Method for Row constraints of the left hamburger grid.
+     *
+     * @return ArrayList of RowConstraints
+     */
     public static ArrayList<RowConstraints> hamburgerRowConstraintsLeft() {
         RowConstraints row0 = new RowConstraints();
         row0.setMinHeight(100);
@@ -249,6 +275,11 @@ public class MainPage {
         return rows;
     }
 
+    /**
+     * Method for column constraints of the left hamburger grid.
+     *
+     * @return ArrayList of ColumnConstraints
+     */
     public static ArrayList<ColumnConstraints> hamburgerColumnConstraintsLeft() {
         ColumnConstraints column0 = new ColumnConstraints();
         column0.setMinWidth(100);
@@ -262,6 +293,11 @@ public class MainPage {
         return columns;
     }
 
+    /**
+     * Method for Row constraints of the right hamburger grid.
+     *
+     * @return ArrayList of RowConstraints
+     */
     public static ArrayList<RowConstraints> hamburgerRowConstraintsRight() {
         RowConstraints row0 = new RowConstraints();
         row0.setMinHeight(125);
@@ -299,6 +335,11 @@ public class MainPage {
         return rows;
     }
 
+    /**
+     * Method for column constraints of the right hamburger grid.
+     *
+     * @return ArrayList of ColumnConstraints
+     */
     public static ArrayList<ColumnConstraints> hamburgerColumnConstraintsRight() {
         ColumnConstraints column0 = new ColumnConstraints();
         column0.setMinWidth(133);
@@ -316,9 +357,37 @@ public class MainPage {
         return columns;
     }
 
+    /**
+     * Method for column constraints of the top grid.
+     *
+     * @return ArrayList of ColumnConstraints
+     */
+    public static ArrayList<ColumnConstraints> girdTopColumnConstraints() {
+        ColumnConstraints column0 = new ColumnConstraints();
+        column0.setMinWidth(40);
+        column0.setMaxWidth(40);
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setMinWidth(1800);
+        column1.setMaxWidth(1800);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setMinWidth(40);
+        column2.setMaxWidth(40);
+        ArrayList<ColumnConstraints> columns = new ArrayList<ColumnConstraints>();
+        columns.add(column0);
+        columns.add(column1);
+        columns.add(column2);
+        return columns;
+    }
+
+    /**
+     * Method for main scene.
+     *
+     * @param primaryStage Primary stage
+     * @return GridPane
+     */
     public static GridPane gridHamburgerLeft(Stage primaryStage) {
         //creating the layout of the hamburger menu
-        Stage window = primaryStage;
+        final Stage window = primaryStage;
         GridPane gridHamburger = new GridPane();
         gridHamburger.setId("hamburgerMenuLeft");
 
@@ -357,9 +426,14 @@ public class MainPage {
         return gridHamburger;
     }
 
+    /**
+     * Method for main scene.
+     *
+     * @param primaryStage Primary stage
+     * @return GridPane
+     */
     public static GridPane gridHamburgerRight(Stage primaryStage) {
         //creating the layout of the hamburger menu
-        Stage window = primaryStage;
         GridPane gridHamburger = new GridPane();
         gridHamburger.setId("hamburgerMenuRight");
 
@@ -368,7 +442,7 @@ public class MainPage {
         //Date date = Main.clientController.getDate();   //Still needs to be inplemented
 
         Image preAcivement1 = new Image("placeholder 100x100.png");//inplement acievemnt not unlocked skin
-        if(Integer.parseInt(result) >= 10000){
+        if (Integer.parseInt(result) >= 10000) {
             preAcivement1 = new Image("placeholder2 100x100.png");//inplement acievemnt Image
         }
         ImageView acivement1 = new ImageView(preAcivement1);
@@ -376,7 +450,7 @@ public class MainPage {
         Tooltip.install(acivement1, new Tooltip("Achievement for reaching 10,000 points"));
 
         Image preAcivement2 = new Image("placeholder 100x100.png");
-        if(Integer.parseInt(result) >= 100000){
+        if (Integer.parseInt(result) >= 100000) {
             preAcivement2 = new Image("placeholder2 100x100.png");
         }
         ImageView acivement2 = new ImageView(preAcivement2);
@@ -384,7 +458,7 @@ public class MainPage {
         Tooltip.install(acivement2, new Tooltip("Achievement for reaching 100,000 points"));
 
         Image preAcivement3 = new Image("placeholder 100x100.png");
-        if(Integer.parseInt(result) >= 1000000){
+        if (Integer.parseInt(result) >= 1000000) {
             preAcivement3 = new Image("placeholder2 100x100.png");
         }
         ImageView acivement3 = new ImageView(preAcivement3);
@@ -435,35 +509,17 @@ public class MainPage {
 
         Button followButton = new Button("follow");
         followButton.setId("followButton");
-        followButton.setOnAction(e->{
+        followButton.setOnAction(e -> {
             //here needs to be the action to start following ome if he exists ^ NOT anonymous
         });
         GridPane.setConstraints(followButton, 0, 9, 3, 1);
 
 
         //add all previously created elements to the hamburger layout
-        gridHamburger.getChildren().addAll(acivement1, acivement2, acivement3, acivement4, acivement5, acivement6, followLabel, folowingList, newFollowLabel,  followTextField, followButton);
+        gridHamburger.getChildren().addAll(acivement1, acivement2, acivement3, acivement4, acivement5,
+                acivement6, followLabel, folowingList, newFollowLabel,  followTextField, followButton);
         gridHamburger.setAlignment(Pos.TOP_CENTER);
         return gridHamburger;
     }
-
-    public static ArrayList<ColumnConstraints> girdTopColumnConstraints(){
-        ColumnConstraints column0 = new ColumnConstraints();
-        column0.setMinWidth(40);
-        column0.setMaxWidth(40);
-        ColumnConstraints column1 = new ColumnConstraints();
-        column1.setMinWidth(1800);
-        column1.setMaxWidth(1800);
-        ColumnConstraints column2 = new ColumnConstraints();
-        column2.setMinWidth(40);
-        column2.setMaxWidth(40);
-        ArrayList<ColumnConstraints> columns = new ArrayList<ColumnConstraints>();
-        columns.add(column0);
-        columns.add(column1);
-        columns.add(column2);
-        return columns;
-    }
-
-
-
+    
 }
