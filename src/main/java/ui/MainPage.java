@@ -428,11 +428,12 @@ public class MainPage {
         GridPane.setConstraints(followTextField, 0, 8, 3, 1);
 
         Button followButton = new Button("follow");
+        followButton.setId("followButton");
         GridPane.setConstraints(followButton, 0, 9, 3, 1);
 
 
         //add all previously created elements to the hamburger layout
-        gridHamburger.getChildren().addAll(acivement1, acivement2, acivement3, acivement4, acivement5, acivement6, followLabel, folowingList, newFollowLabel,  followTextField);
+        gridHamburger.getChildren().addAll(acivement1, acivement2, acivement3, acivement4, acivement5, acivement6, followLabel, folowingList, newFollowLabel,  followTextField, followButton);
         gridHamburger.setAlignment(Pos.TOP_CENTER);
         return gridHamburger;
     }
