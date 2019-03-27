@@ -33,7 +33,32 @@
 .tooltip{
 }
 
-#hamburgerMenu{
+.image-view{
+    -fx-translate-x: 33px;
+    -fx-translate-y: 25px;
+}
+
+.table-view{
+    -fx-max-width: 250px;
+    -fx-translate-x: 25px;
+}
+.table-view .label{
+    -fx-text-fill: black;
+    -fx-font-size: 15px;
+    -fx-border-width: 0px;
+    -fx-max-width: 250px;
+    -fx-max-height: 50px;
+}
+
+.text-field{
+    -fx-max-width: 250px;
+    -fx-min-width: 250px;
+    -fx-max-height: 50px;
+    -fx-min-height: 50px;
+    -fx-translate-x: 25px;
+}
+
+#hamburgerMenuLeft{
     -fx-min-width: 300px;
     -fx-max-width: 300px;
     -fx-min-height: 700px;
@@ -41,9 +66,21 @@
     -fx-border-width: 0 5 0 0;
     -fx-border-color: #9ebe67;
 }
+
+#hamburgerMenuRight{
+    -fx-min-width: 300px;
+    -fx-max-width: 300px;
+    -fx-min-height: 700px;
+    -fx-background-image: url("forestNight.jpg.jpg");
+    -fx-border-width: 0 0 0 5;
+    -fx-border-color: #9ebe67;
+}
+
 #profilePicture{
     -fx-border-width: 1px;
     -fx-border-color:#9ebe67 ;
+    -fx-translate-x: 0px;
+    -fx-translate-y: 0px;
 }
 
 #settingsButton{
@@ -147,6 +184,26 @@
 #hamburgerButton:hover{
     -fx-cursor: HAND;
 }
+
+#followLabel{
+    -fx-border-width: 0px;
+    -fx-max-height: 30px;
+    -fx-font-size: 20px;
+    -fx-translate-x: 50px;
+    -fx-translate-y: 25px;
+    -fx-text-fill: white;
+    -fx-alignment: CENTER;
+}
+
+#newFollowLabel{
+    -fx-border-width: 0px;
+    -fx-max-height: 30px;
+    -fx-font-size: 20px;
+    -fx-translate-x: 50px;
+    -fx-text-fill: white;
+    -fx-alignment: CENTER;
+}
+
 
 
 
