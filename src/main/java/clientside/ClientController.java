@@ -115,12 +115,17 @@ public class ClientController {
             public String toString() {
                 return "deletepreset?username=%s";
             }
+        }, USERINFO {
+            public String toString() {
+                return "userinfo";
+            }
         }
 
     }
 
     /**
      * Deletes the given preset from the user's presetList on the server.
+     *
      * @param preset the preset to delete (only preset name is required, the rest can be null)
      * @return String response message ("true"/"false").
      */
@@ -137,11 +142,13 @@ public class ClientController {
     public void updateUserPresets() throws IOException {
         responseEntity = this.getRequest(this.baseUrl
                 + String.format(Path.GETPRESETS.toString(), this.user.getUsername()));
-        this.user.setPresets(objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<Preset>>(){}));
+        this.user.setPresets(objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<Preset>>() {
+        }));
     }
 
     /**
      * Sends a post request to the server requesting to add a preset to a user's preset list.
+     *
      * @param preset the preset (type: Preset) to be added.
      * @return String response message ("true"/"false").
      */
@@ -158,7 +165,8 @@ public class ClientController {
     public void updateFriendList() throws IOException {
         responseEntity = this.getRequest(this.baseUrl
                 + String.format(Path.GETFRIENDS.toString(), this.user.getUsername()));
-        this.user.setFriends(objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<User>>(){}));
+        this.user.setFriends(objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<User>>() {
+        }));
     }
 
     /**
@@ -175,8 +183,9 @@ public class ClientController {
 
     /**
      * Sends a post request to server to delete a friend from the user's friend list.
+     *
      * @param friendToDelete (User) friend to delete.
-     * @return  String response message ("true"/"false").
+     * @return String response message ("true"/"false").
      */
     public String deleteFriend(User friendToDelete) {
         responseEntity = this.postRequest(this.baseUrl
@@ -203,11 +212,7 @@ public class ClientController {
     public String updatePass(String newPass) {
         responseEntity = this.postRequest(this.baseUrl
                 + String.format(Path.UPDATEPASS.toString(), hash(newPass)), user);
-        String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
-        if (responseMsg.equals("true")) {
-            this.user.setPassword(hash(newPass));
-        }
-        return responseMsg;
+        return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
     /**
@@ -247,7 +252,8 @@ public class ClientController {
     public void updateActionList() {
         responseEntity = this.getRequest(this.baseUrl + String.format(Path.ACTIONS.toString()));
         try {
-            actionList = objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<Action>>(){});
+            actionList = objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<Action>>() {
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -275,9 +281,6 @@ public class ClientController {
             responseEntity = this.postRequest(this.baseUrl
                     + String.format(Path.UPDATEEMAIL.toString(), newEmail), user);
             String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
-            if (responseMsg.equals("true")) {
-                this.user.setEmail(newEmail);
-            }
             return responseMsg;
         } else {
             return "false";
@@ -379,7 +382,8 @@ public class ClientController {
     public void updateTop50() {
         responseEntity = this.getRequest(this.baseUrl + String.format(Path.TOP50.toString()));
         try {
-            top50 = objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<User>>(){});
+            top50 = objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<User>>() {
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -389,8 +393,17 @@ public class ClientController {
         return top50;
     }
 
-    public void updateUserScore() {
-        user.setScore(Integer.parseInt(this.getScore()));
+    /**
+     * Updates the this.user.
+     */
+    public void updateUser() {
+        responseEntity = this.postRequest(this.baseUrl
+                + Path.USERINFO.toString(), user);
+        try {
+            this.user = objectMapper.readValue(responseEntity.getBody(), User.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setBaseUrl(String baseUrl) {

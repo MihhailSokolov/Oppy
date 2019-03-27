@@ -124,12 +124,6 @@ public class ClientControllerTest {
                 .withRequestBody(equalToJson(testUserJson))
                 .willReturn(ok(trueResponse)));
         assertEquals("true", clientController.updatePass("newpaws"));
-        assertEquals(testUser.getPassword(), clientController.hash("newpaws"));
-
-        wireMockRule.stubFor(any(urlPathEqualTo("/updatepass"))
-                .withQueryParam("newpass", equalTo(clientController.hash("newpaws")))
-                .withRequestBody(equalToJson(testUserJson))
-                .willReturn(ok(trueResponse)));
     }
 
     @Test
@@ -149,7 +143,6 @@ public class ClientControllerTest {
                 .willReturn(ok(trueResponse)));
         assertEquals("true", clientController.updateEmail("ewmail", testUser.getPassword()));
         assertEquals("false", clientController.updateEmail("ewmail", "123456"));
-        assertEquals("ewmail", clientController.getUser().getEmail());
     }
 
     @Test
@@ -257,6 +250,7 @@ public class ClientControllerTest {
         assertEquals("true", clientController.updateAnonymous(true));
         assertEquals(true, clientController.getUser().getAnonymous());
     }
+    
     @Test
     public void updateAnonymousTestFalse() {
         this.testUser = new User("user", "pass", "email", 0, new Date());
@@ -266,6 +260,15 @@ public class ClientControllerTest {
                 .willReturn(ok(trueResponse)));
         assertEquals("true", clientController.updateAnonymous(false));
         assertEquals(false, clientController.getUser().getAnonymous());
+    }
+
+    @Test
+    public void updateUserTest() {
+        wireMockRule.stubFor(any(urlPathEqualTo("/userinfo"))
+                .withRequestBody(equalToJson(testUserJson))
+                .willReturn(ok(testFriendJson)));
+        clientController.updateUser();
+        assertEquals(clientController.getUser(), testFriend);
     }
 
 }
