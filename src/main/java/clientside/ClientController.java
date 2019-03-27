@@ -3,6 +3,7 @@ package clientside;
 import com.google.common.hash.Hashing;
 import com.google.gson.Gson;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import server.model.Action;
 import server.model.User;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +26,7 @@ public class ClientController {
     private List<Action> actionList = null;
     private ResponseEntity<String> responseEntity = null;
     private List<User> top50 = null;
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     public ClientController(User user) {
         this.user = user;
@@ -91,8 +94,54 @@ public class ClientController {
             public String toString() {
                 return "reset";
             }
+        }, ADDFRIEND {
+            public String toString() {
+                return "addfriend?username=%s";
+            }
+        }, GETFRIENDS {
+            public String toString() {
+                return "friends?username=%s";
+            }
+        }, DELETEFRIEND {
+            public String toString() {
+                return "deletefriend?username=%s";
+            }
         }
 
+    }
+
+
+    /**
+     * Updates this.user's friendlist by downloading a User (friend) list from server and setting
+     * the user's friends to the mentioned list.
+     */
+    public void updateFriendList() throws IOException {
+        responseEntity = this.getRequest(this.baseUrl
+                + String.format(Path.GETFRIENDS.toString(), this.user.getUsername()));
+        this.user.setFriends(Arrays.asList(objectMapper.readValue(responseEntity.getBody(), User[].class)));
+    }
+
+    /**
+     * Sends a get request to server to add a friend to the this.user's friend list.
+     *
+     * @param friend the the friend (User type) to be added
+     * @return String response message ("true"/"false").
+     */
+    public String addFriend(User friend) {
+        responseEntity = this.postRequest(this.baseUrl
+                + String.format(Path.ADDFRIEND.toString(), this.user.getUsername()), friend);
+        return new JSONObject(responseEntity.getBody()).getString("message");
+    }
+
+    /**
+     * Sends a post request to server to delete a friend from the user's friend list.
+     * @param friendToDelete (User) friend to delete.
+     * @return  String response message ("true"/"false").
+     */
+    public String deleteFriend(User friendToDelete) {
+        responseEntity = this.postRequest(this.baseUrl
+                + String.format(Path.DELETEFRIEND.toString(), this.user.getUsername()), friendToDelete);
+        return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
     /**
@@ -102,7 +151,6 @@ public class ClientController {
      */
     public String register() {
         responseEntity = this.postRequest(this.baseUrl + Path.REGISTER.toString(), user);
-
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
@@ -289,14 +337,13 @@ public class ClientController {
         responseEntity = this.getRequest(this.baseUrl + String.format(Path.TOP50.toString()));
         Gson gson = new Gson();
         top50 = Arrays.asList(gson.fromJson(responseEntity.getBody(), User[].class));
-
     }
 
     public List<User> getTop50() {
         return top50;
     }
 
-    public void updateUser() {
+    public void updateUserScore() {
         user.setScore(Integer.parseInt(this.getScore()));
     }
 
