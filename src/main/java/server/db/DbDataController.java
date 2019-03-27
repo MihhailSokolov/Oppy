@@ -62,8 +62,8 @@ public class DbDataController {
      * Method for getting the actual score of the user.
      *
      * @param username user's username
-     *                 take the difference between the register date and current date and multiply that by 50.
-     * @return the score - 50 times the days since creation of account with minimum value of 0
+     *                 take the difference between the register date and current date and multiply that by 3000.
+     * @return the score - 3000 times the days since creation of account with minimum value of 0
      */
     public int getUserScore(String username) {
         User user = userRepository.findFirstByUsername(username);
@@ -72,7 +72,8 @@ public class DbDataController {
         Date registerDate = user.getRegisterDate();
         long diff = currentDate.getTime() - registerDate.getTime();
         int interval = Math.toIntExact(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
-        int actualScore = score - 150 * interval;
+        int dailyDecay = 3000;
+        int actualScore = score - dailyDecay * interval;
         return actualScore;
     }
 
@@ -267,12 +268,12 @@ public class DbDataController {
     }
 
     /**
-     * Private method to help find the index of the preset in the list only by name.
+     * Method to help find the index of the preset in the list only by name.
      * @param list List of presets
      * @param presetName preset name to be found
      * @return index of the preset or -1 if not found
      */
-    private int findIndexByPresetName(List<Preset> list, String presetName) {
+    int findIndexByPresetName(List<Preset> list, String presetName) {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getName().equals(presetName)) {
                 return i;
@@ -281,8 +282,23 @@ public class DbDataController {
         return -1;
     }
 
+    /**
+     * Method to get list of friends only  with usernames and scores from db.
+     * @param username user's username
+     * @return List of Users who are friends
+     */
     public List<User> getFriends(String username) {
-        return userRepository.findFirstByUsername(username).getFriends();
+        List<User> friends = userRepository.findFirstByUsername(username).getFriends();
+        for (User friend : friends) {
+            friend.setPassword(null);
+            friend.setEmail(null);
+            friend.setScore(getUserScore(friend.getUsername()));
+            friend.setFriends(null);
+            friend.setPresets(null);
+            friend.setProfilePicture(null);
+            friend.setRegisterDate(null);
+        }
+        return friends;
     }
 
     /**
@@ -309,14 +325,15 @@ public class DbDataController {
     public boolean deleteFriend(String username, User friend) {
         User user = userRepository.findFirstByUsername(username);
         List<User> friends = user.getFriends();
+        boolean deleted = false;
         for (User user1 : friends) {
             if (user1.getUsername().equals(friend.getUsername())) {
-                friends.remove(user1);
+                deleted = friends.remove(user1);
             }
         }
         user.setFriends(friends);
         userRepository.save(user);
-        return true;
+        return deleted;
     }
 
     public int getYourPositionInList(String username) {

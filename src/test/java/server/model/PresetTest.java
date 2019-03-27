@@ -47,6 +47,8 @@ public class PresetTest {
         assertEquals(list, preset.getActionList());
     }
 
+
+    @SuppressWarnings("all")
     @Test
     public void testEquals() {
         List<String> list = new ArrayList<>();
@@ -55,11 +57,13 @@ public class PresetTest {
         Preset preset1 = new Preset("preset", list);
         Preset preset2 = new Preset("preset", list);
         Preset preset3 = new Preset("different preset", new ArrayList<>());
+        Preset preset4 = new Preset("preset", new ArrayList<>());
         assertEquals(preset1, preset2);
         assertEquals(preset1, preset1);
         assertNotEquals(preset1, preset3);
-        assertNotEquals(null, preset1);
-        assertNotEquals("String test", preset1);
-        assertNotEquals(new User("user", "pass", "mail", 10, new Date()), preset1);
+        assertNotEquals(preset1, preset4);
+        assertFalse(preset1.equals(null));
+        assertFalse(preset1.equals("String test"));
+        assertFalse(preset1.equals(new User("user", "pass", "mail", 10, new Date())));
     }
 }

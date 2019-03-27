@@ -21,6 +21,7 @@ import server.repository.UserRepository;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -39,6 +40,9 @@ public class ControllerTest {
     User testUser;
 
     List<Preset> presets;
+
+    User friend1;
+    User friend2;
 
     List<User> friends;
 
@@ -80,8 +84,8 @@ public class ControllerTest {
         presets.add(preset1);
         presets.add(preset2);
         testUser.setPresets(presets);
-        User friend1 = new User("friend1", "pass1", "friend1@gmail.com", 100, new Date());
-        User friend2 = new User("friend2", "pass2", "friend2@gmail.com", 200, new Date());
+        friend1 = new User("friend1", "pass1", "friend1@gmail.com", 100, new Date());
+        friend2 = new User("friend2", "pass2", "friend2@gmail.com", 200, new Date());
         friends = new ArrayList<>();
         friends.add(friend1);
         friends.add(friend2);
@@ -101,7 +105,7 @@ public class ControllerTest {
     public void actualPointsTest() {
         userRepository.save(testUser);
         int actualScore = dbDataController.getUserScore(testUser.getUsername());
-        assertEquals(testUser.getScore() - 150, actualScore);
+        assertEquals(testUser.getScore() - 3000, actualScore);
         userRepository.delete(testUser);
     }
 
@@ -460,11 +464,30 @@ public class ControllerTest {
     }
 
     @Test
+    public void checkDeleteWrongPreset() throws Exception {
+        userRepository.save(testUser);
+        ObjectMapper mapper = new ObjectMapper();
+        String oldName = presets.get(0).getName();
+        presets.get(0).setName(oldName + "wrong-preset-name");
+        String jsonBody = mapper.writeValueAsString(presets.get(0));
+        mockMvc.perform(get("/deletepreset?username=" + testUser.getUsername())
+                .contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("false")));
+        userRepository.delete(testUser);
+        presets.get(0).setName(oldName);
+    }
+
+    @Test
     public void checkExecutePreset() throws Exception {
         userRepository.save(testUser);
-        int pointsToBeAdded = 20 + 10;
         int oldScore = testUser.getScore();
         Preset preset = testUser.getPresets().get(0);
+        int pointsToBeAdded = 0;
+        for (String action : preset.getActionList()) {
+            pointsToBeAdded += dbDataController.getActionPoints(action);
+        }
         ObjectMapper mapper = new ObjectMapper();
         String jsonBody = mapper.writeValueAsString(preset);
         mockMvc.perform(get("/executepreset?username=" + testUser.getUsername())
@@ -478,12 +501,31 @@ public class ControllerTest {
     }
 
     @Test
+    public void checkExecuteWrongPreset() throws Exception {
+        userRepository.save(testUser);
+        Preset preset = testUser.getPresets().get(0);
+        String oldName = preset.getName();
+        preset.setName(oldName + "wrong-preset-name");
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBody = mapper.writeValueAsString(preset);
+        mockMvc.perform(get("/executepreset?username=" + testUser.getUsername())
+                .contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("false")));
+        userRepository.delete(testUser);
+        preset.setName(oldName);
+    }
+
+    @Test
     public void checkGetFriends() throws Exception {
+        userRepository.saveAll(Arrays.asList(friend1, friend2));
         userRepository.save(testUser);
         mockMvc.perform(get("/friends?username=" + testUser.getUsername()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"));
         userRepository.delete(testUser);
+        userRepository.deleteAll(Arrays.asList(friend1, friend2));
     }
 
     @Test
@@ -517,6 +559,22 @@ public class ControllerTest {
         assertFalse(testUser.getFriends().contains(friends.get(0)));
         userRepository.delete(testUser);
         testUser.setFriends(friends);
+    }
+
+    @Test
+    public void checkDeleteWrongFriend() throws Exception {
+        userRepository.save(testUser);
+        ObjectMapper mapper = new ObjectMapper();
+        String oldName = friends.get(0).getUsername();
+        friends.get(0).setUsername(oldName + "blah-blah");
+        String jsonBody = mapper.writeValueAsString(friends.get(0));
+        mockMvc.perform(get("/deletefriend?username=" + testUser.getUsername())
+                .contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("false")));
+        userRepository.delete(testUser);
+        friends.get(0).setUsername(oldName);
     }
 
     @Test

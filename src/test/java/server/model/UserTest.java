@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -90,17 +91,44 @@ public class UserTest {
                 " profilePicture='', presets=[], friends=[]]", u.toString());
     }
 
+    @SuppressWarnings("all")
     @Test
     public void testEquals() {
         User user1 = new User("hugo","pass","test@gmail.com",100, new Date());
         User user2 = new User("hugo","pass","test@gmail.com",100, new Date());
         User user3 = new User("nothugo","differentpass","mail@gmail.com",200, new Date());
-        assertEquals(user1, user2);
-        assertEquals(user1, user1);
-        assertNotEquals(user1, user3);
-        assertNotEquals(null, user1);
-        assertNotEquals("String test", user1);
-        assertNotEquals(new Action("name", "category", 10), user1);
+        User user4 = new User("hugo","differentpass","test@gmail.com",100, new Date());
+        User user5 = new User("hugo","pass","mail@gmail.com",100, new Date());
+        User user6 = new User("hugo","pass","test@gmail.com",200, new Date());
+        User user7 = new User("hugo","pass","test@gmail.com",100, new Date(0));
+        User user8 = new User("nothugo","diffpass","test@gmail.com",100, new Date());
+        User user9 = new User("nothugo","pass","nottest@gmail.com",100, new Date());
+        User user10 = new User("nothugo","pass","test@gmail.com",100, new Date(0));
+        User user11 = new User("hugo","pass","test@gmail.com",100, new Date());
+        user11.setAnonymous(true);
+        User user12 = new User("hugo","pass","test@gmail.com",100, new Date());
+        user12.setProfilePicture("1010100101010010111110");
+        User user13 = new User("hugo","pass","test@gmail.com",100, new Date());
+        user13.setFriends(Arrays.asList(user5, user6, user7));
+        User user14 = new User("hugo","pass","test@gmail.com",100, new Date());
+        user14.setPresets(Arrays.asList(new Preset("preset1", new ArrayList<>()), new Preset("preset2", new ArrayList<>())));
+        assertTrue(user1.equals(user2));
+        assertTrue(user1.equals(user1));
+        assertFalse(user1.equals(user3));
+        assertFalse(user1.equals(user4));
+        assertFalse(user1.equals(user5));
+        assertFalse(user1.equals(user6));
+        assertFalse(user1.equals(user7));
+        assertFalse(user1.equals(user8));
+        assertFalse(user1.equals(user9));
+        assertFalse(user1.equals(user10));
+        assertFalse(user1.equals(user11));
+        assertFalse(user1.equals(user12));
+        assertFalse(user1.equals(user13));
+        assertFalse(user1.equals(user14));
+        assertFalse(user1.equals(null));
+        assertFalse(user1.equals("String test"));
+        assertFalse(user1.equals(new Action("name", "category", 10)));
     }
 
     @Test
