@@ -477,6 +477,7 @@ public class ControllerTest {
         userRepository.delete(testUser);
     }
 
+    @Test
     public void checkGetFriends() throws Exception {
         userRepository.save(testUser);
         mockMvc.perform(get("/friends?username=" + testUser.getUsername()))
@@ -605,6 +606,18 @@ public class ControllerTest {
         testUser = userRepository.findFirstByUsername(testUser.getUsername());
         assertNotEquals(newProfilePic, testUser.getProfilePicture());
         userRepository.delete(testUser);
+    }
+
+    @Test
+    public void checkUserSearch() throws Exception {
+        userRepository.save(testUser);
+        MvcResult result = mockMvc.perform(get("/search?username=" + testUser.getUsername().toUpperCase()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn();
+        ObjectMapper mapper = new ObjectMapper();
+        User user = mapper.readValue(result.getResponse().getContentAsString(), User.class);
+        assertEquals(testUser, user);
     }
 
     @Test

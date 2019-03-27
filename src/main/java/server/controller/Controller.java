@@ -241,6 +241,11 @@ public class Controller {
         return ResponseEntity.ok().body(new Response(dbDataController.setProfilePicture(user)));
     }
 
+    @RequestMapping("/search")
+    public ResponseEntity<User> searchForUser(@RequestParam("username") String username) {
+        return ResponseEntity.ok().body(dbDataController.searchUser(username));
+    }
+    
     /**
      * Mapping to get your user information.
      * @param user User object with username and password

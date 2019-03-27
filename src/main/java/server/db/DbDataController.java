@@ -370,6 +370,21 @@ public class DbDataController {
         return true;
     }
 
+    /**
+     * Method to find a user based on username.
+     * @param username username for searching
+     * @return User object if found, null otherwise
+     */
+    public User searchUser(String username) {
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            if (user.getUsername().toLowerCase().equals(username.toLowerCase())) {
+                return user;
+            }
+        }
+        return null;
+    }
+    
     public User getUser(String username) {
         return userRepository.findFirstByUsername(username);
     }

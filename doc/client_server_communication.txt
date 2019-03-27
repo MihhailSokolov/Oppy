@@ -212,3 +212,20 @@ SET PROFILE PICTURE
     Response:
         200 OK
         Body contains JSON Response object with message 'true' if profile picture was successfully changed, 'false' otherwise (if could not find user for example)
+
+GET USER INFO
+    To get complete user object with all the attributes
+    Request:
+        /userinfo
+        Body should contain JSON User object with username and password (everything else can be null)
+    Response:
+    200 OK if user is authorized. Body contains JSON User object
+    401 UNAUTHORIZED if user is not authorized. Body contains JSON null object
+
+SEARCH FOR USER
+    To search for user based on username
+    Request:
+        /search?username=oppy123
+    Response:
+        200 OK
+        Returns JSON User object whose username matches with provided username (case-insensitive) if found it, null otherwise
