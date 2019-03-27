@@ -287,10 +287,9 @@ public class ClientController {
      */
     public void updateTop50() {
         responseEntity = this.getRequest(this.baseUrl + String.format(Path.TOP50.toString()));
-        if (responseEntity.getBody() != null) {
-            Gson gson = new Gson();
-            top50 = Arrays.asList(gson.fromJson(responseEntity.getBody(), User[].class));
-        }
+        Gson gson = new Gson();
+        top50 = Arrays.asList(gson.fromJson(responseEntity.getBody(), User[].class));
+
     }
 
     public List<User> getTop50() {

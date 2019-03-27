@@ -1,6 +1,7 @@
 package clientside;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import org.junit.Before;
@@ -10,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import server.model.Action;
 import server.model.User;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -150,7 +152,7 @@ public class ClientControllerTest {
     }
 
     @Test
-    public void getCategoryListTest(){
+    public void getCategoryListTest() {
 
         List<Action> actionList = new ArrayList<>();
         assertEquals(null, clientController.getCategoryList("5"));
@@ -162,6 +164,17 @@ public class ClientControllerTest {
         cat5actionList.add(cat5action);
         clientController.setActionList(actionList);
         assertEquals(cat5actionList, clientController.getCategoryList("5"));
+    }
+
+    @Test
+    public void updateTop50Test() throws IOException {
+        List<User> testTop50 = new ArrayList<>();
+        testTop50.add(new User("num1", null, null, 10, null));
+        String testTop50Json = objectMapper.writeValueAsString(testTop50);
+        wireMockRule.stubFor(get(urlPathEqualTo("/top50"))
+                .willReturn(ok(testTop50Json)));
+        clientController.updateTop50();
+        assertEquals(testTop50, clientController.getTop50());
     }
 
 }
