@@ -1,7 +1,6 @@
 package clientside;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.common.Json;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
@@ -10,6 +9,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
 import server.model.Action;
+import server.model.Preset;
 import server.model.User;
 
 import java.io.IOException;
@@ -27,9 +27,14 @@ public class ClientControllerTest {
     public WireMockRule wireMockRule = new WireMockRule(); // no constr args = default port 8080
 
     User testUser;
+    User testFriend;
     Action testAction;
+    Preset testPreset;
+
     String testUserJson;
     String testActionJson;
+    String testPresetJson;
+    String testFriendJson;
 
     ClientController clientController;
     ObjectMapper objectMapper;
@@ -40,13 +45,17 @@ public class ClientControllerTest {
     @Before
     public void setUp() throws Exception {
         testUser = new User("user", "pass", "email", 0, new Date());
+        testFriend = new User("Jesus", "", "", 0, new Date());
         testAction = new Action("I had green thoughts", "", 0);
+        testPreset = new Preset("SomePreset", null);
         clientController = new ClientController();
         clientController = new ClientController(testUser);
         clientController.setBaseUrl("http://localhost:8080/");
         objectMapper = new ObjectMapper();
         testUserJson = objectMapper.writeValueAsString(testUser);
         testActionJson = objectMapper.writeValueAsString(testAction);
+        testPresetJson = objectMapper.writeValueAsString(testPreset);
+        testFriendJson = objectMapper.writeValueAsString(testFriend);
         restTemplate = new RestTemplate();
     }
 
@@ -83,7 +92,7 @@ public class ClientControllerTest {
     }
 
     @Test
-    public void getUpdateActionList() {
+    public void getUpdateActionList() throws IOException {
         clientController.setBaseUrl("http://oppy-project.herokuapp.com/");
         clientController.updateActionList();
         List<Action> expectedList = Arrays
@@ -181,25 +190,21 @@ public class ClientControllerTest {
     }
 
     @Test
-    public void addFriendTest() throws JsonProcessingException {
-        User friend = new User("Jesus", "", "", 0, new Date());
-        String friendJson = objectMapper.writeValueAsString(friend);
+    public void addFriendTest()  {
         wireMockRule.stubFor(any(urlPathEqualTo("/addfriend"))
                 .withQueryParam("username", equalTo(testUser.getUsername()))
-                .withRequestBody(equalToJson(friendJson))
+                .withRequestBody(equalToJson(testFriendJson))
                 .willReturn(ok(trueResponse)));
-        assertEquals("true", clientController.addFriend(friend));
+        assertEquals("true", clientController.addFriend(testFriend));
     }
 
     @Test
-    public void deleteFriendTest() throws JsonProcessingException {
-        User friend = new User("Jesus", "", "", 0, new Date());
-        String friendJson = objectMapper.writeValueAsString(friend);
+    public void deleteFriendTest() {
         wireMockRule.stubFor(any(urlPathEqualTo("/deletefriend"))
                 .withQueryParam("username", equalTo(testUser.getUsername()))
-                .withRequestBody(equalToJson(friendJson))
+                .withRequestBody(equalToJson(testFriendJson))
                 .willReturn(ok(trueResponse)));
-        assertEquals("true", clientController.deleteFriend(friend));
+        assertEquals("true", clientController.deleteFriend(testFriend));
     }
 
     @Test
@@ -211,6 +216,36 @@ public class ClientControllerTest {
                 .willReturn(ok(testTop50Json)));
         clientController.updateTop50();
         assertEquals(testTop50, clientController.getTop50());
+    }
+
+    @Test
+    public void addPresetTest() {
+        wireMockRule.stubFor(any(urlPathEqualTo("/addpreset"))
+                .withQueryParam("username", equalTo(testUser.getUsername()))
+                .withRequestBody(equalToJson(testPresetJson))
+                .willReturn(ok(trueResponse)));
+        assertEquals("true", clientController.addPreset(testPreset));
+    }
+
+    @Test
+    public void updateUserPresetsTest() throws IOException {
+        List<Preset> presetList = new ArrayList<>();
+        presetList.add(testPreset);
+        String presetListJson = objectMapper.writeValueAsString(presetList);
+        wireMockRule.stubFor(get(urlPathEqualTo("/presets"))
+                .withQueryParam("username", equalTo(testUser.getUsername()))
+                .willReturn(ok(presetListJson)));
+        clientController.updateUserPresets();
+        assertEquals(presetList, testUser.getPresets());
+    }
+
+    @Test
+    public void deletePresetTest() {
+        wireMockRule.stubFor(any(urlPathEqualTo("/deletepreset"))
+                .withQueryParam("username", equalTo(testUser.getUsername()))
+                .withRequestBody(equalToJson(testPresetJson))
+                .willReturn(ok(trueResponse)));
+        assertEquals("true", clientController.deletePreset(testPreset));
     }
 
 }

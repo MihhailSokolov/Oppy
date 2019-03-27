@@ -3,6 +3,7 @@ package clientside;
 import com.google.common.hash.Hashing;
 import com.google.gson.Gson;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 
@@ -11,12 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import server.model.Action;
+import server.model.Preset;
 import server.model.User;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ClientController {
@@ -106,10 +107,53 @@ public class ClientController {
             public String toString() {
                 return "deletefriend?username=%s";
             }
+        }, ADDPRESET {
+            public String toString() {
+                return "addpreset?username=%s";
+            }
+        }, GETPRESETS {
+            public String toString() {
+                return "presets?username=%s";
+            }
+        }, DELETEPRESET {
+            public String toString() {
+                return "deletepreset?username=%s";
+            }
         }
 
     }
 
+    /**
+     * Deletes the given preset from the user's presetList on the server.
+     * @param preset the preset to delete (only preset name is required, the rest can be null)
+     * @return String response message ("true"/"false").
+     */
+    public String deletePreset(Preset preset) {
+        responseEntity = this.postRequest(this.baseUrl
+                + String.format(Path.DELETEPRESET.toString(), this.user.getUsername()), preset);
+        return new JSONObject(responseEntity.getBody()).getString("message");
+    }
+
+    /**
+     * Updates this.user's presetsList by downloading a User (preset) list from server and setting
+     * the user's presets to the mentioned list.
+     */
+    public void updateUserPresets() throws IOException {
+        responseEntity = this.getRequest(this.baseUrl
+                + String.format(Path.GETPRESETS.toString(), this.user.getUsername()));
+        this.user.setPresets(objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<Preset>>(){}));
+    }
+
+    /**
+     * Sends a post request to the server requesting to add a preset to a user's preset list.
+     * @param preset the preset (type: Preset) to be added.
+     * @return String response message ("true"/"false").
+     */
+    public String addPreset(Preset preset) {
+        responseEntity = this.postRequest(this.baseUrl
+                + String.format(Path.ADDPRESET.toString(), this.user.getUsername()), preset);
+        return new JSONObject(responseEntity.getBody()).getString("message");
+    }
 
     /**
      * Updates this.user's friendlist by downloading a User (friend) list from server and setting
@@ -118,7 +162,7 @@ public class ClientController {
     public void updateFriendList() throws IOException {
         responseEntity = this.getRequest(this.baseUrl
                 + String.format(Path.GETFRIENDS.toString(), this.user.getUsername()));
-        this.user.setFriends(Arrays.asList(objectMapper.readValue(responseEntity.getBody(), User[].class)));
+        this.user.setFriends(objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<User>>(){}));
     }
 
     /**
@@ -206,8 +250,11 @@ public class ClientController {
      */
     public void updateActionList() {
         responseEntity = this.getRequest(this.baseUrl + String.format(Path.ACTIONS.toString()));
-        Gson gson = new Gson();
-        actionList = Arrays.asList(gson.fromJson(responseEntity.getBody(), Action[].class));
+        try {
+            actionList = objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<Action>>(){});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -335,8 +382,11 @@ public class ClientController {
      */
     public void updateTop50() {
         responseEntity = this.getRequest(this.baseUrl + String.format(Path.TOP50.toString()));
-        Gson gson = new Gson();
-        top50 = Arrays.asList(gson.fromJson(responseEntity.getBody(), User[].class));
+        try {
+            top50 = objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<User>>(){});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<User> getTop50() {
@@ -346,7 +396,6 @@ public class ClientController {
     public void updateUserScore() {
         user.setScore(Integer.parseInt(this.getScore()));
     }
-
 
     public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
