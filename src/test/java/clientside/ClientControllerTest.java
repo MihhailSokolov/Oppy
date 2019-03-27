@@ -2,7 +2,6 @@ package clientside;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.tomakehurst.wiremock.common.Json;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import org.junit.Before;
 import org.junit.Rule;
@@ -125,12 +124,6 @@ public class ClientControllerTest {
                 .withRequestBody(equalToJson(testUserJson))
                 .willReturn(ok(trueResponse)));
         assertEquals("true", clientController.updatePass("newpaws"));
-        assertEquals(testUser.getPassword(), clientController.hash("newpaws"));
-
-        wireMockRule.stubFor(any(urlPathEqualTo("/updatepass"))
-                .withQueryParam("newpass", equalTo(clientController.hash("newpaws")))
-                .withRequestBody(equalToJson(testUserJson))
-                .willReturn(ok(trueResponse)));
     }
 
     @Test
@@ -150,7 +143,6 @@ public class ClientControllerTest {
                 .willReturn(ok(trueResponse)));
         assertEquals("true", clientController.updateEmail("ewmail", testUser.getPassword()));
         assertEquals("false", clientController.updateEmail("ewmail", "123456"));
-        assertEquals("ewmail", clientController.getUser().getEmail());
     }
 
     @Test
@@ -246,6 +238,15 @@ public class ClientControllerTest {
                 .withRequestBody(equalToJson(testPresetJson))
                 .willReturn(ok(trueResponse)));
         assertEquals("true", clientController.deletePreset(testPreset));
+    }
+
+    @Test
+    public void updateUserTest() {
+        wireMockRule.stubFor(any(urlPathEqualTo("/userinfo"))
+                .withRequestBody(equalToJson(testUserJson))
+                .willReturn(ok(testFriendJson)));
+        clientController.updateUser();
+        assertEquals(clientController.getUser(), testFriend);
     }
 
 }
