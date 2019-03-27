@@ -1,13 +1,15 @@
 package ui;
 
-import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import server.model.Action;
 
@@ -31,9 +33,7 @@ public class AddActionPage {
         window.setTitle("AddActionPage");
         //CentralGrid////////////////////////////////////////////////////////////////////
         GridPane gridCenter = new GridPane();
-        gridCenter.setPadding(new Insets(10, 10, 10, 10));
-        gridCenter.setVgap(8);
-        gridCenter.setHgap(10);
+        gridCenter.setId("gridCenter");
 
         //adding the back, submit and save as buttons
         Button backButton = new Button("Back");
@@ -41,7 +41,7 @@ public class AddActionPage {
         backButton.setOnAction(e -> window.setScene(MainPage.mainScene(window)));
 
         Button saveAsButton = new Button("Save as ...");
-        GridPane.setConstraints(saveAsButton, 1, 5);
+        GridPane.setConstraints(saveAsButton, 1, 10);
         saveAsButton.setOnAction(e -> {
             //implement a save as method
         });
@@ -54,7 +54,7 @@ public class AddActionPage {
         }
 
         Button submitButton = new Button("submit");
-        GridPane.setConstraints(submitButton, 2, 5);
+        GridPane.setConstraints(submitButton, 2, 10);
         submitButton.setOnAction(e -> {
             for (int i = 0; i < listCheckboxes.size(); i++) {
                 if (listCheckboxes.get(i).isSelected()) {
@@ -66,14 +66,13 @@ public class AddActionPage {
         //here the drop down menu transport is created //////////////////////////////////
         TitledPane transportCategory = new TitledPane();
         transportCategory.setText("Transport");
-        GridPane.setConstraints(transportCategory, 1, 1, 2, 1);
+        GridPane.setConstraints(transportCategory, 1, 2, 2, 1);
         transportCategory.setExpanded(false);
 
         //Set the layout for the TiteldPane's contents
         GridPane gridTransport = new GridPane();
-        gridTransport.setPadding(new Insets(10, 10, 10, 10));
-        gridTransport.setVgap(8);
-        gridTransport.setHgap(10);
+        gridTransport.setId("menuGrid");
+        gridTransport.getColumnConstraints().addAll(menuGridColumnConstraints());
 
         List<Action> transportList = Main.clientController.getCategoryList("transport");
         //gets all available actions and display's dem in the right category
@@ -92,14 +91,13 @@ public class AddActionPage {
         ///here the drop down menu Food is created///////////////////////////////////////
         TitledPane foodCategory = new TitledPane();
         foodCategory.setText("Food");
-        GridPane.setConstraints(foodCategory, 1, 2, 2, 1);
+        GridPane.setConstraints(foodCategory, 1, 4, 2, 1);
         foodCategory.setExpanded(false);
 
         //Set the layout for the TiteldPane's contents
         GridPane gridFood = new GridPane();
-        gridFood.setPadding(new Insets(10, 10, 10, 10));
-        gridFood.setVgap(8);
-        gridFood.setHgap(10);
+        gridFood.setId("menuGrid");
+        gridFood.getColumnConstraints().addAll(menuGridColumnConstraints());
 
         //gets all available actions and display's dem in the right category
         List<Action> foodList = Main.clientController.getCategoryList("food");
@@ -117,14 +115,13 @@ public class AddActionPage {
         ///////here the drop down menu Energy is created/////////////////////////////////
         TitledPane energyCategory = new TitledPane();
         energyCategory.setText("Energy");
-        GridPane.setConstraints(energyCategory, 1, 3, 2, 1);
+        GridPane.setConstraints(energyCategory, 1, 6, 2, 1);
         energyCategory.setExpanded(false);
 
         //Set the layout for the TiteldPane's contents
         GridPane gridEnergy = new GridPane();
-        gridEnergy.setPadding(new Insets(10, 10, 10, 10));
-        gridEnergy.setVgap(8);
-        gridEnergy.setHgap(10);
+        gridEnergy.setId("menuGrid");
+        gridEnergy.getColumnConstraints().addAll(menuGridColumnConstraints());
 
         //gets all available actions and display's dem in the right category
         List<Action> energyList = Main.clientController.getCategoryList("energy");
@@ -142,15 +139,13 @@ public class AddActionPage {
         ///here the drop down menu misc is created///////////////////////////////////////
         TitledPane miscCategory = new TitledPane();
         miscCategory.setText("Misc.");
-        GridPane.setConstraints(miscCategory, 1, 4, 2, 1);
+        GridPane.setConstraints(miscCategory, 1, 8, 2, 1);
         miscCategory.setExpanded(false);
 
         //Set the layout for the TiteldPane's contents
         GridPane gridMisc = new GridPane();
-        gridMisc.setPadding(new Insets(10, 10, 10, 10));
-        gridMisc.setVgap(8);
-        gridMisc.setHgap(10);
-
+        gridMisc.setId("menuGrid");
+        gridMisc.getColumnConstraints().addAll(menuGridColumnConstraints());
         //gets all available actions and display's dem in the right category
         List<Action> miscList = Main.clientController.getCategoryList("misc");
         for (int i = 0; i < miscList.size(); i++) {
@@ -168,10 +163,97 @@ public class AddActionPage {
         BorderPane centralPageLayout = new BorderPane();
         gridCenter.getChildren().addAll(backButton, saveAsButton, submitButton, transportCategory,
                 miscCategory, foodCategory, energyCategory);
+        gridCenter.getRowConstraints().addAll(gridRowConstraints());
+        gridCenter.setAlignment(Pos.CENTER);
         centralPageLayout.setCenter(gridCenter);
         //here the create view is made into a scene and returned when the method is called
         Scene scene = new Scene(centralPageLayout);
         scene.getStylesheets().add("addActionStyle.css");
         return scene;
     }
+
+    public static ArrayList<RowConstraints> gridRowConstraints() {
+        RowConstraints row0 = new RowConstraints();
+        row0.setMinHeight(100);
+        row0.setMaxHeight(100);
+        RowConstraints row1 = new RowConstraints();
+        row1.setMinHeight(10);
+        row1.setMaxHeight(10);
+        RowConstraints row2 = new RowConstraints();
+        row2.setMinHeight(40);
+        RowConstraints row3 = new RowConstraints();
+        row3.setMinHeight(10);
+        row3.setMaxHeight(10);
+        RowConstraints row4 = new RowConstraints();
+        row4.setMinHeight(40);
+        RowConstraints row5 = new RowConstraints();
+        row5.setMinHeight(10);
+        row5.setMaxHeight(10);
+        RowConstraints row6 = new RowConstraints();
+        row6.setMinHeight(40);
+        RowConstraints row7 = new RowConstraints();
+        row7.setMinHeight(10);
+        row7.setMaxHeight(10);
+        RowConstraints row8 = new RowConstraints();
+        row8.setMinHeight(40);
+        RowConstraints row9 = new RowConstraints();
+        row9.setMinHeight(10);
+        row9.setMaxHeight(10);
+        RowConstraints row10 = new RowConstraints();
+        row10.setMinHeight(100);
+        row10.setMaxHeight(100);
+        RowConstraints row11 = new RowConstraints();
+        row11.setMinHeight(0);
+        row11.setMaxHeight(0);
+        RowConstraints row12 = new RowConstraints();
+        row12.setMinHeight(0);
+        row12.setMaxHeight(0);
+        RowConstraints row13 = new RowConstraints();
+        row13.setMinHeight(0);
+        row13.setMaxHeight(0);
+        RowConstraints row14 = new RowConstraints();
+        row14.setMinHeight(0);
+        RowConstraints row15 = new RowConstraints();
+        row15.setMinHeight(0);
+        row15.setMaxHeight(0);
+        RowConstraints row16 = new RowConstraints();
+        row16.setMinHeight(0);
+        ArrayList<RowConstraints> rows = new ArrayList<RowConstraints>();
+        rows.add(row0);
+        rows.add(row1);
+        rows.add(row2);
+        rows.add(row3);
+        rows.add(row4);
+        rows.add(row5);
+        rows.add(row6);
+        rows.add(row7);
+        rows.add(row8);
+        rows.add(row9);
+        rows.add(row10);
+        rows.add(row11);
+        rows.add(row12);
+        rows.add(row13);
+        rows.add(row14);
+        rows.add(row15);
+        rows.add(row16);
+        return rows;
+    }
+    public static ArrayList<ColumnConstraints> menuGridColumnConstraints() {
+        ColumnConstraints column0 = new ColumnConstraints();
+        column0.setMinWidth(0);
+        column0.setMaxWidth(0);
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setMinWidth(400);
+        column1.setMaxWidth(400);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setMinWidth(100);
+        column2.setMaxWidth(100);
+        ArrayList<ColumnConstraints> columns = new ArrayList<ColumnConstraints>();
+        columns.add(column0);
+        columns.add(column1);
+        columns.add(column2);
+        return columns;
+    }
+
+
 }
