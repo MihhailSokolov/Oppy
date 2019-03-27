@@ -64,7 +64,7 @@ public class MainPage {
             username = "lazy ass cunt";  //just here to troll people
         }
         Label usernameLabel = new Label(username);
-        Tooltip.install(usernameLabel, new Tooltip("this is the most hated person in the world"));
+        Tooltip.install(usernameLabel, new Tooltip("This is your username"));
         usernameLabel.setId("username");
         GridPane.setConstraints(usernameLabel, 0, 1);
 
