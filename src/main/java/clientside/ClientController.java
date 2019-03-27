@@ -1,16 +1,11 @@
 package clientside;
 
-import com.google.common.hash.Hashing;
-import com.google.gson.Gson;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.hash.Hashing;
 import org.json.JSONObject;
-
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.client.RestTemplate;
-
 import server.model.Action;
 import server.model.Preset;
 import server.model.User;
@@ -404,5 +399,21 @@ public class ClientController {
     public void setActionList(List<Action> actionList) {
         this.actionList = actionList;
     }
+
+    /**
+     * Sends an "update pushNotifications request" to the server.
+     *
+     * @param trueOrFalse tells if anonymous should be set to true or false.
+     */
+    public String updateAnonymous(boolean trueOrFalse) {
+        responseEntity = this.postRequest(this.baseUrl
+                + String.format(Path.CHANGEANON.toString(), trueOrFalse), user);
+            String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
+            if (responseMsg.equals("true")) {
+                this.user.setAnonymous(trueOrFalse);
+            }
+            return responseMsg;
+    }
+
 
 }

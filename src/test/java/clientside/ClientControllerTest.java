@@ -2,7 +2,6 @@ package clientside;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.tomakehurst.wiremock.common.Json;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import org.junit.Before;
 import org.junit.Rule;
@@ -246,6 +245,27 @@ public class ClientControllerTest {
                 .withRequestBody(equalToJson(testPresetJson))
                 .willReturn(ok(trueResponse)));
         assertEquals("true", clientController.deletePreset(testPreset));
+    }
+
+    @Test
+    public void updateAnonymousTestTrue() {
+        this.testUser = new User("user", "pass", "email", 0, new Date());
+        wireMockRule.stubFor(any(urlPathEqualTo("/changeAnonymous"))
+                .withQueryParam("anonymous", equalTo("true"))
+                .withRequestBody(equalToJson(testUserJson))
+                .willReturn(ok(trueResponse)));
+        assertEquals("true", clientController.updateAnonymous(true));
+        assertEquals(true, clientController.getUser().getAnonymous());
+    }
+    @Test
+    public void updateAnonymousTestFalse() {
+        this.testUser = new User("user", "pass", "email", 0, new Date());
+        wireMockRule.stubFor(any(urlPathEqualTo("/changeAnonymous"))
+                .withQueryParam("anonymous", equalTo("false"))
+                .withRequestBody(equalToJson(testUserJson))
+                .willReturn(ok(trueResponse)));
+        assertEquals("true", clientController.updateAnonymous(false));
+        assertEquals(false, clientController.getUser().getAnonymous());
     }
 
 }
