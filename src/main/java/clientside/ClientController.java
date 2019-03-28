@@ -5,11 +5,8 @@ import com.google.common.hash.Hashing;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
-
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.client.RestTemplate;
-
 import server.model.Action;
 import server.model.Preset;
 import server.model.User;
@@ -263,7 +260,7 @@ public class ClientController {
     }
 
     /**
-     * Sends a "delete acct request" to the server
+     * Sends a "delete acct request" to the server.
      *
      * @return String response msg ("true"/"false"), implying success or failure.
      */
@@ -416,5 +413,19 @@ public class ClientController {
     public void setActionList(List<Action> actionList) {
         this.actionList = actionList;
     }
+
+    /**
+     * Sends an "update pushNotifications request" to the server.
+     *
+     * @param trueOrFalse tells if anonymous should be set to true or false.
+     */
+    public String updateAnonymous(boolean trueOrFalse) {
+        responseEntity = this.postRequest(this.baseUrl
+                + String.format(Path.CHANGEANON.toString(), trueOrFalse), user);
+        String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
+            this.user.setAnonymous(trueOrFalse);
+        return responseMsg;
+    }
+
 
 }

@@ -241,6 +241,17 @@ public class ClientControllerTest {
     }
 
     @Test
+    public void updateAnonymousTest() {
+        this.testUser = new User("user", "pass", "email", 0, new Date());
+        wireMockRule.stubFor(any(urlPathEqualTo("/changeAnonymous"))
+                .withQueryParam("anonymous", equalTo("true"))
+                .withRequestBody(equalToJson(testUserJson))
+                .willReturn(ok(trueResponse)));
+        assertEquals("true", clientController.updateAnonymous(true));
+        assertEquals(true, clientController.getUser().getAnonymous());
+    }
+
+    @Test
     public void updateUserTest() {
         wireMockRule.stubFor(any(urlPathEqualTo("/userinfo"))
                 .withRequestBody(equalToJson(testUserJson))
