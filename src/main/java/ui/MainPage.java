@@ -5,12 +5,18 @@ import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -20,10 +26,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import server.model.User;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+//import javafx.scene.control.;
 
 
 //import javax.xml.soap.Text;
@@ -32,6 +41,8 @@ import java.util.Date;
  * Class for creating main page.
  */
 public class MainPage {
+    private static TableView<User> folowingList = new TableView<>();
+
     /**
      * Method for main scene.
      *
@@ -41,8 +52,8 @@ public class MainPage {
     public static Scene mainScene(Stage primaryStage) {
         Stage window = primaryStage;
         window.setTitle("MainPage");
-        window.setFullScreen(true);
-        BorderPane centralPageLayout = new BorderPane();
+        window.setMaximized(true);
+        final BorderPane centralPageLayout = new BorderPane();
 
         //////////////////////////////////////////////////////////////////////////////////////
         ///centerPage contents////////////////////////////////////////////////////////////////
@@ -64,7 +75,7 @@ public class MainPage {
             username = "lazy ass cunt";  //just here to troll people
         }
         Label usernameLabel = new Label(username);
-        Tooltip.install(usernameLabel, new Tooltip("this is the most hated person in the world"));
+        Tooltip.install(usernameLabel, new Tooltip("Your username"));
         usernameLabel.setId("username");
         GridPane.setConstraints(usernameLabel, 0, 1);
 
@@ -112,7 +123,8 @@ public class MainPage {
         gridCenter.setAlignment(Pos.CENTER);
 
         //here the hamburger menu is initialized
-        GridPane gridHamburger = gridHamburger(window);
+        final GridPane gridHamburgerLeft = gridHamburgerLeft(window);
+        final GridPane gridHamburgerRight = gridHamburgerRight(window);
 
         //////////////////////////////////////////////////////////////////////////////////
         //TopGrid/////////////////////////////////////////////////////////////////////////
@@ -123,32 +135,53 @@ public class MainPage {
         gridTop.setVgap(8);
         gridTop.setHgap(10);
 
-        //here the hamburger icon is created and and functions are attached
-        //so that by clicking it it opens and closes the side menu
-        JFXHamburger hamburger = new JFXHamburger();
-        Tooltip.install(hamburger, new Tooltip("Options menu"));
-        hamburger.setId("hamburgerButton");
-        HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(hamburger);
-        burgerTask.setRate(-1);
-        hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
-            if (burgerTask.getRate() == -1) {
-                centralPageLayout.setLeft(gridHamburger);
+        //here the hamburger icons are created and and functions are attached
+        //so that by clicking it it opens and closes the side menu's
+        JFXHamburger hamburgerLeft = new JFXHamburger();
+        Tooltip.install(hamburgerLeft, new Tooltip("Options menu"));
+        hamburgerLeft.setId("hamburgerButton");
+        HamburgerSlideCloseTransition burgerTaskLeft = new HamburgerSlideCloseTransition(hamburgerLeft);
+        burgerTaskLeft.setRate(-1);
+        hamburgerLeft.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+            if (burgerTaskLeft.getRate() == -1) {
+                centralPageLayout.setLeft(gridHamburgerLeft);
             } else {
                 centralPageLayout.setLeft(null);
             }
-            burgerTask.setRate(burgerTask.getRate() * -1);
-            burgerTask.play();
+            burgerTaskLeft.setRate(burgerTaskLeft.getRate() * -1);
+            burgerTaskLeft.play();
         });
-        gridTop.setConstraints(hamburger, 0, 0);
-        gridTop.getChildren().addAll(hamburger);
+        gridTop.setConstraints(hamburgerLeft, 0, 0);
+
+        JFXHamburger hamburgerRight = new JFXHamburger();
+        Tooltip.install(hamburgerRight, new Tooltip("Achievements/Friends menu"));
+        hamburgerRight.setId("hamburgerButton");
+        HamburgerSlideCloseTransition burgerTaskRight = new HamburgerSlideCloseTransition(hamburgerRight);
+        burgerTaskRight.setRate(-1);
+        hamburgerRight.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+            if (burgerTaskRight.getRate() == -1) {
+                centralPageLayout.setRight(gridHamburgerRight);
+            } else {
+                centralPageLayout.setRight(null);
+                folowingList = new TableView<>();
+            }
+            burgerTaskRight.setRate(burgerTaskRight.getRate() * -1);
+            burgerTaskRight.play();
+        });
+        gridTop.setConstraints(hamburgerRight, 2, 0);
+
+        gridTop.getChildren().addAll(hamburgerLeft, hamburgerRight);
         gridTop.setStyle("-fx-background-color: #4c4242;");
 
         ////////////////////////////////////////////////////////////////
         ////setting the sizes of the rows///////////////////////////////
-        gridCenter.getRowConstraints().addAll(gridRowconstraints());
+        gridCenter.getRowConstraints().addAll(gridRowConstraints());
         gridCenter.getColumnConstraints().addAll(gridColumnConstraints());
-        gridHamburger.getRowConstraints().addAll(hamburgerRowConstraints());
-        gridHamburger.getColumnConstraints().addAll(hamburgerColumnConstraints());
+        gridHamburgerLeft.getRowConstraints().addAll(hamburgerRowConstraintsLeft());
+        gridHamburgerLeft.getColumnConstraints().addAll(hamburgerColumnConstraintsLeft());
+        gridHamburgerRight.getRowConstraints().addAll(hamburgerRowConstraintsRight());
+        gridHamburgerRight.getColumnConstraints().addAll(hamburgerColumnConstraintsRight());
+        gridTop.getColumnConstraints().addAll(girdTopColumnConstraints());
         /////////////////////////////////////////////////////////////////////////
         ////CentralPageLayout/////////////////////////////////////////////////////
 
@@ -156,16 +189,18 @@ public class MainPage {
         centralPageLayout.setTop(gridTop);
 
         //here the create view is made into a scene and returned when the method is called
-        Scene scene = new Scene(centralPageLayout);
+        Scene scene = new Scene(centralPageLayout, 1920, 1080);
         scene.getStylesheets().add("mainStyle.css");
         return scene;
     }
 
     /**
-     * Method for setting grid row constraints.
-     * @return ArrayList of column constraints
+     * Method for Row constraints of the central grid.
+     *
+     *
+     * @return ArrayList of RowConstraints
      */
-    public static ArrayList<RowConstraints> gridRowconstraints() {
+    public static ArrayList<RowConstraints> gridRowConstraints() {
         RowConstraints row0 = new RowConstraints();
         row0.setMinHeight(0);
         row0.setMaxHeight(0);
@@ -197,9 +232,11 @@ public class MainPage {
         return rows;
     }
 
+
     /**
-     * Method for setting grid column constraints.
-     * @return ArrayList of column constraints
+     * Method for column constraints of the central grid.
+     *
+     * @return ArrayList of ColumnConstraints
      */
     public static ArrayList<ColumnConstraints> gridColumnConstraints() {
         ColumnConstraints column0 = new ColumnConstraints();
@@ -218,11 +255,13 @@ public class MainPage {
         return columns;
     }
 
+
     /**
-     * Method for setting hamburger row constraints.
-     * @return ArrayList of row constraints
+     * Method for Row constraints of the left hamburger grid.
+     *
+     * @return ArrayList of RowConstraints
      */
-    public static ArrayList<RowConstraints> hamburgerRowConstraints() {
+    public static ArrayList<RowConstraints> hamburgerRowConstraintsLeft() {
         RowConstraints row0 = new RowConstraints();
         row0.setMinHeight(100);
         RowConstraints row1 = new RowConstraints();
@@ -237,10 +276,11 @@ public class MainPage {
     }
 
     /**
-     * Method for setting hamburger column constraints.
-     * @return ArrayList of column constraints
+     * Method for column constraints of the left hamburger grid.
+     *
+     * @return ArrayList of ColumnConstraints
      */
-    public static ArrayList<ColumnConstraints> hamburgerColumnConstraints() {
+    public static ArrayList<ColumnConstraints> hamburgerColumnConstraintsLeft() {
         ColumnConstraints column0 = new ColumnConstraints();
         column0.setMinWidth(100);
         column0.setMaxWidth(100);
@@ -254,14 +294,102 @@ public class MainPage {
     }
 
     /**
-     * Method setting up and returning Hamburger GridPane.
+     * Method for Row constraints of the right hamburger grid.
+     *
+     * @return ArrayList of RowConstraints
+     */
+    public static ArrayList<RowConstraints> hamburgerRowConstraintsRight() {
+        RowConstraints row0 = new RowConstraints();
+        row0.setMinHeight(125);
+        row0.setMaxHeight(125);
+        RowConstraints row1 = new RowConstraints();
+        row1.setMinHeight(10);
+        row1.setMaxHeight(10);
+        RowConstraints row2 = new RowConstraints();
+        row2.setMinHeight(125);
+        row2.setMaxHeight(125);
+        RowConstraints row3 = new RowConstraints();
+        row3.setMinHeight(10);
+        row3.setMaxHeight(10);
+        RowConstraints row4 = new RowConstraints();
+        row4.setMinHeight(125);
+        row4.setMaxHeight(125);
+        RowConstraints row5 = new RowConstraints();
+        row5.setMinHeight(30);
+        row5.setMaxHeight(30);
+        RowConstraints row6 = new RowConstraints();
+        row6.setMinHeight(360);
+        row6.setMaxHeight(360);
+        RowConstraints row7 = new RowConstraints();
+        row7.setMinHeight(30);
+        row7.setMaxHeight(30);
+        ArrayList<RowConstraints> rows = new ArrayList<RowConstraints>();
+        rows.add(row0);
+        rows.add(row1);
+        rows.add(row2);
+        rows.add(row3);
+        rows.add(row4);
+        rows.add(row5);
+        rows.add(row6);
+        rows.add(row7);
+        return rows;
+    }
+
+    /**
+     * Method for column constraints of the right hamburger grid.
+     *
+     * @return ArrayList of ColumnConstraints
+     */
+    public static ArrayList<ColumnConstraints> hamburgerColumnConstraintsRight() {
+        ColumnConstraints column0 = new ColumnConstraints();
+        column0.setMinWidth(133);
+        column0.setMaxWidth(133);
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setMinWidth(133);
+        column1.setMaxWidth(133);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setMinWidth(34);
+        column2.setMaxWidth(34);
+        ArrayList<ColumnConstraints> columns = new ArrayList<ColumnConstraints>();
+        columns.add(column0);
+        columns.add(column1);
+        columns.add(column2);
+        return columns;
+    }
+
+    /**
+     * Method for column constraints of the top grid.
+     *
+     * @return ArrayList of ColumnConstraints
+     */
+    public static ArrayList<ColumnConstraints> girdTopColumnConstraints() {
+        ColumnConstraints column0 = new ColumnConstraints();
+        column0.setMinWidth(40);
+        column0.setMaxWidth(40);
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setMinWidth(1800);
+        column1.setMaxWidth(1800);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setMinWidth(40);
+        column2.setMaxWidth(40);
+        ArrayList<ColumnConstraints> columns = new ArrayList<ColumnConstraints>();
+        columns.add(column0);
+        columns.add(column1);
+        columns.add(column2);
+        return columns;
+    }
+
+    /**
+     * Method for main scene.
+     *
      * @param primaryStage Primary stage
      * @return GridPane
      */
-    public static GridPane gridHamburger(Stage primaryStage) {
+    public static GridPane gridHamburgerLeft(Stage primaryStage) {
         //creating the layout of the hamburger menu
+        final Stage window = primaryStage;
         GridPane gridHamburger = new GridPane();
-        gridHamburger.setId("hamburgerMenu");
+        gridHamburger.setId("hamburgerMenuLeft");
 
         //creating the buttons for settings, leaderboard and addAction
 
@@ -273,7 +401,6 @@ public class MainPage {
         displayProfilePicture.setId("profilePicture");
         gridHamburger.setConstraints(displayProfilePicture, 0, 0, 1, 1);
 
-        Stage window = primaryStage;
         Button settingsButton = new Button("settings");
         settingsButton.setId("settingsButton");
         settingsButton.setOnAction(e -> window.setScene(SettingsPage.settingsScene(window)));
@@ -299,5 +426,100 @@ public class MainPage {
         return gridHamburger;
     }
 
+    /**
+     * Method for main scene.
+     *
+     * @param primaryStage Primary stage
+     * @return GridPane
+     */
+    public static GridPane gridHamburgerRight(Stage primaryStage) {
+        //creating the layout of the hamburger menu
+        GridPane gridHamburger = new GridPane();
+        gridHamburger.setId("hamburgerMenuRight");
 
+        //here the acivement images are created and the achievements you unlocked are displayed
+        String result = Main.clientController.getScore();
+        //Date date = Main.clientController.getDate();   //Still needs to be inplemented
+
+        Image preAcivement1 = new Image("placeholder 100x100.png");//inplement acievemnt not unlocked skin
+        if (Integer.parseInt(result) >= 10000) {
+            preAcivement1 = new Image("placeholder2 100x100.png");//inplement acievemnt Image
+        }
+        ImageView acivement1 = new ImageView(preAcivement1);
+        GridPane.setConstraints(acivement1, 0,0);
+        Tooltip.install(acivement1, new Tooltip("Achievement for reaching 10,000 points"));
+
+        Image preAcivement2 = new Image("placeholder 100x100.png");
+        if (Integer.parseInt(result) >= 100000) {
+            preAcivement2 = new Image("placeholder2 100x100.png");
+        }
+        ImageView acivement2 = new ImageView(preAcivement2);
+        GridPane.setConstraints(acivement2, 0,2);
+        Tooltip.install(acivement2, new Tooltip("Achievement for reaching 100,000 points"));
+
+        Image preAcivement3 = new Image("placeholder 100x100.png");
+        if (Integer.parseInt(result) >= 1000000) {
+            preAcivement3 = new Image("placeholder2 100x100.png");
+        }
+        ImageView acivement3 = new ImageView(preAcivement3);
+        GridPane.setConstraints(acivement3, 0,4);
+        Tooltip.install(acivement3, new Tooltip("Achievement for reaching 1,000,000 points"));
+
+        Image preAcivement4 = new Image("placeholder 100x100.png");
+        ImageView acivement4 = new ImageView(preAcivement4);
+        GridPane.setConstraints(acivement4, 1,0);
+        Tooltip.install(acivement4, new Tooltip("Achievement for playing for 1 week"));
+
+        Image preAcivement5 = new Image("placeholder 100x100.png");
+        ImageView acivement5 = new ImageView(preAcivement5);
+        GridPane.setConstraints(acivement5, 1,2);
+        Tooltip.install(acivement5, new Tooltip("Achievement for playing for 1 month"));
+
+        Image preAcivement6 = new Image("placeholder 100x100.png");
+        ImageView acivement6 = new ImageView(preAcivement6);
+        GridPane.setConstraints(acivement6, 1,4);
+        Tooltip.install(acivement6, new Tooltip("Achievement for playing for 1 year"));
+
+        //here the followingList is displayed and the follow option is created
+        Label followLabel = new Label("people you follow:");
+        followLabel.setId("followLabel");
+        GridPane.setConstraints(followLabel,0,5,3,1);
+
+        Main.clientController.updateTop50(); //should become list of people you follow
+        ObservableList<User> data =
+                FXCollections.observableArrayList(
+                        Main.clientController.getTop50()  //should become list of people you follow
+                );
+        TableColumn name = new TableColumn("name");
+        name.setCellValueFactory(new PropertyValueFactory<>("username"));
+        folowingList.setItems(data);
+        folowingList.getColumns().addAll(name);
+        folowingList.setMaxHeight(300);
+        folowingList.setPrefWidth(250);
+        folowingList.setColumnResizePolicy(folowingList.CONSTRAINED_RESIZE_POLICY);
+        GridPane.setConstraints(folowingList,0,6, 3, 1);
+
+        Label newFollowLabel = new Label("Search new people:");
+        newFollowLabel.setId("newFollowLabel");
+        GridPane.setConstraints(newFollowLabel,0,7,3,1);
+
+        TextField followTextField = new TextField();
+        followTextField.setPromptText("Start following...");
+        GridPane.setConstraints(followTextField, 0, 8, 3, 1);
+
+        Button followButton = new Button("follow");
+        followButton.setId("followButton");
+        followButton.setOnAction(e -> {
+            //here needs to be the action to start following ome if he exists ^ NOT anonymous
+        });
+        GridPane.setConstraints(followButton, 0, 9, 3, 1);
+
+
+        //add all previously created elements to the hamburger layout
+        gridHamburger.getChildren().addAll(acivement1, acivement2, acivement3, acivement4, acivement5,
+                acivement6, followLabel, folowingList, newFollowLabel,  followTextField, followButton);
+        gridHamburger.setAlignment(Pos.TOP_CENTER);
+        return gridHamburger;
+    }
+    
 }
