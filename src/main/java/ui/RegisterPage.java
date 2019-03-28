@@ -162,7 +162,7 @@ public class RegisterPage {
             if (ke.getCode() == KeyCode.ENTER) {
                 registerButton.fire();
             }
-            if (ke.getCode() != KeyCode.BACK_SPACE) {
+            if(ke.getCode() != KeyCode.BACK_SPACE || ke.getCode() != KeyCode.DELETE || ke.getCode() != KeyCode.TAB){
                 ke.consume();
             }
 

@@ -165,7 +165,7 @@ public class LoginPage {
             if (ke.getCode() == KeyCode.ENTER) {
                 loginButton.fire();
             }
-            if(ke.getCode() != KeyCode.BACK_SPACE){
+            if(ke.getCode() != KeyCode.BACK_SPACE || ke.getCode() != KeyCode.DELETE || ke.getCode() != KeyCode.TAB){
                 ke.consume();
             }
         });
