@@ -59,12 +59,13 @@ public class ResetPointsPage {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             if (ke.getCode() == KeyCode.ENTER) {
                 resetButton.fire();
+                ke.consume();
+
             }
             if (ke.getCode() == KeyCode.ESCAPE) {
                 cancelButton.fire();
-            }
-            if (ke.getCode() != KeyCode.BACK_SPACE){
                 ke.consume();
+
             }
         });
         return scene;

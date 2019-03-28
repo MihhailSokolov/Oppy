@@ -161,11 +161,8 @@ public class RegisterPage {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             if (ke.getCode() == KeyCode.ENTER) {
                 registerButton.fire();
-            }
-            if(ke.getCode() != KeyCode.BACK_SPACE || ke.getCode() != KeyCode.DELETE || ke.getCode() != KeyCode.TAB){
                 ke.consume();
             }
-
         });
         scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             final KeyCombination login = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
@@ -173,11 +170,10 @@ public class RegisterPage {
             public void handle(KeyEvent ke) {
                 if (login.match(ke)) {
                     loginButton.fire();
+                    ke.consume();
                 }
                 if (availability.match(ke)) {
                     checkA.fire();
-                }
-                if (ke.getCode() != KeyCode.BACK_SPACE) {
                     ke.consume();
                 }
             }

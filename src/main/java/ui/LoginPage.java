@@ -164,8 +164,6 @@ public class LoginPage {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             if (ke.getCode() == KeyCode.ENTER) {
                 loginButton.fire();
-            }
-            if(ke.getCode() != KeyCode.BACK_SPACE || ke.getCode() != KeyCode.DELETE || ke.getCode() != KeyCode.TAB){
                 ke.consume();
             }
         });
@@ -174,8 +172,6 @@ public class LoginPage {
             public void handle(KeyEvent ke) {
                 if(register.match(ke)) {
                     registerButton.fire();
-                }
-                if (ke.getCode() != KeyCode.BACK_SPACE) {
                     ke.consume();
                 }
             }

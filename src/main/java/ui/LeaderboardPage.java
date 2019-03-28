@@ -146,8 +146,8 @@ public class LeaderboardPage {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             if (ke.getCode() == KeyCode.ESCAPE) {
                 backButton.fire();
+                ke.consume();
             }
-            ke.consume();
         });
         return scene;
 

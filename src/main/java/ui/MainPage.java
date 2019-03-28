@@ -187,6 +187,12 @@ public class MainPage {
         centralPageLayout.setCenter(gridCenter);
         centralPageLayout.setTop(gridTop);
 
+        //logout from main page functionality
+        Button invisLogoutbutton = new Button();
+        invisLogoutbutton.setOnAction( e-> {
+            window.setScene(LoginPage.loginScene(window));
+        });
+
         //here the create view is made into a scene and returned when the method is called
         Scene scene = new Scene(centralPageLayout, 1920, 1080);
         scene.getStylesheets().add("mainStyle.css");
@@ -201,10 +207,7 @@ public class MainPage {
                 addActionButton.fire();
             }
             if (ke.getCode() == KeyCode.ESCAPE) {
-                SettingsPage.logOutButton.fire();
-            }
-            if(ke.getCode() != KeyCode.BACK_SPACE){
-                ke.consume();
+                invisLogoutbutton.fire();
             }
         });
         return scene;
