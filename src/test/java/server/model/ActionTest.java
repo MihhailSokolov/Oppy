@@ -59,16 +59,23 @@ public class ActionTest {
         assertEquals("Action[actionName='recycle bottle', category='recycling', points='10']", action.toString());
     }
 
+    @SuppressWarnings("all")
     @Test
     public void testEquals() {
         Action action1 = new Action("recycle bottle","recycling",10);
         Action action2 = new Action("recycle bottle","recycling",10);
         Action action3 = new Action("vegetable meal","food",15);
-        assertEquals(action1, action2);
-        assertEquals(action1, action1);
-        assertNotEquals(action1, action3);
-        assertNotEquals(null, action1);
-        assertNotEquals("String test", action1);
-        assertNotEquals(new User("user", "pass", "mail", 10, new Date()), action1);
+        Action action4 = new Action("recycle bottle","food",10);
+        Action action5 = new Action("vegetable meal","recycling",10);
+        Action action6 = new Action("recycle bottle","recycling",15);
+        assertTrue(action1.equals(action2));
+        assertTrue(action1.equals(action1));
+        assertFalse(action1.equals(action3));
+        assertFalse(action1.equals(action4));
+        assertFalse(action1.equals(action5));
+        assertFalse(action1.equals(action6));
+        assertFalse(action1.equals(null));
+        assertFalse(action1.equals("String test"));
+        assertFalse(action1.equals(new User("user", "pass", "mail", 10, new Date())));
     }
 }

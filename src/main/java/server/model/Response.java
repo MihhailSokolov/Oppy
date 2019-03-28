@@ -11,12 +11,10 @@ public class Response {
         this.message = message;
     }
 
-    @JsonCreator
     public Response(@JsonProperty("message") int intMessage) {
         this.message = String.valueOf(intMessage);
     }
 
-    @JsonCreator
     public Response(@JsonProperty("message") boolean boolMessage) {
         this.message = String.valueOf(boolMessage);
     }

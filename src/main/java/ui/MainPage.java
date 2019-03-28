@@ -401,6 +401,7 @@ public class MainPage {
         displayProfilePicture.setId("profilePicture");
         gridHamburger.setConstraints(displayProfilePicture, 0, 0, 1, 1);
 
+        Stage window = primaryStage;
         Button settingsButton = new Button("settings");
         settingsButton.setId("settingsButton");
         settingsButton.setOnAction(e -> window.setScene(SettingsPage.settingsScene(window)));
