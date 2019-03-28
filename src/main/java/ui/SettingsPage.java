@@ -15,7 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class SettingsPage {
-
+    public static Button logOutButton;
     /**
      * Method for creating settings page.
      * @param primaryStage primary stage
@@ -76,7 +76,7 @@ public class SettingsPage {
         });
 
 
-        Button logOutButton = new Button("Log out");
+        logOutButton = new Button("Log out");
         GridPane.setConstraints(logOutButton,1,6,2,1);
         logOutButton.setOnAction(e -> {
             window.setScene(LoginPage.loginScene(window));

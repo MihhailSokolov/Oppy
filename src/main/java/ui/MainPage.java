@@ -39,7 +39,9 @@ import java.util.Date;
  */
 public class MainPage {
     private static TableView<User> folowingList = new TableView<>();
-    private static Scene scene;
+    private static Button settingsButton;
+    private static Button leaderboardButton;
+    private static Button addActionButton;
     /**
      * Method for main scene.
      *
@@ -186,8 +188,25 @@ public class MainPage {
         centralPageLayout.setTop(gridTop);
 
         //here the create view is made into a scene and returned when the method is called
-        scene = new Scene(centralPageLayout, 1920, 1080);
+        Scene scene = new Scene(centralPageLayout, 1920, 1080);
         scene.getStylesheets().add("mainStyle.css");
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
+            if (ke.getCode() == KeyCode.S) {
+                settingsButton.fire();
+            }
+            if (ke.getCode() == KeyCode.L) {
+                leaderboardButton.fire();
+            }
+            if (ke.getCode() == KeyCode.A) {
+                addActionButton.fire();
+            }
+            if (ke.getCode() == KeyCode.ESCAPE) {
+                SettingsPage.logOutButton.fire();
+            }
+            if(ke.getCode() != KeyCode.BACK_SPACE){
+                ke.consume();
+            }
+        });
         return scene;
     }
 
@@ -398,12 +417,12 @@ public class MainPage {
         displayProfilePicture.setId("profilePicture");
         gridHamburger.setConstraints(displayProfilePicture, 0, 0, 1, 1);
 
-        Button settingsButton = new Button("settings");
+        settingsButton = new Button("settings");
         settingsButton.setId("settingsButton");
         settingsButton.setOnAction(e -> window.setScene(SettingsPage.settingsScene(window)));
         gridHamburger.setConstraints(settingsButton, 1, 0, 1, 1);
 
-        Button leaderboardButton = new Button("Leaderboard");
+        leaderboardButton = new Button("Leaderboard");
         leaderboardButton.setId("leaderActionButton");
         leaderboardButton.setOnAction(e -> {
             Main.clientController.updateTop50();
@@ -412,26 +431,10 @@ public class MainPage {
         gridHamburger.setConstraints(leaderboardButton, 0, 1, 2, 1);
 
 
-        Button addActionButton = new Button("Add action");
+        addActionButton = new Button("Add action");
         addActionButton.setId("leaderActionButton");
         addActionButton.setOnAction(e -> window.setScene(AddActionPage.addActionScene(window)));
         gridHamburger.setConstraints(addActionButton, 0, 2, 2, 1);
-
-        //key bindings
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
-            if (ke.getCode() == KeyCode.S) {
-                settingsButton.fire();
-            }
-            if (ke.getCode() == KeyCode.L) {
-                leaderboardButton.fire();
-            }
-            if (ke.getCode() == KeyCode.A) {
-                addActionButton.fire();
-            }
-            if(ke.getCode() != KeyCode.BACK_SPACE){
-                ke.consume();
-            }
-        });
 
         //add all previously created elements to the hamburger layout
         gridHamburger.getChildren().addAll(settingsButton, leaderboardButton, addActionButton, displayProfilePicture);
