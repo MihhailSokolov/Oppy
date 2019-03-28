@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -54,6 +56,14 @@ public class ResetPointsPage {
 
         //here the create view is made into a scene and return when the method is called
         Scene scene = new Scene(grid, 500, 325);
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
+            if (ke.getCode() == KeyCode.ENTER) {
+                resetButton.fire();
+            }
+            if (ke.getCode() != KeyCode.BACK_SPACE){
+                ke.consume();
+            }
+        });
         return scene;
     }
 }
