@@ -10,12 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -221,10 +216,13 @@ public class MainPage {
         row1.setMinHeight(100);
         RowConstraints row2 = new RowConstraints();
         row2.setMinHeight(100);
+        RowConstraints row3 = new RowConstraints();
+        row3.setMinHeight(100);
         ArrayList<RowConstraints> rows = new ArrayList<RowConstraints>();
         rows.add(row0);
         rows.add(row1);
         rows.add(row2);
+        rows.add(row3);
         return rows;
     }
 
@@ -354,12 +352,12 @@ public class MainPage {
         displayProfilePicture.setId("profilePicture");
         gridHamburger.setConstraints(displayProfilePicture, 0, 0, 1, 1);
 
-        Button settingsButton = new Button("settings");
+        ToggleButton settingsButton = new  ToggleButton("settings");
         settingsButton.setId("settingsButton");
         settingsButton.setOnAction(e -> window.setScene(SettingsPage.settingsScene(window)));
         gridHamburger.setConstraints(settingsButton, 1, 0, 1, 1);
 
-        Button leaderboardButton = new Button("Leaderboard");
+        ToggleButton leaderboardButton = new  ToggleButton("Leaderboard");
         leaderboardButton.setId("leaderActionButton");
         leaderboardButton.setOnAction(e -> {
             Main.clientController.updateTop50();
@@ -368,13 +366,31 @@ public class MainPage {
         gridHamburger.setConstraints(leaderboardButton, 0, 1, 2, 1);
 
 
-        Button addActionButton = new Button("Add action");
+        ToggleButton addActionButton = new  ToggleButton("Add action");
         addActionButton.setId("leaderActionButton");
         addActionButton.setOnAction(e -> window.setScene(AddActionPage.addActionScene(window)));
         gridHamburger.setConstraints(addActionButton, 0, 2, 2, 1);
 
+        ToggleButton mainButton = new  ToggleButton("Main page");
+        mainButton.setId("leaderActionButton");
+        mainButton.setOnAction(e -> window.setScene(AddActionPage.addActionScene(window)));
+        gridHamburger.setConstraints(mainButton, 0, 3, 2, 1);
+
+        if(window.getTitle().equals("MainPage")){
+            disableButton(mainButton);
+        }
+        else if(window.getTitle().equals("AddActionPage")){
+            disableButton(addActionButton);
+        }
+        else if(window.getTitle().equals("SettingsPage")){
+            disableButton(settingsButton);
+        }
+        else if(window.getTitle().equals("LeaderboardPage")){
+            disableButton(leaderboardButton);
+        }
+
         //add all previously created elements to the hamburger layout
-        gridHamburger.getChildren().addAll(settingsButton, leaderboardButton, addActionButton, displayProfilePicture);
+        gridHamburger.getChildren().addAll(settingsButton, leaderboardButton, addActionButton, displayProfilePicture,mainButton);
         gridHamburger.setAlignment(Pos.TOP_CENTER);
         return gridHamburger;
     }
@@ -529,4 +545,11 @@ public class MainPage {
         gridTop.setStyle("-fx-background-color: #4c4242;");
         return gridTop;
     }
+
+    public static void disableButton(ToggleButton clicked){
+        clicked.setSelected(true);
+        clicked.setDisable(true);
+    }
+
 }
+
