@@ -1,18 +1,17 @@
 package ui;
 
 import clientside.ClientController;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -159,6 +158,30 @@ public class RegisterPage {
         borderPane.setTop(topGrid);
         Scene scene = new Scene(borderPane);
         scene.getStylesheets().add("LoginRegisterStyle.css");
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
+            if (ke.getCode() == KeyCode.ENTER) {
+                registerButton.fire();
+            }
+            if (ke.getCode() != KeyCode.BACK_SPACE) {
+                ke.consume();
+            }
+
+        });
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            final KeyCombination login = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+            final KeyCombination availability = new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN);
+            public void handle(KeyEvent ke) {
+                if (login.match(ke)) {
+                    loginButton.fire();
+                }
+                if (availability.match(ke)) {
+                    checkA.fire();
+                }
+                if (ke.getCode() != KeyCode.BACK_SPACE) {
+                    ke.consume();
+                }
+            }
+        });
         return scene;
     }
 
