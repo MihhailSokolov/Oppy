@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 
 public class ChangeEmailPage {
     /**
-     <<<<<<< HEAD
      * Method for creating the ChangeEmail page.
      *
      * @param primaryStage primary stage
@@ -68,12 +67,10 @@ public class ChangeEmailPage {
             if (ke.getCode() == KeyCode.ENTER) {
                 changeButton.fire();
                 ke.consume();
-
             }
-            if(ke.getCode() == KeyCode.ESCAPE) {
+            if (ke.getCode() == KeyCode.ESCAPE) {
                 cancelButton.fire();
                 ke.consume();
-
             }
         });
         return scene;

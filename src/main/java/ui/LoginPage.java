@@ -5,7 +5,14 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -88,7 +95,6 @@ public class LoginPage {
                 failed.setTitle("Notification");
                 failed.show();
             }
-
         });
         GridPane.setConstraints(loginButton, 0, 9, 2, 1);
 
@@ -102,8 +108,7 @@ public class LoginPage {
                 fakeLoginButton, registerButton);
         grid.setAlignment(Pos.CENTER);
 
-        //TopGrid made here/////////////////////////////////
-        ///////////////////////////////////////////////////
+        //TopGrid made here
         GridPane topGrid = new GridPane();
         topGrid.setPadding(new Insets(10, 10, 10, 10));
         topGrid.setVgap(8);
@@ -117,9 +122,7 @@ public class LoginPage {
         topGrid.getChildren().add(displayLogo);
         topGrid.setAlignment(Pos.CENTER);
 
-
-        ////////////////////////////////////////////////////////////////
-        ////setting the sizes of the rows///////////////////////////////
+        //setting the sizes of the rows
         RowConstraints row0 = new RowConstraints();
         row0.setMinHeight(100);
         row0.setMaxHeight(100);
@@ -152,8 +155,7 @@ public class LoginPage {
         row10.setMinHeight(100);
 
         grid.getRowConstraints().addAll(row0, row1, row2, row3, row4, row5, row6, row7, row8, row9, row10);
-        ////end of setting row sizes////////////////////////////////////
-        ////////////////////////////////////////////////////////////////
+        //end of setting row sizes
 
         //here the create view is made into a scene and return when the method is called
         BorderPane borderPane = new BorderPane();
@@ -170,7 +172,7 @@ public class LoginPage {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             final KeyCombination register = new KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN);
             public void handle(KeyEvent ke) {
-                if(register.match(ke)) {
+                if (register.match(ke)) {
                     registerButton.fire();
                     ke.consume();
                 }
@@ -178,6 +180,4 @@ public class LoginPage {
         });
         return scene;
     }
-
-
 }

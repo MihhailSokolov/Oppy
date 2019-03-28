@@ -30,7 +30,7 @@ public class AddActionPage {
         ArrayList<Action> listOfActions = new ArrayList<Action>();
         Stage window = primaryStage;
         window.setTitle("AddActionPage");
-        //CentralGrid////////////////////////////////////////////////////////////////////
+        //CentralGrid
         GridPane gridCenter = new GridPane();
         gridCenter.setPadding(new Insets(10, 10, 10, 10));
         gridCenter.setVgap(8);
@@ -40,13 +40,11 @@ public class AddActionPage {
         Button backButton = new Button("Back");
         GridPane.setConstraints(backButton, 0, 0);
         backButton.setOnAction(e -> window.setScene(MainPage.mainScene(window)));
-
         Button saveAsButton = new Button("Save as ...");
         GridPane.setConstraints(saveAsButton, 1, 5);
         saveAsButton.setOnAction(e -> {
             //implement a save as method
         });
-
         Main.clientController.updateActionList();
         List<Action> actionList = Main.clientController.getActionList();
         for (Action act : actionList) {
@@ -63,7 +61,7 @@ public class AddActionPage {
             }
         });
 
-        //here the drop down menu transport is created //////////////////////////////////
+        //here the drop down menu transport is created
         TitledPane transportCategory = new TitledPane();
         transportCategory.setText("Transport");
         GridPane.setConstraints(transportCategory, 1, 1, 2, 1);
@@ -74,9 +72,8 @@ public class AddActionPage {
         gridTransport.setPadding(new Insets(10, 10, 10, 10));
         gridTransport.setVgap(8);
         gridTransport.setHgap(10);
-
         List<Action> transportList = Main.clientController.getCategoryList("transport");
-        //gets all available actions and display's dem in the right category
+        //gets all available actions and display's them in the right category
         for (int i = 0; i < transportList.size(); i++) {
             CheckBox newCheckBox = new CheckBox(transportList.get(i).getActionName());
             GridPane.setConstraints(newCheckBox, 1, i);
@@ -85,23 +82,20 @@ public class AddActionPage {
             Label newLabelPoints = new Label(strPoints);
             GridPane.setConstraints(newLabelPoints, 2, i);
             gridTransport.getChildren().addAll(newCheckBox, newLabelPoints);
-
         }
         transportCategory.setContent(gridTransport);
-
-        ///here the drop down menu Food is created///////////////////////////////////////
+        ///here the drop down menu Food is created
         TitledPane foodCategory = new TitledPane();
         foodCategory.setText("Food");
         GridPane.setConstraints(foodCategory, 1, 2, 2, 1);
         foodCategory.setExpanded(false);
-
-        //Set the layout for the TiteldPane's contents
+        //Set the layout for the TitledPane's contents
         GridPane gridFood = new GridPane();
         gridFood.setPadding(new Insets(10, 10, 10, 10));
         gridFood.setVgap(8);
         gridFood.setHgap(10);
 
-        //gets all available actions and display's dem in the right category
+        //gets all available actions and display's them in the right category
         List<Action> foodList = Main.clientController.getCategoryList("food");
         for (int i = 0; i < foodList.size(); i++) {
             CheckBox newCheckBox = new CheckBox(foodList.get(i).getActionName());
@@ -113,19 +107,16 @@ public class AddActionPage {
             gridFood.getChildren().addAll(newCheckBox, newLabelPoints);
         }
         foodCategory.setContent(gridFood);
-
-        ///////here the drop down menu Energy is created/////////////////////////////////
+        //here the drop down menu Energy is created
         TitledPane energyCategory = new TitledPane();
         energyCategory.setText("Energy");
         GridPane.setConstraints(energyCategory, 1, 3, 2, 1);
         energyCategory.setExpanded(false);
-
-        //Set the layout for the TiteldPane's contents
+        //Set the layout for the TitledPane's contents
         GridPane gridEnergy = new GridPane();
         gridEnergy.setPadding(new Insets(10, 10, 10, 10));
         gridEnergy.setVgap(8);
         gridEnergy.setHgap(10);
-
         //gets all available actions and display's dem in the right category
         List<Action> energyList = Main.clientController.getCategoryList("energy");
         for (int i = 0; i < energyList.size(); i++) {
@@ -139,12 +130,11 @@ public class AddActionPage {
         }
         energyCategory.setContent(gridEnergy);
 
-        ///here the drop down menu misc is created///////////////////////////////////////
+        //here the drop down menu misc is created
         TitledPane miscCategory = new TitledPane();
         miscCategory.setText("Misc.");
         GridPane.setConstraints(miscCategory, 1, 4, 2, 1);
         miscCategory.setExpanded(false);
-
         //Set the layout for the TiteldPane's contents
         GridPane gridMisc = new GridPane();
         gridMisc.setPadding(new Insets(10, 10, 10, 10));
@@ -161,13 +151,12 @@ public class AddActionPage {
             Label newLabelPoints = new Label(strPoints);
             GridPane.setConstraints(newLabelPoints, 2, i);
             gridMisc.getChildren().addAll(newCheckBox, newLabelPoints);
-
         }
         miscCategory.setContent(gridMisc);
-        ////central page layout/////////////////////////////////////////////////////////////////
+        //central page layout
         BorderPane centralPageLayout = new BorderPane();
-        gridCenter.getChildren().addAll(backButton, saveAsButton, submitButton, transportCategory,
-                miscCategory, foodCategory, energyCategory);
+        gridCenter.getChildren().addAll(backButton, saveAsButton, submitButton, transportCategory, miscCategory,
+                foodCategory, energyCategory);
         centralPageLayout.setCenter(gridCenter);
         //here the create view is made into a scene and returned when the method is called
         Scene scene = new Scene(centralPageLayout, 1000, 600);

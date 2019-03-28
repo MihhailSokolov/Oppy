@@ -5,7 +5,13 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -53,7 +59,6 @@ public class RegisterPage {
             window.setScene(LoginPage.loginScene(window));
         });
         loginButton.setToggleGroup(loginRegister);
-
         //email, username, password  and confirm password fields and labels
         Label email = new Label("email");
         GridPane.setConstraints(email, 0, 2);
@@ -106,7 +111,6 @@ public class RegisterPage {
                 failed.show();
             }
         });
-
         //The Check-availability button
         Button checkA = new Button("Check Availability");
         checkA.setId("checkAvailability");
@@ -124,14 +128,12 @@ public class RegisterPage {
                 usernameTextfield.setStyle("-fx-background-color: #ff0000");
             }
         });
-
         //Here all elements previously created are added to the view and the view is centered
         grid.getChildren().addAll(email, username, password, confirmPassword, emailTextfield,
                 usernameTextfield, passwordTextfield, confirmPasswordTextfield,
                 registerButton, loginButton, fakeRegisterButton, checkA);
         grid.setAlignment(Pos.CENTER);
-        //TopGrid made here/////////////////////////////////
-        ///////////////////////////////////////////////////
+        //TopGrid made here
         GridPane topGrid = new GridPane();
         topGrid.setPadding(new Insets(10, 10, 10, 10));
         topGrid.setVgap(8);
@@ -145,12 +147,10 @@ public class RegisterPage {
         topGrid.getChildren().add(displayLogo);
         topGrid.setAlignment(Pos.CENTER);
 
-        ////////////////////////////////////////////////////////////////
-        ////setting the sizes of the rows///////////////////////////////
+        //setting the sizes of the rows
 
         grid.getRowConstraints().addAll(gridRowConstraints());
-        ////end of setting row sizes////////////////////////////////////
-        ////////////////////////////////////////////////////////////////
+        //end of setting row sizes
 
         //here the create view is made into a scene and return when the method is called
         BorderPane borderPane = new BorderPane();

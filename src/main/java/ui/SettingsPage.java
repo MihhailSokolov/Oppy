@@ -21,6 +21,7 @@ public class SettingsPage {
      * @param primaryStage primary stage
      * @return settings scene
      */
+
     public static Scene settingsScene(Stage primaryStage) {
         Stage window = primaryStage;
         window.setTitle("SettingsPage");
