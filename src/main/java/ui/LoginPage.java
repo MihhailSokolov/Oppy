@@ -161,8 +161,11 @@ public class LoginPage {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             if (ke.getCode() == KeyCode.ENTER) {
                 loginButton.fire();
-                ke.consume(); // <-- stops passing the event to next node
             }
+            if(ke.getCode() == KeyCode.R) {
+                registerButton.fire();
+            }
+            ke.consume();
         });
         return scene;
     }
