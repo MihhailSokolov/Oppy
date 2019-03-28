@@ -30,7 +30,7 @@ public class AddActionPage {
         window.setTitle("AddActionPage");
         final BorderPane centralPageLayout = new BorderPane();
 
-        //here the hamburger menu's and the top menu are initialized
+        //here the hamburger menu's and the top menu and the mainGrid are initialized
         final GridPane gridHamburgerLeft = MainPage.gridHamburgerLeft(window);
         final GridPane gridHamburgerRight = MainPage.gridHamburgerRight(window);
         final GridPane gridTop = MainPage.gridTop(centralPageLayout, gridHamburgerLeft, gridHamburgerRight);

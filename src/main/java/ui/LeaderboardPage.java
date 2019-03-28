@@ -48,6 +48,7 @@ public class LeaderboardPage {
         Main.clientController.updateUser();
         Stage window = primaryStage;
         window.setTitle("LeaderboardPage");
+        final BorderPane centralPageLayout = new BorderPane();
 
         /////////////////////////////////////////////////////////////////////////////////
         //CentralGrid////////////////////////////////////////////////////////////////////
@@ -130,17 +131,30 @@ public class LeaderboardPage {
         scoreOfuser.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         GridPane.setConstraints(scoreOfuser,1,2);
 
+        //here all above created tables are added to the central Grid
+        gridCenter.getChildren().addAll(backButton,number1Player,bestPlayers,scoreOfuser);
 
+        //here the hamburger menu's and the top menu are initialized
+        final GridPane gridHamburgerLeft = MainPage.gridHamburgerLeft(window);
+        final GridPane gridHamburgerRight = MainPage.gridHamburgerRight(window);
+        final GridPane gridTop = MainPage.gridTop(centralPageLayout, gridHamburgerLeft, gridHamburgerRight);
 
-
+        ////setting the sizes of the rows///////////////////////////////
+        //gridCenter.getRowConstraints().addAll(gridRowConstraints());
+        //gridCenter.getColumnConstraints().addAll(gridColumnConstraints());
+        gridHamburgerLeft.getRowConstraints().addAll(MainPage.hamburgerRowConstraintsLeft());
+        gridHamburgerLeft.getColumnConstraints().addAll(MainPage.hamburgerColumnConstraintsLeft());
+        gridHamburgerRight.getRowConstraints().addAll(MainPage.hamburgerRowConstraintsRight());
+        gridHamburgerRight.getColumnConstraints().addAll(MainPage.hamburgerColumnConstraintsRight());
+        gridTop.getColumnConstraints().addAll(MainPage.girdTopColumnConstraints());
         //////////////////////////////////////////////////////////////////////////////////////
         ////central page layout///////////////////////////////////////////////////////////////
-        gridCenter.getChildren().addAll(backButton,number1Player,bestPlayers,scoreOfuser);
-        BorderPane centralPageLayout = new BorderPane();
         centralPageLayout.setCenter(gridCenter);
+        centralPageLayout.setTop(gridTop);
 
         //here the create view is made into a scene and returned when the method is called
-        Scene scene = new Scene(centralPageLayout, 1000, 600);
+        Scene scene = new Scene(centralPageLayout, 1920, 1080);
+        scene.getStylesheets().add("topHamburgerStyle.css");
         return scene;
 
     }
