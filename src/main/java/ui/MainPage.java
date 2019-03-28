@@ -10,15 +10,12 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
@@ -42,7 +39,7 @@ import java.util.Date;
  */
 public class MainPage {
     private static TableView<User> folowingList = new TableView<>();
-
+    private static Scene scene;
     /**
      * Method for main scene.
      *
@@ -189,7 +186,7 @@ public class MainPage {
         centralPageLayout.setTop(gridTop);
 
         //here the create view is made into a scene and returned when the method is called
-        Scene scene = new Scene(centralPageLayout, 1920, 1080);
+        scene = new Scene(centralPageLayout, 1920, 1080);
         scene.getStylesheets().add("mainStyle.css");
         return scene;
     }
@@ -419,6 +416,22 @@ public class MainPage {
         addActionButton.setId("leaderActionButton");
         addActionButton.setOnAction(e -> window.setScene(AddActionPage.addActionScene(window)));
         gridHamburger.setConstraints(addActionButton, 0, 2, 2, 1);
+
+        //key bindings
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
+            if (ke.getCode() == KeyCode.S) {
+                settingsButton.fire();
+            }
+            if (ke.getCode() == KeyCode.L) {
+                leaderboardButton.fire();
+            }
+            if (ke.getCode() == KeyCode.A) {
+                addActionButton.fire();
+            }
+            if(ke.getCode() != KeyCode.BACK_SPACE){
+                ke.consume();
+            }
+        });
 
         //add all previously created elements to the hamburger layout
         gridHamburger.getChildren().addAll(settingsButton, leaderboardButton, addActionButton, displayProfilePicture);
