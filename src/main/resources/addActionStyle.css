@@ -17,13 +17,12 @@
     -fx-border-color: #789149;
     -fx-background-color: radial-gradient(center 50% 50%, radius 60%, reflect, #79f2ff, #0000a8);
 }
+
 .titled-pane{
     -fx-text-fill: white;
     -fx-max-width: 500px;
     -fx-min-width: 500px;
-
 }
-
 .titled-pane > .title{
     -fx-background-color:  #789149, #789149, darkblue;
     -fx-border-width: 2px;
@@ -35,6 +34,12 @@
 .titled-pane > .title > .arrow-button .arrow{
     -fx-background-color: white;
     -fx-alignment: CENTER_LEFT;
+}
+.titled-pane .title:hover{
+    -fx-background-color:  #789149, #789149, #0000b4;
+}
+.titled-pane .title:pressed{
+    -fx-background-color:  #789149, #789149, #00004c;
 }
 
 
@@ -66,8 +71,11 @@
     -fx-max-height: 40px;
     -fx-translate-x: 5px;
 }
+#menuGrid .check-box:hover .box{
+    -fx-background-color: #000080;
+}
 #menuGrid .check-box:pressed .box{
-    -fx-background-color: #000030;
+    -fx-background-color: #000048;
 }
 #menuGrid .check-box .box{
     -fx-background-color: #000060;
@@ -102,4 +110,19 @@
     -fx-min-height: 50px;
     -fx-max-height: 50px;
     -fx-translate-y: 0px;
+}
+.button:hover{
+    -fx-background-color:
+            #07080a,
+            linear-gradient(#38424b 10%, #1f2429 30%, #191d22 110%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 110%, rgba(114,131,148,1), rgba(255,255,255,0.1));
+    -fx-cursor: hand;
+}
+.button:pressed{
+    -fx-background-color:
+            #07080a,
+            linear-gradient(#38424b 00%, #1f2429 0%, #191d22 50%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 50%, rgba(114,131,148,0,5), rgba(255,255,255,0.0));
 }
