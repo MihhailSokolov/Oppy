@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -169,6 +171,18 @@ public class AddActionPage {
         centralPageLayout.setCenter(gridCenter);
         //here the create view is made into a scene and returned when the method is called
         Scene scene = new Scene(centralPageLayout, 1000, 600);
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
+            if (ke.getCode() == KeyCode.ENTER) {
+                submitButton.fire();
+            }
+            if (ke.getCode() == KeyCode.S) {
+                saveAsButton.fire();
+            }
+            if (ke.getCode() == KeyCode.ESCAPE) {
+                backButton.fire();
+            }
+            ke.consume();
+        });
         return scene;
     }
 }
