@@ -62,6 +62,9 @@ public class DeleteUserPage {
             if (ke.getCode() == KeyCode.ENTER) {
                 deleteButton.fire();
             }
+            if (ke.getCode() == KeyCode.ESCAPE) {
+                cancelButton.fire();
+            }
             if (ke.getCode() != KeyCode.BACK_SPACE){
                 ke.consume();
             }

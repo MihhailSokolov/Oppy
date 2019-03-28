@@ -69,6 +69,9 @@ public class ChangePasswordPage {
             if (ke.getCode() == KeyCode.ENTER) {
                 changeButton.fire();
             }
+            if (ke.getCode() == KeyCode.ESCAPE) {
+                cancelButton.fire();
+            }
             if (ke.getCode() != KeyCode.BACK_SPACE){
                 ke.consume();
             }

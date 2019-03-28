@@ -115,7 +115,7 @@ public class SettingsPage {
             if (ke.getCode() == KeyCode.P) {
                 changePasswordButton.fire();
             }
-            if (ke.getCode() == KeyCode.L || ke.getCode() == KeyCode.ESCAPE) {
+            if (ke.getCode() == KeyCode.L) {
                 logOutButton.fire();
             }
             if (ke.getCode() == KeyCode.D || ke.getCode() == KeyCode.DELETE) {
@@ -123,6 +123,9 @@ public class SettingsPage {
             }
             if (ke.getCode() == KeyCode.R) {
                 resetButton.fire();
+            }
+            if (ke.getCode() == KeyCode.ESCAPE) {
+                backButton.fire();
             }
             ke.consume();
         });
