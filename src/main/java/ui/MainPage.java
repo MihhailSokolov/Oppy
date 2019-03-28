@@ -135,15 +135,15 @@ public class MainPage {
         gridHamburgerRight.getRowConstraints().addAll(hamburgerRowConstraintsRight());
         gridHamburgerRight.getColumnConstraints().addAll(hamburgerColumnConstraintsRight());
         gridTop.getColumnConstraints().addAll(girdTopColumnConstraints());
-        /////////////////////////////////////////////////////////////////////////
-        ////CentralPageLayout/////////////////////////////////////////////////////
 
+        ////CentralPageLayout/////////////////////////////////////////////////////
         centralPageLayout.setCenter(gridCenter);
         centralPageLayout.setTop(gridTop);
 
         //here the create view is made into a scene and returned when the method is called
         Scene scene = new Scene(centralPageLayout, 1920, 1080);
         scene.getStylesheets().add("mainStyle.css");
+        scene.getStylesheets().add("topHamburgerStyle.css");
         return scene;
     }
 

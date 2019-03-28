@@ -35,11 +35,6 @@ public class AddActionPage {
         GridPane gridCenter = new GridPane();
         gridCenter.setId("gridCenter");
 
-        //adding the back, submit and save as buttons
-      /* Button backButton = new Button("Back");
-        GridPane.setConstraints(backButton, 0, 0);
-        backButton.setOnAction(e -> window.setScene(MainPage.mainScene(window)));*/
-
         Button saveAsButton = new Button("Save as ...");
         GridPane.setConstraints(saveAsButton, 1, 10);
         saveAsButton.setOnAction(e -> {
@@ -83,7 +78,6 @@ public class AddActionPage {
             Label newLabelPoints = new Label(strPoints);
             GridPane.setConstraints(newLabelPoints, 2, i);
             gridTransport.getChildren().addAll(newCheckBox, newLabelPoints);
-
         }
         transportCategory.setContent(gridTransport);
 
@@ -205,6 +199,7 @@ public class AddActionPage {
         //here the create view is made into a scene and returned when the method is called
         Scene scene = new Scene(centralPageLayout);
         scene.getStylesheets().add("addActionStyle.css");
+        scene.getStylesheets().add("topHamburgerStyle.css");
         return scene;
     }
 
@@ -217,21 +212,25 @@ public class AddActionPage {
         row1.setMaxHeight(50);
         RowConstraints row2 = new RowConstraints();
         row2.setMinHeight(40);
+        row2.setMaxHeight(420);
         RowConstraints row3 = new RowConstraints();
         row3.setMinHeight(10);
         row3.setMaxHeight(10);
         RowConstraints row4 = new RowConstraints();
         row4.setMinHeight(40);
+        row4.setMaxHeight(420);
         RowConstraints row5 = new RowConstraints();
         row5.setMinHeight(10);
         row5.setMaxHeight(10);
         RowConstraints row6 = new RowConstraints();
         row6.setMinHeight(40);
+        row6.setMaxHeight(420);
         RowConstraints row7 = new RowConstraints();
         row7.setMinHeight(10);
         row7.setMaxHeight(10);
         RowConstraints row8 = new RowConstraints();
         row8.setMinHeight(40);
+        row8.setMaxHeight(420);
         RowConstraints row9 = new RowConstraints();
         row9.setMinHeight(10);
         row9.setMaxHeight(10);
@@ -240,20 +239,8 @@ public class AddActionPage {
         row10.setMaxHeight(50);
         RowConstraints row11 = new RowConstraints();
         row11.setMinHeight(0);
-        row11.setMaxHeight(0);
-        RowConstraints row12 = new RowConstraints();
-        row12.setMinHeight(0);
-        row12.setMaxHeight(0);
-        RowConstraints row13 = new RowConstraints();
-        row13.setMinHeight(0);
-        row13.setMaxHeight(0);
-        RowConstraints row14 = new RowConstraints();
-        row14.setMinHeight(0);
-        RowConstraints row15 = new RowConstraints();
-        row15.setMinHeight(0);
-        row15.setMaxHeight(0);
-        RowConstraints row16 = new RowConstraints();
-        row16.setMinHeight(0);
+        row11.setMaxHeight(380);
+
         ArrayList<RowConstraints> rows = new ArrayList<RowConstraints>();
         rows.add(row0);
         rows.add(row1);
@@ -266,12 +253,6 @@ public class AddActionPage {
         rows.add(row8);
         rows.add(row9);
         rows.add(row10);
-        rows.add(row11);
-        rows.add(row12);
-        rows.add(row13);
-        rows.add(row14);
-        rows.add(row15);
-        rows.add(row16);
         return rows;
     }
 
