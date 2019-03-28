@@ -1,6 +1,4 @@
 .root{
-    -fx-min-height: 1080;
-    -fx-min-width: 1920;
     /* Images from https://www.pexels.com/photo/alternative-alternative-energy-close-up-electricity-356049/*/
     -fx-background-image: url("naturalEnergie.jpg");
     -fx-background-repeat: stretch;

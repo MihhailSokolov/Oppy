@@ -483,7 +483,8 @@ public class MainPage {
      * @param gridHamburgerRight GridPane of right HamburgerMenu
      * @return GridPane
      */
-    public static GridPane gridTop(BorderPane centralPageLayout, GridPane gridHamburgerLeft, GridPane gridHamburgerRight){
+    public static GridPane gridTop(BorderPane centralPageLayout,
+                                   GridPane gridHamburgerLeft, GridPane gridHamburgerRight) {
         GridPane gridTop = new GridPane();
         gridTop.setPadding(new Insets(10, 10, 10, 10));
         gridTop.setVgap(8);

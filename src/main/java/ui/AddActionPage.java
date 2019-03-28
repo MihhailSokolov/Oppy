@@ -25,13 +25,159 @@ public class AddActionPage {
      * @return Scene
      */
     public static Scene addActionScene(Stage primaryStage) {
-        ArrayList<CheckBox> listCheckboxes = new ArrayList<CheckBox>();
-        ArrayList<Action> listOfActions = new ArrayList<Action>();
         Stage window = primaryStage;
         window.setMaximized(true);
         window.setTitle("AddActionPage");
         final BorderPane centralPageLayout = new BorderPane();
-        //CentralGrid////////////////////////////////////////////////////////////////////
+
+        //here the hamburger menu's and the top menu are initialized
+        final GridPane gridHamburgerLeft = MainPage.gridHamburgerLeft(window);
+        final GridPane gridHamburgerRight = MainPage.gridHamburgerRight(window);
+        final GridPane gridTop = MainPage.gridTop(centralPageLayout, gridHamburgerLeft, gridHamburgerRight);
+        final GridPane gridCenter = centralGrid();
+
+        ////setting the sizes of the rows///////////////////////////////
+        gridCenter.getRowConstraints().addAll(gridRowConstraints());
+        gridCenter.getColumnConstraints().addAll(gridColumnConstraints());
+        gridHamburgerLeft.getRowConstraints().addAll(MainPage.hamburgerRowConstraintsLeft());
+        gridHamburgerLeft.getColumnConstraints().addAll(MainPage.hamburgerColumnConstraintsLeft());
+        gridHamburgerRight.getRowConstraints().addAll(MainPage.hamburgerRowConstraintsRight());
+        gridHamburgerRight.getColumnConstraints().addAll(MainPage.hamburgerColumnConstraintsRight());
+        gridTop.getColumnConstraints().addAll(MainPage.girdTopColumnConstraints());
+
+        //gridCenter.setAlignment(Pos.CENTER);
+        centralPageLayout.setCenter(gridCenter);
+        centralPageLayout.setTop(gridTop);
+        //here the create view is made into a scene and returned when the method is called
+        Scene scene = new Scene(centralPageLayout, 1920, 1080);
+        scene.getStylesheets().add("addActionStyle.css");
+        scene.getStylesheets().add("topHamburgerStyle.css");
+        return scene;
+    }
+
+    /**
+     * Method for Row constraints of the central grid.
+     *
+     *
+     * @return ArrayList of RowConstraints
+     */
+    public static ArrayList<RowConstraints> gridRowConstraints() {
+        RowConstraints row0 = new RowConstraints();
+        row0.setMinHeight(0);
+        row0.setMaxHeight(0);
+        RowConstraints row1 = new RowConstraints();
+        row1.setMinHeight(50);
+        row1.setMaxHeight(50);
+        RowConstraints row2 = new RowConstraints();
+        row2.setMinHeight(40);
+        row2.setMaxHeight(420);
+        RowConstraints row3 = new RowConstraints();
+        row3.setMinHeight(10);
+        row3.setMaxHeight(10);
+        RowConstraints row4 = new RowConstraints();
+        row4.setMinHeight(40);
+        row4.setMaxHeight(420);
+        RowConstraints row5 = new RowConstraints();
+        row5.setMinHeight(10);
+        row5.setMaxHeight(10);
+        RowConstraints row6 = new RowConstraints();
+        row6.setMinHeight(40);
+        row6.setMaxHeight(420);
+        RowConstraints row7 = new RowConstraints();
+        row7.setMinHeight(10);
+        row7.setMaxHeight(10);
+        RowConstraints row8 = new RowConstraints();
+        row8.setMinHeight(40);
+        row8.setMaxHeight(420);
+        RowConstraints row9 = new RowConstraints();
+        row9.setMinHeight(10);
+        row9.setMaxHeight(10);
+        RowConstraints row10 = new RowConstraints();
+        row10.setMinHeight(50);
+        row10.setMaxHeight(50);
+        RowConstraints row11 = new RowConstraints();
+        row11.setMinHeight(0);
+        row11.setMaxHeight(380);
+
+        ArrayList<RowConstraints> rows = new ArrayList<RowConstraints>();
+        rows.add(row0);
+        rows.add(row1);
+        rows.add(row2);
+        rows.add(row3);
+        rows.add(row4);
+        rows.add(row5);
+        rows.add(row6);
+        rows.add(row7);
+        rows.add(row8);
+        rows.add(row9);
+        rows.add(row10);
+        return rows;
+    }
+
+    /**
+     * Method for Column constraints of the central grid.
+     *
+     *
+     * @return ArrayList of ColumnConstraints
+     */
+    public static ArrayList<ColumnConstraints> gridColumnConstraints() {
+        ColumnConstraints column0 = new ColumnConstraints();
+        column0.setMinWidth(50);
+        column0.setMaxWidth(50);
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setMinWidth(237);
+        column1.setMaxWidth(237);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setMinWidth(26);
+        column2.setMaxWidth(26);
+        ColumnConstraints column3 = new ColumnConstraints();
+        column3.setMinWidth(237);
+        column3.setMaxWidth(237);
+        ColumnConstraints column4 = new ColumnConstraints();
+        column4.setMinWidth(50);
+        column4.setMaxWidth(50);
+
+        ArrayList<ColumnConstraints> columns = new ArrayList<ColumnConstraints>();
+        columns.add(column0);
+        columns.add(column1);
+        columns.add(column2);
+        columns.add(column3);
+        columns.add(column4);
+        return columns;
+    }
+
+    /**
+     * Method for Column constraints of the grid inside the drop-down menu's.
+     *
+     *
+     * @return ArrayList of ColumnConstraints
+     */
+    public static ArrayList<ColumnConstraints> menuGridColumnConstraints() {
+        ColumnConstraints column0 = new ColumnConstraints();
+        column0.setMinWidth(0);
+        column0.setMaxWidth(0);
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setMinWidth(400);
+        column1.setMaxWidth(400);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setMinWidth(100);
+        column2.setMaxWidth(100);
+        ArrayList<ColumnConstraints> columns = new ArrayList<ColumnConstraints>();
+        columns.add(column0);
+        columns.add(column1);
+        columns.add(column2);
+        return columns;
+    }
+
+    /**
+     * Method for the central Grid.
+     *
+     *
+     * @return GridPane , the centralGrid
+     */
+    public static GridPane centralGrid() {
+        final ArrayList<Action> listOfActions = new ArrayList<Action>();
+        final ArrayList<CheckBox> listCheckboxes = new ArrayList<CheckBox>();
         GridPane gridCenter = new GridPane();
         gridCenter.setId("gridCenter");
 
@@ -153,151 +299,30 @@ public class AddActionPage {
         miscCategory.setContent(gridMisc);
 
         //setting so that only one category can be open at any time
-        transportCategory.setOnMouseClicked(e ->{
+        transportCategory.setOnMouseClicked(e -> {
             foodCategory.setExpanded(false);
             energyCategory.setExpanded(false);
             miscCategory.setExpanded(false);
         });
-        foodCategory.setOnMouseClicked(e ->{
+        foodCategory.setOnMouseClicked(e -> {
             transportCategory.setExpanded(false);
             energyCategory.setExpanded(false);
             miscCategory.setExpanded(false);
         });
-       energyCategory.setOnMouseClicked(e ->{
+        energyCategory.setOnMouseClicked(e -> {
             transportCategory.setExpanded(false);
             foodCategory.setExpanded(false);
             miscCategory.setExpanded(false);
         });
-        miscCategory.setOnMouseClicked(e ->{
+        miscCategory.setOnMouseClicked(e -> {
             transportCategory.setExpanded(false);
             foodCategory.setExpanded(false);
             energyCategory.setExpanded(false);
         });
-
-        //here the hamburger menu's and the top menu are initialized
-        final GridPane gridHamburgerLeft = MainPage.gridHamburgerLeft(window);
-        final GridPane gridHamburgerRight = MainPage.gridHamburgerRight(window);
-        final GridPane gridTop = MainPage.gridTop(centralPageLayout, gridHamburgerLeft, gridHamburgerRight);
-
-        ////setting the sizes of the rows///////////////////////////////
-        gridCenter.getRowConstraints().addAll(gridRowConstraints());
-        gridCenter.getColumnConstraints().addAll(gridColumnConstraints());
-        gridHamburgerLeft.getRowConstraints().addAll(MainPage.hamburgerRowConstraintsLeft());
-        gridHamburgerLeft.getColumnConstraints().addAll(MainPage.hamburgerColumnConstraintsLeft());
-        gridHamburgerRight.getRowConstraints().addAll(MainPage.hamburgerRowConstraintsRight());
-        gridHamburgerRight.getColumnConstraints().addAll(MainPage.hamburgerColumnConstraintsRight());
-        gridTop.getColumnConstraints().addAll(MainPage.girdTopColumnConstraints());
-
         ////central page layout/////////////////////////////////////////////////////////////////
         gridCenter.getChildren().addAll(saveAsButton, submitButton, transportCategory,
                 miscCategory, foodCategory, energyCategory);
-        gridCenter.getRowConstraints().addAll(gridRowConstraints());
-        gridCenter.getColumnConstraints().addAll(gridColumnConstraints());
-        //gridCenter.setAlignment(Pos.CENTER);
-        centralPageLayout.setCenter(gridCenter);
-        centralPageLayout.setTop(gridTop);
-        //here the create view is made into a scene and returned when the method is called
-        Scene scene = new Scene(centralPageLayout);
-        scene.getStylesheets().add("addActionStyle.css");
-        scene.getStylesheets().add("topHamburgerStyle.css");
-        return scene;
+        return gridCenter;
     }
-
-    public static ArrayList<RowConstraints> gridRowConstraints() {
-        RowConstraints row0 = new RowConstraints();
-        row0.setMinHeight(0);
-        row0.setMaxHeight(0);
-        RowConstraints row1 = new RowConstraints();
-        row1.setMinHeight(50);
-        row1.setMaxHeight(50);
-        RowConstraints row2 = new RowConstraints();
-        row2.setMinHeight(40);
-        row2.setMaxHeight(420);
-        RowConstraints row3 = new RowConstraints();
-        row3.setMinHeight(10);
-        row3.setMaxHeight(10);
-        RowConstraints row4 = new RowConstraints();
-        row4.setMinHeight(40);
-        row4.setMaxHeight(420);
-        RowConstraints row5 = new RowConstraints();
-        row5.setMinHeight(10);
-        row5.setMaxHeight(10);
-        RowConstraints row6 = new RowConstraints();
-        row6.setMinHeight(40);
-        row6.setMaxHeight(420);
-        RowConstraints row7 = new RowConstraints();
-        row7.setMinHeight(10);
-        row7.setMaxHeight(10);
-        RowConstraints row8 = new RowConstraints();
-        row8.setMinHeight(40);
-        row8.setMaxHeight(420);
-        RowConstraints row9 = new RowConstraints();
-        row9.setMinHeight(10);
-        row9.setMaxHeight(10);
-        RowConstraints row10 = new RowConstraints();
-        row10.setMinHeight(50);
-        row10.setMaxHeight(50);
-        RowConstraints row11 = new RowConstraints();
-        row11.setMinHeight(0);
-        row11.setMaxHeight(380);
-
-        ArrayList<RowConstraints> rows = new ArrayList<RowConstraints>();
-        rows.add(row0);
-        rows.add(row1);
-        rows.add(row2);
-        rows.add(row3);
-        rows.add(row4);
-        rows.add(row5);
-        rows.add(row6);
-        rows.add(row7);
-        rows.add(row8);
-        rows.add(row9);
-        rows.add(row10);
-        return rows;
-    }
-
-    public static ArrayList<ColumnConstraints> gridColumnConstraints() {
-        ColumnConstraints column0 = new ColumnConstraints();
-        column0.setMinWidth(50);
-        column0.setMaxWidth(50);
-        ColumnConstraints column1 = new ColumnConstraints();
-        column1.setMinWidth(237);
-        column1.setMaxWidth(237);
-        ColumnConstraints column2 = new ColumnConstraints();
-        column2.setMinWidth(26);
-        column2.setMaxWidth(26);
-        ColumnConstraints column3 = new ColumnConstraints();
-        column3.setMinWidth(237);
-        column3.setMaxWidth(237);
-        ColumnConstraints column4 = new ColumnConstraints();
-        column4.setMinWidth(50);
-        column4.setMaxWidth(50);
-
-        ArrayList<ColumnConstraints> columns = new ArrayList<ColumnConstraints>();
-        columns.add(column0);
-        columns.add(column1);
-        columns.add(column2);
-        columns.add(column3);
-        columns.add(column4);
-        return columns;
-    }
-
-    public static ArrayList<ColumnConstraints> menuGridColumnConstraints() {
-        ColumnConstraints column0 = new ColumnConstraints();
-        column0.setMinWidth(0);
-        column0.setMaxWidth(0);
-        ColumnConstraints column1 = new ColumnConstraints();
-        column1.setMinWidth(400);
-        column1.setMaxWidth(400);
-        ColumnConstraints column2 = new ColumnConstraints();
-        column2.setMinWidth(100);
-        column2.setMaxWidth(100);
-        ArrayList<ColumnConstraints> columns = new ArrayList<ColumnConstraints>();
-        columns.add(column0);
-        columns.add(column1);
-        columns.add(column2);
-        return columns;
-    }
-
 
 }
