@@ -122,58 +122,11 @@ public class MainPage {
         gridCenter.getChildren().addAll(displayLogo, numberOfPoints, pointLoss, timer, usernameLabel);
         gridCenter.setAlignment(Pos.CENTER);
 
-        //here the hamburger menu is initialized
+        //here the hamburger menu's and the top menu are initialized
         final GridPane gridHamburgerLeft = gridHamburgerLeft(window);
         final GridPane gridHamburgerRight = gridHamburgerRight(window);
+        final GridPane gridTop = gridTop(centralPageLayout, gridHamburgerLeft, gridHamburgerRight);
 
-        //////////////////////////////////////////////////////////////////////////////////
-        //TopGrid/////////////////////////////////////////////////////////////////////////
-
-        // creating a new grid for the top field of the BorderPane
-        GridPane gridTop = new GridPane();
-        gridTop.setPadding(new Insets(10, 10, 10, 10));
-        gridTop.setVgap(8);
-        gridTop.setHgap(10);
-
-        //here the hamburger icons are created and and functions are attached
-        //so that by clicking it it opens and closes the side menu's
-        JFXHamburger hamburgerLeft = new JFXHamburger();
-        Tooltip.install(hamburgerLeft, new Tooltip("Options menu"));
-        hamburgerLeft.setId("hamburgerButton");
-        HamburgerSlideCloseTransition burgerTaskLeft = new HamburgerSlideCloseTransition(hamburgerLeft);
-        burgerTaskLeft.setRate(-1);
-        hamburgerLeft.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
-            if (burgerTaskLeft.getRate() == -1) {
-                centralPageLayout.setLeft(gridHamburgerLeft);
-            } else {
-                centralPageLayout.setLeft(null);
-            }
-            burgerTaskLeft.setRate(burgerTaskLeft.getRate() * -1);
-            burgerTaskLeft.play();
-        });
-        gridTop.setConstraints(hamburgerLeft, 0, 0);
-
-        JFXHamburger hamburgerRight = new JFXHamburger();
-        Tooltip.install(hamburgerRight, new Tooltip("Achievements/Friends menu"));
-        hamburgerRight.setId("hamburgerButton");
-        HamburgerSlideCloseTransition burgerTaskRight = new HamburgerSlideCloseTransition(hamburgerRight);
-        burgerTaskRight.setRate(-1);
-        hamburgerRight.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
-            if (burgerTaskRight.getRate() == -1) {
-                centralPageLayout.setRight(gridHamburgerRight);
-            } else {
-                centralPageLayout.setRight(null);
-                folowingList = new TableView<>();
-            }
-            burgerTaskRight.setRate(burgerTaskRight.getRate() * -1);
-            burgerTaskRight.play();
-        });
-        gridTop.setConstraints(hamburgerRight, 2, 0);
-
-        gridTop.getChildren().addAll(hamburgerLeft, hamburgerRight);
-        gridTop.setStyle("-fx-background-color: #4c4242;");
-
-        ////////////////////////////////////////////////////////////////
         ////setting the sizes of the rows///////////////////////////////
         gridCenter.getRowConstraints().addAll(gridRowConstraints());
         gridCenter.getColumnConstraints().addAll(gridColumnConstraints());
@@ -521,5 +474,58 @@ public class MainPage {
         gridHamburger.setAlignment(Pos.TOP_CENTER);
         return gridHamburger;
     }
-    
+
+    /**
+     * Method for main scene.
+     *
+     * @param centralPageLayout BorderPane of witch left and right are set
+     * @param gridHamburgerLeft GridPane of left HamburgerMenu
+     * @param gridHamburgerRight GridPane of right HamburgerMenu
+     * @return GridPane
+     */
+    public static GridPane gridTop(BorderPane centralPageLayout, GridPane gridHamburgerLeft, GridPane gridHamburgerRight){
+        GridPane gridTop = new GridPane();
+        gridTop.setPadding(new Insets(10, 10, 10, 10));
+        gridTop.setVgap(8);
+        gridTop.setHgap(10);
+
+        //here the hamburger icons are created and and functions are attached
+        //so that by clicking it it opens and closes the side menu's
+        JFXHamburger hamburgerLeft = new JFXHamburger();
+        Tooltip.install(hamburgerLeft, new Tooltip("Options menu"));
+        hamburgerLeft.setId("hamburgerButton");
+        HamburgerSlideCloseTransition burgerTaskLeft = new HamburgerSlideCloseTransition(hamburgerLeft);
+        burgerTaskLeft.setRate(-1);
+        hamburgerLeft.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+            if (burgerTaskLeft.getRate() == -1) {
+                centralPageLayout.setLeft(gridHamburgerLeft);
+            } else {
+                centralPageLayout.setLeft(null);
+            }
+            burgerTaskLeft.setRate(burgerTaskLeft.getRate() * -1);
+            burgerTaskLeft.play();
+        });
+        gridTop.setConstraints(hamburgerLeft, 0, 0);
+
+        JFXHamburger hamburgerRight = new JFXHamburger();
+        Tooltip.install(hamburgerRight, new Tooltip("Achievements/Friends menu"));
+        hamburgerRight.setId("hamburgerButton");
+        HamburgerSlideCloseTransition burgerTaskRight = new HamburgerSlideCloseTransition(hamburgerRight);
+        burgerTaskRight.setRate(-1);
+        hamburgerRight.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+            if (burgerTaskRight.getRate() == -1) {
+                centralPageLayout.setRight(gridHamburgerRight);
+            } else {
+                centralPageLayout.setRight(null);
+                folowingList = new TableView<>();
+            }
+            burgerTaskRight.setRate(burgerTaskRight.getRate() * -1);
+            burgerTaskRight.play();
+        });
+        gridTop.setConstraints(hamburgerRight, 2, 0);
+
+        gridTop.getChildren().addAll(hamburgerLeft, hamburgerRight);
+        gridTop.setStyle("-fx-background-color: #4c4242;");
+        return gridTop;
+    }
 }

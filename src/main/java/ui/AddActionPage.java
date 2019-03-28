@@ -30,6 +30,7 @@ public class AddActionPage {
         Stage window = primaryStage;
         window.setMaximized(true);
         window.setTitle("AddActionPage");
+        final BorderPane centralPageLayout = new BorderPane();
         //CentralGrid////////////////////////////////////////////////////////////////////
         GridPane gridCenter = new GridPane();
         gridCenter.setId("gridCenter");
@@ -179,14 +180,28 @@ public class AddActionPage {
             energyCategory.setExpanded(false);
         });
 
+        //here the hamburger menu's and the top menu are initialized
+        final GridPane gridHamburgerLeft = MainPage.gridHamburgerLeft(window);
+        final GridPane gridHamburgerRight = MainPage.gridHamburgerRight(window);
+        final GridPane gridTop = MainPage.gridTop(centralPageLayout, gridHamburgerLeft, gridHamburgerRight);
+
+        ////setting the sizes of the rows///////////////////////////////
+        gridCenter.getRowConstraints().addAll(gridRowConstraints());
+        gridCenter.getColumnConstraints().addAll(gridColumnConstraints());
+        gridHamburgerLeft.getRowConstraints().addAll(MainPage.hamburgerRowConstraintsLeft());
+        gridHamburgerLeft.getColumnConstraints().addAll(MainPage.hamburgerColumnConstraintsLeft());
+        gridHamburgerRight.getRowConstraints().addAll(MainPage.hamburgerRowConstraintsRight());
+        gridHamburgerRight.getColumnConstraints().addAll(MainPage.hamburgerColumnConstraintsRight());
+        gridTop.getColumnConstraints().addAll(MainPage.girdTopColumnConstraints());
+
         ////central page layout/////////////////////////////////////////////////////////////////
-        BorderPane centralPageLayout = new BorderPane();
         gridCenter.getChildren().addAll(saveAsButton, submitButton, transportCategory,
                 miscCategory, foodCategory, energyCategory);
         gridCenter.getRowConstraints().addAll(gridRowConstraints());
         gridCenter.getColumnConstraints().addAll(gridColumnConstraints());
         //gridCenter.setAlignment(Pos.CENTER);
         centralPageLayout.setCenter(gridCenter);
+        centralPageLayout.setTop(gridTop);
         //here the create view is made into a scene and returned when the method is called
         Scene scene = new Scene(centralPageLayout);
         scene.getStylesheets().add("addActionStyle.css");
