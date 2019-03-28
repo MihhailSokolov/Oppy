@@ -165,7 +165,9 @@ public class LoginPage {
             if (ke.getCode() == KeyCode.ENTER) {
                 loginButton.fire();
             }
-            ke.consume();
+            if(ke.getCode() != KeyCode.BACK_SPACE){
+                ke.consume();
+            }
         });
         scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             final KeyCombination register = new KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN);
