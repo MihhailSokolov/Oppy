@@ -45,7 +45,6 @@ public class AddActionPage {
             //implement a save as method
         });
 
-
         Main.clientController.updateActionList();
         List<Action> actionList = Main.clientController.getActionList();
         for (Action act : actionList) {

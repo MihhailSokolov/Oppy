@@ -1,5 +1,6 @@
 package server.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,9 +21,9 @@ import server.repository.UserRepository;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -39,6 +40,9 @@ public class ControllerTest {
     User testUser;
 
     List<Preset> presets;
+
+    User friend1;
+    User friend2;
 
     List<User> friends;
 
@@ -80,8 +84,8 @@ public class ControllerTest {
         presets.add(preset1);
         presets.add(preset2);
         testUser.setPresets(presets);
-        User friend1 = new User("friend1", "pass1", "friend1@gmail.com", 100, new Date());
-        User friend2 = new User("friend2", "pass2", "friend2@gmail.com", 200, new Date());
+        friend1 = new User("friend1", "pass1", "friend1@gmail.com", 100, new Date());
+        friend2 = new User("friend2", "pass2", "friend2@gmail.com", 200, new Date());
         friends = new ArrayList<>();
         friends.add(friend1);
         friends.add(friend2);
@@ -101,7 +105,7 @@ public class ControllerTest {
     public void actualPointsTest() {
         userRepository.save(testUser);
         int actualScore = dbDataController.getUserScore(testUser.getUsername());
-        assertEquals(testUser.getScore() - 150, actualScore);
+        assertEquals(testUser.getScore() - 3000, actualScore);
         userRepository.delete(testUser);
     }
 
@@ -373,12 +377,18 @@ public class ControllerTest {
         assertEquals(0, testUser.getScore());
         userRepository.delete(testUser);
     }
+
+    @Test
     public void checkTop50Users() throws Exception {
         userRepository.save(testUser);
-        mockMvc.perform(get("/top50"))
+        MvcResult result = mockMvc.perform(get("/top50"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json;charset=UTF-8"));
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn();
         userRepository.delete(testUser);
+        ObjectMapper mapper = new ObjectMapper();
+        List<User> top50Users = mapper.readValue(result.getResponse().getContentAsString(), new TypeReference<List<User>>(){});
+        assertFalse(top50Users.isEmpty());
     }
 
     @Test
@@ -454,11 +464,30 @@ public class ControllerTest {
     }
 
     @Test
+    public void checkDeleteWrongPreset() throws Exception {
+        userRepository.save(testUser);
+        ObjectMapper mapper = new ObjectMapper();
+        String oldName = presets.get(0).getName();
+        presets.get(0).setName(oldName + "wrong-preset-name");
+        String jsonBody = mapper.writeValueAsString(presets.get(0));
+        mockMvc.perform(get("/deletepreset?username=" + testUser.getUsername())
+                .contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("false")));
+        userRepository.delete(testUser);
+        presets.get(0).setName(oldName);
+    }
+
+    @Test
     public void checkExecutePreset() throws Exception {
         userRepository.save(testUser);
-        int pointsToBeAdded = 20 + 10;
         int oldScore = testUser.getScore();
         Preset preset = testUser.getPresets().get(0);
+        int pointsToBeAdded = 0;
+        for (String action : preset.getActionList()) {
+            pointsToBeAdded += dbDataController.getActionPoints(action);
+        }
         ObjectMapper mapper = new ObjectMapper();
         String jsonBody = mapper.writeValueAsString(preset);
         mockMvc.perform(get("/executepreset?username=" + testUser.getUsername())
@@ -472,12 +501,31 @@ public class ControllerTest {
     }
 
     @Test
+    public void checkExecuteWrongPreset() throws Exception {
+        userRepository.save(testUser);
+        Preset preset = testUser.getPresets().get(0);
+        String oldName = preset.getName();
+        preset.setName(oldName + "wrong-preset-name");
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBody = mapper.writeValueAsString(preset);
+        mockMvc.perform(get("/executepreset?username=" + testUser.getUsername())
+                .contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("false")));
+        userRepository.delete(testUser);
+        preset.setName(oldName);
+    }
+
+    @Test
     public void checkGetFriends() throws Exception {
+        userRepository.saveAll(Arrays.asList(friend1, friend2));
         userRepository.save(testUser);
         mockMvc.perform(get("/friends?username=" + testUser.getUsername()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"));
         userRepository.delete(testUser);
+        userRepository.deleteAll(Arrays.asList(friend1, friend2));
     }
 
     @Test
@@ -511,6 +559,22 @@ public class ControllerTest {
         assertFalse(testUser.getFriends().contains(friends.get(0)));
         userRepository.delete(testUser);
         testUser.setFriends(friends);
+    }
+
+    @Test
+    public void checkDeleteWrongFriend() throws Exception {
+        userRepository.save(testUser);
+        ObjectMapper mapper = new ObjectMapper();
+        String oldName = friends.get(0).getUsername();
+        friends.get(0).setUsername(oldName + "blah-blah");
+        String jsonBody = mapper.writeValueAsString(friends.get(0));
+        mockMvc.perform(get("/deletefriend?username=" + testUser.getUsername())
+                .contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("false")));
+        userRepository.delete(testUser);
+        friends.get(0).setUsername(oldName);
     }
 
     @Test
@@ -600,5 +664,41 @@ public class ControllerTest {
         testUser = userRepository.findFirstByUsername(testUser.getUsername());
         assertNotEquals(newProfilePic, testUser.getProfilePicture());
         userRepository.delete(testUser);
+    }
+
+    @Test
+    public void checkUserSearch() throws Exception {
+        userRepository.save(testUser);
+        MvcResult result = mockMvc.perform(get("/search?username=" + testUser.getUsername().toUpperCase()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn();
+        ObjectMapper mapper = new ObjectMapper();
+        User user = mapper.readValue(result.getResponse().getContentAsString(), User.class);
+        assertEquals(testUser, user);
+    }
+
+    @Test
+    public void checkGetUserInfo() throws Exception {
+        userRepository.save(testUser);
+        User user = new User(testUser.getUsername(), testUser.getPassword(), null, 0, null);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBody = mapper.writeValueAsString(user);
+        MvcResult result = mockMvc.perform(get("/userinfo").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn();
+        User receivedUser = mapper.readValue(result.getResponse().getContentAsString(), User.class);
+        assertEquals(testUser, receivedUser);
+    }
+
+    @Test
+    public void checkGetWrongUserInfo() throws Exception {
+        userRepository.save(testUser);
+        User user = new User(testUser.getUsername(), testUser.getPassword() + "should-have-wrong-pass", null, 0, null);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBody = mapper.writeValueAsString(user);
+        mockMvc.perform(get("/userinfo").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isUnauthorized());
     }
 }

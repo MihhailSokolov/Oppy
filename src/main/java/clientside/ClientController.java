@@ -1,20 +1,19 @@
 package clientside;
 
 import com.google.common.hash.Hashing;
-import com.google.gson.Gson;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
-
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.client.RestTemplate;
-
 import server.model.Action;
+import server.model.Preset;
 import server.model.User;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ClientController {
@@ -23,6 +22,8 @@ public class ClientController {
     private RestTemplate restTemplate = new RestTemplate();
     private List<Action> actionList = null;
     private ResponseEntity<String> responseEntity = null;
+    private List<User> top50 = null;
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     public ClientController(User user) {
         this.user = user;
@@ -90,8 +91,106 @@ public class ClientController {
             public String toString() {
                 return "reset";
             }
+        }, ADDFRIEND {
+            public String toString() {
+                return "addfriend?username=%s";
+            }
+        }, GETFRIENDS {
+            public String toString() {
+                return "friends?username=%s";
+            }
+        }, DELETEFRIEND {
+            public String toString() {
+                return "deletefriend?username=%s";
+            }
+        }, ADDPRESET {
+            public String toString() {
+                return "addpreset?username=%s";
+            }
+        }, GETPRESETS {
+            public String toString() {
+                return "presets?username=%s";
+            }
+        }, DELETEPRESET {
+            public String toString() {
+                return "deletepreset?username=%s";
+            }
+        }, USERINFO {
+            public String toString() {
+                return "userinfo";
+            }
         }
 
+    }
+
+    /**
+     * Deletes the given preset from the user's presetList on the server.
+     *
+     * @param preset the preset to delete (only preset name is required, the rest can be null)
+     * @return String response message ("true"/"false").
+     */
+    public String deletePreset(Preset preset) {
+        responseEntity = this.postRequest(this.baseUrl
+                + String.format(Path.DELETEPRESET.toString(), this.user.getUsername()), preset);
+        return new JSONObject(responseEntity.getBody()).getString("message");
+    }
+
+    /**
+     * Updates this.user's presetsList by downloading a User (preset) list from server and setting
+     * the user's presets to the mentioned list.
+     */
+    public void updateUserPresets() throws IOException {
+        responseEntity = this.getRequest(this.baseUrl
+                + String.format(Path.GETPRESETS.toString(), this.user.getUsername()));
+        this.user.setPresets(objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<Preset>>() {
+        }));
+    }
+
+    /**
+     * Sends a post request to the server requesting to add a preset to a user's preset list.
+     *
+     * @param preset the preset (type: Preset) to be added.
+     * @return String response message ("true"/"false").
+     */
+    public String addPreset(Preset preset) {
+        responseEntity = this.postRequest(this.baseUrl
+                + String.format(Path.ADDPRESET.toString(), this.user.getUsername()), preset);
+        return new JSONObject(responseEntity.getBody()).getString("message");
+    }
+
+    /**
+     * Updates this.user's friendlist by downloading a User (friend) list from server and setting
+     * the user's friends to the mentioned list.
+     */
+    public void updateFriendList() throws IOException {
+        responseEntity = this.getRequest(this.baseUrl
+                + String.format(Path.GETFRIENDS.toString(), this.user.getUsername()));
+        this.user.setFriends(objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<User>>() {
+        }));
+    }
+
+    /**
+     * Sends a get request to server to add a friend to the this.user's friend list.
+     *
+     * @param friend the the friend (User type) to be added
+     * @return String response message ("true"/"false").
+     */
+    public String addFriend(User friend) {
+        responseEntity = this.postRequest(this.baseUrl
+                + String.format(Path.ADDFRIEND.toString(), this.user.getUsername()), friend);
+        return new JSONObject(responseEntity.getBody()).getString("message");
+    }
+
+    /**
+     * Sends a post request to server to delete a friend from the user's friend list.
+     *
+     * @param friendToDelete (User) friend to delete.
+     * @return String response message ("true"/"false").
+     */
+    public String deleteFriend(User friendToDelete) {
+        responseEntity = this.postRequest(this.baseUrl
+                + String.format(Path.DELETEFRIEND.toString(), this.user.getUsername()), friendToDelete);
+        return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
     /**
@@ -101,7 +200,6 @@ public class ClientController {
      */
     public String register() {
         responseEntity = this.postRequest(this.baseUrl + Path.REGISTER.toString(), user);
-
         return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
@@ -114,11 +212,7 @@ public class ClientController {
     public String updatePass(String newPass) {
         responseEntity = this.postRequest(this.baseUrl
                 + String.format(Path.UPDATEPASS.toString(), hash(newPass)), user);
-        String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
-        if (responseMsg.equals("true")) {
-            this.user.setPassword(hash(newPass));
-        }
-        return responseMsg;
+        return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
     /**
@@ -157,12 +251,16 @@ public class ClientController {
      */
     public void updateActionList() {
         responseEntity = this.getRequest(this.baseUrl + String.format(Path.ACTIONS.toString()));
-        Gson gson = new Gson();
-        actionList = Arrays.asList(gson.fromJson(responseEntity.getBody(), Action[].class));
+        try {
+            actionList = objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<Action>>() {
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
-     * Sends a "delete acct request" to the server
+     * Sends a "delete acct request" to the server.
      *
      * @return String response msg ("true"/"false"), implying success or failure.
      */
@@ -183,9 +281,6 @@ public class ClientController {
             responseEntity = this.postRequest(this.baseUrl
                     + String.format(Path.UPDATEEMAIL.toString(), newEmail), user);
             String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
-            if (responseMsg.equals("true")) {
-                this.user.setEmail(newEmail);
-            }
             return responseMsg;
         } else {
             return "false";
@@ -281,6 +376,36 @@ public class ClientController {
         return Hashing.sha256().hashString(pwd, StandardCharsets.UTF_8).toString();
     }
 
+    /**
+     * Method to update the top50 arraylist with the users who have the most points.
+     */
+    public void updateTop50() {
+        responseEntity = this.getRequest(this.baseUrl + String.format(Path.TOP50.toString()));
+        try {
+            top50 = objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<User>>() {
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<User> getTop50() {
+        return top50;
+    }
+
+    /**
+     * Updates the this.user.
+     */
+    public void updateUser() {
+        responseEntity = this.postRequest(this.baseUrl
+                + Path.USERINFO.toString(), user);
+        try {
+            this.user = objectMapper.readValue(responseEntity.getBody(), User.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
     }
@@ -288,4 +413,19 @@ public class ClientController {
     public void setActionList(List<Action> actionList) {
         this.actionList = actionList;
     }
+
+    /**
+     * Sends an "update pushNotifications request" to the server.
+     *
+     * @param trueOrFalse tells if anonymous should be set to true or false.
+     */
+    public String updateAnonymous(boolean trueOrFalse) {
+        responseEntity = this.postRequest(this.baseUrl
+                + String.format(Path.CHANGEANON.toString(), trueOrFalse), user);
+        String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
+            this.user.setAnonymous(trueOrFalse);
+        return responseMsg;
+    }
+
+
 }

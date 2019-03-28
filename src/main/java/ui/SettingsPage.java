@@ -60,7 +60,9 @@ public class SettingsPage {
         GridPane.setConstraints(anonymousButton,1,3,2,1);
         anonymousButton.setText("Anonymous");
         anonymousButton.setSelected(false);
-        anonymousButton.setOnAction(e -> System.out.println("testAnonymous"));//no priority to fix
+        anonymousButton.setOnAction(e ->{
+            Main.clientController.updateAnonymous(anonymousButton.isSelected());
+        });
 
         Button changeEmailButton = new Button("Change email");
         GridPane.setConstraints(changeEmailButton,1,4,2,1);
