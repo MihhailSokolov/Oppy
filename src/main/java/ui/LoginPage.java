@@ -1,6 +1,7 @@
 package ui;
 
 import clientside.ClientController;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -8,6 +9,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -162,10 +165,18 @@ public class LoginPage {
             if (ke.getCode() == KeyCode.ENTER) {
                 loginButton.fire();
             }
-            if(ke.getCode() == KeyCode.R) {
-                registerButton.fire();
-            }
             ke.consume();
+        });
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            final KeyCombination register = new KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN);
+            public void handle(KeyEvent ke) {
+                if(register.match(ke)) {
+                    registerButton.fire();
+                }
+                if (ke.getCode() != KeyCode.BACK_SPACE) {
+                    ke.consume();
+                }
+            }
         });
         return scene;
     }
