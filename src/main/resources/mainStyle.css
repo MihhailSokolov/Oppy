@@ -1,0 +1,55 @@
+.root{
+    -fx-background-image: url("nightSky.jpg"); /*https://www.pexels.com/search/universe/*/
+    -fx-background-repeat: stretch;
+    -fx-background-size: 2000 1200;
+    -fx-background-position: center center;
+    -fx-text-fill: white;
+}
+
+#centerGrid{
+    /*-fx-max-width: 1100px;
+    -fx-min-width: 1100px;
+    -fx-max-height: 1200px;
+    -fx-min-height: 1200px;*/
+}
+
+.label{
+    -fx-text-fill: white;
+    -fx-font-size: 30px;
+    -fx-max-height: 45px;
+    -fx-min-height: 45px;
+    -fx-max-width: 200px;
+    -fx-min-width: 200px;
+    -fx-border-width: 5px;
+    -fx-border-color:#9ebe67 ;
+    -fx-border-radius: 6px;
+}
+.label:hover{
+    -fx-cursor: OPEN_HAND;
+}
+
+.tooltip{
+    -fx-font-size: 20px;
+}
+
+#username{
+    -fx-border-width: 5 5 0 5;
+    -fx-border-radius: 5 5 0 0;
+}
+
+#yourPoints{
+    -fx-border-width: 0 5 5 5;
+    -fx-border-radius: 0 0 5 5;
+}
+
+#timeTillPointLoss{
+    -fx-border-width: 5 5 0 5;
+    -fx-border-radius: 5 5 0 0;
+}
+
+#pointLoss{
+    -fx-border-width: 0 5 5 5;
+    -fx-text-fill: red;
+    -fx-border-radius: 0 0 5 5;
+}
+

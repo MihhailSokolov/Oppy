@@ -1,0 +1,126 @@
+.root{
+    /* Images from https://www.pexels.com/photo/alternative-alternative-energy-close-up-electricity-356049/*/
+    -fx-background-image: url("nightSky.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 2000 1200;
+    -fx-background-position: center center;
+}
+
+#gridCenter{
+    -fx-max-height: 680px;
+    -fx-min-height: 680px;
+    -fx-max-width: 600px;
+    -fx-min-width: 600px;
+    -fx-border-width: 2px;
+    -fx-border-color: #789149;
+    -fx-background-color: radial-gradient(center 50% 50%, radius 60%, reflect, #5a8a22, black );
+}
+
+.titled-pane{
+    -fx-text-fill: white;
+    -fx-max-width: 500px;
+    -fx-min-width: 500px;
+}
+.titled-pane > .title{
+    -fx-background-color:  #789149, #789149, #006000;
+    -fx-border-width: 2px;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 20px;
+    -fx-pref-height: 50px;
+    -fx-alignment: CENTER_LEFT;
+}
+.titled-pane > .title > .arrow-button .arrow{
+    -fx-background-color: white;
+    -fx-alignment: CENTER_LEFT;
+}
+.titled-pane .title:hover{
+    -fx-background-color:  #789149, #789149, #009000;
+}
+.titled-pane .title:pressed{
+    -fx-background-color:  #789149, #789149, #003000;
+}
+
+
+#menuGrid{
+    -fx-max-width: 500px;
+    -fx-min-width: 500px;
+    -fx-border-width: 0 2 2 2;
+    -fx-border-color: #789149;
+    -fx-background-color: radial-gradient(center 50% 50%, radius 60%, reflect, #74b426, black );
+    -fx-padding: 0 0 0 0;
+    -fx-vgap: 0px;
+    -fx-hgap: 0px;
+
+}
+#menuGrid .label{
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-min-width: 100px;
+    -fx-max-width: 100px;
+    -fx-min-height: 40px;
+    -fx-max-height: 40px;
+}
+#menuGrid .check-box{
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-min-width: 3950px;
+    -fx-max-width: 395px;
+    -fx-min-height: 40px;
+    -fx-max-height: 40px;
+    -fx-translate-x: 5px;
+}
+#menuGrid .check-box:hover .box{
+    -fx-background-color: #008000;
+}
+#menuGrid .check-box:pressed .box{
+    -fx-background-color: #002000;
+}
+#menuGrid .check-box .box{
+    -fx-background-color: #006000;
+    -fx-text-fill: white;
+    -fx-border-width: 2px;
+    -fx-border-color: #789149;
+}
+#menuGrid .check-box:selected .mark {
+    -fx-font-weight: bold;
+    -fx-background-color: white;
+}
+#menuGrid .check-box:hover{
+    -fx-cursor: hand;
+}
+
+.button{
+    -fx-background-color:
+            #090a0c,
+            linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20 10 20;
+    -fx-min-width: 237px;
+    -fx-max-width: 237px;
+    -fx-min-height: 50px;
+    -fx-max-height: 50px;
+    -fx-translate-y: 0px;
+}
+.button:hover{
+    -fx-background-color:
+            #07080a,
+            linear-gradient(#38424b 10%, #1f2429 30%, #191d22 110%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 110%, rgba(114,131,148,1), rgba(255,255,255,0.1));
+    -fx-cursor: hand;
+}
+.button:pressed{
+    -fx-background-color:
+            #07080a,
+            linear-gradient(#38424b 00%, #1f2429 0%, #191d22 50%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 50%, rgba(114,131,148,0,5), rgba(255,255,255,0.0));
+}
