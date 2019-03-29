@@ -54,7 +54,6 @@ public class SettingsPage {
             if(selectedFile != null) {
                 Image selectedImage = new Image(selectedFile.toURI().toString(), 100, 100, true, true);
                 profilePicture = selectedImage;
-                System.out.println(profilePicture.getHeight());
                 window.setScene(settingsScene(window));
             }
         });
