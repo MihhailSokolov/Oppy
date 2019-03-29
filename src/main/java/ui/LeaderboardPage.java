@@ -48,7 +48,6 @@ public class LeaderboardPage {
      */
     public static Scene leaderboardScene(Stage primaryStage) {
         Main.clientController.updateTop50();
-        Main.clientController.updateUser();
         Stage window = primaryStage;
         window.setTitle("LeaderboardPage");
         final BorderPane centralPageLayout = new BorderPane();

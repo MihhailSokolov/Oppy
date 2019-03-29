@@ -484,6 +484,9 @@ public class MainPage {
         GridPane.setConstraints(followLabel,0,5,3,1);
 
         Main.clientController.updateTop50(); //should become list of people you follow
+        Main.clientController.updateUser();
+        Main.clientController.getUser().setEmail("" + Main.clientController.getPosition());
+        Main.clientController.top50Ranks(Main.clientController.getTop50());
         ObservableList<User> data =
                 FXCollections.observableArrayList(
                         Main.clientController.getTop50()  //should become list of people you follow

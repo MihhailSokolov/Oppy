@@ -119,6 +119,10 @@ public class ClientController {
             public String toString() {
                 return "userinfo";
             }
+        }, POSITION {
+            public String toString() {
+                return "position?username=%s";
+            }
         }
 
     }
@@ -425,6 +429,17 @@ public class ClientController {
         String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
             this.user.setAnonymous(trueOrFalse);
         return responseMsg;
+    }
+
+    public void top50Ranks(List<User> list) {
+        for(int i = 1; i <= list.size(); i++){
+            list.get(i - 1).setEmail("" + i);
+        }
+    }
+
+    public int getPosition() {
+        responseEntity = this.getRequest(this.baseUrl + String.format(Path.POSITION.toString(), user.getUsername()));
+        return Integer.parseInt(new JSONObject(responseEntity.getBody()).getString("message"));
     }
 
 
