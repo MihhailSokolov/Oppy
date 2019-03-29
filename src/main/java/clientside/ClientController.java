@@ -4,6 +4,7 @@ import com.google.common.hash.Hashing;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.scene.image.Image;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -11,6 +12,7 @@ import server.model.Action;
 import server.model.Preset;
 import server.model.User;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -119,8 +121,38 @@ public class ClientController {
             public String toString() {
                 return "userinfo";
             }
+        }, SETPROFILEPIC {
+            public String toString() {
+                return "setprofilepic";
+            }
+        }, GETPROFILEPIC {
+            public String toString() {
+                return "getprofilepic?username=%s";
+            }
         }
 
+    }
+
+    /**
+     * Fetches the profile picture base 64 string from the server.
+     * @param username who the profile picture belongs to.
+     * @return Image (profile picture).
+     */
+    public Image getProfilePic(String username) {
+        responseEntity = this.getRequest(this.baseUrl + String.format(Path.GETPROFILEPIC.toString(), username));
+        return ImageHandler.decodeToImg(new JSONObject(responseEntity.getBody()).getString("message"));
+    }
+
+    /**
+     * Sends the base64 encoded profile picture string to the server.
+     * @param img the img file to be encoded and sent.
+     * @return String response message ("true"/"false").
+     */
+    public String updateProfilePic(File img) {
+        String encodedStr = ImageHandler.getBase64Str(img);
+        this.user.setProfilePicture(encodedStr);
+        responseEntity = this.postRequest(this.baseUrl + Path.SETPROFILEPIC.toString(), user);
+        return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
     /**
@@ -423,7 +455,7 @@ public class ClientController {
         responseEntity = this.postRequest(this.baseUrl
                 + String.format(Path.CHANGEANON.toString(), trueOrFalse), user);
         String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
-            this.user.setAnonymous(trueOrFalse);
+        this.user.setAnonymous(trueOrFalse);
         return responseMsg;
     }
 

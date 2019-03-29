@@ -1,8 +1,10 @@
 package clientside;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import javafx.scene.image.Image;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -11,6 +13,7 @@ import server.model.Action;
 import server.model.Preset;
 import server.model.User;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +43,7 @@ public class ClientControllerTest {
     RestTemplate restTemplate;
 
     final String trueResponse = "{\"message\" : \"true\"}";
+    final File tuxFile = new File("src/main/resources/tuxFile.png");
 
     @Before
     public void setUp() throws Exception {
@@ -182,7 +186,7 @@ public class ClientControllerTest {
     }
 
     @Test
-    public void addFriendTest()  {
+    public void addFriendTest() {
         wireMockRule.stubFor(any(urlPathEqualTo("/addfriend"))
                 .withQueryParam("username", equalTo(testUser.getUsername()))
                 .withRequestBody(equalToJson(testFriendJson))
@@ -258,6 +262,30 @@ public class ClientControllerTest {
                 .willReturn(ok(testFriendJson)));
         clientController.updateUser();
         assertEquals(clientController.getUser(), testFriend);
+    }
+
+    @Test
+    public void updateProfilePicTest() throws JsonProcessingException {
+        testUser.setProfilePicture(ImageHandler.getBase64Str(tuxFile));
+        wireMockRule.stubFor(any(urlPathEqualTo("/setprofilepic"))
+                .withRequestBody(equalToJson(objectMapper.writeValueAsString(testUser)))
+                .willReturn(ok(trueResponse)));
+        assertEquals("true", clientController.updateProfilePic(tuxFile));
+    }
+
+    @Test
+    public void getProfilePicTest() {
+        String base64tux = ImageHandler.getBase64Str(tuxFile);
+        Image tuxImg = ImageHandler.decodeToImg(base64tux);
+        wireMockRule.stubFor(get(urlPathEqualTo("/getprofilepic"))
+                .withQueryParam("username", equalTo(testUser.getUsername()))
+                .willReturn(ok("{\"message\" : \"" + base64tux + "\"}")));
+        Image imgFromServer = clientController.getProfilePic(testUser.getUsername());
+        for (int i = 0; i < tuxImg.getWidth(); i++) {
+            for (int j = 0; j < tuxImg.getHeight(); j++) {
+                assertEquals(tuxImg.getPixelReader().getArgb(i, j), imgFromServer.getPixelReader().getArgb(i, j));
+            }
+        }
     }
 
 }
