@@ -11,11 +11,19 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class namePresetPage {
+public class NamePresetPage {
 
     private static String presetName;
 
-    public static Scene namePresetScene(Stage primaryStage, ArrayList<String> listForPresets){
+    /**
+     * This page gives user the option to name the presets which they created.
+     *
+     * @param primaryStage The stage being passed along from the addActionPage
+     * @param listForPresets The list of the selected presets
+     * @return returns the addActionPage again so the user can create another preset
+     */
+
+    public static Scene namePresetScene(Stage primaryStage, ArrayList<String> listForPresets) {
         Stage window = primaryStage;
         window.setTitle("Name Preset");
 
@@ -36,7 +44,6 @@ public class namePresetPage {
             System.out.println(listForPresets);
             presetName = nameTextField.getText();
             server.model.Preset presetToSend = new server.model.Preset(presetName, listForPresets);
-            listForPresets.clear();
             String result = Main.clientController.addPreset(presetToSend);
             if (result.equals("true")) {
                 window.setScene(AddActionPage.addActionScene(window));

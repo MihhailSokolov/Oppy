@@ -423,7 +423,7 @@ public class ClientController {
         responseEntity = this.postRequest(this.baseUrl
                 + String.format(Path.CHANGEANON.toString(), trueOrFalse), user);
         String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
-            this.user.setAnonymous(trueOrFalse);
+        this.user.setAnonymous(trueOrFalse);
         return responseMsg;
     }
 

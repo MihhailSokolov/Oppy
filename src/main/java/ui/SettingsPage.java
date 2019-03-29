@@ -60,7 +60,7 @@ public class SettingsPage {
         GridPane.setConstraints(anonymousButton,1,3,2,1);
         anonymousButton.setText("Anonymous");
         anonymousButton.setSelected(false);
-        anonymousButton.setOnAction(e ->{
+        anonymousButton.setOnAction(e -> {
             Main.clientController.updateAnonymous(anonymousButton.isSelected());
         });
 
