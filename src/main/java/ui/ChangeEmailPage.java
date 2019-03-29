@@ -7,12 +7,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class ChangeEmailPage {
     /**
-     <<<<<<< HEAD
      * Method for creating the ChangeEmail page.
      *
      * @param primaryStage primary stage
@@ -62,6 +63,16 @@ public class ChangeEmailPage {
 
         //here the create view is made into a scene and return when the method is called
         Scene scene = new Scene(grid, 500, 325);
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
+            if (ke.getCode() == KeyCode.ENTER) {
+                changeButton.fire();
+                ke.consume();
+            }
+            if (ke.getCode() == KeyCode.ESCAPE) {
+                cancelButton.fire();
+                ke.consume();
+            }
+        });
         return scene;
     }
 }

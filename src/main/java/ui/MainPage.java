@@ -19,6 +19,8 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
@@ -32,43 +34,40 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-//import javafx.scene.control.;
-
-
-//import javax.xml.soap.Text;
-
 /**
  * Class for creating main page.
  */
 public class MainPage {
+
     private static TableView<User> folowingList = new TableView<>();
+    private static Button settingsButton;
+    private static Button leaderboardButton;
+    private static Button addActionButton;
 
     /**
-     * Method for main scene.
+     *  Method for main scene.
      *
      * @param primaryStage Primary stage
      * @return Scene
      */
     public static Scene mainScene(Stage primaryStage) {
+
         Stage window = primaryStage;
         window.setTitle("MainPage");
         window.setMaximized(true);
         final BorderPane centralPageLayout = new BorderPane();
-
-        //////////////////////////////////////////////////////////////////////////////////////
-        ///centerPage contents////////////////////////////////////////////////////////////////
+        //centerPage contents
 
         //create the grid for the center of the page
         GridPane gridCenter = new GridPane();
         gridCenter.setId("centerGrid");
-
         //here the logo is created
+
         //here the image of the planet needs to be placed
         Image logo = new Image("placeholder 700x700.png");
         ImageView displayLogo = new ImageView(logo);
         GridPane.setConstraints(displayLogo, 1, 3);
 
-        //Username, TotalPoints, daily point loss and timer fields
         //here the username label is created
         String username = Main.clientController.getUser().getUsername();
         if (username == null || username.equals("")) {
@@ -116,25 +115,18 @@ public class MainPage {
         Tooltip.install(timer, new Tooltip("Time before daily point-loss occurs"));
         timer.setId("timeTillPointLoss");
         GridPane.setConstraints(timer, 2, 1);
-
-
         //Here all elements previously created are added to the view and the view is center
         gridCenter.getChildren().addAll(displayLogo, numberOfPoints, pointLoss, timer, usernameLabel);
         gridCenter.setAlignment(Pos.CENTER);
-
         //here the hamburger menu is initialized
         final GridPane gridHamburgerLeft = gridHamburgerLeft(window);
         final GridPane gridHamburgerRight = gridHamburgerRight(window);
-
-        //////////////////////////////////////////////////////////////////////////////////
-        //TopGrid/////////////////////////////////////////////////////////////////////////
-
+        //TopGrid
         // creating a new grid for the top field of the BorderPane
         GridPane gridTop = new GridPane();
         gridTop.setPadding(new Insets(10, 10, 10, 10));
         gridTop.setVgap(8);
         gridTop.setHgap(10);
-
         //here the hamburger icons are created and and functions are attached
         //so that by clicking it it opens and closes the side menu's
         JFXHamburger hamburgerLeft = new JFXHamburger();
@@ -152,7 +144,6 @@ public class MainPage {
             burgerTaskLeft.play();
         });
         gridTop.setConstraints(hamburgerLeft, 0, 0);
-
         JFXHamburger hamburgerRight = new JFXHamburger();
         Tooltip.install(hamburgerRight, new Tooltip("Achievements/Friends menu"));
         hamburgerRight.setId("hamburgerButton");
@@ -172,9 +163,7 @@ public class MainPage {
 
         gridTop.getChildren().addAll(hamburgerLeft, hamburgerRight);
         gridTop.setStyle("-fx-background-color: #4c4242;");
-
-        ////////////////////////////////////////////////////////////////
-        ////setting the sizes of the rows///////////////////////////////
+        //setting the sizes of the rows
         gridCenter.getRowConstraints().addAll(gridRowConstraints());
         gridCenter.getColumnConstraints().addAll(gridColumnConstraints());
         gridHamburgerLeft.getRowConstraints().addAll(hamburgerRowConstraintsLeft());
@@ -182,25 +171,40 @@ public class MainPage {
         gridHamburgerRight.getRowConstraints().addAll(hamburgerRowConstraintsRight());
         gridHamburgerRight.getColumnConstraints().addAll(hamburgerColumnConstraintsRight());
         gridTop.getColumnConstraints().addAll(girdTopColumnConstraints());
-        /////////////////////////////////////////////////////////////////////////
-        ////CentralPageLayout/////////////////////////////////////////////////////
-
+        //CentralPageLayout
         centralPageLayout.setCenter(gridCenter);
         centralPageLayout.setTop(gridTop);
-
+        //logout from main page functionality
+        Button invisLogoutbutton = new Button();
+        invisLogoutbutton.setOnAction( e -> window.setScene(LoginPage.loginScene(window)));
         //here the create view is made into a scene and returned when the method is called
         Scene scene = new Scene(centralPageLayout, 1920, 1080);
         scene.getStylesheets().add("mainStyle.css");
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
+            if (ke.getCode() == KeyCode.S) {
+                settingsButton.fire();
+            }
+            if (ke.getCode() == KeyCode.L) {
+                leaderboardButton.fire();
+            }
+            if (ke.getCode() == KeyCode.A) {
+                addActionButton.fire();
+            }
+            if (ke.getCode() == KeyCode.ESCAPE) {
+                invisLogoutbutton.fire();
+            }
+        });
         return scene;
     }
-
     /**
      * Method for Row constraints of the central grid.
      *
      *
      * @return ArrayList of RowConstraints
      */
+
     public static ArrayList<RowConstraints> gridRowConstraints() {
+
         RowConstraints row0 = new RowConstraints();
         row0.setMinHeight(0);
         row0.setMaxHeight(0);
@@ -231,14 +235,14 @@ public class MainPage {
         rows.add(row6);
         return rows;
     }
-
-
     /**
      * Method for column constraints of the central grid.
      *
      * @return ArrayList of ColumnConstraints
      */
+
     public static ArrayList<ColumnConstraints> gridColumnConstraints() {
+
         ColumnConstraints column0 = new ColumnConstraints();
         column0.setMinWidth(200);
         column0.setMaxWidth(200);
@@ -401,12 +405,12 @@ public class MainPage {
         displayProfilePicture.setId("profilePicture");
         gridHamburger.setConstraints(displayProfilePicture, 0, 0, 1, 1);
 
-        Button settingsButton = new Button("settings");
+        settingsButton = new Button("settings");
         settingsButton.setId("settingsButton");
         settingsButton.setOnAction(e -> window.setScene(SettingsPage.settingsScene(window)));
         gridHamburger.setConstraints(settingsButton, 1, 0, 1, 1);
 
-        Button leaderboardButton = new Button("Leaderboard");
+        leaderboardButton = new Button("Leaderboard");
         leaderboardButton.setId("leaderActionButton");
         leaderboardButton.setOnAction(e -> {
             Main.clientController.updateTop50();
@@ -415,7 +419,7 @@ public class MainPage {
         gridHamburger.setConstraints(leaderboardButton, 0, 1, 2, 1);
 
 
-        Button addActionButton = new Button("Add action");
+        addActionButton = new Button("Add action");
         addActionButton.setId("leaderActionButton");
         addActionButton.setOnAction(e -> window.setScene(AddActionPage.addActionScene(window)));
         gridHamburger.setConstraints(addActionButton, 0, 2, 2, 1);

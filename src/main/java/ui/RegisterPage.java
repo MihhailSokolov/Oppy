@@ -1,6 +1,7 @@
 package ui;
 
 import clientside.ClientController;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,6 +14,10 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -54,7 +59,6 @@ public class RegisterPage {
             window.setScene(LoginPage.loginScene(window));
         });
         loginButton.setToggleGroup(loginRegister);
-
         //email, username, password  and confirm password fields and labels
         Label email = new Label("email");
         GridPane.setConstraints(email, 0, 2);
@@ -107,7 +111,6 @@ public class RegisterPage {
                 failed.show();
             }
         });
-
         //The Check-availability button
         Button checkA = new Button("Check Availability");
         checkA.setId("checkAvailability");
@@ -125,14 +128,12 @@ public class RegisterPage {
                 usernameTextfield.setStyle("-fx-background-color: #ff0000");
             }
         });
-
         //Here all elements previously created are added to the view and the view is centered
         grid.getChildren().addAll(email, username, password, confirmPassword, emailTextfield,
                 usernameTextfield, passwordTextfield, confirmPasswordTextfield,
                 registerButton, loginButton, fakeRegisterButton, checkA);
         grid.setAlignment(Pos.CENTER);
-        //TopGrid made here/////////////////////////////////
-        ///////////////////////////////////////////////////
+        //TopGrid made here
         GridPane topGrid = new GridPane();
         topGrid.setPadding(new Insets(10, 10, 10, 10));
         topGrid.setVgap(8);
@@ -146,12 +147,10 @@ public class RegisterPage {
         topGrid.getChildren().add(displayLogo);
         topGrid.setAlignment(Pos.CENTER);
 
-        ////////////////////////////////////////////////////////////////
-        ////setting the sizes of the rows///////////////////////////////
+        //setting the sizes of the rows
 
         grid.getRowConstraints().addAll(gridRowConstraints());
-        ////end of setting row sizes////////////////////////////////////
-        ////////////////////////////////////////////////////////////////
+        //end of setting row sizes
 
         //here the create view is made into a scene and return when the method is called
         BorderPane borderPane = new BorderPane();
@@ -159,6 +158,26 @@ public class RegisterPage {
         borderPane.setTop(topGrid);
         Scene scene = new Scene(borderPane);
         scene.getStylesheets().add("LoginRegisterStyle.css");
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
+            if (ke.getCode() == KeyCode.ENTER) {
+                registerButton.fire();
+                ke.consume();
+            }
+        });
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            final KeyCombination login = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+            final KeyCombination availability = new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN);
+            public void handle(KeyEvent ke) {
+                if (login.match(ke)) {
+                    loginButton.fire();
+                    ke.consume();
+                }
+                if (availability.match(ke)) {
+                    checkA.fire();
+                    ke.consume();
+                }
+            }
+        });
         return scene;
     }
 
