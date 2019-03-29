@@ -108,7 +108,7 @@ public class MainPage {
         GridPane.setConstraints(displayLogo, 1, 3);
 
         //here the daily point loss needs to be queried
-        Label pointLoss = new Label(Integer.toString(-150));
+        Label pointLoss = new Label(Integer.toString(-3000));
         pointLoss.setId("pointLoss");
         Tooltip.install(pointLoss, new Tooltip("Number of points you lose each day"));
         GridPane.setConstraints(pointLoss, 2, 2);
@@ -456,6 +456,7 @@ public class MainPage {
 
         //here the achievement images are created and the achievements you unlocked are displayed
         String result = Main.clientController.getScore();
+
         //Date date = Main.clientController.getDate();   //Still needs to be implemented
 
         Image preAcivement1 = new Image("placeholder 100x100.png");//implement achievement not unlocked skin
@@ -502,12 +503,16 @@ public class MainPage {
         followLabel.setId("followLabel");
         GridPane.setConstraints(followLabel,0,5,3,1);
 
-        Main.clientController.updateTop50(); //should become list of people you follow
+        try {
+            Main.clientController.updateFriendList();
+        }
+        catch (Exception e){}
         Main.clientController.updateUser();
         ObservableList<User> data =
                 FXCollections.observableArrayList(
-                        Main.clientController.getTop50()  //should become list of people you follow
+                        Main.clientController.getUser().getFriends()  //should become list of people you follow
                 );
+
         TableColumn name = new TableColumn("name");
         name.setCellValueFactory(new PropertyValueFactory<>("username"));
         folowingList.setItems(data);
@@ -528,7 +533,7 @@ public class MainPage {
         Button followButton = new Button("follow");
         followButton.setId("followButton");
         followButton.setOnAction(e -> {
-            //here needs to be the action to start following ome if he exists ^ NOT anonymous
+            Main.clientController.addFriend(followTextField.getText());
         });
         GridPane.setConstraints(followButton, 0, 9, 3, 1);
 

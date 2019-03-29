@@ -307,10 +307,11 @@ public class DbDataController {
      * @param friend new friend (User) to be added
      * @return true if successfully added, false otherwise
      */
-    public boolean addNewFriend(String username, User friend) {
+    public boolean addNewFriend(String username, String usernameFriend) {
         User user = userRepository.findFirstByUsername(username);
+        User userFriend = userRepository.findFirstByUsername(usernameFriend);
         List<User> friends = user.getFriends();
-        friends.add(friend);
+        friends.add(userFriend);
         user.setFriends(friends);
         userRepository.save(user);
         return true;

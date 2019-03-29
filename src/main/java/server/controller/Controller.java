@@ -217,8 +217,8 @@ public class Controller {
     }
 
     @RequestMapping("/addfriend")
-    public ResponseEntity<Response> addFriend(@RequestParam("username") String username, @RequestBody User friend) {
-        return ResponseEntity.ok().body(new Response(dbDataController.addNewFriend(username, friend)));
+    public ResponseEntity<Response> addFriend(@RequestParam("username") String username, @RequestBody String usernameFriend) {
+        return ResponseEntity.ok().body(new Response(dbDataController.addNewFriend(username, usernameFriend)));
     }
 
     @RequestMapping("/deletefriend")

@@ -173,13 +173,14 @@ public class ClientController {
         }));
     }
 
+
     /**
      * Sends a get request to server to add a friend to the this.user's friend list.
      *
      * @param friend the the friend (User type) to be added
      * @return String response message ("true"/"false").
      */
-    public String addFriend(User friend) {
+    public String addFriend(String friend) {
         responseEntity = this.postRequest(this.baseUrl
                 + String.format(Path.ADDFRIEND.toString(), this.user.getUsername()), friend);
         return new JSONObject(responseEntity.getBody()).getString("message");

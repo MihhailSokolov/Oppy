@@ -1,6 +1,5 @@
 package ui;
 
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -204,7 +203,7 @@ public class AddActionPage {
             listOfActions.add(act);
         }
 
-        Button saveAsButton = new Button("Save as ...");
+        Button saveAsButton = new Button("Save as preset...");
         GridPane.setConstraints(saveAsButton, 1, 10);
         ArrayList<String> listForPresets = new ArrayList<String>();
         saveAsButton.setOnAction(e -> {
