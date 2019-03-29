@@ -61,6 +61,9 @@
     -fx-translate-x: 50px;
     -fx-text-fill: white;
 }
+.check-box:hover .box{
+    -fx-background-color: #008000;
+}
 .check-box:pressed .box{
     -fx-background-color: #003000;
 }

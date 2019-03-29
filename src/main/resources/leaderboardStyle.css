@@ -1,0 +1,119 @@
+.root{
+    -fx-background-image: url("nightSky.jpg"); /*https://www.pexels.com/search/universe/*/
+    -fx-background-repeat: stretch;
+    -fx-background-size: 2000 1200;
+    -fx-background-position: center center;
+    -fx-text-fill: white;
+}
+
+#gridCenter{
+    -fx-max-height: 680px;
+    -fx-min-height: 680px;
+    -fx-max-width: 600px;
+    -fx-min-width: 600px;
+    -fx-border-width: 2px;
+    -fx-border-color: #789149;
+    -fx-background-color: radial-gradient(center 50% 50%, radius 60%, reflect, #5a8a22, black );
+}
+
+#tableUser{
+    -fx-max-width: 500px;
+    -fx-min-width: 500px;
+    -fx-max-height: 60px;
+    -fx-background-color: #2a3039;
+    -fx-translate-x: 0px;
+    -fx-translate-y: 25px;
+}
+#tableUser .column-header .label{
+    -fx-text-fill: none;
+    -fx-min-height: 20px;
+    -fx-max-height: 20px;
+}
+
+#tableNum1{
+    -fx-max-width: 500px;
+    -fx-min-width: 500px;
+    -fx-max-height: 60px;
+    -fx-background-color: #2a3039;
+    -fx-translate-x: 0px;
+    -fx-translate-y: 25px;
+}
+#tableNum1 .column-header  .label{
+    -fx-text-fill: none;
+    -fx-min-height: 20px;
+    -fx-max-height: 20px;
+}
+
+#tableBest50{
+    -fx-max-width: 500px;
+    -fx-min-width: 500px;
+    -fx-max-height: 400px;
+    -fx-background-color: #2a3039;
+    -fx-translate-x: 0px;
+    -fx-translate-y: 25px;
+}
+#tableBest50 .column-header .label{
+    -fx-text-fill: none;
+    -fx-min-height: 20px;
+    -fx-max-height: 20px;
+}
+
+#number1PlayerLabel{
+    -fx-max-width: 500px;
+    -fx-min-width: 500px;
+    -fx-max-height: 30px;
+    -fx-min-height: 30px;
+    -fx-background-color: #2a3039;
+    -fx-translate-x: 0px;
+    -fx-translate-y: 13px;
+    -fx-alignment: CENTER;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+}
+
+#bestPlayersLabel{
+    -fx-max-width: 500px;
+    -fx-min-width: 500px;
+    -fx-max-height: 30px;
+    -fx-min-height: 30px;
+    -fx-background-color: #2a3039;
+    -fx-translate-x: 0px;
+    -fx-translate-y: -165px;
+    -fx-alignment: CENTER;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+  }
+
+#scoreOfUserLabel{
+    -fx-max-width: 500px;
+    -fx-min-width: 500px;
+    -fx-max-height: 30px;
+    -fx-min-height: 30px;
+    -fx-background-color: #2a3039;
+    -fx-translate-x: 0px;
+    -fx-translate-y: 13px;
+    -fx-alignment: CENTER;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+}
+/*#tableUser .column-header{
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-border-width: 0px;
+    -fx-max-width: 250px;
+    -fx-max-height: 50px;
+    -fx-background-color: #2a3039;
+}
+#tableUser .column-header  .label{
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-border-width: 0px;
+    -fx-max-width: 225px;
+    -fx-max-height: 50px;
+    -fx-background-color: #2a3039;
+    -fx-alignment: center;
+}
+
+#tableUser .filler{
+    -fx-background-color: #2a3039;
+}*/

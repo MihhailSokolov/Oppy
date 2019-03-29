@@ -1,0 +1,87 @@
+.root{
+    -fx-background-image: url("nightSky.jpg"); /*https://www.pexels.com/search/universe/*/
+    -fx-background-repeat: stretch;
+    -fx-background-size: 2000 1200;
+    -fx-background-position: center center;
+    -fx-text-fill: white;
+}
+
+#gridCenter{
+    -fx-max-height: 680px;
+    -fx-min-height: 680px;
+    -fx-max-width: 600px;
+    -fx-min-width: 600px;
+    -fx-border-width: 2px;
+    -fx-border-color: #789149;
+    -fx-background-color: radial-gradient(center 50% 50%, radius 60%, reflect, #5a8a22, black );
+}
+.button{
+    -fx-background-color:
+            #090a0c,
+            linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20 10 20;
+    -fx-min-width: 500px;
+    -fx-max-width: 500px;
+    -fx-min-height: 60px;
+    -fx-max-height: 60px;
+    -fx-translate-x: 0px;
+    -fx-translate-y: 0px;
+}
+.button:hover{
+    -fx-background-color:
+            #07080a,
+            linear-gradient(#38424b 10%, #1f2429 30%, #191d22 110%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 110%, rgba(114,131,148,1), rgba(255,255,255,0.1));
+    -fx-cursor: hand;
+}
+.button:pressed{
+    -fx-background-color:
+            #07080a,
+            linear-gradient(#38424b 00%, #1f2429 0%, #191d22 50%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 50%, rgba(114,131,148,0,5), rgba(255,255,255,0.0));
+}
+
+#pfButton{
+    -fx-background-color: none;
+    -fx-border-width: 0px;
+    -fx-min-width: 100px;
+    -fx-max-width: 100px;
+    -fx-min-height: 100px;
+    -fx-min-height: 100px;
+}
+#pfButton:hover{
+    -fx-cursor: hand;
+}
+
+#label{
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-min-width: 200px;
+    -fx-max-width: 200px;
+    -fx-min-height: 30px;
+    -fx-max-height: 30px;
+    -fx-translate-x: 50px;
+    -fx-translate-y: 25;
+}
+
+#JFXToggleButton{
+    -fx-min-width: 500px;
+    -fx-max-width: 500px;
+    -fx-min-height: 50px;
+    -fx-max-height: 50px;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-alignment: CENTER_LEFT;
+
+}
