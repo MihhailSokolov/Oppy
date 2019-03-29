@@ -61,17 +61,11 @@ public class MainPage {
         //create the grid for the center of the page
         GridPane gridCenter = new GridPane();
         gridCenter.setId("centerGrid");
-        //here the logo is created
-
-        //here the image of the planet needs to be placed
-        Image logo = new Image("placeholder 700x700.png");
-        ImageView displayLogo = new ImageView(logo);
-        GridPane.setConstraints(displayLogo, 1, 3);
 
         //here the username label is created
         String username = Main.clientController.getUser().getUsername();
         if (username == null || username.equals("")) {
-            username = "lazy ass cunt";  //just here to troll people
+            username = "test account";
         }
         Label usernameLabel = new Label(username);
         Tooltip.install(usernameLabel, new Tooltip("This is your username"));
@@ -80,17 +74,38 @@ public class MainPage {
 
         //here the number of points needs to be queried
         String result = Main.clientController.getScore();
+        int pointValue = Integer.parseInt(result);
         Label numberOfPoints = new Label(result);
         numberOfPoints.setId("yourPoints");
         Tooltip.install(numberOfPoints, new Tooltip("Your current number of points"));
-        if (Integer.parseInt(result) < 0) {
+        if (pointValue < 0) {
             numberOfPoints.setStyle("-fx-text-fill: red");
-        } else if (Integer.parseInt(result) > 0) {
+        } else if (pointValue > 0) {
             numberOfPoints.setStyle("-fx-text-fill: green");
         } else {
             numberOfPoints.setStyle("-fx-text-fill: yellow");
         }
         GridPane.setConstraints(numberOfPoints, 0, 2);
+
+        //here the image of the planet needs to be placed
+        Image planet;
+        if(pointValue >= 15000){
+        planet = new Image("oppy1.png");
+        } else if(pointValue >= 10000){
+            planet = new Image("oppy2.png");
+        } else if(pointValue >= 5000){
+            planet = new Image("oppy3.png");
+        } else if(pointValue < -15000){
+            planet = new Image("oppy7.png");
+        } else if(pointValue < -10000){
+            planet = new Image("oppy6.png");
+        } else if(pointValue < -5000){
+            planet = new Image("oppy5.png");
+        } else {
+            planet = new Image("oppy4.png");
+        }
+        ImageView displayLogo = new ImageView(planet);
+        GridPane.setConstraints(displayLogo, 1, 3);
 
         //here the daily point loss needs to be queried
         Label pointLoss = new Label(Integer.toString(-150));
@@ -439,13 +454,13 @@ public class MainPage {
         GridPane gridHamburger = new GridPane();
         gridHamburger.setId("hamburgerMenuRight");
 
-        //here the acivement images are created and the achievements you unlocked are displayed
+        //here the achievement images are created and the achievements you unlocked are displayed
         String result = Main.clientController.getScore();
-        //Date date = Main.clientController.getDate();   //Still needs to be inplemented
+        //Date date = Main.clientController.getDate();   //Still needs to be implemented
 
-        Image preAcivement1 = new Image("placeholder 100x100.png");//inplement acievemnt not unlocked skin
+        Image preAcivement1 = new Image("placeholder 100x100.png");//implement achievement not unlocked skin
         if (Integer.parseInt(result) >= 10000) {
-            preAcivement1 = new Image("placeholder2 100x100.png");//inplement acievemnt Image
+            preAcivement1 = new Image("placeholder2 100x100.png");//implement achievement Image
         }
         ImageView acivement1 = new ImageView(preAcivement1);
         GridPane.setConstraints(acivement1, 0,0);
