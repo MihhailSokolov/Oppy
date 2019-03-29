@@ -141,7 +141,7 @@ public class RegisterPage {
         topGrid.setId("topGrid");
 
         //here the logo is created
-        Image logo = new Image("placeholder 350x150.png");
+        Image logo = new Image("oppy350x150.png");
         ImageView displayLogo = new ImageView(logo);
         GridPane.setConstraints(displayLogo, 0, 0, 3, 1);
         topGrid.getChildren().add(displayLogo);
