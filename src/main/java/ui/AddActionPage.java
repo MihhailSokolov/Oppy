@@ -39,17 +39,30 @@ public class AddActionPage {
         GridPane.setConstraints(backButton, 0, 0);
         backButton.setOnAction(e -> window.setScene(MainPage.mainScene(window)));
 
-        Button saveAsButton = new Button("Save as ...");
-        GridPane.setConstraints(saveAsButton, 1, 5);
-        saveAsButton.setOnAction(e -> {
-            //implement a save as method
-        });
-
         Main.clientController.updateActionList();
         List<Action> actionList = Main.clientController.getActionList();
         for (Action act : actionList) {
             listOfActions.add(act);
         }
+
+        Button saveAsButton = new Button("Save as ...");
+        GridPane.setConstraints(saveAsButton, 1, 5);
+        ArrayList<String> listForPresets = new ArrayList<String>();
+        saveAsButton.setOnAction(e -> {
+            for (int i = 0; i<listCheckboxes.size(); i++){
+                if(listCheckboxes.get(i).isSelected()){
+                    String actionName = listCheckboxes.get(i).getText();
+                    for (int j = 0; j<listOfActions.size(); j++){
+                        if (actionName.equals(listOfActions.get(j).getActionName())){
+                            listForPresets.add(listOfActions.get(j).getActionName());
+                        }
+                    }
+                }
+            }
+            window.setScene(namePresetPage.namePresetScene(window, listForPresets));
+            //            System.out.println(listForPresets);
+        });
+
 
         Button submitButton = new Button("submit");
         GridPane.setConstraints(submitButton, 2, 5);
