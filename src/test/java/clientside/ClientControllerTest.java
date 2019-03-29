@@ -43,7 +43,7 @@ public class ClientControllerTest {
     RestTemplate restTemplate;
 
     final String trueResponse = "{\"message\" : \"true\"}";
-    final File tuxFile = new File("src/main/resources/tuxFile.png");
+    final File tuxFile = new File("src/main/resources/tux.png");
 
     @Before
     public void setUp() throws Exception {
