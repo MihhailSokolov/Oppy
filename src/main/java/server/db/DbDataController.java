@@ -337,7 +337,7 @@ public class DbDataController {
     }
 
     public int getYourPositionInList(String username) {
-        List<User> users = userRepository.findAllByAnonymousOrUsernameOrderByScore(false, username);
+        List<User> users = userRepository.findAllByAnonymousOrUsernameOrderByScoreDesc(false, username);
         return findIndexByUsername(users, username);
     }
 

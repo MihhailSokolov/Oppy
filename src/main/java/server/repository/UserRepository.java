@@ -19,5 +19,5 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     List<User> findAllByAnonymous(boolean isAnonymous);
 
-    List<User> findAllByAnonymousOrUsernameOrderByScore(boolean anonymous, String username);
+    List<User> findAllByAnonymousOrUsernameOrderByScoreDesc(boolean anonymous, String username);
 }
