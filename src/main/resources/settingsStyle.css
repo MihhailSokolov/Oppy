@@ -1,0 +1,8 @@
+.root{
+    -fx-background-image: url("nature.jpg"); /*https://www.pexels.com/search/universe/*/
+    -fx-background-repeat: stretch;
+    -fx-background-size: 2000 1200;
+    -fx-background-position: center center;
+    -fx-text-fill: white;
+}
+

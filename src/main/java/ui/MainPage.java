@@ -7,7 +7,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -26,6 +25,8 @@ import server.model.User;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+//import javafx.scene.control.*;
 
 //import javafx.scene.control.;
 
@@ -120,7 +121,7 @@ public class MainPage {
         //here the hamburger menu's and the top menu are initialized
         final GridPane gridHamburgerLeft = gridHamburgerLeft(window);
         final GridPane gridHamburgerRight = gridHamburgerRight(window);
-        final GridPane gridTop = gridTop(centralPageLayout, gridHamburgerLeft, gridHamburgerRight);
+        final GridPane gridTop = gridTop(centralPageLayout, gridHamburgerLeft, gridHamburgerRight, "Main Page");
 
         ////setting the sizes of the rows///////////////////////////////
         gridCenter.getRowConstraints().addAll(gridRowConstraints());
@@ -315,11 +316,11 @@ public class MainPage {
      */
     public static ArrayList<ColumnConstraints> girdTopColumnConstraints() {
         ColumnConstraints column0 = new ColumnConstraints();
-        column0.setMinWidth(40);
-        column0.setMaxWidth(40);
+        column0.setMinWidth(60);
+        column0.setMaxWidth(60);
         ColumnConstraints column1 = new ColumnConstraints();
-        column1.setMinWidth(1800);
-        column1.setMaxWidth(1800);
+        column1.setMinWidth(1780);
+        column1.setMaxWidth(1780);
         ColumnConstraints column2 = new ColumnConstraints();
         column2.setMinWidth(40);
         column2.setMaxWidth(40);
@@ -354,13 +355,18 @@ public class MainPage {
 
         ToggleButton settingsButton = new  ToggleButton("settings");
         settingsButton.setId("settingsButton");
-        settingsButton.setOnAction(e -> window.setScene(SettingsPage.settingsScene(window)));
+        settingsButton.setOnAction(e -> {
+            folowingList = new TableView<>();
+            window.setScene(SettingsPage.settingsScene(window));
+        });
         gridHamburger.setConstraints(settingsButton, 1, 0, 1, 1);
 
         ToggleButton leaderboardButton = new  ToggleButton("Leaderboard");
         leaderboardButton.setId("leaderActionButton");
         leaderboardButton.setOnAction(e -> {
-            Main.clientController.updateTop50();
+            //because number1Player is static it needs to be reset every time you close the page
+            LeaderboardPage.resetTables();
+            folowingList = new TableView<>();
             window.setScene(LeaderboardPage.leaderboardScene(window));
         });
         gridHamburger.setConstraints(leaderboardButton, 0, 1, 2, 1);
@@ -368,29 +374,33 @@ public class MainPage {
 
         ToggleButton addActionButton = new  ToggleButton("Add action");
         addActionButton.setId("leaderActionButton");
-        addActionButton.setOnAction(e -> window.setScene(AddActionPage.addActionScene(window)));
+        addActionButton.setOnAction(e -> {
+            folowingList = new TableView<>();
+            window.setScene(AddActionPage.addActionScene(window));
+        });
         gridHamburger.setConstraints(addActionButton, 0, 2, 2, 1);
 
         ToggleButton mainButton = new  ToggleButton("Main page");
         mainButton.setId("leaderActionButton");
-        mainButton.setOnAction(e -> window.setScene(AddActionPage.addActionScene(window)));
+        mainButton.setOnAction(e -> {
+            folowingList = new TableView<>();
+            window.setScene(MainPage.mainScene(window));
+        });
         gridHamburger.setConstraints(mainButton, 0, 3, 2, 1);
 
-        if(window.getTitle().equals("MainPage")){
+        if (window.getTitle().equals("MainPage") ) {
             disableButton(mainButton);
-        }
-        else if(window.getTitle().equals("AddActionPage")){
+        } else if (window.getTitle().equals("AddActionPage")) {
             disableButton(addActionButton);
-        }
-        else if(window.getTitle().equals("SettingsPage")){
+        } else if (window.getTitle().equals("SettingsPage")) {
             disableButton(settingsButton);
-        }
-        else if(window.getTitle().equals("LeaderboardPage")){
+        } else if (window.getTitle().equals("LeaderboardPage")) {
             disableButton(leaderboardButton);
         }
 
         //add all previously created elements to the hamburger layout
-        gridHamburger.getChildren().addAll(settingsButton, leaderboardButton, addActionButton, displayProfilePicture,mainButton);
+        gridHamburger.getChildren().addAll(settingsButton, leaderboardButton,
+                addActionButton, displayProfilePicture,mainButton);
         gridHamburger.setAlignment(Pos.TOP_CENTER);
         return gridHamburger;
     }
@@ -499,12 +509,9 @@ public class MainPage {
      * @param gridHamburgerRight GridPane of right HamburgerMenu
      * @return GridPane
      */
-    public static GridPane gridTop(BorderPane centralPageLayout,
-                                   GridPane gridHamburgerLeft, GridPane gridHamburgerRight) {
-        GridPane gridTop = new GridPane();
-        gridTop.setPadding(new Insets(10, 10, 10, 10));
-        gridTop.setVgap(8);
-        gridTop.setHgap(10);
+    public static GridPane gridTop(BorderPane centralPageLayout, GridPane gridHamburgerLeft,
+                                   GridPane gridHamburgerRight, String text) {
+        final GridPane gridTop = new GridPane();
 
         //here the hamburger icons are created and and functions are attached
         //so that by clicking it it opens and closes the side menu's
@@ -541,12 +548,17 @@ public class MainPage {
         });
         gridTop.setConstraints(hamburgerRight, 2, 0);
 
-        gridTop.getChildren().addAll(hamburgerLeft, hamburgerRight);
+        Label pageName = new Label(text);
+        GridPane.setConstraints(pageName, 1,0);
+        pageName.setId("pageName");
+        Tooltip.install(pageName, new Tooltip("Your current page"));
+
+        gridTop.getChildren().addAll(hamburgerLeft, hamburgerRight, pageName);
         gridTop.setStyle("-fx-background-color: #4c4242;");
         return gridTop;
     }
 
-    public static void disableButton(ToggleButton clicked){
+    public static void disableButton(ToggleButton clicked) {
         clicked.setSelected(true);
         clicked.setDisable(true);
     }

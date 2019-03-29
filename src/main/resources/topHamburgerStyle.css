@@ -151,6 +151,9 @@
             radial-gradient(center 50% 0%, radius 50%, rgba(114,131,148,0,5), rgba(255,255,255,0.0));
 }
 
+#hamburgerButton{
+    -fx-translate-x: 15px;
+}
 #hamburgerButton:hover{
     -fx-cursor: HAND;
 }
@@ -199,6 +202,17 @@
     -fx-translate-x: 25px;
 }
 
-
+#pageName{
+    -fx-font-size: 20px;
+    -fx-min-height: 30px;
+    -fx-max-height: 30px;
+    -fx-max-width: 200px;
+    -fx-min-width: 200px;
+    -fx-text-fill: white;
+    -fx-alignment: CENTER;
+    -fx-border-width: 0px;
+    -fx-translate-x: 790px;
+    -fx-border-radius: 0px;
+}
 
 

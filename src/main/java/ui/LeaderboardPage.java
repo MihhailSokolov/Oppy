@@ -2,16 +2,19 @@ package ui;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import server.model.User;
+
+import java.util.ArrayList;
 
 
 public class LeaderboardPage {
@@ -52,23 +55,7 @@ public class LeaderboardPage {
 
         /////////////////////////////////////////////////////////////////////////////////
         //CentralGrid////////////////////////////////////////////////////////////////////
-        GridPane gridCenter = new GridPane();
-        gridCenter.setPadding(new Insets(10, 10, 10, 10));
-        gridCenter.setVgap(8);
-        gridCenter.setHgap(10);
-
-        //here all the buttons normal buttons and labels are added
-
-
-        Button backButton = new Button("Back");
-        GridPane.setConstraints(backButton, 0, 0);
-        backButton.setOnAction(e -> {
-            //because number1Player is static it needs to be reset every time you close the page
-            number1Player = new TableView<>();
-            bestPlayers = new TableView<>(); //same here
-            scoreOfuser = new TableView<>(); //same here
-            window.setScene(MainPage.mainScene(window));
-        });
+        final  GridPane gridCenter = new GridPane();
 
         //here the columns for the tables are created
         TableColumn rank = new TableColumn("rank");
@@ -111,42 +98,52 @@ public class LeaderboardPage {
         //data needs tp be replaced with an ObservableList<User> only containing the number 1 player
         number1Player.setItems(num1);
         number1Player.getColumns().addAll(rank, name, score);
-        number1Player.setPrefHeight(60);
-        number1Player.setPrefWidth(300);
+        number1Player.setId("tableNum1");
         number1Player.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         GridPane.setConstraints(number1Player,1,0);
+        Label number1PlayerLabel = new Label("#1 Player");
+        GridPane.setConstraints(number1PlayerLabel, 1,0 );
+        number1PlayerLabel.setId("number1PlayerLabel");
 
         //data needs to be replaced with an ObservableList<User> containing the best 50 players
         bestPlayers.setItems(data);
         bestPlayers.getColumns().addAll(rank2, name2, score2);
-        bestPlayers.setPrefHeight(400);
-        bestPlayers.setPrefWidth(300);
+        bestPlayers.setId("tableBest50");
         GridPane.setConstraints(bestPlayers,1,1);
+        Label bestPlayersLabel = new Label("Top 50 Player Worldwide");
+        GridPane.setConstraints(bestPlayersLabel, 1,1);
+        bestPlayersLabel.setId("bestPlayersLabel");
 
         //data needs tp be replaced with an ObservableList<User> only containing the current User
         scoreOfuser.setItems(user);
         scoreOfuser.getColumns().addAll(rank3, name3, score3);
-        scoreOfuser.setPrefHeight(60);
-        scoreOfuser.setPrefWidth(300);
+        scoreOfuser.setId("tableUser");
         scoreOfuser.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         GridPane.setConstraints(scoreOfuser,1,2);
+        Label scoreOfUserLabel = new Label("Your Score");
+        GridPane.setConstraints(scoreOfUserLabel,1,2);
+        scoreOfUserLabel.setId("scoreOfUserLabel");
 
         //here all above created tables are added to the central Grid
-        gridCenter.getChildren().addAll(backButton,number1Player,bestPlayers,scoreOfuser);
+        gridCenter.getChildren().addAll(number1Player, bestPlayers, scoreOfuser,
+                number1PlayerLabel, bestPlayersLabel, scoreOfUserLabel);
+        gridCenter.setId("gridCenter");
 
         //here the hamburger menu's and the top menu are initialized
         final GridPane gridHamburgerLeft = MainPage.gridHamburgerLeft(window);
         final GridPane gridHamburgerRight = MainPage.gridHamburgerRight(window);
-        final GridPane gridTop = MainPage.gridTop(centralPageLayout, gridHamburgerLeft, gridHamburgerRight);
+        final GridPane gridTop = MainPage.gridTop(centralPageLayout, gridHamburgerLeft,
+                gridHamburgerRight, "Leaderboard Page");
 
         ////setting the sizes of the rows///////////////////////////////
-        //gridCenter.getRowConstraints().addAll(gridRowConstraints());
-        //gridCenter.getColumnConstraints().addAll(gridColumnConstraints());
+        gridCenter.getRowConstraints().addAll(gridRowConstraints());
+        gridCenter.getColumnConstraints().addAll(gridColumnConstraints());
         gridHamburgerLeft.getRowConstraints().addAll(MainPage.hamburgerRowConstraintsLeft());
         gridHamburgerLeft.getColumnConstraints().addAll(MainPage.hamburgerColumnConstraintsLeft());
         gridHamburgerRight.getRowConstraints().addAll(MainPage.hamburgerRowConstraintsRight());
         gridHamburgerRight.getColumnConstraints().addAll(MainPage.hamburgerColumnConstraintsRight());
         gridTop.getColumnConstraints().addAll(MainPage.girdTopColumnConstraints());
+
         //////////////////////////////////////////////////////////////////////////////////////
         ////central page layout///////////////////////////////////////////////////////////////
         centralPageLayout.setCenter(gridCenter);
@@ -155,7 +152,70 @@ public class LeaderboardPage {
         //here the create view is made into a scene and returned when the method is called
         Scene scene = new Scene(centralPageLayout, 1920, 1080);
         scene.getStylesheets().add("topHamburgerStyle.css");
+        scene.getStylesheets().add("leaderboardStyle.css");
         return scene;
+    }
 
+    /**
+     * A method that resets the tableViews form leaderboardPage and updates top50 and user.
+     */
+    public static void resetTables() {
+        //because number1Player is static it needs to be reset every time you close the page
+        number1Player = new TableView<>();
+        bestPlayers = new TableView<>(); //same here
+        scoreOfuser = new TableView<>(); //same here
+
+        //updating the to keep the score accurate as possible
+        Main.clientController.updateTop50();
+        Main.clientController.updateUser();
+    }
+
+    /**
+     * Method for Row constraints of the central grid.
+     *
+     *
+     * @return ArrayList of RowConstraints
+     */
+    public static ArrayList<RowConstraints> gridRowConstraints() {
+        RowConstraints row0 = new RowConstraints();
+        row0.setMinHeight(85);
+        row0.setMaxHeight(85);
+        RowConstraints row1 = new RowConstraints();
+        row1.setMinHeight(425);
+        row1.setMaxHeight(425);
+        RowConstraints row2 = new RowConstraints();
+        row2.setMinHeight(85);
+        row2.setMaxHeight(85);
+
+        ArrayList<RowConstraints> rows = new ArrayList<RowConstraints>();
+        rows.add(row0);
+        rows.add(row1);
+        rows.add(row2);
+        return rows;
+    }
+
+    /**
+     * Method for Column constraints of the central grid.
+     *
+     *
+     * @return ArrayList of ColumnConstraints
+     */
+    public static ArrayList<ColumnConstraints> gridColumnConstraints() {
+        ColumnConstraints column0 = new ColumnConstraints();
+        column0.setMinWidth(50);
+        column0.setMaxWidth(50);
+        ColumnConstraints column1 = new ColumnConstraints();
+        column1.setMinWidth(500);
+        column1.setMaxWidth(500);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setMinWidth(50);
+        column2.setMaxWidth(50);
+
+
+        ArrayList<ColumnConstraints> columns = new ArrayList<ColumnConstraints>();
+        columns.add(column0);
+        columns.add(column1);
+        columns.add(column2);
+        return columns;
     }
 }

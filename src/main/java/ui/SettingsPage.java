@@ -65,7 +65,7 @@ public class SettingsPage {
         GridPane.setConstraints(anonymousButton,1,3,2,1);
         anonymousButton.setText("Anonymous");
         anonymousButton.setSelected(false);
-        anonymousButton.setOnAction(e ->{
+        anonymousButton.setOnAction(e -> {
             Main.clientController.updateAnonymous(anonymousButton.isSelected());
         });
 
@@ -113,7 +113,8 @@ public class SettingsPage {
         //here the hamburger menu's and the top menu are initialized
         final GridPane gridHamburgerLeft = MainPage.gridHamburgerLeft(window);
         final GridPane gridHamburgerRight = MainPage.gridHamburgerRight(window);
-        final GridPane gridTop = MainPage.gridTop(centralPageLayout, gridHamburgerLeft, gridHamburgerRight);
+        final GridPane gridTop = MainPage.gridTop(centralPageLayout, gridHamburgerLeft,
+                gridHamburgerRight, "Settings Page");
 
         ////setting the sizes of the rows///////////////////////////////
         //gridCenter.getRowConstraints().addAll(gridRowConstraints());
@@ -133,6 +134,7 @@ public class SettingsPage {
         scene.getStylesheets().add("topHamburgerStyle.css");
         return scene;
     }
+
     /**
      * Method for Row constraints of the central grid.
      *

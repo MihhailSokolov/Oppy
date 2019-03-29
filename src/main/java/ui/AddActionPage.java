@@ -33,7 +33,8 @@ public class AddActionPage {
         //here the hamburger menu's and the top menu and the mainGrid are initialized
         final GridPane gridHamburgerLeft = MainPage.gridHamburgerLeft(window);
         final GridPane gridHamburgerRight = MainPage.gridHamburgerRight(window);
-        final GridPane gridTop = MainPage.gridTop(centralPageLayout, gridHamburgerLeft, gridHamburgerRight);
+        final GridPane gridTop = MainPage.gridTop(centralPageLayout, gridHamburgerLeft,
+                gridHamburgerRight, "Actions Page");
         final GridPane gridCenter = centralGrid();
 
         ////setting the sizes of the rows///////////////////////////////
@@ -45,7 +46,6 @@ public class AddActionPage {
         gridHamburgerRight.getColumnConstraints().addAll(MainPage.hamburgerColumnConstraintsRight());
         gridTop.getColumnConstraints().addAll(MainPage.girdTopColumnConstraints());
 
-        //gridCenter.setAlignment(Pos.CENTER);
         centralPageLayout.setCenter(gridCenter);
         centralPageLayout.setTop(gridTop);
         //here the create view is made into a scene and returned when the method is called
@@ -193,7 +193,7 @@ public class AddActionPage {
             listOfActions.add(act);
         }
 
-        Button submitButton = new Button("submit");
+        Button submitButton = new Button("Submit");
         GridPane.setConstraints(submitButton, 3, 10);
         submitButton.setOnAction(e -> {
             for (int i = 0; i < listCheckboxes.size(); i++) {
