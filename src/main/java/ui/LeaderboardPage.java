@@ -22,15 +22,14 @@ public class LeaderboardPage {
     private static  TableView<User> number1Player = new TableView<>();
     private static  TableView<User> bestPlayers = new TableView<>();
     private static  TableView<User> scoreOfuser = new TableView<>();
-    //this part is only here for testing and showing how the tables work.
-    //Will be deleted once it can be replaced\
 
+    //Here we create the 3 observable lists we are going to put in the tables
     private static final ObservableList<User> user =
             FXCollections.observableArrayList(
                     Main.clientController.getUser()
             );
 
-    private static final ObservableList<User> data =
+    private static final ObservableList<User> top50 =
             FXCollections.observableArrayList(
                     Main.clientController.getTop50()
             );
@@ -39,7 +38,6 @@ public class LeaderboardPage {
             FXCollections.observableArrayList(
                     Main.clientController.getTop50().get(0)
             );
-    //end of the testing part
 
     /**
      * Method for creating leaderboard scene.
@@ -47,7 +45,7 @@ public class LeaderboardPage {
      * @return scene
      */
     public static Scene leaderboardScene(Stage primaryStage) {
-        Main.clientController.updateTop50();
+        resetTables();
         Stage window = primaryStage;
         window.setTitle("LeaderboardPage");
         final BorderPane centralPageLayout = new BorderPane();
@@ -56,9 +54,9 @@ public class LeaderboardPage {
         //CentralGrid////////////////////////////////////////////////////////////////////
         final  GridPane gridCenter = new GridPane();
 
-        //here the columns for the tables are created
+        //here the 3 columns for the first are created
         TableColumn rank = new TableColumn("rank");
-        //needs to be linked to rank later
+        //the ranks are stored locally under email
         rank.setCellValueFactory(new PropertyValueFactory<>("email"));
 
         TableColumn name = new TableColumn("name");
@@ -66,11 +64,10 @@ public class LeaderboardPage {
 
         TableColumn score = new TableColumn("score");
         score.setCellValueFactory(new PropertyValueFactory<>("score"));
-        //TableColumn profilePicture = new TableColumn("pf");
 
-        //here the columns for the tables are created
+        //here the 3 columns for the second table are created
         TableColumn rank2 = new TableColumn("rank");
-        //needs to be linked to rank later
+        //the ranks are stored locally under email
         rank2.setCellValueFactory(new PropertyValueFactory<>("email"));
 
         TableColumn name2 = new TableColumn("name");
@@ -80,9 +77,9 @@ public class LeaderboardPage {
         score2.setCellValueFactory(new PropertyValueFactory<>("score"));
         //TableColumn profilePicture = new TableColumn("pf");
 
-        //here the columns for the tables are created
+        //here the 3 columns for last table are created
         TableColumn rank3 = new TableColumn("rank");
-        //needs to be linked to rank later
+        //the ranks are stored locally under email
         rank3.setCellValueFactory(new PropertyValueFactory<>("email"));
 
         TableColumn name3 = new TableColumn("name");
@@ -90,11 +87,9 @@ public class LeaderboardPage {
 
         TableColumn score3 = new TableColumn("score");
         score3.setCellValueFactory(new PropertyValueFactory<>("score"));
-        //TableColumn profilePicture = new TableColumn("pf");
 
 
         //here the columns and content are added to the tables and settings of the tables are set
-        //data needs tp be replaced with an ObservableList<User> only containing the number 1 player
         number1Player.setItems(num1);
         number1Player.getColumns().addAll(rank, name, score);
         number1Player.setId("tableNum1");
@@ -104,8 +99,8 @@ public class LeaderboardPage {
         GridPane.setConstraints(number1PlayerLabel, 1,0 );
         number1PlayerLabel.setId("number1PlayerLabel");
 
-        //data needs to be replaced with an ObservableList<User> containing the best 50 players
-        bestPlayers.setItems(data);
+        //here we place the second set of columns in the second table with the top50 players
+        bestPlayers.setItems(top50);
         bestPlayers.getColumns().addAll(rank2, name2, score2);
         bestPlayers.setId("tableBest50");
         GridPane.setConstraints(bestPlayers,1,1);
@@ -113,7 +108,7 @@ public class LeaderboardPage {
         GridPane.setConstraints(bestPlayersLabel, 1,1);
         bestPlayersLabel.setId("bestPlayersLabel");
 
-        //data needs tp be replaced with an ObservableList<User> only containing the current User
+        //here we place the third set of columns in the third table with the user
         scoreOfuser.setItems(user);
         scoreOfuser.getColumns().addAll(rank3, name3, score3);
         scoreOfuser.setId("tableUser");

@@ -427,19 +427,22 @@ public class ClientController {
         responseEntity = this.postRequest(this.baseUrl
                 + String.format(Path.CHANGEANON.toString(), trueOrFalse), user);
         String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
-            this.user.setAnonymous(trueOrFalse);
+        this.user.setAnonymous(trueOrFalse);
         return responseMsg;
     }
 
+    /**
+     * changes the email value of a list of users in decending order.
+     */
     public void top50Ranks(List<User> list) {
-        for(int i = 1; i <= list.size(); i++){
+        for (int i = 1; i <= list.size(); i++) {
             list.get(i - 1).setEmail("" + i);
         }
     }
 
-    public int getPosition() {
+    public String getPosition() {
         responseEntity = this.getRequest(this.baseUrl + String.format(Path.POSITION.toString(), user.getUsername()));
-        return Integer.parseInt(new JSONObject(responseEntity.getBody()).getString("message"));
+        return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
 
