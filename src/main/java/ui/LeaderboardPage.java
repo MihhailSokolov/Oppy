@@ -7,6 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -153,6 +155,12 @@ public class LeaderboardPage {
         Scene scene = new Scene(centralPageLayout, 1920, 1080);
         scene.getStylesheets().add("topHamburgerStyle.css");
         scene.getStylesheets().add("leaderboardStyle.css");
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
+            if (ke.getCode() == KeyCode.ESCAPE) {
+                backButton.fire();
+                ke.consume();
+            }
+        });
         return scene;
     }
 
