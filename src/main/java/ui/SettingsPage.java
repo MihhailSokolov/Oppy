@@ -2,6 +2,7 @@ package ui;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXToggleButton;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,7 +18,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class SettingsPage {
@@ -42,7 +46,7 @@ public class SettingsPage {
         gridCenter.setId("gridCenter");
 
         //in this line the placeholder should be replaced with the actual profile picture
-        if(profilePicture == null){profilePicture = new Image("placeholder 100x100.png");}
+        profilePicture = Main.clientController.getProfilePic(Main.clientController.getUser().getUsername());
         ImageView displayProfilePicture = new ImageView(profilePicture);
         Button profilePictureButton = new Button();
         profilePictureButton.setGraphic(displayProfilePicture);
@@ -54,6 +58,7 @@ public class SettingsPage {
             if(selectedFile != null) {
                 Image selectedImage = new Image(selectedFile.toURI().toString(), 100, 100, true, true);
                 profilePicture = selectedImage;
+                Main.clientController.updateProfilePic(selectedImage);
                 window.setScene(settingsScene(window));
             }
         });

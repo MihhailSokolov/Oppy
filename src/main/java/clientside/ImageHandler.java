@@ -1,19 +1,29 @@
 package clientside;
 
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import org.apache.commons.io.FileUtils;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Base64;
 
 public class ImageHandler {
-    static String getBase64Str(File imgFile) {
+    static String getBase64Str(Image img) {
+        File outputFile = new File("src/main/resources/pfp.png");
+        BufferedImage bImage = SwingFXUtils.fromFXImage(img, null);
+        try {
+            ImageIO.write(bImage, "png", outputFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         String encodedString = "";
         try {
-            byte[] imgBytes = FileUtils.readFileToByteArray(imgFile);
+            byte[] imgBytes = FileUtils.readFileToByteArray(outputFile);
             encodedString = Base64.getEncoder().encodeToString(imgBytes);
         } catch (IOException e) {
             e.printStackTrace();

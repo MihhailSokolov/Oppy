@@ -148,7 +148,7 @@ public class ClientController {
      * @param img the img file to be encoded and sent.
      * @return String response message ("true"/"false").
      */
-    public String updateProfilePic(File img) {
+    public String updateProfilePic(Image img) {
         String encodedStr = ImageHandler.getBase64Str(img);
         this.user.setProfilePicture(encodedStr);
         responseEntity = this.postRequest(this.baseUrl + Path.SETPROFILEPIC.toString(), user);
