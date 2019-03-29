@@ -1,6 +1,6 @@
 .root{
     /* Images from https://www.pexels.com/photo/alternative-alternative-energy-close-up-electricity-356049/*/
-    -fx-background-image: url("naturalEnergie.jpg");
+    -fx-background-image: url("nightSky.jpg");
     -fx-background-repeat: stretch;
     -fx-background-size: 2000 1200;
     -fx-background-position: center center;
@@ -13,7 +13,7 @@
     -fx-min-width: 600px;
     -fx-border-width: 2px;
     -fx-border-color: #789149;
-    -fx-background-color: radial-gradient(center 50% 50%, radius 60%, reflect, #79f2ff, #0000a8);
+    -fx-background-color: radial-gradient(center 50% 50%, radius 60%, reflect, #5a8a22, black );
 }
 
 .titled-pane{
@@ -22,7 +22,7 @@
     -fx-min-width: 500px;
 }
 .titled-pane > .title{
-    -fx-background-color:  #789149, #789149, darkblue;
+    -fx-background-color:  #789149, #789149, #006000;
     -fx-border-width: 2px;
     -fx-text-fill: #ffffff;
     -fx-font-size: 20px;
@@ -34,10 +34,10 @@
     -fx-alignment: CENTER_LEFT;
 }
 .titled-pane .title:hover{
-    -fx-background-color:  #789149, #789149, #0000b4;
+    -fx-background-color:  #789149, #789149, #009000;
 }
 .titled-pane .title:pressed{
-    -fx-background-color:  #789149, #789149, #00004c;
+    -fx-background-color:  #789149, #789149, #003000;
 }
 
 
@@ -46,7 +46,7 @@
     -fx-min-width: 500px;
     -fx-border-width: 0 2 2 2;
     -fx-border-color: #789149;
-    -fx-background-color: radial-gradient(center 50% 50%, radius 60%, reflect, #5186ff, darkblue );
+    -fx-background-color: radial-gradient(center 50% 50%, radius 60%, reflect, #74b426, black );
     -fx-padding: 0 0 0 0;
     -fx-vgap: 0px;
     -fx-hgap: 0px;
@@ -70,13 +70,13 @@
     -fx-translate-x: 5px;
 }
 #menuGrid .check-box:hover .box{
-    -fx-background-color: #000080;
+    -fx-background-color: #008000;
 }
 #menuGrid .check-box:pressed .box{
-    -fx-background-color: #000048;
+    -fx-background-color: #002000;
 }
 #menuGrid .check-box .box{
-    -fx-background-color: #000060;
+    -fx-background-color: #006000;
     -fx-text-fill: white;
     -fx-border-width: 2px;
     -fx-border-color: #789149;
