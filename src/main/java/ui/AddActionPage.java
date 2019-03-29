@@ -1,5 +1,6 @@
 package ui;
 
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -40,7 +41,7 @@ public class AddActionPage {
         final GridPane gridHamburgerRight = MainPage.gridHamburgerRight(window);
         final GridPane gridTop = MainPage.gridTop(centralPageLayout, gridHamburgerLeft,
                 gridHamburgerRight, "Actions Page");
-        final GridPane gridCenter = centralGrid();
+        final GridPane gridCenter = centralGrid(window);
 
         ////setting the sizes of the rows///////////////////////////////
         gridCenter.getRowConstraints().addAll(gridRowConstraints());
@@ -189,25 +190,40 @@ public class AddActionPage {
      *
      * @return GridPane , the centralGrid
      */
-    public static GridPane centralGrid() {
+    public static GridPane centralGrid(Stage primaryStage) {
+        final Stage window = primaryStage;
         final ArrayList<Action> listOfActions = new ArrayList<Action>();
         final ArrayList<CheckBox> listCheckboxes = new ArrayList<CheckBox>();
-        GridPane gridCenter = new GridPane();
+        final GridPane gridCenter = new GridPane();
         gridCenter.setId("gridCenter");
 
-        saveAsButton = new Button("Save as ...");
-        GridPane.setConstraints(saveAsButton, 1, 10);
-        saveAsButton.setOnAction(e -> {
-            //implement a save as method
-        });
+
         Main.clientController.updateActionList();
         List<Action> actionList = Main.clientController.getActionList();
         for (Action act : actionList) {
             listOfActions.add(act);
         }
 
-        submitButton = new Button("Submit");
+        Button saveAsButton = new Button("Save as ...");
+        GridPane.setConstraints(saveAsButton, 1, 10);
+        ArrayList<String> listForPresets = new ArrayList<String>();
+        saveAsButton.setOnAction(e -> {
+            for (int i = 0; i < listCheckboxes.size(); i++) {
+                if (listCheckboxes.get(i).isSelected()) {
+                    String actionName = listCheckboxes.get(i).getText();
+                    for (int j = 0; j < listOfActions.size(); j++) {
+                        if (actionName.equals(listOfActions.get(j).getActionName())) {
+                            listForPresets.add(listOfActions.get(j).getActionName());
+                        }
+                    }
+                }
+            }
+            window.setScene(NamePresetPage.namePresetScene(window, listForPresets));
+        });
+
+        Button submitButton = new Button("submit");
         GridPane.setConstraints(submitButton, 3, 10);
+
         submitButton.setOnAction(e -> {
             for (int i = 0; i < listCheckboxes.size(); i++) {
                 if (listCheckboxes.get(i).isSelected()) {
