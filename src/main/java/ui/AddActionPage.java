@@ -23,6 +23,7 @@ import java.util.List;
 public class AddActionPage {
     private static Button submitButton;
     private static Button saveAsButton;
+
     /**
      * Class for adding the action page.
      * @param primaryStage Primary stage
@@ -56,7 +57,7 @@ public class AddActionPage {
         Scene scene = new Scene(centralPageLayout, 1920, 1080);
         scene.getStylesheets().add("addActionStyle.css");
         scene.getStylesheets().add("topHamburgerStyle.css");
-         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             if (ke.getCode() == KeyCode.ENTER) {
                 submitButton.fire();
             }
