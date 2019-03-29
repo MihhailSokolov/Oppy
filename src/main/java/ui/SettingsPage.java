@@ -142,12 +142,8 @@ public class SettingsPage {
             if (ke.getCode() == KeyCode.R) {
                 resetButton.fire();
             }
-            if (ke.getCode() == KeyCode.ESCAPE) {
-                backButton.fire();
-            }
             ke.consume();
         });
->>>>>>> src/main/java/ui/SettingsPage.java
         return scene;
     }
 

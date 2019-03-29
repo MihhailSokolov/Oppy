@@ -21,6 +21,8 @@ import java.util.List;
  * Class for adding the action page.
  */
 public class AddActionPage {
+    private static Button submitButton;
+    private static Button saveAsButton;
     /**
      * Class for adding the action page.
      * @param primaryStage Primary stage
@@ -60,9 +62,6 @@ public class AddActionPage {
             }
             if (ke.getCode() == KeyCode.S) {
                 saveAsButton.fire();
-            }
-            if (ke.getCode() == KeyCode.ESCAPE) {
-                backButton.fire();
             }
             ke.consume();
         });
@@ -195,7 +194,7 @@ public class AddActionPage {
         GridPane gridCenter = new GridPane();
         gridCenter.setId("gridCenter");
 
-        Button saveAsButton = new Button("Save as ...");
+        saveAsButton = new Button("Save as ...");
         GridPane.setConstraints(saveAsButton, 1, 10);
         saveAsButton.setOnAction(e -> {
             //implement a save as method
@@ -206,7 +205,7 @@ public class AddActionPage {
             listOfActions.add(act);
         }
 
-        Button submitButton = new Button("Submit");
+        submitButton = new Button("Submit");
         GridPane.setConstraints(submitButton, 3, 10);
         submitButton.setOnAction(e -> {
             for (int i = 0; i < listCheckboxes.size(); i++) {
