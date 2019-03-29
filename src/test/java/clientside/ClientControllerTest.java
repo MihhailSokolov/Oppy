@@ -29,6 +29,7 @@ public class ClientControllerTest {
     User testFriend;
     Action testAction;
     Preset testPreset;
+    List<User> testList;
 
     String testUserJson;
     String testActionJson;
@@ -258,6 +259,22 @@ public class ClientControllerTest {
                 .willReturn(ok(testFriendJson)));
         clientController.updateUser();
         assertEquals(clientController.getUser(), testFriend);
+    }
+
+    @Test
+    public void getPositionTest() {
+        wireMockRule.stubFor(get(urlPathEqualTo("/position"))
+                .withQueryParam("username", equalTo(testUser.getUsername()))
+                .willReturn(ok(trueResponse)));
+        assertEquals("true", clientController.getPosition());
+    }
+
+    @Test
+    public void top50RankTest() {
+        List<User> test = new ArrayList<>();
+        test.add(new User("BillGates99", null, null, 0, new Date()));
+        clientController.top50Ranks(test);
+        assertEquals("1", test.get(0).getEmail());
     }
 
 }
