@@ -384,8 +384,12 @@ public class MainPage {
         ToggleButton leaderboardButton = new  ToggleButton("Leaderboard");
         leaderboardButton.setId("leaderActionButton");
         leaderboardButton.setOnAction(e -> {
+            //sets the email locally stored in the User objects to their rank
+            Main.clientController.getUser().setEmail(Main.clientController.getPosition());
+            Main.clientController.top50Ranks(Main.clientController.getTop50());
             //because number1Player is static it needs to be reset every time you close the page
             LeaderboardPage.resetTables();
+
             folowingList = new TableView<>();
             window.setScene(LeaderboardPage.leaderboardScene(window));
         });
@@ -484,6 +488,7 @@ public class MainPage {
         GridPane.setConstraints(followLabel,0,5,3,1);
 
         Main.clientController.updateTop50(); //should become list of people you follow
+        Main.clientController.updateUser();
         ObservableList<User> data =
                 FXCollections.observableArrayList(
                         Main.clientController.getTop50()  //should become list of people you follow
