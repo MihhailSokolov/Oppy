@@ -46,7 +46,7 @@ public class SettingsPage {
         gridCenter.setId("gridCenter");
 
         //in this line the placeholder should be replaced with the actual profile picture
-        profilePicture = Main.clientController.getProfilePic(Main.clientController.getUser().getUsername());
+        profilePicture = SwingFXUtils.toFXImage(Main.clientController.getProfilePic(Main.clientController.getUser().getUsername()), null);
         ImageView displayProfilePicture = new ImageView(profilePicture);
         Button profilePictureButton = new Button();
         profilePictureButton.setGraphic(displayProfilePicture);
@@ -58,7 +58,7 @@ public class SettingsPage {
             if(selectedFile != null) {
                 Image selectedImage = new Image(selectedFile.toURI().toString(), 100, 100, true, true);
                 profilePicture = selectedImage;
-                Main.clientController.updateProfilePic(selectedImage);
+                Main.clientController.updateProfilePic(SwingFXUtils.fromFXImage(selectedImage, null));
                 window.setScene(settingsScene(window));
             }
         });

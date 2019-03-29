@@ -12,6 +12,7 @@ import server.model.Action;
 import server.model.Preset;
 import server.model.User;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -138,7 +139,7 @@ public class ClientController {
      * @param username who the profile picture belongs to.
      * @return Image (profile picture).
      */
-    public Image getProfilePic(String username) {
+    public BufferedImage getProfilePic(String username) {
         responseEntity = this.getRequest(this.baseUrl + String.format(Path.GETPROFILEPIC.toString(), username));
         return ImageHandler.decodeToImg(new JSONObject(responseEntity.getBody()).getString("message"));
     }
@@ -148,7 +149,7 @@ public class ClientController {
      * @param img the img file to be encoded and sent.
      * @return String response message ("true"/"false").
      */
-    public String updateProfilePic(Image img) {
+    public String updateProfilePic(BufferedImage img) {
         String encodedStr = ImageHandler.getBase64Str(img);
         this.user.setProfilePicture(encodedStr);
         responseEntity = this.postRequest(this.baseUrl + Path.SETPROFILEPIC.toString(), user);

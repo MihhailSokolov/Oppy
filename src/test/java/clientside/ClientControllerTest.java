@@ -13,6 +13,8 @@ import server.model.Action;
 import server.model.Preset;
 import server.model.User;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -264,28 +266,31 @@ public class ClientControllerTest {
         assertEquals(clientController.getUser(), testFriend);
     }
 
-//    @Test
-//    public void updateProfilePicTest() throws JsonProcessingException {
-//        testUser.setProfilePicture(ImageHandler.getBase64Str(tuxFile));
-//        wireMockRule.stubFor(any(urlPathEqualTo("/setprofilepic"))
-//                .withRequestBody(equalToJson(objectMapper.writeValueAsString(testUser)))
-//                .willReturn(ok(trueResponse)));
-//        assertEquals("true", clientController.updateProfilePic(tuxFile));
-//    }
+    @Test
+    public void updateProfilePicTest() throws IOException {
+        testUser.setProfilePicture(ImageHandler.getBase64Str(ImageIO.read(tuxFile)));
+        wireMockRule.stubFor(any(urlPathEqualTo("/setprofilepic"))
+                .withRequestBody(equalToJson(objectMapper.writeValueAsString(testUser)))
+                .willReturn(ok(trueResponse)));
+        assertEquals("true", clientController.updateProfilePic(ImageIO.read(tuxFile)));
+    }
 
-//    @Test
-//    public void getProfilePicTest() {
-//        String base64tux = ImageHandler.getBase64Str(tuxFile);
-//        Image tuxImg = ImageHandler.decodeToImg(base64tux);
-//        wireMockRule.stubFor(get(urlPathEqualTo("/getprofilepic"))
-//                .withQueryParam("username", equalTo(testUser.getUsername()))
-//                .willReturn(ok("{\"message\" : \"" + base64tux + "\"}")));
-//        Image imgFromServer = clientController.getProfilePic(testUser.getUsername());
-//        for (int i = 0; i < tuxImg.getWidth(); i++) {
-//            for (int j = 0; j < tuxImg.getHeight(); j++) {
-//                assertEquals(tuxImg.getPixelReader().getArgb(i, j), imgFromServer.getPixelReader().getArgb(i, j));
-//            }
-//        }
-//    }
+    @Test
+    public void getProfilePicTest() throws IOException {
+        String base64tux = ImageHandler.getBase64Str(ImageIO.read(tuxFile));
+        BufferedImage tuxImg = ImageHandler.decodeToImg(base64tux);
+        wireMockRule.stubFor(get(urlPathEqualTo("/getprofilepic"))
+                .withQueryParam("username", equalTo(testUser.getUsername()))
+                .willReturn(ok("{\"message\" : \"" + base64tux + "\"}")));
+        BufferedImage imgFromServer = clientController.getProfilePic(testUser.getUsername());
+        assertEquals(imgFromServer.getHeight(), tuxImg.getHeight());
+        assertEquals(imgFromServer.getWidth(), tuxImg.getWidth());
+        for (int x = 0; x < imgFromServer.getWidth(); x++) {
+            for (int y = 0; y < imgFromServer.getHeight(); y++) {
+                assertEquals(imgFromServer.getRGB(x, y), tuxImg.getRGB(x, y));
+            }
+        }
+    }
+
 
 }

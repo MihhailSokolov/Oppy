@@ -15,9 +15,9 @@ import java.io.IOException;
 import java.util.Base64;
 
 public class ImageHandler {
-    static String getBase64Str(Image img) {
+    static String getBase64Str(BufferedImage bImage) {
 //        File outputFile = new File("src/main/resources/pfp.png");
-        BufferedImage bImage = SwingFXUtils.fromFXImage(img, null);
+//        BufferedImage bImage = SwingFXUtils.fromFXImage(img, null);
         Scalr.resize(bImage, 150);
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
@@ -42,8 +42,14 @@ public class ImageHandler {
 //        return encodedString;
     }
 
-    static Image decodeToImg(String encodedStr) {
+    static BufferedImage decodeToImg(String encodedStr) {
         byte[] imgBytes = Base64.getDecoder().decode(encodedStr);
-        return new Image(new ByteArrayInputStream(imgBytes));
+        try {
+            return ImageIO.read(new ByteArrayInputStream(imgBytes));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
+
 }
