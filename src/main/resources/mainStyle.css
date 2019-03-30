@@ -7,10 +7,10 @@
 }
 
 #centerGrid{
-    /*-fx-max-width: 1100px;
+    -fx-max-width: 1100px;
     -fx-min-width: 1100px;
-    -fx-max-height: 1200px;
-    -fx-min-height: 1200px;*/
+    -fx-max-height: 790px;
+    -fx-min-height: 790px;
 }
 
 .label{
@@ -51,5 +51,17 @@
     -fx-border-width: 0 5 5 5;
     -fx-text-fill: red;
     -fx-border-radius: 0 0 5 5;
+}
+
+#gridBot{
+    -fx-min-height: 150px;
+    -fx-max-height: 150px;
+    -fx-background-color: white;
+}
+#actionName{
+    -fx-min-height: 30px;
+    -fx-max-height: 30px;
+    -fx-font-size: 12px;
+    -fx-text-fill: black;
 }
 

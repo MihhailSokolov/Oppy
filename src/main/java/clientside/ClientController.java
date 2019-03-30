@@ -143,11 +143,15 @@ public class ClientController {
      * Updates this.user's presetsList by downloading a User (preset) list from server and setting
      * the user's presets to the mentioned list.
      */
-    public void updateUserPresets() throws IOException {
+    public void updateUserPresets() {
         responseEntity = this.getRequest(this.baseUrl
                 + String.format(Path.GETPRESETS.toString(), this.user.getUsername()));
-        this.user.setPresets(objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<Preset>>() {
-        }));
+        try {
+            this.user.setPresets(objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<Preset>>() {
+            }));
+        } catch (IOException e) {
+            System.out.println("ErrorUpdatePresets");
+        }
     }
 
     /**

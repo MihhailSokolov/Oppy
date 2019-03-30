@@ -110,6 +110,8 @@ public class MainPage {
             planet = new Image("oppy4.png");
         }
         ImageView displayLogo = new ImageView(planet);
+        displayLogo.setFitHeight(700);
+        displayLogo.setFitWidth(700);
         GridPane.setConstraints(displayLogo, 1, 3);
 
         //here the daily point loss needs to be queried
@@ -142,7 +144,9 @@ public class MainPage {
         //here the hamburger menu's and the top menu are initialized
         final GridPane gridHamburgerLeft = gridHamburgerLeft(window);
         final GridPane gridHamburgerRight = gridHamburgerRight(window);
+        final GridPane gridBot = gridBot();
         final GridPane gridTop = gridTop(centralPageLayout, gridHamburgerLeft, gridHamburgerRight, "Main Page");
+
 
         ////setting the sizes of the rows///////////////////////////////
 
@@ -157,11 +161,12 @@ public class MainPage {
         //CentralPageLayout
         centralPageLayout.setCenter(gridCenter);
         centralPageLayout.setTop(gridTop);
+        centralPageLayout.setBottom(gridBot);
         //logout from main page functionality
         Button invisLogoutbutton = new Button();
         invisLogoutbutton.setOnAction( e -> window.setScene(LoginPage.loginScene(window)));
         //here the create view is made into a scene and returned when the method is called
-        Scene scene = new Scene(centralPageLayout, 1920, 1080);
+        Scene scene = new Scene(centralPageLayout, 1920, 1000);
         scene.getStylesheets().add("mainStyle.css");
         scene.getStylesheets().add("topHamburgerStyle.css");
         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
@@ -536,9 +541,6 @@ public class MainPage {
         Main.clientController.updateTop50();
         Main.clientController.updateFriendList();
 
-        System.out.println(diff);
-        System.out.println(date);
-        System.out.println(now);
         ObservableList<User> data =
                 FXCollections.observableArrayList(
                         Main.clientController.getUser().getFriends()  //should become list of people you follow
@@ -601,6 +603,12 @@ public class MainPage {
 
         //here the hamburger icons are created and and functions are attached
         //so that by clicking it it opens and closes the side menu's
+        JFXHamburger hamburgerRight = new JFXHamburger();
+        Tooltip.install(hamburgerRight, new Tooltip("Achievements/Friends menu"));
+        hamburgerRight.setId("hamburgerButton");
+        HamburgerSlideCloseTransition burgerTaskRight = new HamburgerSlideCloseTransition(hamburgerRight);
+        burgerTaskRight.setRate(-1);
+
         JFXHamburger hamburgerLeft = new JFXHamburger();
         Tooltip.install(hamburgerLeft, new Tooltip("Options menu"));
         hamburgerLeft.setId("hamburgerButton");
@@ -609,27 +617,32 @@ public class MainPage {
         hamburgerLeft.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
             if (burgerTaskLeft.getRate() == -1) {
                 centralPageLayout.setLeft(gridHamburgerLeft);
+                centralPageLayout.setBottom(null);
             } else {
                 centralPageLayout.setLeft(null);
+                if(burgerTaskRight.getRate() == -1){
+                    centralPageLayout.setBottom(gridBot());
+                }
             }
             burgerTaskLeft.setRate(burgerTaskLeft.getRate() * -1);
             burgerTaskLeft.play();
         });
         gridTop.setConstraints(hamburgerLeft, 0, 0);
 
-        JFXHamburger hamburgerRight = new JFXHamburger();
-        Tooltip.install(hamburgerRight, new Tooltip("Achievements/Friends menu"));
-        hamburgerRight.setId("hamburgerButton");
-        HamburgerSlideCloseTransition burgerTaskRight = new HamburgerSlideCloseTransition(hamburgerRight);
-        burgerTaskRight.setRate(-1);
+
         hamburgerRight.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
             if (burgerTaskRight.getRate() == -1) {
                 centralPageLayout.setRight(gridHamburgerRight);
+                centralPageLayout.setBottom(null);
             } else {
                 centralPageLayout.setRight(null);
                 folowingList = new TableView<>();
+                if(burgerTaskLeft.getRate() == -1 ){
+                    centralPageLayout.setBottom(gridBot());
+                }
             }
             burgerTaskRight.setRate(burgerTaskRight.getRate() * -1);
+
             burgerTaskRight.play();
         });
         gridTop.setConstraints(hamburgerRight, 2, 0);
@@ -647,6 +660,29 @@ public class MainPage {
     public static void disableButton(ToggleButton clicked) {
         clicked.setSelected(true);
         clicked.setDisable(true);
+    }
+
+    public static GridPane gridBot() {
+        final GridPane gridBot = new GridPane();
+        gridBot.setId("gridBot");
+        Main.clientController.updateUserPresets();
+        for(int i=0; i< Main.clientController.getUser().getPresets().size(); i++){
+           Button button = new Button(Main.clientController.getUser().getPresets().get(i).getName());
+           GridPane.setConstraints(button, i,0);
+           gridBot.getChildren().add(button);
+           for(int j =0; j < Main.clientController.getUser().getPresets().get(i).getActionList().size() && j<4; j++){
+               Label actionName = new Label("");
+               if(j==3){
+                   actionName = new Label("etc.");
+               }else{
+                   actionName = new Label( Main.clientController.getUser().getPresets().get(i).getActionList().get(j));
+               }
+               actionName.setId("actionName");
+               GridPane.setConstraints(actionName, i,j+1);
+               gridBot.getChildren().add(actionName);
+           }
+        }
+        return gridBot;
     }
 
 }
