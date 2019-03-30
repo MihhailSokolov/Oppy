@@ -691,7 +691,9 @@ public class ControllerTest {
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn();
         User receivedUser = mapper.readValue(result.getResponse().getContentAsString(), User.class);
+        receivedUser.setScore(receivedUser.getScore() + 3000);
         assertEquals(testUser, receivedUser);
+        //userRepository.delete(testUser);
     }
 
     @Test
@@ -702,5 +704,6 @@ public class ControllerTest {
         String jsonBody = mapper.writeValueAsString(user);
         mockMvc.perform(get("/userinfo").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
                 .andExpect(status().isUnauthorized());
+        //userRepository.delete(testUser);
     }
 }
