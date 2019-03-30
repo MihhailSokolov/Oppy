@@ -80,7 +80,7 @@ public class MainPage {
         //here the number of points needs to be queried
         String result = Main.clientController.getScore();
         int pointValue = Integer.parseInt(result);
-        Label numberOfPoints = new Label(result);
+        final Label numberOfPoints = new Label(result);
         numberOfPoints.setId("yourPoints");
         Tooltip.install(numberOfPoints, new Tooltip("Your current number of points"));
         if (pointValue < 0) {
@@ -144,8 +144,8 @@ public class MainPage {
         //here the hamburger menu's and the top menu are initialized
         final GridPane gridHamburgerLeft = gridHamburgerLeft(window);
         final GridPane gridHamburgerRight = gridHamburgerRight(window);
-        final GridPane gridBot = gridBot();
-        final GridPane gridTop = gridTop(centralPageLayout, gridHamburgerLeft, gridHamburgerRight, "Main Page");
+        final GridPane gridBot = gridBot(numberOfPoints);
+        final GridPane gridTop = gridTop(centralPageLayout, gridHamburgerLeft, gridHamburgerRight, "Main Page", numberOfPoints, window);
 
 
         ////setting the sizes of the rows///////////////////////////////
@@ -598,7 +598,7 @@ public class MainPage {
      * @return GridPane
      */
     public static GridPane gridTop(BorderPane centralPageLayout, GridPane gridHamburgerLeft,
-                                   GridPane gridHamburgerRight, String text) {
+                                   GridPane gridHamburgerRight, String text, Label scoreLabel, Stage window) {
         final GridPane gridTop = new GridPane();
 
         //here the hamburger icons are created and and functions are attached
@@ -620,8 +620,8 @@ public class MainPage {
                 centralPageLayout.setBottom(null);
             } else {
                 centralPageLayout.setLeft(null);
-                if(burgerTaskRight.getRate() == -1){
-                    centralPageLayout.setBottom(gridBot());
+                if(burgerTaskRight.getRate() == -1 && window.getTitle().equals("MainPage")){
+                    centralPageLayout.setBottom(gridBot(scoreLabel));
                 }
             }
             burgerTaskLeft.setRate(burgerTaskLeft.getRate() * -1);
@@ -637,8 +637,8 @@ public class MainPage {
             } else {
                 centralPageLayout.setRight(null);
                 folowingList = new TableView<>();
-                if(burgerTaskLeft.getRate() == -1 ){
-                    centralPageLayout.setBottom(gridBot());
+                if(burgerTaskLeft.getRate() == -1 && window.getTitle().equals("MainPage") ){
+                    centralPageLayout.setBottom(gridBot(scoreLabel));
                 }
             }
             burgerTaskRight.setRate(burgerTaskRight.getRate() * -1);
@@ -662,7 +662,7 @@ public class MainPage {
         clicked.setDisable(true);
     }
 
-    public static GridPane gridBot() {
+    public static GridPane gridBot(Label scoreLabel) {
         final GridPane gridBot = new GridPane();
         gridBot.setId("gridBot");
         Main.clientController.updateUserPresets();
@@ -671,6 +671,15 @@ public class MainPage {
            button.setId("presetButton");
            GridPane.setConstraints(button, i,0);
            gridBot.getChildren().add(button);
+           final int a =i;
+           button.setOnAction(e -> {
+               for (int j =0; j < Main.clientController.getUser().getPresets().get(a).getActionList().size(); j++){
+                   Main.clientController.takeAction(Main.clientController.getUser().getPresets().get(a).getActionList().get(j));
+                   Main.clientController.updateUser();
+                   scoreLabel.setText(Integer.toString(Main.clientController.getUser().getScore()));
+               }
+           });
+
            Label actionName = new Label("");
            for(int j =0; j < Main.clientController.getUser().getPresets().get(i).getActionList().size() && j<4; j++){
                if(j==3){

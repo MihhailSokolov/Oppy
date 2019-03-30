@@ -103,7 +103,7 @@ public class SettingsPage {
         final GridPane gridHamburgerLeft = MainPage.gridHamburgerLeft(window);
         final GridPane gridHamburgerRight = MainPage.gridHamburgerRight(window);
         final GridPane gridTop = MainPage.gridTop(centralPageLayout, gridHamburgerLeft,
-                gridHamburgerRight, "Settings Page");
+                gridHamburgerRight, "Settings Page", new Label(), window);
 
         ////setting the sizes of the rows///////////////////////////////
         gridCenter.getRowConstraints().addAll(gridRowConstraints());

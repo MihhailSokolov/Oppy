@@ -124,7 +124,7 @@ public class LeaderboardPage {
         final GridPane gridHamburgerLeft = MainPage.gridHamburgerLeft(window);
         final GridPane gridHamburgerRight = MainPage.gridHamburgerRight(window);
         final GridPane gridTop = MainPage.gridTop(centralPageLayout, gridHamburgerLeft,
-                gridHamburgerRight, "Leaderboard Page");
+                gridHamburgerRight, "Leaderboard Page", new Label(), window);
 
         ////setting the sizes of the rows///////////////////////////////
         gridCenter.getRowConstraints().addAll(gridRowConstraints());
