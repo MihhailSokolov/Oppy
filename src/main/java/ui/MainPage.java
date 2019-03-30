@@ -84,17 +84,17 @@ public class MainPage {
 
         //here the image of the planet needs to be placed
         Image planet;
-        if(pointValue >= 15000){
-        planet = new Image("oppy1.png");
-        } else if(pointValue >= 10000){
+        if (pointValue >= 15000) {
+            planet = new Image("oppy1.png");
+        } else if (pointValue >= 10000) {
             planet = new Image("oppy2.png");
-        } else if(pointValue >= 5000){
-            planet = new Image("oppy3.png");
-        } else if(pointValue < -15000){
+        } else if (pointValue >= 5000) {
+            planet = new Image("op py3.png");
+        } else if (pointValue < -15000) {
             planet = new Image("oppy7.png");
-        } else if(pointValue < -10000){
+        } else if (pointValue < -10000) {
             planet = new Image("oppy6.png");
-        } else if(pointValue < -5000){
+        } else if (pointValue < -5000) {
             planet = new Image("oppy5.png");
         } else {
             planet = new Image("oppy4.png");
@@ -454,7 +454,7 @@ public class MainPage {
         Date date = Main.clientController.getUser().getRegisterDate();
         Date now = new Date();
         long diffInMillies = Math.abs(now.getTime() - date.getTime());
-        long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+        final long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
         String result = Main.clientController.getScore();
 
         //Date date = Main.clientController.getDate();   //Still needs to be implemented
@@ -484,7 +484,7 @@ public class MainPage {
         Tooltip.install(acivement3, new Tooltip("Achievement for reaching 1,000,000 points"));
 
         Image preAcivement4 = new Image("placeholder 100x100.png");
-        if (diff >= 7){
+        if (diff >= 7) {
             preAcivement4 = new Image("placeholder2 100x100.png");
         }
         ImageView acivement4 = new ImageView(preAcivement4);
@@ -492,7 +492,7 @@ public class MainPage {
         Tooltip.install(acivement4, new Tooltip("Achievement for playing for 1 week"));
 
         Image preAcivement5 = new Image("placeholder 100x100.png");
-        if (diff >= 30){
+        if (diff >= 30) {
             preAcivement5 = new Image("placeholder2 100x100.png");
         }
         ImageView acivement5 = new ImageView(preAcivement5);
@@ -500,7 +500,7 @@ public class MainPage {
         Tooltip.install(acivement5, new Tooltip("Achievement for playing for 1 month"));
 
         Image preAcivement6 = new Image("placeholder 100x100.png");
-        if (diff >= 365){
+        if (diff >= 365) {
             preAcivement6 = new Image("placeholder2 100x100.png");
         }
         ImageView acivement6 = new ImageView(preAcivement6);
@@ -515,8 +515,9 @@ public class MainPage {
         Main.clientController.updateTop50();
         try {
             Main.clientController.updateFriendList();
+        } catch (Exception e) {
+            System.out.println("ErrorUpdateFriendList");
         }
-        catch (Exception e){}
 
         System.out.println(diff);
         System.out.println(date);
