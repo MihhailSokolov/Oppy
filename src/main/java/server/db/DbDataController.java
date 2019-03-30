@@ -417,8 +417,15 @@ public class DbDataController {
         }
         return null;
     }
-    
+
+    /**
+     * Method to get complete User object from db.
+     * @param username user's username
+     * @return User object
+     */
     public User getUser(String username) {
-        return userRepository.findFirstByUsername(username);
+        User user = userRepository.findFirstByUsername(username);
+        user.setScore(getUserScore(username));
+        return user;
     }
 }
