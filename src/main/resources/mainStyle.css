@@ -62,7 +62,7 @@
     -fx-background-image: url("test.jpg");
     -fx-background-repeat: stretch;
     -fx-background-size: 2000 1200;
-    /*-fx-hgap: 10px;*/
+    -fx-hgap: 10px;
 }
 
 #actionName{
@@ -146,6 +146,7 @@
     -fx-border-width: 2 2 0 2;
     -fx-border-color: #9ebe67 #9ebe67 #9ebe67 white;
     -fx-border-radius: 0 5 0 0;
+    -fx-translate-x: -10px;
 }
 #presetDeleteButton:hover{
     -fx-background-color:
