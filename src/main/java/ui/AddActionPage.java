@@ -39,7 +39,7 @@ public class AddActionPage {
         final GridPane gridHamburgerLeft = MainPage.gridHamburgerLeft(window);
         final GridPane gridHamburgerRight = MainPage.gridHamburgerRight(window);
         final GridPane gridTop = MainPage.gridTop(centralPageLayout, gridHamburgerLeft,
-                gridHamburgerRight, "Actions Page");
+                gridHamburgerRight, "Actions Page", new Label(), window);
         final GridPane gridCenter = centralGrid(window);
 
         ////setting the sizes of the rows///////////////////////////////
