@@ -586,14 +586,28 @@ public class MainPage {
         followButton.setId("followButton");
         followButton.setOnAction(e -> {
             User friend = new User(followTextField.getText(), null, null, 0, null);
-
+            ArrayList<String> friendNames = new ArrayList<String>();
+            Main.clientController.updateUser();
+            for(int i = 0; i < Main.clientController.getUser().getFriends().size(); i++){
+                friendNames.add( Main.clientController.getUser().getFriends().get(i).getUsername());
+            }
+            for(int i=0; i<friendNames.size(); i++){
+                System.out.println(friendNames.get(i));
+            }
             if (followTextField.getText().equals(Main.clientController.getUser().getUsername())){
                 Alert failed = new Alert(Alert.AlertType.ERROR);
                 failed.setContentText("You can't follow yourself");
                 failed.setHeaderText("Failure.");
                 failed.setTitle("Notification");
                 failed.show();
-            } else if (Main.clientController.addFriend(friend).equals("true")) {
+            } else if(friendNames.contains(friend.getUsername())){
+                Alert failed = new Alert(Alert.AlertType.ERROR);
+                failed.setContentText("You already follow the person");
+                failed.setHeaderText("Failure.");
+                failed.setTitle("Notification");
+                failed.show();
+            }
+            else if (Main.clientController.addFriend(friend).equals("true")) {
                 Main.clientController.updateFriendList();
                 folowingList.setItems(FXCollections.observableArrayList(Main.clientController.getUser().getFriends()));
                 folowingList.refresh();
@@ -687,14 +701,6 @@ public class MainPage {
     }
 
     /**
-     * Very short method that disables a button.
-     */
-    public static void disableButton(ToggleButton clicked) {
-        clicked.setSelected(true);
-        clicked.setDisable(true);
-    }
-
-    /**
      * Method for main scene.
      *
      * @param scoreLabel gives the Label with the score to be update
@@ -745,6 +751,15 @@ public class MainPage {
         }
         return gridBot;
     }
+
+    /**
+     * Very short method that disables a button.
+     */
+    public static void disableButton(ToggleButton clicked) {
+        clicked.setSelected(true);
+        clicked.setDisable(true);
+    }
+
 
 }
 
