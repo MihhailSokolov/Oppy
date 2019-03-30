@@ -217,7 +217,8 @@ public class Controller {
     }
 
     @RequestMapping("/addfriend")
-    public ResponseEntity<Response> addFriend(@RequestParam("username") String username, @RequestBody String usernameFriend) {
+    public ResponseEntity<Response> addFriend(@RequestParam("username") String username,
+                                              @RequestBody String usernameFriend) {
         return ResponseEntity.ok().body(new Response(dbDataController.addNewFriend(username, usernameFriend)));
     }
 

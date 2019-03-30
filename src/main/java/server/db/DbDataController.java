@@ -304,7 +304,7 @@ public class DbDataController {
     /**
      * Method to add a new friend to the user's friend list.
      * @param username user's username
-     * @param friend new friend (User) to be added
+     * @param usernameFriend username of friend to be added
      * @return true if successfully added, false otherwise
      */
     public boolean addNewFriend(String username, String usernameFriend) {
