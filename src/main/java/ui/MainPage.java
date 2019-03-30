@@ -11,22 +11,11 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -574,6 +563,27 @@ public class MainPage {
         folowingList.setColumnResizePolicy(folowingList.CONSTRAINED_RESIZE_POLICY);
         GridPane.setConstraints(folowingList,0,6, 3, 1);
 
+        folowingList.setRowFactory( tv -> {
+                    TableRow<User> row = new TableRow<>();
+                    row.setOnMouseClicked(event -> {
+                        if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                            User rowData = row.getItem();
+                            System.out.println(rowData.getUsername());
+                            Main.clientController.updateUser();
+                            User friend = new User(rowData.getUsername(), null, null, 0, null);
+                            Main.clientController.deleteFriend(friend);
+                        }
+                    });
+            return row ;
+        });
+
+
+
+
+
+
+
+
         Label newFollowLabel = new Label("Search new people:");
         newFollowLabel.setId("newFollowLabel");
         GridPane.setConstraints(newFollowLabel,0,7,3,1);
@@ -759,7 +769,6 @@ public class MainPage {
         clicked.setSelected(true);
         clicked.setDisable(true);
     }
-
 
 }
 
