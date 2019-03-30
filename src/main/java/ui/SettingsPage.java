@@ -16,6 +16,8 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 import java.io.IOException;
@@ -42,7 +44,12 @@ public class SettingsPage {
         final GridPane gridCenter = new GridPane();
         gridCenter.setId("gridCenter");
 
-        profilePicture = SwingFXUtils.toFXImage(Main.clientController.getProfilePic(Main.clientController.getUser().getUsername()), null);
+        BufferedImage serverProfilePicture = Main.clientController.getProfilePic(Main.clientController.getUser().getUsername());
+        if(serverProfilePicture != null){
+            profilePicture = SwingFXUtils.toFXImage(serverProfilePicture, null);
+        } else {
+            profilePicture = new Image("oppy100x100.png");
+        }
         ImageView displayProfilePicture = new ImageView(profilePicture);
         Button profilePictureButton = new Button();
         profilePictureButton.setGraphic(displayProfilePicture);
