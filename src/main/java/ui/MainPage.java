@@ -7,6 +7,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -21,6 +22,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -164,6 +167,26 @@ public class MainPage {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             if (ke.getCode() == KeyCode.ESCAPE) {
                 invisLogoutbutton.fire();
+                ke.consume();
+            }
+        });
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            final KeyCombination settings = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+            final KeyCombination leaderboard = new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN);
+            final KeyCombination addAction = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN);
+            public void handle(KeyEvent ke) {
+                if (settings.match(ke)) {
+                    settingsButton.fire();
+                    ke.consume();
+                }
+                if (leaderboard.match(ke)) {
+                    leaderboardButton.fire();
+                    ke.consume();
+                }
+                if (addAction.match(ke)) {
+                    addActionButton.fire();
+                    ke.consume();
+                }
             }
         });
         return scene;
