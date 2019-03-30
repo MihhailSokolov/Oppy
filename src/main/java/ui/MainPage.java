@@ -508,6 +508,10 @@ public class MainPage {
         }
         catch (Exception e){}
         Main.clientController.updateUser();
+        Date date = Main.clientController.getUser().getRegisterDate();
+        Date now = new Date();
+        System.out.println(date);
+        System.out.println(now);
         ObservableList<User> data =
                 FXCollections.observableArrayList(
                         Main.clientController.getUser().getFriends()  //should become list of people you follow
