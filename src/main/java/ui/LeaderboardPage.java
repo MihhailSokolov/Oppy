@@ -24,20 +24,11 @@ public class LeaderboardPage {
     private static  TableView<User> scoreOfuser = new TableView<>();
 
     //Here we create the 3 observable lists we are going to put in the tables
-    private static final ObservableList<User> user =
-            FXCollections.observableArrayList(
-                    Main.clientController.getUser()
-            );
+    private static ObservableList<User> user;
 
-    private static final ObservableList<User> top50 =
-            FXCollections.observableArrayList(
-                    Main.clientController.getTop50()
-            );
+    private static ObservableList<User> top50;
 
-    private static final ObservableList<User> num1 =
-            FXCollections.observableArrayList(
-                    Main.clientController.getTop50().get(0)
-            );
+    private static ObservableList<User> num1;
 
     /**
      * Method for creating leaderboard scene.
@@ -45,7 +36,13 @@ public class LeaderboardPage {
      * @return scene
      */
     public static Scene leaderboardScene(Stage primaryStage) {
-        resetTables();
+        //Here we put the values in the list so they get reloaded with the page everytime.
+        user = FXCollections.observableArrayList(Main.clientController.getUser());
+
+        top50 = FXCollections.observableArrayList(Main.clientController.getTop50());
+
+        num1 = FXCollections.observableArrayList(Main.clientController.getTop50().get(0));
+
         Stage window = primaryStage;
         window.setTitle("LeaderboardPage");
         final BorderPane centralPageLayout = new BorderPane();

@@ -415,11 +415,11 @@ public class MainPage {
         ToggleButton leaderboardButton = new  ToggleButton("Leaderboard");
         leaderboardButton.setId("leaderActionButton");
         leaderboardButton.setOnAction(e -> {
+            //resets/updates the data stored in the top50 list and the user
+            LeaderboardPage.resetTables();
             //sets the email locally stored in the User objects to their rank
             Main.clientController.getUser().setEmail(Main.clientController.getPosition());
             Main.clientController.top50Ranks(Main.clientController.getTop50());
-            //because number1Player is static it needs to be reset every time you close the page
-            LeaderboardPage.resetTables();
 
             folowingList = new TableView<>();
             window.setScene(LeaderboardPage.leaderboardScene(window));
