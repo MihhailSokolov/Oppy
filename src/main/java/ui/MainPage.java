@@ -586,7 +586,14 @@ public class MainPage {
         followButton.setId("followButton");
         followButton.setOnAction(e -> {
             User friend = new User(followTextField.getText(), null, null, 0, null);
-            if (Main.clientController.addFriend(friend).equals("true")) {
+
+            if (followTextField.getText().equals(Main.clientController.getUser().getUsername())){
+                Alert failed = new Alert(Alert.AlertType.ERROR);
+                failed.setContentText("You can't follow yourself");
+                failed.setHeaderText("Failure.");
+                failed.setTitle("Notification");
+                failed.show();
+            } else if (Main.clientController.addFriend(friend).equals("true")) {
                 Main.clientController.updateFriendList();
                 folowingList.setItems(FXCollections.observableArrayList(Main.clientController.getUser().getFriends()));
                 folowingList.refresh();

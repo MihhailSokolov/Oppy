@@ -100,6 +100,7 @@ public class LeaderboardPage {
         bestPlayers.setItems(top50);
         bestPlayers.getColumns().addAll(rank2, name2, score2);
         bestPlayers.setId("tableBest50");
+        bestPlayers.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         GridPane.setConstraints(bestPlayers,1,1);
         Label bestPlayersLabel = new Label("Top 50 Player Worldwide");
         GridPane.setConstraints(bestPlayersLabel, 1,1);
