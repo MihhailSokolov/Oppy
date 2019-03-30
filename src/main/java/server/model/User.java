@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -121,21 +120,6 @@ public class User {
 
     public void setFriends(List<User> friends) {
         this.friends = friends;
-    }
-
-    @Override
-    public String toString() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        return "User["
-                + "username='" + username + '\''
-                + ", password='" + password + '\''
-                + ", email='" + email + '\''
-                + ", score=" + score
-                + ", registerDate='" + dateFormat.format(registerDate) + '\''
-                + ", anonymous=" + anonymous
-                + ", profilePicture='" + profilePicture + '\''
-                + ", presets=" + presets
-                + ", friends=" + friends + ']';
     }
 
     @Override

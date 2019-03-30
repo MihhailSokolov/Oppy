@@ -304,11 +304,16 @@ public class DbDataController {
     /**
      * Method to add a new friend to the user's friend list.
      * @param username user's username
-     * @param friend new friend (User) to be added
+     * @param friend User to be added as friend
      * @return true if successfully added, false otherwise
      */
     public boolean addNewFriend(String username, User friend) {
         User user = userRepository.findFirstByUsername(username);
+        if (userRepository.findFirstByUsername(friend.getUsername()) == null) {
+            return false;
+        } else {
+            friend = userRepository.findFirstByUsername(friend.getUsername());
+        }
         List<User> friends = user.getFriends();
         friends.add(friend);
         user.setFriends(friends);

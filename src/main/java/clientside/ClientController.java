@@ -166,12 +166,16 @@ public class ClientController {
      * Updates this.user's friendlist by downloading a User (friend) list from server and setting
      * the user's friends to the mentioned list.
      */
-    public void updateFriendList() throws IOException {
+    public void updateFriendList() {
         responseEntity = this.getRequest(this.baseUrl
                 + String.format(Path.GETFRIENDS.toString(), this.user.getUsername()));
-        this.user.setFriends(objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<User>>() {
-        }));
+        try {
+            this.user.setFriends(objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<User>>() {}));
+        } catch (IOException e) {
+            System.out.println("ErrorUpdateFriendList");
+        }
     }
+
 
     /**
      * Sends a get request to server to add a friend to the this.user's friend list.

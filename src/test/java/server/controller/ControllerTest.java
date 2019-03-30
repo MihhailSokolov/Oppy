@@ -531,7 +531,8 @@ public class ControllerTest {
     @Test
     public void checkAddFriend() throws Exception {
         userRepository.save(testUser);
-        User newFriend = new User("friend3", "pass3", "friend3@gmail.com", 300, new Date());
+        User newFriend = new User("friend", null, null, 0, null);
+        userRepository.save(newFriend);
         ObjectMapper mapper = new ObjectMapper();
         String jsonBody = mapper.writeValueAsString(newFriend);
         mockMvc.perform(get("/addfriend?username=" + testUser.getUsername())
@@ -542,6 +543,7 @@ public class ControllerTest {
         testUser = userRepository.findFirstByUsername(testUser.getUsername());
         assertTrue(testUser.getFriends().contains(newFriend));
         userRepository.delete(testUser);
+        userRepository.delete(newFriend);
         testUser.setFriends(friends);
     }
 

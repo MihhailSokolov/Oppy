@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -33,6 +34,7 @@ import server.model.User;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Class for creating main page.
@@ -89,17 +91,17 @@ public class MainPage {
 
         //here the image of the planet needs to be placed
         Image planet;
-        if(pointValue >= 15000){
-        planet = new Image("oppy1.png");
-        } else if(pointValue >= 10000){
+        if (pointValue >= 15000) {
+            planet = new Image("oppy1.png");
+        } else if (pointValue >= 10000) {
             planet = new Image("oppy2.png");
-        } else if(pointValue >= 5000){
+        } else if (pointValue >= 5000) {
             planet = new Image("oppy3.png");
-        } else if(pointValue < -15000){
+        } else if (pointValue < -15000) {
             planet = new Image("oppy7.png");
-        } else if(pointValue < -10000){
+        } else if (pointValue < -10000) {
             planet = new Image("oppy6.png");
-        } else if(pointValue < -5000){
+        } else if (pointValue < -5000) {
             planet = new Image("oppy5.png");
         } else {
             planet = new Image("oppy4.png");
@@ -108,7 +110,7 @@ public class MainPage {
         GridPane.setConstraints(displayLogo, 1, 3);
 
         //here the daily point loss needs to be queried
-        Label pointLoss = new Label(Integer.toString(-150));
+        Label pointLoss = new Label(Integer.toString(-3000));
         pointLoss.setId("pointLoss");
         Tooltip.install(pointLoss, new Tooltip("Number of points you lose each day"));
         GridPane.setConstraints(pointLoss, 2, 2);
@@ -160,15 +162,6 @@ public class MainPage {
         scene.getStylesheets().add("mainStyle.css");
         scene.getStylesheets().add("topHamburgerStyle.css");
         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
-            if (ke.getCode() == KeyCode.S) {
-                settingsButton.fire();
-            }
-            if (ke.getCode() == KeyCode.L) {
-                leaderboardButton.fire();
-            }
-            if (ke.getCode() == KeyCode.A) {
-                addActionButton.fire();
-            }
             if (ke.getCode() == KeyCode.ESCAPE) {
                 invisLogoutbutton.fire();
             }
@@ -455,7 +448,13 @@ public class MainPage {
         gridHamburger.setId("hamburgerMenuRight");
 
         //here the achievement images are created and the achievements you unlocked are displayed
+        Main.clientController.updateUser();
+        Date date = Main.clientController.getUser().getRegisterDate();
+        Date now = new Date();
+        long diffInMillies = Math.abs(now.getTime() - date.getTime());
+        final long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
         String result = Main.clientController.getScore();
+
         //Date date = Main.clientController.getDate();   //Still needs to be implemented
 
         Image preAcivement1 = new Image("placeholder 100x100.png");//implement achievement not unlocked skin
@@ -483,16 +482,25 @@ public class MainPage {
         Tooltip.install(acivement3, new Tooltip("Achievement for reaching 1,000,000 points"));
 
         Image preAcivement4 = new Image("placeholder 100x100.png");
+        if (diff >= 7) {
+            preAcivement4 = new Image("placeholder2 100x100.png");
+        }
         ImageView acivement4 = new ImageView(preAcivement4);
         GridPane.setConstraints(acivement4, 1,0);
         Tooltip.install(acivement4, new Tooltip("Achievement for playing for 1 week"));
 
         Image preAcivement5 = new Image("placeholder 100x100.png");
+        if (diff >= 30) {
+            preAcivement5 = new Image("placeholder2 100x100.png");
+        }
         ImageView acivement5 = new ImageView(preAcivement5);
         GridPane.setConstraints(acivement5, 1,2);
         Tooltip.install(acivement5, new Tooltip("Achievement for playing for 1 month"));
 
         Image preAcivement6 = new Image("placeholder 100x100.png");
+        if (diff >= 365) {
+            preAcivement6 = new Image("placeholder2 100x100.png");
+        }
         ImageView acivement6 = new ImageView(preAcivement6);
         GridPane.setConstraints(acivement6, 1,4);
         Tooltip.install(acivement6, new Tooltip("Achievement for playing for 1 year"));
@@ -502,12 +510,17 @@ public class MainPage {
         followLabel.setId("followLabel");
         GridPane.setConstraints(followLabel,0,5,3,1);
 
-        Main.clientController.updateTop50(); //should become list of people you follow
-        Main.clientController.updateUser();
+        Main.clientController.updateTop50();
+        Main.clientController.updateFriendList();
+
+        System.out.println(diff);
+        System.out.println(date);
+        System.out.println(now);
         ObservableList<User> data =
                 FXCollections.observableArrayList(
-                        Main.clientController.getTop50()  //should become list of people you follow
+                        Main.clientController.getUser().getFriends()  //should become list of people you follow
                 );
+
         TableColumn name = new TableColumn("name");
         name.setCellValueFactory(new PropertyValueFactory<>("username"));
         folowingList.setItems(data);
@@ -528,7 +541,18 @@ public class MainPage {
         Button followButton = new Button("follow");
         followButton.setId("followButton");
         followButton.setOnAction(e -> {
-            //here needs to be the action to start following ome if he exists ^ NOT anonymous
+            User friend = new User(followTextField.getText(), null, null, 0, null);
+            if (Main.clientController.addFriend(friend).equals("true")) {
+                Main.clientController.updateFriendList();
+                folowingList.setItems(FXCollections.observableArrayList(Main.clientController.getUser().getFriends()));
+                folowingList.refresh();
+            } else {
+                Alert failed = new Alert(Alert.AlertType.ERROR);
+                failed.setContentText("Such user does not exist");
+                failed.setHeaderText("Failure.");
+                failed.setTitle("Notification");
+                failed.show();
+            }
         });
         GridPane.setConstraints(followButton, 0, 9, 3, 1);
 
