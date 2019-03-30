@@ -144,8 +144,9 @@ public class MainPage {
         //here the hamburger menu's and the top menu are initialized
         final GridPane gridHamburgerLeft = gridHamburgerLeft(window);
         final GridPane gridHamburgerRight = gridHamburgerRight(window);
-        final GridPane gridBot = gridBot(numberOfPoints);
-        final GridPane gridTop = gridTop(centralPageLayout, gridHamburgerLeft, gridHamburgerRight, "Main Page", numberOfPoints, window);
+        final GridPane gridBot = gridBot(numberOfPoints, window);
+        final GridPane gridTop = gridTop(centralPageLayout, gridHamburgerLeft, gridHamburgerRight,
+                "Main Page", numberOfPoints, window);
 
 
         ////setting the sizes of the rows///////////////////////////////
@@ -196,13 +197,13 @@ public class MainPage {
         });
         return scene;
     }
+
     /**
      * Method for Row constraints of the central grid.
      *
      *
      * @return ArrayList of RowConstraints
      */
-
     public static ArrayList<RowConstraints> gridRowConstraints() {
 
         RowConstraints row0 = new RowConstraints();
@@ -235,12 +236,12 @@ public class MainPage {
         rows.add(row6);
         return rows;
     }
+
     /**
      * Method for column constraints of the central grid.
      *
      * @return ArrayList of ColumnConstraints
      */
-
     public static ArrayList<ColumnConstraints> gridColumnConstraints() {
 
         ColumnConstraints column0 = new ColumnConstraints();
@@ -597,6 +598,9 @@ public class MainPage {
      * @param centralPageLayout BorderPane of witch left and right are set
      * @param gridHamburgerLeft GridPane of left HamburgerMenu
      * @param gridHamburgerRight GridPane of right HamburgerMenu
+     * @param text the name of the current Page
+     * @param  scoreLabel gives the Label with the score to be passed to gridBot
+     * @param  window Stage so that the window can be changed or updated
      * @return GridPane
      */
     public static GridPane gridTop(BorderPane centralPageLayout, GridPane gridHamburgerLeft,
@@ -622,8 +626,8 @@ public class MainPage {
                 centralPageLayout.setBottom(null);
             } else {
                 centralPageLayout.setLeft(null);
-                if(burgerTaskRight.getRate() == -1 && window.getTitle().equals("MainPage")){
-                    centralPageLayout.setBottom(gridBot(scoreLabel));
+                if (burgerTaskRight.getRate() == -1 && window.getTitle().equals("MainPage")) {
+                    centralPageLayout.setBottom(gridBot(scoreLabel, window));
                 }
             }
             burgerTaskLeft.setRate(burgerTaskLeft.getRate() * -1);
@@ -639,8 +643,8 @@ public class MainPage {
             } else {
                 centralPageLayout.setRight(null);
                 folowingList = new TableView<>();
-                if(burgerTaskLeft.getRate() == -1 && window.getTitle().equals("MainPage") ){
-                    centralPageLayout.setBottom(gridBot(scoreLabel));
+                if (burgerTaskLeft.getRate() == -1 && window.getTitle().equals("MainPage")) {
+                    centralPageLayout.setBottom(gridBot(scoreLabel, window));
                 }
             }
             burgerTaskRight.setRate(burgerTaskRight.getRate() * -1);
@@ -659,41 +663,62 @@ public class MainPage {
         return gridTop;
     }
 
+    /**
+     * Very short method that disables a button.
+     */
     public static void disableButton(ToggleButton clicked) {
         clicked.setSelected(true);
         clicked.setDisable(true);
     }
 
-    public static GridPane gridBot(Label scoreLabel) {
+    /**
+     * Method for main scene.
+     *
+     * @param scoreLabel gives the Label with the score to be update
+     * @param window1 Stage so that the window can be reset
+     * @return GridPane
+     */
+    public static GridPane gridBot(Label scoreLabel, Stage window1) {
         final GridPane gridBot = new GridPane();
+        final Stage window = window1;
         gridBot.setId("gridBot");
         Main.clientController.updateUserPresets();
-        for(int i=0; i< Main.clientController.getUser().getPresets().size(); i++){
-           Button button = new Button(Main.clientController.getUser().getPresets().get(i).getName());
-           button.setId("presetButton");
-           GridPane.setConstraints(button, i,0);
-           gridBot.getChildren().add(button);
-           final int a =i;
-           button.setOnAction(e -> {
-               for (int j =0; j < Main.clientController.getUser().getPresets().get(a).getActionList().size(); j++){
-                   Main.clientController.takeAction(Main.clientController.getUser().getPresets().get(a).getActionList().get(j));
-                   Main.clientController.updateUser();
-                   scoreLabel.setText(Integer.toString(Main.clientController.getUser().getScore()));
-               }
-           });
+        for (int i = 0; i < Main.clientController.getUser().getPresets().size(); i++) {
+            final int a = i;
+            Button button = new Button(Main.clientController.getUser().getPresets().get(i).getName());
+            button.setId("presetButton");
+            GridPane.setConstraints(button, 2 * i,0);
+            button.setOnAction(e -> {
+                for (int j  = 0; j < Main.clientController.getUser().getPresets().get(a).getActionList().size(); j++) {
+                    Main.clientController.takeAction(
+                            Main.clientController.getUser().getPresets().get(a).getActionList().get(j));
+                    Main.clientController.updateUser();
+                    scoreLabel.setText(Integer.toString(Main.clientController.getUser().getScore()));
+                }
+            });
 
-           Label actionName = new Label("");
-           for(int j =0; j < Main.clientController.getUser().getPresets().get(i).getActionList().size() && j<4; j++){
-               if(j==3){
-                   actionName = new Label("etc.");
-               }else{
-                   actionName = new Label("-"+ Main.clientController.getUser().getPresets().get(i).getActionList().get(j));
-               }
-               actionName.setId("actionName");
-               GridPane.setConstraints(actionName, i,j+1);
-               gridBot.getChildren().add(actionName);
-           }
-           actionName.setId("actionNameLast");
+            Label actionName = new Label("");
+            for (int j = 0; j < Main.clientController.getUser().getPresets().get(i).getActionList().size()
+                    && j < 4; j++) {
+                if (j == 3) {
+                    actionName = new Label("etc.");
+                } else {
+                    actionName = new Label("-"
+                            + Main.clientController.getUser().getPresets().get(i).getActionList().get(j));
+                }
+                actionName.setId("actionName");
+                GridPane.setConstraints(actionName, 2 * i,j + 1,2,1);
+                gridBot.getChildren().add(actionName);
+            }
+            actionName.setId("actionNameLast");
+            Button deletePreset = new Button("X");
+            deletePreset.setId("presetDeleteButton");
+            deletePreset.setOnAction(e -> {
+                Main.clientController.deletePreset(Main.clientController.getUser().getPresets().get(a));
+                window.setScene(MainPage.mainScene(window));
+            });
+            GridPane.setConstraints(deletePreset, 2 * i + 1, 0);
+            gridBot.getChildren().addAll(button, deletePreset);
         }
         return gridBot;
     }
