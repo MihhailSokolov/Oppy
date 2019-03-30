@@ -1,7 +1,7 @@
 package ui;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXToggleButton;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,13 +13,21 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class SettingsPage {
+
     public static Button logOutButton;
+    private static Image profilePicture;
+
     /**
      * Method for creating settings page.
      * @param primaryStage primary stage
@@ -36,11 +44,28 @@ public class SettingsPage {
         final GridPane gridCenter = new GridPane();
         gridCenter.setId("gridCenter");
 
-        //in this line the placeholder should be replaced with the actual profile picture
-        Image profilePicture = new Image("placeholder 100x100.png"); //get profile pic
+        BufferedImage serverProfilePicture =
+                Main.clientController.getProfilePic(Main.clientController.getUser().getUsername());
+        if (serverProfilePicture != null) {
+            profilePicture = SwingFXUtils.toFXImage(serverProfilePicture, null);
+        } else {
+            profilePicture = new Image("oppy100x100.png");
+        }
         ImageView displayProfilePicture = new ImageView(profilePicture);
-        JFXButton profilePictureButton = new JFXButton();
+        Button profilePictureButton = new Button();
         profilePictureButton.setGraphic(displayProfilePicture);
+        profilePictureButton.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choose profile picture");
+            fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+            File selectedFile = fileChooser.showOpenDialog(window);
+            if (selectedFile != null) {
+                Image selectedImage = new Image(selectedFile.toURI().toString(), 100, 100, true, true);
+                profilePicture = selectedImage;
+                Main.clientController.updateProfilePic(SwingFXUtils.fromFXImage(selectedImage, null));
+                window.setScene(settingsScene(window));
+            }
+        });
         GridPane.setConstraints(profilePictureButton,1,0,1,2);
         profilePictureButton.setId("pfButton");
 

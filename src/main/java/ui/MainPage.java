@@ -7,6 +7,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -34,6 +35,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import server.model.User;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -403,7 +405,14 @@ public class MainPage {
         //creating the buttons for settings, leaderboard and addAction
 
         //Here your profile picture needs to be gotten from the database
-        Image profilePicture = new Image("placeholder 100x100.png");
+        BufferedImage serverProfilePicture = Main.clientController.getProfilePic(
+                Main.clientController.getUser().getUsername());
+        Image profilePicture;
+        if (serverProfilePicture != null) {
+            profilePicture = SwingFXUtils.toFXImage(serverProfilePicture, null);
+        } else {
+            profilePicture = new Image("oppy100x100.png");
+        }
         ImageView displayProfilePicture = new ImageView(profilePicture);
         displayProfilePicture.setFitHeight(100);
         displayProfilePicture.setFitWidth(100);

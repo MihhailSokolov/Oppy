@@ -11,6 +11,7 @@ import server.model.Action;
 import server.model.Preset;
 import server.model.User;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -119,12 +120,42 @@ public class ClientController {
             public String toString() {
                 return "userinfo";
             }
+        }, SETPROFILEPIC {
+            public String toString() {
+                return "setprofilepic";
+            }
+        }, GETPROFILEPIC {
+            public String toString() {
+                return "getprofilepic?username=%s";
+            }
         }, POSITION {
             public String toString() {
                 return "position?username=%s";
             }
         }
 
+    }
+
+    /**
+     * Fetches the profile picture base 64 string from the server.
+     * @param username who the profile picture belongs to.
+     * @return Image (profile picture).
+     */
+    public BufferedImage getProfilePic(String username) {
+        responseEntity = this.getRequest(this.baseUrl + String.format(Path.GETPROFILEPIC.toString(), username));
+        return ImageHandler.decodeToImg(new JSONObject(responseEntity.getBody()).getString("message"));
+    }
+
+    /**
+     * Sends the base64 encoded profile picture string to the server.
+     * @param img the img file to be encoded and sent.
+     * @return String response message ("true"/"false").
+     */
+    public String updateProfilePic(BufferedImage img) {
+        String encodedStr = ImageHandler.getBase64Str(img);
+        this.user.setProfilePicture(encodedStr);
+        responseEntity = this.postRequest(this.baseUrl + Path.SETPROFILEPIC.toString(), user);
+        return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
     /**
