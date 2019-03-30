@@ -195,14 +195,11 @@ public class AddActionPage {
         final ArrayList<CheckBox> listCheckboxes = new ArrayList<CheckBox>();
         final GridPane gridCenter = new GridPane();
         gridCenter.setId("gridCenter");
-
-
         Main.clientController.updateActionList();
         List<Action> actionList = Main.clientController.getActionList();
         for (Action act : actionList) {
             listOfActions.add(act);
         }
-
         Button saveAsButton = new Button("Save as preset...");
         GridPane.setConstraints(saveAsButton, 1, 10);
         ArrayList<String> listForPresets = new ArrayList<String>();
@@ -219,10 +216,8 @@ public class AddActionPage {
             }
             window.setScene(NamePresetPage.namePresetScene(window, listForPresets));
         });
-
         Button submitButton = new Button("submit");
         GridPane.setConstraints(submitButton, 3, 10);
-
         submitButton.setOnAction(e -> {
             for (int i = 0; i < listCheckboxes.size(); i++) {
                 if (listCheckboxes.get(i).isSelected()) {
@@ -230,18 +225,15 @@ public class AddActionPage {
                 }
             }
         });
-
         //here the drop down menu transport is created
         TitledPane transportCategory = new TitledPane();
         transportCategory.setText("Transport");
         GridPane.setConstraints(transportCategory, 1, 2, 3, 1);
         transportCategory.setExpanded(false);
-
         //Set the layout for the TiteldPane's contents
         GridPane gridTransport = new GridPane();
         gridTransport.setId("menuGrid");
         gridTransport.getColumnConstraints().addAll(menuGridColumnConstraints());
-
         List<Action> transportList = Main.clientController.getCategoryList("transport");
         //gets all available actions and display's them in the right category
         for (int i = 0; i < transportList.size(); i++) {
@@ -263,7 +255,6 @@ public class AddActionPage {
         GridPane gridFood = new GridPane();
         gridFood.setId("menuGrid");
         gridFood.getColumnConstraints().addAll(menuGridColumnConstraints());
-
         //gets all available actions and display's them in the right category
         List<Action> foodList = Main.clientController.getCategoryList("food");
         for (int i = 0; i < foodList.size(); i++) {
@@ -285,8 +276,6 @@ public class AddActionPage {
         GridPane gridEnergy = new GridPane();
         gridEnergy.setId("menuGrid");
         gridEnergy.getColumnConstraints().addAll(menuGridColumnConstraints());
-
-
         //gets all available actions and display's dem in the right category
         List<Action> energyList = Main.clientController.getCategoryList("energy");
         for (int i = 0; i < energyList.size(); i++) {
@@ -299,7 +288,6 @@ public class AddActionPage {
             gridEnergy.getChildren().addAll(newCheckBox, newLabelPoints);
         }
         energyCategory.setContent(gridEnergy);
-
         //here the drop down menu misc is created
         TitledPane miscCategory = new TitledPane();
         miscCategory.setText("Misc.");
@@ -321,7 +309,6 @@ public class AddActionPage {
             gridMisc.getChildren().addAll(newCheckBox, newLabelPoints);
         }
         miscCategory.setContent(gridMisc);
-
         //setting so that only one category can be open at any time
         transportCategory.setOnMouseClicked(e -> {
             foodCategory.setExpanded(false);
@@ -347,7 +334,6 @@ public class AddActionPage {
         gridCenter.getChildren().addAll(saveAsButton, submitButton, transportCategory,
                 miscCategory, foodCategory, energyCategory);
         return gridCenter;
-        
     }
 
 }

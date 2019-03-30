@@ -35,7 +35,6 @@ public class ClientControllerTest {
     String testActionJson;
     String testPresetJson;
     String testFriendJson;
-    String testFriendUsernameJson;
 
     ClientController clientController;
     ObjectMapper objectMapper;
@@ -57,7 +56,6 @@ public class ClientControllerTest {
         testActionJson = objectMapper.writeValueAsString(testAction);
         testPresetJson = objectMapper.writeValueAsString(testPreset);
         testFriendJson = objectMapper.writeValueAsString(testFriend);
-        testFriendUsernameJson = "42";
         restTemplate = new RestTemplate();
     }
 
@@ -188,9 +186,9 @@ public class ClientControllerTest {
     public void addFriendTest()  {
         wireMockRule.stubFor(any(urlPathEqualTo("/addfriend"))
                 .withQueryParam("username", equalTo(testUser.getUsername()))
-                .withRequestBody(equalToJson(testFriendUsernameJson))
+                .withRequestBody(equalToJson(testFriendJson))
                 .willReturn(ok(trueResponse)));
-        assertEquals("true", clientController.addFriend(testFriendUsernameJson));
+        assertEquals("true", clientController.addFriend(testFriend));
     }
 
     @Test
