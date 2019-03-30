@@ -22,7 +22,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -406,9 +405,10 @@ public class MainPage {
         //creating the buttons for settings, leaderboard and addAction
 
         //Here your profile picture needs to be gotten from the database
-        BufferedImage serverProfilePicture = Main.clientController.getProfilePic(Main.clientController.getUser().getUsername());
+        BufferedImage serverProfilePicture = Main.clientController.getProfilePic(
+                Main.clientController.getUser().getUsername());
         Image profilePicture;
-        if(serverProfilePicture != null){
+        if (serverProfilePicture != null) {
             profilePicture = SwingFXUtils.toFXImage(serverProfilePicture, null);
         } else {
             profilePicture = new Image("oppy100x100.png");

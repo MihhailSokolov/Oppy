@@ -25,9 +25,9 @@ import java.util.ArrayList;
 
 public class SettingsPage {
 
+    public static Button logOutButton;
     private static Image profilePicture;
 
-    public static Button logOutButton;
     /**
      * Method for creating settings page.
      * @param primaryStage primary stage
@@ -44,8 +44,9 @@ public class SettingsPage {
         final GridPane gridCenter = new GridPane();
         gridCenter.setId("gridCenter");
 
-        BufferedImage serverProfilePicture = Main.clientController.getProfilePic(Main.clientController.getUser().getUsername());
-        if(serverProfilePicture != null){
+        BufferedImage serverProfilePicture =
+                Main.clientController.getProfilePic(Main.clientController.getUser().getUsername());
+        if (serverProfilePicture != null) {
             profilePicture = SwingFXUtils.toFXImage(serverProfilePicture, null);
         } else {
             profilePicture = new Image("oppy100x100.png");
@@ -58,7 +59,7 @@ public class SettingsPage {
             fileChooser.setTitle("Choose profile picture");
             fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
             File selectedFile = fileChooser.showOpenDialog(window);
-            if(selectedFile != null) {
+            if (selectedFile != null) {
                 Image selectedImage = new Image(selectedFile.toURI().toString(), 100, 100, true, true);
                 profilePicture = selectedImage;
                 Main.clientController.updateProfilePic(SwingFXUtils.fromFXImage(selectedImage, null));
