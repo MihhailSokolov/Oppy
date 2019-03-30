@@ -43,10 +43,8 @@ public class LoginPage {
         Stage window = primaryStage;
         window.setTitle("LoginPage");
         window.setMaximized(true);
-
         GridPane grid = new GridPane();
         grid.setId("grid");
-
         //fake login button at the top
         ToggleButton fakeLoginButton = new ToggleButton("Sign in");
         fakeLoginButton.setId("login-register");
@@ -56,18 +54,15 @@ public class LoginPage {
 
         ToggleGroup loginRegister = new ToggleGroup();
         fakeLoginButton.setToggleGroup(loginRegister);
-
         //the button the redirects to the register page
         ToggleButton registerButton = new ToggleButton("Register");
         registerButton.setId("login-register");
         GridPane.setConstraints(registerButton, 1, 0);
         registerButton.setOnAction(e -> window.setScene(RegisterPage.registerScene(window)));
         registerButton.setToggleGroup(loginRegister);
-
         //login/email and password fields and labels
         Label username = new Label("Username/email");
         GridPane.setConstraints(username, 0, 2);
-
         Label password = new Label("Password");
         GridPane.setConstraints(password, 0, 5);
 
@@ -80,15 +75,12 @@ public class LoginPage {
         usernameTextfield.setPromptText("Username");
         usernameTextfield.setText(remUserName);
         GridPane.setConstraints(usernameTextfield, 0, 3, 2, 1);
-
         PasswordField passwordTextfield = new PasswordField();
         passwordTextfield.setPromptText("Password");
         GridPane.setConstraints(passwordTextfield, 0, 6, 2,  1);
-
         //remember forgot login
         CheckBox rememberMe = new CheckBox("remember me");
         GridPane.setConstraints(rememberMe, 0, 7);
-
 
         Button loginButton = new Button("Login");
         loginButton.setId("loginRegisterButton");
@@ -119,20 +111,17 @@ public class LoginPage {
         Button forgotPasswordButton = new Button("forgot password?");
         forgotPasswordButton.setId("forgotPasswordButton");
         GridPane.setConstraints(forgotPasswordButton, 1, 7);
-
         //Here all elements previously created are added to the view and the view is center
         grid.getChildren().addAll(loginButton, username, password, usernameTextfield,
                 passwordTextfield, rememberMe, forgotPasswordButton,
                 fakeLoginButton, registerButton);
         grid.setAlignment(Pos.CENTER);
-
         //TopGrid made here
         GridPane topGrid = new GridPane();
         topGrid.setPadding(new Insets(10, 10, 10, 10));
         topGrid.setVgap(8);
         topGrid.setHgap(10);
         topGrid.setId("topGrid");
-
         //here the logo is created
         Image logo = new Image("oppy350x150.png");
         ImageView displayLogo = new ImageView(logo);
@@ -174,7 +163,6 @@ public class LoginPage {
 
         grid.getRowConstraints().addAll(row0, row1, row2, row3, row4, row5, row6, row7, row8, row9, row10);
         //end of setting row sizes
-
         //here the create view is made into a scene and return when the method is called
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(grid);
