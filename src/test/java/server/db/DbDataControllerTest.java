@@ -80,7 +80,7 @@ public class DbDataControllerTest {
         }
         userRepository.saveAll(users);
         List<User> top50 = dbDataController.getTop50Users();
-        userRepository.deleteAll(top50);
+        userRepository.deleteAll(users);
         assertEquals(50, top50.size());
     }
 
