@@ -51,10 +51,10 @@ public class NamePresetPage {
             final Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
             alert2.setTitle("ALERT!");
             alert2.setHeaderText("No name entered for the preset");
-            if(Main.clientController.getUser().getPresets().size() > 7){
+            if (Main.clientController.getUser().getPresets().size() > 7) {
                 alert1.showAndWait();
                 window.setScene(AddActionPage.addActionScene(window));
-            }else if (presetName ==null || presetName.equals("")) {
+            } else if (presetName == null || presetName.equals("")) {
                 alert2.showAndWait();
             } else {
                 server.model.Preset presetToSend = new server.model.Preset(presetName, listForPresets);
