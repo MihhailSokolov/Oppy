@@ -546,8 +546,10 @@ public class MainPage {
 
         TableColumn name = new TableColumn("name");
         name.setCellValueFactory(new PropertyValueFactory<>("username"));
+        TableColumn score = new TableColumn("score");
+        score.setCellValueFactory(new PropertyValueFactory<>("score"));
         folowingList.setItems(data);
-        folowingList.getColumns().addAll(name);
+        folowingList.getColumns().addAll(name, score);
         folowingList.setMaxHeight(300);
         folowingList.setPrefWidth(250);
         folowingList.setColumnResizePolicy(folowingList.CONSTRAINED_RESIZE_POLICY);
