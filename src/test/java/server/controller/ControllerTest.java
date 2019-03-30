@@ -531,7 +531,7 @@ public class ControllerTest {
     @Test
     public void checkAddFriend() throws Exception {
         userRepository.save(testUser);
-        User newFriend = new User("friend", null, null, 0, null);
+        User newFriend = new User("friend", null, null, 0, new Date());
         userRepository.save(newFriend);
         ObjectMapper mapper = new ObjectMapper();
         String jsonBody = mapper.writeValueAsString(newFriend);
@@ -541,6 +541,7 @@ public class ControllerTest {
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$.message", is("true")));
         testUser = userRepository.findFirstByUsername(testUser.getUsername());
+        newFriend = userRepository.findFirstByUsername(newFriend.getUsername());
         assertTrue(testUser.getFriends().contains(newFriend));
         userRepository.delete(testUser);
         userRepository.delete(newFriend);
