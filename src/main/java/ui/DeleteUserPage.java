@@ -11,6 +11,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class DeleteUserPage {
     /**
      <<<<<<< HEAD
@@ -40,7 +42,11 @@ public class DeleteUserPage {
             // Maybe a pop up or the like asking the user if they're sure they want to delete?
             String result = Main.clientController.deleteAccount();
             if (result.equals("true")) {
-                window.setScene(LoginPage.loginScene(window));
+                try {
+                    window.setScene(LoginPage.loginScene(window));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
 
         });

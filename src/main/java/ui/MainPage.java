@@ -34,6 +34,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import server.model.User;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -159,7 +160,13 @@ public class MainPage {
         centralPageLayout.setTop(gridTop);
         //logout from main page functionality
         Button invisLogoutbutton = new Button();
-        invisLogoutbutton.setOnAction( e -> window.setScene(LoginPage.loginScene(window)));
+        invisLogoutbutton.setOnAction( e -> {
+            try {
+                window.setScene(LoginPage.loginScene(window));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
         //here the create view is made into a scene and returned when the method is called
         Scene scene = new Scene(centralPageLayout, 1920, 1080);
         scene.getStylesheets().add("mainStyle.css");

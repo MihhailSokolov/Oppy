@@ -24,6 +24,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import server.model.User;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -41,7 +42,6 @@ public class RegisterPage {
 
         GridPane grid = new GridPane();
         grid.setId("grid2");
-
         //fake register button at the top
         ToggleButton fakeRegisterButton = new ToggleButton("Register");
         fakeRegisterButton.setId("login-register");
@@ -50,44 +50,40 @@ public class RegisterPage {
         GridPane.setConstraints(fakeRegisterButton, 1, 0);
         ToggleGroup loginRegister = new ToggleGroup();
         fakeRegisterButton.setToggleGroup(loginRegister);
-
         //The button the redirects to the login page
         ToggleButton loginButton = new ToggleButton("Sign in");
         loginButton.setId("login-register");
         GridPane.setConstraints(loginButton, 0, 0);
         loginButton.setOnAction(e -> {
-            window.setScene(LoginPage.loginScene(window));
+            try {
+                window.setScene(LoginPage.loginScene(window));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         });
         loginButton.setToggleGroup(loginRegister);
         //email, username, password  and confirm password fields and labels
         Label email = new Label("email");
         GridPane.setConstraints(email, 0, 2);
-
         Label username = new Label("Username");
         GridPane.setConstraints(username, 0, 5);
-
         Label password = new Label("Password");
         GridPane.setConstraints(password, 0, 8);
-
         Label confirmPassword = new Label("Confirm password");
         GridPane.setConstraints(confirmPassword, 0, 11);
 
         TextField emailTextfield = new TextField();
         emailTextfield.setPromptText("email");
         GridPane.setConstraints(emailTextfield, 0, 3, 2, 1);
-
         TextField usernameTextfield = new TextField();
         usernameTextfield.setPromptText("Username");
         GridPane.setConstraints(usernameTextfield, 0, 6, 2, 1);
-
         PasswordField passwordTextfield = new PasswordField();
         passwordTextfield.setPromptText("Password");
         GridPane.setConstraints(passwordTextfield, 0, 9, 2, 1);
-
         PasswordField confirmPasswordTextfield = new PasswordField();
         confirmPasswordTextfield.setPromptText("Confirm password");
         GridPane.setConstraints(confirmPasswordTextfield, 0, 12, 2, 1);
-
         //Here the register button is created
         Button registerButton = new Button("Register");
         registerButton.setId("loginRegisterButton");
@@ -102,7 +98,11 @@ public class RegisterPage {
                 success.setContentText("You have successfully registered!");
                 success.setTitle("Notification");
                 success.show();
-                window.setScene(LoginPage.loginScene(window));
+                try {
+                    window.setScene(LoginPage.loginScene(window));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             } else {
                 Alert failed = new Alert(Alert.AlertType.ERROR);
                 failed.setHeaderText("Failed.");
@@ -139,19 +139,15 @@ public class RegisterPage {
         topGrid.setVgap(8);
         topGrid.setHgap(10);
         topGrid.setId("topGrid");
-
         //here the logo is created
         Image logo = new Image("oppy350x150.png");
         ImageView displayLogo = new ImageView(logo);
         GridPane.setConstraints(displayLogo, 0, 0, 3, 1);
         topGrid.getChildren().add(displayLogo);
         topGrid.setAlignment(Pos.CENTER);
-
         //setting the sizes of the rows
-
         grid.getRowConstraints().addAll(gridRowConstraints());
         //end of setting row sizes
-
         //here the create view is made into a scene and return when the method is called
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(grid);

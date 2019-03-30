@@ -4,6 +4,8 @@ import clientside.ClientController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 
 public class Main extends Application {
 
@@ -18,7 +20,7 @@ public class Main extends Application {
      *
      * @param primaryStage primStage
      */
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
         Stage window = primaryStage;
 
         window.setTitle("LoginPage");
