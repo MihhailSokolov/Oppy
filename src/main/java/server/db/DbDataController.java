@@ -341,8 +341,19 @@ public class DbDataController {
         return deleted;
     }
 
+    /**
+     * Method to get user's current ranking.
+     * @param username user's username
+     * @return integer rank
+     */
     public int getYourPositionInList(String username) {
-        List<User> users = userRepository.findAllByAnonymousOrUsernameOrderByScoreDesc(false, username);
+        List<User> users = userRepository.findAllByAnonymousOrUsername(false, username);
+        List<User> sortedUsers = new ArrayList<>();
+        for (User user : users) {
+            user.setScore(getUserScore(user.getUsername()));
+            sortedUsers.add(user);
+        }
+        sortedUsers.sort(new ScoreComparator());
         return findIndexByUsername(users, username);
     }
 
