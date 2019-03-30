@@ -2,20 +2,20 @@ package clientside;
 
 import org.imgscalr.Scalr;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
+import javax.imageio.ImageIO;
 
 
 public class ImageHandler {
-    static String getBase64Str(BufferedImage bImage) {
-        Scalr.resize(bImage, 150);
+    static String getBase64Str(BufferedImage binImage) {
+        Scalr.resize(binImage, 150);
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
-            ImageIO.write(bImage, "png", os);
+            ImageIO.write(binImage, "png", os);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -11,7 +11,6 @@ import server.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -331,7 +330,8 @@ public class DbDataController {
         User user = userRepository.findFirstByUsername(username);
         List<User> friends = user.getFriends();
         boolean deleted = false;
-        for (User user1 : friends) {
+        List<User> newFriends = List.copyOf(friends);
+        for (User user1 : newFriends) {
             if (user1.getUsername().equals(friend.getUsername())) {
                 deleted = friends.remove(user1);
             }
