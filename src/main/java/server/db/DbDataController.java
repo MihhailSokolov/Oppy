@@ -330,7 +330,7 @@ public class DbDataController {
         User user = userRepository.findFirstByUsername(username);
         List<User> friends = user.getFriends();
         boolean deleted = false;
-        List<User> newFriends = List.copyOf(friends);
+        List<User> newFriends = new ArrayList<>(friends);
         for (User user1 : newFriends) {
             if (user1.getUsername().equals(friend.getUsername())) {
                 deleted = friends.remove(user1);
