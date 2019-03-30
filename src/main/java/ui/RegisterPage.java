@@ -24,6 +24,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import server.model.User;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -56,7 +57,11 @@ public class RegisterPage {
         loginButton.setId("login-register");
         GridPane.setConstraints(loginButton, 0, 0);
         loginButton.setOnAction(e -> {
-            window.setScene(LoginPage.loginScene(window));
+            try {
+                window.setScene(LoginPage.loginScene(window));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         });
         loginButton.setToggleGroup(loginRegister);
         //email, username, password  and confirm password fields and labels
@@ -102,7 +107,11 @@ public class RegisterPage {
                 success.setContentText("You have successfully registered!");
                 success.setTitle("Notification");
                 success.show();
-                window.setScene(LoginPage.loginScene(window));
+                try {
+                    window.setScene(LoginPage.loginScene(window));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             } else {
                 Alert failed = new Alert(Alert.AlertType.ERROR);
                 failed.setHeaderText("Failed.");

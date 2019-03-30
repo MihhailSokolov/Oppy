@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class SettingsPage {
@@ -77,7 +78,11 @@ public class SettingsPage {
         logOutButton = new Button("Log out");
         GridPane.setConstraints(logOutButton,1,6,2,1);
         logOutButton.setOnAction(e -> {
-            window.setScene(LoginPage.loginScene(window));
+            try {
+                window.setScene(LoginPage.loginScene(window));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         });
 
         Button deleteAccountButton = new Button("Delete account");

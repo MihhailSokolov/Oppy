@@ -11,6 +11,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class ChangePasswordPage {
     /**
      <<<<<<< HEAD
@@ -47,7 +49,11 @@ public class ChangePasswordPage {
             String result = Main.clientController.updatePass(newPasswordTextfield.getText());
             if (result.equals("true")) { // change password
 
-                window.setScene(LoginPage.loginScene(window));
+                try {
+                    window.setScene(LoginPage.loginScene(window));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
         GridPane.setConstraints(changeButton, 2, 4);

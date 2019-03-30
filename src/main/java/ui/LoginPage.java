@@ -25,6 +25,11 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import server.model.User;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Date;
 
 public class LoginPage {
@@ -34,7 +39,7 @@ public class LoginPage {
      * @param primaryStage primary stage
      * @return scene
      */
-    public static Scene loginScene(Stage primaryStage) {
+    public static Scene loginScene(Stage primaryStage) throws IOException {
         Stage window = primaryStage;
         window.setTitle("LoginPage");
         window.setMaximized(true);
@@ -66,8 +71,14 @@ public class LoginPage {
         Label password = new Label("Password");
         GridPane.setConstraints(password, 0, 5);
 
+        new FileWriter("remember.txt", false);
+        File file = new File("remember.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        String remUserName = br.readLine();
+
         TextField usernameTextfield = new TextField();
         usernameTextfield.setPromptText("Username");
+        usernameTextfield.setText(remUserName);
         GridPane.setConstraints(usernameTextfield, 0, 3, 2, 1);
 
         PasswordField passwordTextfield = new PasswordField();
@@ -87,6 +98,13 @@ public class LoginPage {
             String result = clientHandler.login();
             if (result.equals("true")) { // go to main page, now set to register as example
                 Main.clientController = clientHandler;
+                if (rememberMe.isSelected()) {
+                    try {
+                        clientside.Remember.storeUser(usernameTextfield.getText(), "remember.txt");
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
                 window.setScene(MainPage.mainScene(window));
             } else {
                 Alert failed = new Alert(Alert.AlertType.ERROR);
