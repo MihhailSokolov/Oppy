@@ -1,6 +1,7 @@
 package ui;
 
 import clientside.ClientController;
+import clientside.RegisterCheck;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -88,10 +89,19 @@ public class RegisterPage {
         Button registerButton = new Button("Register");
         registerButton.setId("loginRegisterButton");
         GridPane.setConstraints(registerButton, 0, 15, 2, 1);
+
         registerButton.setOnAction(e -> {
-            ClientController clientController = new ClientController(new User(usernameTextfield.getText(),
-                    passwordTextfield.getText(), emailTextfield.getText(), 0, new Date()));
-            String result = clientController.register();
+            String result;
+            if (RegisterCheck.checkUser(usernameTextfield.getText())
+                    && RegisterCheck.checkEmail(emailTextfield.getText())
+                    && RegisterCheck.checkPassword(passwordTextfield.getText(), confirmPasswordTextfield.getText())) {
+                ClientController clientController = new ClientController(new User(usernameTextfield.getText(),
+                        passwordTextfield.getText(), emailTextfield.getText(), 0, new Date()));
+                result = clientController.register();
+            } else {
+                result = "username, email, or password is too short "
+                        + "(password is less 8 characters or any other field is left empty)";
+            }
             if (result.equals("true")) {
                 Alert success = new Alert(Alert.AlertType.INFORMATION);
                 success.setHeaderText("Success!");
