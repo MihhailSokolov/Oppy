@@ -1,10 +1,8 @@
 package clientside;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import javafx.scene.image.Image;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,6 +32,7 @@ public class ClientControllerTest {
     User testFriend;
     Action testAction;
     Preset testPreset;
+    List<User> testList;
 
     String testUserJson;
     String testActionJson;
@@ -292,5 +291,20 @@ public class ClientControllerTest {
         }
     }
 
+    @Test
+    public void getPositionTest() {
+        wireMockRule.stubFor(get(urlPathEqualTo("/position"))
+                .withQueryParam("username", equalTo(testUser.getUsername()))
+                .willReturn(ok(trueResponse)));
+        assertEquals("true", clientController.getPosition());
+    }
+
+    @Test
+    public void top50RankTest() {
+        List<User> test = new ArrayList<>();
+        test.add(new User("BillGates99", null, null, 0, new Date()));
+        clientController.top50Ranks(test);
+        assertEquals("1", test.get(0).getEmail());
+    }
 
 }

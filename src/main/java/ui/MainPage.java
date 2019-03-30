@@ -7,8 +7,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -20,6 +22,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -30,9 +34,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import server.model.User;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Class for creating main page.
@@ -61,17 +67,11 @@ public class MainPage {
         //create the grid for the center of the page
         GridPane gridCenter = new GridPane();
         gridCenter.setId("centerGrid");
-        //here the logo is created
-
-        //here the image of the planet needs to be placed
-        Image logo = new Image("placeholder 700x700.png");
-        ImageView displayLogo = new ImageView(logo);
-        GridPane.setConstraints(displayLogo, 1, 3);
 
         //here the username label is created
         String username = Main.clientController.getUser().getUsername();
         if (username == null || username.equals("")) {
-            username = "lazy ass cunt";  //just here to troll people
+            username = "test account";
         }
         Label usernameLabel = new Label(username);
         Tooltip.install(usernameLabel, new Tooltip("This is your username"));
@@ -80,20 +80,41 @@ public class MainPage {
 
         //here the number of points needs to be queried
         String result = Main.clientController.getScore();
+        int pointValue = Integer.parseInt(result);
         Label numberOfPoints = new Label(result);
         numberOfPoints.setId("yourPoints");
         Tooltip.install(numberOfPoints, new Tooltip("Your current number of points"));
-        if (Integer.parseInt(result) < 0) {
+        if (pointValue < 0) {
             numberOfPoints.setStyle("-fx-text-fill: red");
-        } else if (Integer.parseInt(result) > 0) {
+        } else if (pointValue > 0) {
             numberOfPoints.setStyle("-fx-text-fill: green");
         } else {
             numberOfPoints.setStyle("-fx-text-fill: yellow");
         }
         GridPane.setConstraints(numberOfPoints, 0, 2);
 
+        //here the image of the planet needs to be placed
+        Image planet;
+        if (pointValue >= 15000) {
+            planet = new Image("oppy1.png");
+        } else if (pointValue >= 10000) {
+            planet = new Image("oppy2.png");
+        } else if (pointValue >= 5000) {
+            planet = new Image("oppy3.png");
+        } else if (pointValue < -15000) {
+            planet = new Image("oppy7.png");
+        } else if (pointValue < -10000) {
+            planet = new Image("oppy6.png");
+        } else if (pointValue < -5000) {
+            planet = new Image("oppy5.png");
+        } else {
+            planet = new Image("oppy4.png");
+        }
+        ImageView displayLogo = new ImageView(planet);
+        GridPane.setConstraints(displayLogo, 1, 3);
+
         //here the daily point loss needs to be queried
-        Label pointLoss = new Label(Integer.toString(-150));
+        Label pointLoss = new Label(Integer.toString(-3000));
         pointLoss.setId("pointLoss");
         Tooltip.install(pointLoss, new Tooltip("Number of points you lose each day"));
         GridPane.setConstraints(pointLoss, 2, 2);
@@ -139,23 +160,40 @@ public class MainPage {
         centralPageLayout.setTop(gridTop);
         //logout from main page functionality
         Button invisLogoutbutton = new Button();
-        invisLogoutbutton.setOnAction( e -> window.setScene(LoginPage.loginScene(window)));
+        invisLogoutbutton.setOnAction( e -> {
+            try {
+                window.setScene(LoginPage.loginScene(window));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
         //here the create view is made into a scene and returned when the method is called
         Scene scene = new Scene(centralPageLayout, 1920, 1080);
         scene.getStylesheets().add("mainStyle.css");
         scene.getStylesheets().add("topHamburgerStyle.css");
         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
-            if (ke.getCode() == KeyCode.S) {
-                settingsButton.fire();
-            }
-            if (ke.getCode() == KeyCode.L) {
-                leaderboardButton.fire();
-            }
-            if (ke.getCode() == KeyCode.A) {
-                addActionButton.fire();
-            }
             if (ke.getCode() == KeyCode.ESCAPE) {
                 invisLogoutbutton.fire();
+                ke.consume();
+            }
+        });
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            final KeyCombination settings = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+            final KeyCombination leaderboard = new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN);
+            final KeyCombination addAction = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN);
+            public void handle(KeyEvent ke) {
+                if (settings.match(ke)) {
+                    settingsButton.fire();
+                    ke.consume();
+                }
+                if (leaderboard.match(ke)) {
+                    leaderboardButton.fire();
+                    ke.consume();
+                }
+                if (addAction.match(ke)) {
+                    addActionButton.fire();
+                    ke.consume();
+                }
             }
         });
         return scene;
@@ -384,8 +422,12 @@ public class MainPage {
         ToggleButton leaderboardButton = new  ToggleButton("Leaderboard");
         leaderboardButton.setId("leaderActionButton");
         leaderboardButton.setOnAction(e -> {
-            //because number1Player is static it needs to be reset every time you close the page
+            //resets/updates the data stored in the top50 list and the user
             LeaderboardPage.resetTables();
+            //sets the email locally stored in the User objects to their rank
+            Main.clientController.getUser().setEmail(Main.clientController.getPosition());
+            Main.clientController.top50Ranks(Main.clientController.getTop50());
+
             folowingList = new TableView<>();
             window.setScene(LeaderboardPage.leaderboardScene(window));
         });
@@ -435,13 +477,19 @@ public class MainPage {
         GridPane gridHamburger = new GridPane();
         gridHamburger.setId("hamburgerMenuRight");
 
-        //here the acivement images are created and the achievements you unlocked are displayed
+        //here the achievement images are created and the achievements you unlocked are displayed
+        Main.clientController.updateUser();
+        Date date = Main.clientController.getUser().getRegisterDate();
+        Date now = new Date();
+        long diffInMillies = Math.abs(now.getTime() - date.getTime());
+        final long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
         String result = Main.clientController.getScore();
-        //Date date = Main.clientController.getDate();   //Still needs to be inplemented
 
-        Image preAcivement1 = new Image("placeholder 100x100.png");//inplement acievemnt not unlocked skin
+        //Date date = Main.clientController.getDate();   //Still needs to be implemented
+
+        Image preAcivement1 = new Image("placeholder 100x100.png");//implement achievement not unlocked skin
         if (Integer.parseInt(result) >= 10000) {
-            preAcivement1 = new Image("placeholder2 100x100.png");//inplement acievemnt Image
+            preAcivement1 = new Image("placeholder2 100x100.png");//implement achievement Image
         }
         ImageView acivement1 = new ImageView(preAcivement1);
         GridPane.setConstraints(acivement1, 0,0);
@@ -464,16 +512,25 @@ public class MainPage {
         Tooltip.install(acivement3, new Tooltip("Achievement for reaching 1,000,000 points"));
 
         Image preAcivement4 = new Image("placeholder 100x100.png");
+        if (diff >= 7) {
+            preAcivement4 = new Image("placeholder2 100x100.png");
+        }
         ImageView acivement4 = new ImageView(preAcivement4);
         GridPane.setConstraints(acivement4, 1,0);
         Tooltip.install(acivement4, new Tooltip("Achievement for playing for 1 week"));
 
         Image preAcivement5 = new Image("placeholder 100x100.png");
+        if (diff >= 30) {
+            preAcivement5 = new Image("placeholder2 100x100.png");
+        }
         ImageView acivement5 = new ImageView(preAcivement5);
         GridPane.setConstraints(acivement5, 1,2);
         Tooltip.install(acivement5, new Tooltip("Achievement for playing for 1 month"));
 
         Image preAcivement6 = new Image("placeholder 100x100.png");
+        if (diff >= 365) {
+            preAcivement6 = new Image("placeholder2 100x100.png");
+        }
         ImageView acivement6 = new ImageView(preAcivement6);
         GridPane.setConstraints(acivement6, 1,4);
         Tooltip.install(acivement6, new Tooltip("Achievement for playing for 1 year"));
@@ -483,11 +540,17 @@ public class MainPage {
         followLabel.setId("followLabel");
         GridPane.setConstraints(followLabel,0,5,3,1);
 
-        Main.clientController.updateTop50(); //should become list of people you follow
+        Main.clientController.updateTop50();
+        Main.clientController.updateFriendList();
+
+        System.out.println(diff);
+        System.out.println(date);
+        System.out.println(now);
         ObservableList<User> data =
                 FXCollections.observableArrayList(
-                        Main.clientController.getTop50()  //should become list of people you follow
+                        Main.clientController.getUser().getFriends()  //should become list of people you follow
                 );
+
         TableColumn name = new TableColumn("name");
         name.setCellValueFactory(new PropertyValueFactory<>("username"));
         folowingList.setItems(data);
@@ -508,7 +571,18 @@ public class MainPage {
         Button followButton = new Button("follow");
         followButton.setId("followButton");
         followButton.setOnAction(e -> {
-            //here needs to be the action to start following ome if he exists ^ NOT anonymous
+            User friend = new User(followTextField.getText(), null, null, 0, null);
+            if (Main.clientController.addFriend(friend).equals("true")) {
+                Main.clientController.updateFriendList();
+                folowingList.setItems(FXCollections.observableArrayList(Main.clientController.getUser().getFriends()));
+                folowingList.refresh();
+            } else {
+                Alert failed = new Alert(Alert.AlertType.ERROR);
+                failed.setContentText("Such user does not exist");
+                failed.setHeaderText("Failure.");
+                failed.setTitle("Notification");
+                failed.show();
+            }
         });
         GridPane.setConstraints(followButton, 0, 9, 3, 1);
 

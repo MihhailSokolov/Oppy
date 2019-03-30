@@ -4,7 +4,6 @@ import com.google.common.hash.Hashing;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.scene.image.Image;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -13,7 +12,6 @@ import server.model.Preset;
 import server.model.User;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -130,6 +128,10 @@ public class ClientController {
             public String toString() {
                 return "getprofilepic?username=%s";
             }
+        }, POSITION {
+            public String toString() {
+                return "position?username=%s";
+            }
         }
 
     }
@@ -195,12 +197,16 @@ public class ClientController {
      * Updates this.user's friendlist by downloading a User (friend) list from server and setting
      * the user's friends to the mentioned list.
      */
-    public void updateFriendList() throws IOException {
+    public void updateFriendList() {
         responseEntity = this.getRequest(this.baseUrl
                 + String.format(Path.GETFRIENDS.toString(), this.user.getUsername()));
-        this.user.setFriends(objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<User>>() {
-        }));
+        try {
+            this.user.setFriends(objectMapper.readValue(responseEntity.getBody(), new TypeReference<List<User>>() {}));
+        } catch (IOException e) {
+            System.out.println("ErrorUpdateFriendList");
+        }
     }
+
 
     /**
      * Sends a get request to server to add a friend to the this.user's friend list.
@@ -458,6 +464,20 @@ public class ClientController {
         String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
         this.user.setAnonymous(trueOrFalse);
         return responseMsg;
+    }
+
+    /**
+     * changes the email value of a list of users in decending order.
+     */
+    public void top50Ranks(List<User> list) {
+        for (int i = 1; i <= list.size(); i++) {
+            list.get(i - 1).setEmail("" + i);
+        }
+    }
+
+    public String getPosition() {
+        responseEntity = this.getRequest(this.baseUrl + String.format(Path.POSITION.toString(), user.getUsername()));
+        return new JSONObject(responseEntity.getBody()).getString("message");
     }
 
 

@@ -1,6 +1,5 @@
 package ui;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
@@ -17,10 +16,8 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -45,7 +42,6 @@ public class SettingsPage {
         final GridPane gridCenter = new GridPane();
         gridCenter.setId("gridCenter");
 
-        //in this line the placeholder should be replaced with the actual profile picture
         profilePicture = SwingFXUtils.toFXImage(Main.clientController.getProfilePic(Main.clientController.getUser().getUsername()), null);
         ImageView displayProfilePicture = new ImageView(profilePicture);
         Button profilePictureButton = new Button();
@@ -99,7 +95,11 @@ public class SettingsPage {
         logOutButton = new Button("Log out");
         GridPane.setConstraints(logOutButton,1,6,2,1);
         logOutButton.setOnAction(e -> {
-            window.setScene(LoginPage.loginScene(window));
+            try {
+                window.setScene(LoginPage.loginScene(window));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         });
 
         Button deleteAccountButton = new Button("Delete account");

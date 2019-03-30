@@ -304,11 +304,16 @@ public class DbDataController {
     /**
      * Method to add a new friend to the user's friend list.
      * @param username user's username
-     * @param friend new friend (User) to be added
+     * @param friend User to be added as friend
      * @return true if successfully added, false otherwise
      */
     public boolean addNewFriend(String username, User friend) {
         User user = userRepository.findFirstByUsername(username);
+        if (userRepository.findFirstByUsername(friend.getUsername()) == null) {
+            return false;
+        } else {
+            friend = userRepository.findFirstByUsername(friend.getUsername());
+        }
         List<User> friends = user.getFriends();
         friends.add(friend);
         user.setFriends(friends);
@@ -336,8 +341,19 @@ public class DbDataController {
         return deleted;
     }
 
+    /**
+     * Method to get user's current ranking.
+     * @param username user's username
+     * @return integer rank
+     */
     public int getYourPositionInList(String username) {
-        List<User> users = userRepository.findAllByAnonymousOrUsernameOrderByScore(false, username);
+        List<User> users = userRepository.findAllByAnonymousOrUsername(false, username);
+        List<User> sortedUsers = new ArrayList<>();
+        for (User user : users) {
+            user.setScore(getUserScore(user.getUsername()));
+            sortedUsers.add(user);
+        }
+        sortedUsers.sort(new ScoreComparator());
         return findIndexByUsername(users, username);
     }
 
@@ -401,8 +417,15 @@ public class DbDataController {
         }
         return null;
     }
-    
+
+    /**
+     * Method to get complete User object from db.
+     * @param username user's username
+     * @return User object
+     */
     public User getUser(String username) {
-        return userRepository.findFirstByUsername(username);
+        User user = userRepository.findFirstByUsername(username);
+        user.setScore(getUserScore(username));
+        return user;
     }
 }
