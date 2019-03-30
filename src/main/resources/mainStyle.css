@@ -57,11 +57,72 @@
     -fx-min-height: 150px;
     -fx-max-height: 150px;
     -fx-background-color: white;
+    -fx-alignment: CENTER;
+    /* Image from https://www.pexels.com/photo/scenic-view-of-dramatic-sky-during-winter-258112/*/
+    -fx-background-image: url("test.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 2000 1200;
+    -fx-hgap: 10px;
 }
+
 #actionName{
+     -fx-min-height: 30px;
+     -fx-max-height: 30px;
+     -fx-min-width: 200px;
+     -fx-max-width: 200px;
+     -fx-font-size: 12px;
+     -fx-text-fill: black;
+     -fx-border-width: 0 2 0 2;
+     -fx-border-radius: 0px;
+     -fx-text-fill: white;
+ }
+
+#actionNameLast{
     -fx-min-height: 30px;
     -fx-max-height: 30px;
+    -fx-min-width: 200px;
+    -fx-max-width: 200px;
     -fx-font-size: 12px;
     -fx-text-fill: black;
+    -fx-border-width: 0 2 2 2;
+    -fx-border-radius: 0 0 5 5px;
+    -fx-text-fill: white;
+}
+
+#presetButton{
+    -fx-background-color:
+            #090a0c,
+            linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 12px;
+    -fx-min-width: 200px;
+    -fx-max-width: 200px;
+    -fx-min-height: 30px;
+    -fx-max-height: 30px;
+    -fx-border-width: 2 2 0 2;
+    -fx-border-color: #9ebe67;
+    -fx-border-radius: 5 5 0 0;
+}
+#presetButton:hover{
+    -fx-background-color:
+            #07080a,
+            linear-gradient(#38424b 10%, #1f2429 30%, #191d22 110%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 110%, rgba(114,131,148,1), rgba(255,255,255,0.1));
+    -fx-cursor: hand;
+}
+#presetButton:pressed{
+    -fx-background-color:
+            #07080a,
+            linear-gradient(#38424b 00%, #1f2429 0%, #191d22 50%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 50%, rgba(114,131,148,0,5), rgba(255,255,255,0.0));
 }
 

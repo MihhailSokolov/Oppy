@@ -668,19 +668,21 @@ public class MainPage {
         Main.clientController.updateUserPresets();
         for(int i=0; i< Main.clientController.getUser().getPresets().size(); i++){
            Button button = new Button(Main.clientController.getUser().getPresets().get(i).getName());
+           button.setId("presetButton");
            GridPane.setConstraints(button, i,0);
            gridBot.getChildren().add(button);
+           Label actionName = new Label("");
            for(int j =0; j < Main.clientController.getUser().getPresets().get(i).getActionList().size() && j<4; j++){
-               Label actionName = new Label("");
                if(j==3){
                    actionName = new Label("etc.");
                }else{
-                   actionName = new Label( Main.clientController.getUser().getPresets().get(i).getActionList().get(j));
+                   actionName = new Label("-"+ Main.clientController.getUser().getPresets().get(i).getActionList().get(j));
                }
                actionName.setId("actionName");
                GridPane.setConstraints(actionName, i,j+1);
                gridBot.getChildren().add(actionName);
            }
+           actionName.setId("actionNameLast");
         }
         return gridBot;
     }
