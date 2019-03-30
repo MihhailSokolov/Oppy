@@ -73,18 +73,6 @@ public class DbDataControllerTest {
     }
 
     @Test
-    public void testGetTop50ListSize() {
-        List<User> users = new ArrayList<>();
-        for (int i = 1; i <= 51; i++) {
-            users.add(new User("user" + i, "password" + i, "mail" + i, i, new Date()));
-        }
-        userRepository.saveAll(users);
-        List<User> top50 = dbDataController.getTop50Users();
-        userRepository.deleteAll(users);
-        assertEquals(50, top50.size());
-    }
-
-    @Test
     public void testSearchUser() {
         assertNull(dbDataController.searchUser("user-which-should-not-exist"));
     }
