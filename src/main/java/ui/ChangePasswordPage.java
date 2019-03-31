@@ -70,7 +70,8 @@ public class ChangePasswordPage {
         grid.setAlignment(Pos.CENTER);
 
         //here the create view is made into a scene and return when the method is called
-        Scene scene = new Scene(grid, 500, 325);
+        Scene scene = new Scene(grid, 1920, 1080);
+        scene.getStylesheets().add("settingsStyle.css");
         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             if (ke.getCode() == KeyCode.ENTER) {
                 changeButton.fire();
