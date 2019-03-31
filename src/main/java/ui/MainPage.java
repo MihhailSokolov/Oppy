@@ -503,49 +503,49 @@ public class MainPage {
 
         //Date date = Main.clientController.getDate();   //Still needs to be implemented
 
-        Image preAcivement1 = new Image("placeholder 100x100.png");//implement achievement not unlocked skin
+        Image preAcivement1 = new Image("acievmentNotUnlocked.png");//implement achievement not unlocked skin
         if (Integer.parseInt(result) >= 10000) {
-            preAcivement1 = new Image("placeholder2 100x100.png");//implement achievement Image
+            preAcivement1 = new Image("Acievment1.png");//implement achievement Image
         }
         ImageView acivement1 = new ImageView(preAcivement1);
         GridPane.setConstraints(acivement1, 0,0);
         Tooltip.install(acivement1, new Tooltip("Achievement for reaching 10,000 points"));
 
-        Image preAcivement2 = new Image("placeholder 100x100.png");
+        Image preAcivement2 = new Image("acievmentNotUnlocked.png");
         if (Integer.parseInt(result) >= 100000) {
-            preAcivement2 = new Image("placeholder2 100x100.png");
+            preAcivement2 = new Image("Acievment2.png");
         }
         ImageView acivement2 = new ImageView(preAcivement2);
         GridPane.setConstraints(acivement2, 0,2);
         Tooltip.install(acivement2, new Tooltip("Achievement for reaching 100,000 points"));
 
-        Image preAcivement3 = new Image("placeholder 100x100.png");
+        Image preAcivement3 = new Image("acievmentNotUnlocked.png");
         if (Integer.parseInt(result) >= 1000000) {
-            preAcivement3 = new Image("placeholder2 100x100.png");
+            preAcivement3 = new Image("Acievment3.png");
         }
         ImageView acivement3 = new ImageView(preAcivement3);
         GridPane.setConstraints(acivement3, 0,4);
         Tooltip.install(acivement3, new Tooltip("Achievement for reaching 1,000,000 points"));
 
-        Image preAcivement4 = new Image("placeholder 100x100.png");
+        Image preAcivement4 = new Image("acievmentNotUnlocked.png");
         if (diff >= 7) {
-            preAcivement4 = new Image("placeholder2 100x100.png");
+            preAcivement4 = new Image("Acievment4.png");
         }
         ImageView acivement4 = new ImageView(preAcivement4);
         GridPane.setConstraints(acivement4, 1,0);
         Tooltip.install(acivement4, new Tooltip("Achievement for playing for 1 week"));
 
-        Image preAcivement5 = new Image("placeholder 100x100.png");
+        Image preAcivement5 = new Image("acievmentNotUnlocked.png");
         if (diff >= 30) {
-            preAcivement5 = new Image("placeholder2 100x100.png");
+            preAcivement5 = new Image("Acievment5.png");
         }
         ImageView acivement5 = new ImageView(preAcivement5);
         GridPane.setConstraints(acivement5, 1,2);
         Tooltip.install(acivement5, new Tooltip("Achievement for playing for 1 month"));
 
-        Image preAcivement6 = new Image("placeholder 100x100.png");
+        Image preAcivement6 = new Image("acievmentNotUnlocked.png");
         if (diff >= 365) {
-            preAcivement6 = new Image("placeholder2 100x100.png");
+            preAcivement6 = new Image("Acievment6.png");
         }
         ImageView acivement6 = new ImageView(preAcivement6);
         GridPane.setConstraints(acivement6, 1,4);
