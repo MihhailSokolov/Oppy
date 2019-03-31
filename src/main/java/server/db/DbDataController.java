@@ -354,7 +354,7 @@ public class DbDataController {
             sortedUsers.add(user);
         }
         sortedUsers.sort(new ScoreComparator());
-        return findIndexByUsername(users, username);
+        return findIndexByUsername(sortedUsers, username);
     }
 
     /**
