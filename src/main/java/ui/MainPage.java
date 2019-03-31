@@ -572,17 +572,16 @@ public class MainPage {
                             Main.clientController.updateUser();
                             User friend = new User(rowData.getUsername(), null, null, 0, null);
                             Main.clientController.deleteFriend(friend);
+                            Main.clientController.updateFriendList();
+                            folowingList.setItems(FXCollections.observableArrayList(Main.clientController.getUser().getFriends()));
+                            folowingList.refresh();
                         }
                     });
             return row ;
         });
-
-
-
-
-
-
-
+        Tooltip.install(folowingList, new Tooltip("People you follow, double click on them to delete them"));
+        folowingList.setId("followList");
+        folowingList.setPlaceholder(new Label("Start following people..."));
 
         Label newFollowLabel = new Label("Search new people:");
         newFollowLabel.setId("newFollowLabel");
@@ -621,6 +620,7 @@ public class MainPage {
                 Main.clientController.updateFriendList();
                 folowingList.setItems(FXCollections.observableArrayList(Main.clientController.getUser().getFriends()));
                 folowingList.refresh();
+                followTextField.clear();
             } else {
                 Alert failed = new Alert(Alert.AlertType.ERROR);
                 failed.setContentText("Such user does not exist");

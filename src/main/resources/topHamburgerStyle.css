@@ -230,4 +230,11 @@
     -fx-border-radius: 0px;
 }
 
+#followList .label{
+    -fx-border-width: 0px;
+    -fx-font-size: 20;
+    -fx-text-fill: white;
+    -fx-text-alignment: CENTER;
+}
+
 
