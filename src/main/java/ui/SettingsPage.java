@@ -81,7 +81,7 @@ public class SettingsPage {
         JFXToggleButton anonymousButton = new JFXToggleButton();
         GridPane.setConstraints(anonymousButton,1,3,2,1);
         anonymousButton.setText("Anonymous");
-        anonymousButton.setSelected(false);
+        anonymousButton.setSelected(Main.clientController.getUser().getAnonymous());
         anonymousButton.setOnAction(e -> {
             Main.clientController.updateAnonymous(anonymousButton.isSelected());
         });

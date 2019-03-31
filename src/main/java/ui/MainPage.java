@@ -15,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
@@ -574,6 +575,27 @@ public class MainPage {
         folowingList.setColumnResizePolicy(folowingList.CONSTRAINED_RESIZE_POLICY);
         GridPane.setConstraints(folowingList,0,6, 3, 1);
 
+        folowingList.setRowFactory( tv -> {
+            TableRow<User> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    User rowData = row.getItem();
+                    System.out.println(rowData.getUsername());
+                    Main.clientController.updateUser();
+                    User friend = new User(rowData.getUsername(), null, null, 0, null);
+                    Main.clientController.deleteFriend(friend);
+                    Main.clientController.updateFriendList();
+                    folowingList.setItems(FXCollections.observableArrayList(
+                            Main.clientController.getUser().getFriends()));
+                    folowingList.refresh();
+                }
+            });
+            return row ;
+        });
+        Tooltip.install(folowingList, new Tooltip("People you follow, double click on them to delete them"));
+        folowingList.setId("followList");
+        folowingList.setPlaceholder(new Label("Start following people..."));
+
         Label newFollowLabel = new Label("Search new people:");
         newFollowLabel.setId("newFollowLabel");
         GridPane.setConstraints(newFollowLabel,0,7,3,1);
@@ -584,20 +606,8 @@ public class MainPage {
 
         Button followButton = new Button("follow");
         followButton.setId("followButton");
-        followButton.setOnAction(e -> {
-            User friend = new User(followTextField.getText(), null, null, 0, null);
-            if (Main.clientController.addFriend(friend).equals("true")) {
-                Main.clientController.updateFriendList();
-                folowingList.setItems(FXCollections.observableArrayList(Main.clientController.getUser().getFriends()));
-                folowingList.refresh();
-            } else {
-                Alert failed = new Alert(Alert.AlertType.ERROR);
-                failed.setContentText("Such user does not exist");
-                failed.setHeaderText("Failure.");
-                failed.setTitle("Notification");
-                failed.show();
-            }
-        });
+        followButtonSetOnAction(followButton, followTextField);
+
         GridPane.setConstraints(followButton, 0, 9, 3, 1);
 
 
@@ -680,14 +690,6 @@ public class MainPage {
     }
 
     /**
-     * Very short method that disables a button.
-     */
-    public static void disableButton(ToggleButton clicked) {
-        clicked.setSelected(true);
-        clicked.setDisable(true);
-    }
-
-    /**
      * Method for main scene.
      *
      * @param scoreLabel gives the Label with the score to be update
@@ -737,6 +739,58 @@ public class MainPage {
             gridBot.getChildren().addAll(button, deletePreset);
         }
         return gridBot;
+    }
+
+    /**
+     * Very short method that disables a button.
+     */
+    public static void disableButton(ToggleButton clicked) {
+        clicked.setSelected(true);
+        clicked.setDisable(true);
+    }
+
+    /**
+     * Method for setting action to start following someone to a button.
+     *
+     * @param followButton button that needs to get the action
+     * @param followTextField textField from witch text is gathered for the method
+     */
+    public static void followButtonSetOnAction(Button followButton, TextField followTextField) {
+        followButton.setOnAction(e -> {
+            final User friend = new User(followTextField.getText(), null, null, 0, null);
+            ArrayList<String> friendNames = new ArrayList<String>();
+            Main.clientController.updateUser();
+            for (int i = 0; i < Main.clientController.getUser().getFriends().size(); i++) {
+                friendNames.add( Main.clientController.getUser().getFriends().get(i).getUsername());
+            }
+            for (int i = 0; i  < friendNames.size(); i++) {
+                System.out.println(friendNames.get(i));
+            }
+            if (followTextField.getText().equals(Main.clientController.getUser().getUsername())) {
+                Alert failed = new Alert(Alert.AlertType.ERROR);
+                failed.setContentText("You can't follow yourself");
+                failed.setHeaderText("Failure.");
+                failed.setTitle("Notification");
+                failed.show();
+            } else if (friendNames.contains(friend.getUsername())) {
+                Alert failed = new Alert(Alert.AlertType.ERROR);
+                failed.setContentText("You already follow the person");
+                failed.setHeaderText("Failure.");
+                failed.setTitle("Notification");
+                failed.show();
+            } else if (Main.clientController.addFriend(friend).equals("true")) {
+                Main.clientController.updateFriendList();
+                folowingList.setItems(FXCollections.observableArrayList(Main.clientController.getUser().getFriends()));
+                folowingList.refresh();
+                followTextField.clear();
+            } else {
+                Alert failed = new Alert(Alert.AlertType.ERROR);
+                failed.setContentText("Such user does not exist");
+                failed.setHeaderText("Failure.");
+                failed.setTitle("Notification");
+                failed.show();
+            }
+        });
     }
 
 }
