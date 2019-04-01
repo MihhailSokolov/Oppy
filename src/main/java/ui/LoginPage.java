@@ -61,7 +61,7 @@ public class LoginPage {
         registerButton.setOnAction(e -> window.setScene(RegisterPage.registerScene(window)));
         registerButton.setToggleGroup(loginRegister);
         //login/email and password fields and labels
-        Label username = new Label("Username/email");
+        Label username = new Label("Username");
         GridPane.setConstraints(username, 0, 2);
         Label password = new Label("Password");
         GridPane.setConstraints(password, 0, 5);
