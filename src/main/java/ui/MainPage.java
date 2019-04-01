@@ -60,28 +60,24 @@ public class MainPage {
      * @return Scene
      */
     public static Scene mainScene(Stage primaryStage) {
-
+        //setting title of the window and creating the BorderPane, the central layout for the window
         Stage window = primaryStage;
         window.setTitle("MainPage");
         window.setMaximized(true);
         final BorderPane centralPageLayout = new BorderPane();
-        //centerPage contents
 
         //create the grid for the center of the page
         GridPane gridCenter = new GridPane();
         gridCenter.setId("centerGrid");
 
-        //here the username label is created
+        //here the Label witch displays your username is created
         String username = Main.clientController.getUser().getUsername();
-        if (username == null || username.equals("")) {
-            username = "test account";
-        }
         Label usernameLabel = new Label(username);
         Tooltip.install(usernameLabel, new Tooltip("This is your username"));
         usernameLabel.setId("username");
         GridPane.setConstraints(usernameLabel, 0, 1);
 
-        //here the number of points needs to be queried
+        //here the Label for your number of points is created, and set to a color dependent on your score
         String result = Main.clientController.getScore();
         int pointValue = Integer.parseInt(result);
         final Label numberOfPoints = new Label(result);
@@ -96,7 +92,7 @@ public class MainPage {
         }
         GridPane.setConstraints(numberOfPoints, 0, 2);
 
-        //here the image of the planet needs to be placed
+        //here the image of the planet is set dependent on your number of points
         Image planet;
         if (pointValue >= 15000) {
             planet = new Image("oppy1.png");
@@ -118,13 +114,13 @@ public class MainPage {
         displayLogo.setFitWidth(700);
         GridPane.setConstraints(displayLogo, 1, 3);
 
-        //here the daily point loss needs to be queried
+        //here the Label that displays your daily point-loss is created
         Label pointLoss = new Label(Integer.toString(-3000));
         pointLoss.setId("pointLoss");
         Tooltip.install(pointLoss, new Tooltip("Number of points you lose each day"));
         GridPane.setConstraints(pointLoss, 2, 2);
 
-        // Here is the counter counting down until midnight
+        // Here is the counter counting down until midnight, when points-loss occurs
         Label timer = new Label();
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
@@ -141,20 +137,19 @@ public class MainPage {
         Tooltip.install(timer, new Tooltip("Time before daily point-loss occurs"));
         timer.setId("timeTillPointLoss");
         GridPane.setConstraints(timer, 2, 1);
-        //Here all elements previously created are added to the view and the view is center
+
+        //Here all elements previously created are added to the grid for the center of the page, and centered
         gridCenter.getChildren().addAll(displayLogo, numberOfPoints, pointLoss, timer, usernameLabel);
         gridCenter.setAlignment(Pos.CENTER);
 
-        //here the hamburger menu's and the top menu are initialized
+        //here variables for the hamburger menu's, the top menu and the bottom menu are created
         final GridPane gridHamburgerLeft = gridHamburgerLeft(window);
         final GridPane gridHamburgerRight = gridHamburgerRight(window);
         final GridPane gridBot = gridBot(numberOfPoints, window);
         final GridPane gridTop = gridTop(centralPageLayout, gridHamburgerLeft, gridHamburgerRight,
                 "Main Page", numberOfPoints, window);
 
-
-        ////setting the sizes of the rows///////////////////////////////
-
+        //Here the column and row constraints of all sections of the page are set
         gridCenter.getRowConstraints().addAll(gridRowConstraints());
         gridCenter.getColumnConstraints().addAll(gridColumnConstraints());
         gridHamburgerLeft.getRowConstraints().addAll(hamburgerRowConstraintsLeft());
@@ -163,11 +158,12 @@ public class MainPage {
         gridHamburgerRight.getColumnConstraints().addAll(hamburgerColumnConstraintsRight());
         gridTop.getColumnConstraints().addAll(girdTopColumnConstraints());
 
-        //CentralPageLayout
+        //here the top center and bottom regions of the BorderPane are initialized to the desired gridPanes.
         centralPageLayout.setCenter(gridCenter);
         centralPageLayout.setTop(gridTop);
         centralPageLayout.setBottom(gridBot);
-        //logout from main page functionality
+
+        //Here an invisible button is created the allows you to log out from the mainPage
         Button invisLogoutbutton = new Button();
         invisLogoutbutton.setOnAction( e -> {
             try {
@@ -176,10 +172,13 @@ public class MainPage {
                 e1.printStackTrace();
             }
         });
-        //here the create view is made into a scene and returned when the method is called
+
+        //here a scene is constructed out of the BorderPane and styleSheets are added to it
         Scene scene = new Scene(centralPageLayout, 1920, 1000);
         scene.getStylesheets().add("mainStyle.css");
         scene.getStylesheets().add("topHamburgerStyle.css");
+
+        //here Key_events are added to the scene
         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             if (ke.getCode() == KeyCode.ESCAPE) {
                 invisLogoutbutton.fire();
@@ -205,6 +204,8 @@ public class MainPage {
                 }
             }
         });
+
+        //here the scene is returned
         return scene;
     }
 
@@ -215,7 +216,6 @@ public class MainPage {
      * @return ArrayList of RowConstraints
      */
     public static ArrayList<RowConstraints> gridRowConstraints() {
-
         RowConstraints row0 = new RowConstraints();
         row0.setMinHeight(0);
         row0.setMaxHeight(0);
@@ -253,7 +253,6 @@ public class MainPage {
      * @return ArrayList of ColumnConstraints
      */
     public static ArrayList<ColumnConstraints> gridColumnConstraints() {
-
         ColumnConstraints column0 = new ColumnConstraints();
         column0.setMinWidth(200);
         column0.setMaxWidth(200);
@@ -409,9 +408,7 @@ public class MainPage {
         GridPane gridHamburger = new GridPane();
         gridHamburger.setId("hamburgerMenuLeft");
 
-        //creating the buttons for settings, leaderboard and addAction
-
-        //Here your profile picture needs to be gotten from the database
+        //Here an image view from your profile picture is created
         BufferedImage serverProfilePicture = Main.clientController.getProfilePic(
                 Main.clientController.getUser().getUsername());
         Image profilePicture;
@@ -426,8 +423,8 @@ public class MainPage {
         displayProfilePicture.setId("profilePicture");
         gridHamburger.setConstraints(displayProfilePicture, 0, 0, 1, 1);
 
+        //here the toggleButton for the settingsPage is created
         ToggleButton settingsButton = new  ToggleButton("settings");
-
         settingsButton.setId("settingsButton");
         settingsButton.setOnAction(e -> {
             folowingList = new TableView<>();
@@ -435,20 +432,20 @@ public class MainPage {
         });
         gridHamburger.setConstraints(settingsButton, 1, 0, 1, 1);
 
-        ToggleButton leaderboardButton = new  ToggleButton("Leaderboard");
-        leaderboardButton.setId("leaderActionButton");
-        leaderboardButton.setOnAction(e -> {
-            //resets/updates the data stored in the top50 list and the user
+        //here the toggleButton for the leaderBoardPage is created
+        ToggleButton leaderBoardButton = new  ToggleButton("Leaderboard");
+        leaderBoardButton.setId("leaderActionButton");
+        leaderBoardButton.setOnAction(e -> {
+            //When clicked the button resets leaderBoard tables and loads data on the user and the Top50 players
             LeaderboardPage.resetTables();
-            //sets the email locally stored in the User objects to their rank
             Main.clientController.getUser().setEmail(Main.clientController.getPosition());
             Main.clientController.top50Ranks(Main.clientController.getTop50());
-
             folowingList = new TableView<>();
             window.setScene(LeaderboardPage.leaderboardScene(window));
         });
         gridHamburger.setConstraints(leaderboardButton, 0, 1, 2, 1);
 
+        //Here the toggleButton for the addActionPage is created
         ToggleButton addActionButton = new  ToggleButton("Add action");
         addActionButton.setId("leaderActionButton");
         addActionButton.setOnAction(e -> {
@@ -457,6 +454,7 @@ public class MainPage {
         });
         gridHamburger.setConstraints(addActionButton, 0, 2, 2, 1);
 
+        //Here the toggleButton for the MainPage is created
         ToggleButton mainButton = new  ToggleButton("Main page");
         mainButton.setId("leaderActionButton");
         mainButton.setOnAction(e -> {
@@ -465,6 +463,7 @@ public class MainPage {
         });
         gridHamburger.setConstraints(mainButton, 0, 3, 2, 1);
 
+        //Here the button the switch to the current window is disabled
         if (window.getTitle().equals("MainPage") ) {
             disableButton(mainButton);
         } else if (window.getTitle().equals("AddActionPage")) {
@@ -472,13 +471,15 @@ public class MainPage {
         } else if (window.getTitle().equals("SettingsPage")) {
             disableButton(settingsButton);
         } else if (window.getTitle().equals("LeaderboardPage")) {
-            disableButton(leaderboardButton);
+            disableButton(leaderBoardButton);
         }
 
-        //add all previously created elements to the hamburger layout
-        gridHamburger.getChildren().addAll(settingsButton, leaderboardButton,
+        //Adds all previously created elements to the hamburger layout
+        gridHamburger.getChildren().addAll(settingsButton, leaderBoardButton,
                 addActionButton, displayProfilePicture,mainButton);
         gridHamburger.setAlignment(Pos.TOP_CENTER);
+
+        //returns the hamburger grid
         return gridHamburger;
     }
 
@@ -493,7 +494,7 @@ public class MainPage {
         GridPane gridHamburger = new GridPane();
         gridHamburger.setId("hamburgerMenuRight");
 
-        //here the achievement images are created and the achievements you unlocked are displayed
+        //Here some data is acquired, some stats are updated and some variables are created
         Main.clientController.updateUser();
         Date date = Main.clientController.getUser().getRegisterDate();
         Date now = new Date();
@@ -501,69 +502,67 @@ public class MainPage {
         final long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
         String result = Main.clientController.getScore();
 
-        //Date date = Main.clientController.getDate();   //Still needs to be implemented
-
-        Image preAcivement1 = new Image("acievmentNotUnlocked.png");//implement achievement not unlocked skin
+        //Here all achievements are created and their conditions for unlocking are set
+        Image preAchievement1 = new Image("acievmentNotUnlocked.png");//implement achievement not unlocked skin
         if (Integer.parseInt(result) >= 10000) {
-            preAcivement1 = new Image("Acievment1.png");//implement achievement Image
+            preAchievement1 = new Image("Acievment1.png");//implement achievement Image
         }
-        ImageView acivement1 = new ImageView(preAcivement1);
-        GridPane.setConstraints(acivement1, 0,0);
-        Tooltip.install(acivement1, new Tooltip("Achievement for reaching 10,000 points"));
+        ImageView achievement1 = new ImageView(preAchievement1);
+        GridPane.setConstraints(achievement1, 0,0);
+        Tooltip.install(achievement1, new Tooltip("Achievement for reaching 10,000 points"));
 
-        Image preAcivement2 = new Image("acievmentNotUnlocked.png");
+        Image preAchievement2 = new Image("acievmentNotUnlocked.png");
         if (Integer.parseInt(result) >= 100000) {
-            preAcivement2 = new Image("Acievment2.png");
+            preAchievement2 = new Image("Acievment2.png");
         }
-        ImageView acivement2 = new ImageView(preAcivement2);
-        GridPane.setConstraints(acivement2, 0,2);
-        Tooltip.install(acivement2, new Tooltip("Achievement for reaching 100,000 points"));
+        ImageView achievement2 = new ImageView(preAchievement2);
+        GridPane.setConstraints(achievement2, 0,2);
+        Tooltip.install(achievement2, new Tooltip("Achievement for reaching 100,000 points"));
 
-        Image preAcivement3 = new Image("acievmentNotUnlocked.png");
+        Image preAchievement3 = new Image("acievmentNotUnlocked.png");
         if (Integer.parseInt(result) >= 1000000) {
-            preAcivement3 = new Image("Acievment3.png");
+            preAchievement3 = new Image("Acievment3.png");
         }
-        ImageView acivement3 = new ImageView(preAcivement3);
-        GridPane.setConstraints(acivement3, 0,4);
-        Tooltip.install(acivement3, new Tooltip("Achievement for reaching 1,000,000 points"));
+        ImageView achievement3 = new ImageView(preAchievement3);
+        GridPane.setConstraints(achievement3, 0,4);
+        Tooltip.install(achievement3, new Tooltip("Achievement for reaching 1,000,000 points"));
 
-        Image preAcivement4 = new Image("acievmentNotUnlocked.png");
+        Image preAchievement4 = new Image("acievmentNotUnlocked.png");
         if (diff >= 7) {
-            preAcivement4 = new Image("Acievment4.png");
+            preAchievement4 = new Image("Acievment4.png");
         }
-        ImageView acivement4 = new ImageView(preAcivement4);
-        GridPane.setConstraints(acivement4, 1,0);
-        Tooltip.install(acivement4, new Tooltip("Achievement for playing for 1 week"));
+        ImageView achievement4 = new ImageView(preAchievement4);
+        GridPane.setConstraints(achievement4, 1,0);
+        Tooltip.install(achievement4, new Tooltip("Achievement for playing for 1 week"));
 
-        Image preAcivement5 = new Image("acievmentNotUnlocked.png");
+        Image preAchievement5 = new Image("acievmentNotUnlocked.png");
         if (diff >= 30) {
-            preAcivement5 = new Image("Acievment5.png");
+            preAchievement5 = new Image("Acievment5.png");
         }
-        ImageView acivement5 = new ImageView(preAcivement5);
-        GridPane.setConstraints(acivement5, 1,2);
-        Tooltip.install(acivement5, new Tooltip("Achievement for playing for 1 month"));
+        ImageView achievement5 = new ImageView(preAchievement5);
+        GridPane.setConstraints(achievement5, 1,2);
+        Tooltip.install(achievement5, new Tooltip("Achievement for playing for 1 month"));
 
-        Image preAcivement6 = new Image("acievmentNotUnlocked.png");
+        Image preAchievement6 = new Image("acievmentNotUnlocked.png");
         if (diff >= 365) {
-            preAcivement6 = new Image("Acievment6.png");
+            preAchievement6 = new Image("Acievment6.png");
         }
-        ImageView acivement6 = new ImageView(preAcivement6);
-        GridPane.setConstraints(acivement6, 1,4);
-        Tooltip.install(acivement6, new Tooltip("Achievement for playing for 1 year"));
+        ImageView achievement6 = new ImageView(preAchievement6);
+        GridPane.setConstraints(achievement6, 1,4);
+        Tooltip.install(achievement6, new Tooltip("Achievement for playing for 1 year"));
 
-        //here the followingList is displayed and the follow option is created
-        Label followLabel = new Label("people you follow:");
-        followLabel.setId("followLabel");
-        GridPane.setConstraints(followLabel,0,5,3,1);
-
+        //some data is updated
         Main.clientController.updateTop50();
         Main.clientController.updateFriendList();
 
+        //here the followingList is created
+        Label followLabel = new Label("people you follow:");
+        followLabel.setId("followLabel");
+        GridPane.setConstraints(followLabel,0,5,3,1);
         ObservableList<User> data =
                 FXCollections.observableArrayList(
-                        Main.clientController.getUser().getFriends()  //should become list of people you follow
+                        Main.clientController.getUser().getFriends()
                 );
-
         TableColumn name = new TableColumn("name");
         name.setCellValueFactory(new PropertyValueFactory<>("username"));
         TableColumn score = new TableColumn("score");
@@ -574,8 +573,8 @@ public class MainPage {
         folowingList.setPrefWidth(250);
         folowingList.setColumnResizePolicy(folowingList.CONSTRAINED_RESIZE_POLICY);
         GridPane.setConstraints(folowingList,0,6, 3, 1);
-
         folowingList.setRowFactory( tv -> {
+            //Here the followingList is set to delete friends when their name is double-clicked in the table
             TableRow<User> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
@@ -596,25 +595,29 @@ public class MainPage {
         folowingList.setId("followList");
         folowingList.setPlaceholder(new Label("Start following people..."));
 
+        //here a Label is created with the test "Search new people"
         Label newFollowLabel = new Label("Search new people:");
         newFollowLabel.setId("newFollowLabel");
         GridPane.setConstraints(newFollowLabel,0,7,3,1);
 
+        //here the textfield is created in witch you type name of user you want to follow
         TextField followTextField = new TextField();
         followTextField.setPromptText("Start following...");
         GridPane.setConstraints(followTextField, 0, 8, 3, 1);
 
+        //here the follow button is created
         Button followButton = new Button("follow");
         followButton.setId("followButton");
         followButtonSetOnAction(followButton, followTextField);
-
         GridPane.setConstraints(followButton, 0, 9, 3, 1);
 
 
         //add all previously created elements to the hamburger layout
-        gridHamburger.getChildren().addAll(acivement1, acivement2, acivement3, acivement4, acivement5,
-                acivement6, followLabel, folowingList, newFollowLabel,  followTextField, followButton);
+        gridHamburger.getChildren().addAll(achievement1, achievement2, achievement3, achievement4, achievement5,
+                achievement6, followLabel, folowingList, newFollowLabel,  followTextField, followButton);
         gridHamburger.setAlignment(Pos.TOP_CENTER);
+
+        //here the hamburger grid is returned
         return gridHamburger;
     }
 
@@ -631,10 +634,12 @@ public class MainPage {
      */
     public static GridPane gridTop(BorderPane centralPageLayout, GridPane gridHamburgerLeft,
                                    GridPane gridHamburgerRight, String text, Label scoreLabel, Stage window) {
+        //creating the layout of the top menu
         final GridPane gridTop = new GridPane();
 
         //here the hamburger icons are created and and functions are attached
-        //so that by clicking it it opens and closes the side menu's
+        //so that by clicking it it opens and closes the side menu's and
+        //the  presets aren't on screen if one of the is open
         JFXHamburger hamburgerRight = new JFXHamburger();
         Tooltip.install(hamburgerRight, new Tooltip("Achievements/Friends menu"));
         hamburgerRight.setId("hamburgerButton");
@@ -679,13 +684,17 @@ public class MainPage {
         });
         gridTop.setConstraints(hamburgerRight, 2, 0);
 
+        //here a Label the displays the pageName is created
         Label pageName = new Label(text);
         GridPane.setConstraints(pageName, 1,0);
         pageName.setId("pageName");
         Tooltip.install(pageName, new Tooltip("Your current page"));
 
+        //here all previous created elements are added to the top layout
         gridTop.getChildren().addAll(hamburgerLeft, hamburgerRight, pageName);
         gridTop.setStyle("-fx-background-color: #4c4242;");
+
+        //here the top grid is returned
         return gridTop;
     }
 
@@ -697,10 +706,16 @@ public class MainPage {
      * @return GridPane
      */
     public static GridPane gridBot(Label scoreLabel, Stage window1) {
+
+        //creating the layout of the bottom grid
         final GridPane gridBot = new GridPane();
         final Stage window = window1;
         gridBot.setId("gridBot");
+
+        //here all presets of the user are loaded and added to the bottom grid
         Main.clientController.updateUserPresets();
+
+        //gets the names of the preSets and makes buttons of them
         for (int i = 0; i < Main.clientController.getUser().getPresets().size(); i++) {
             final int a = i;
             Button button = new Button(Main.clientController.getUser().getPresets().get(i).getName());
@@ -708,13 +723,14 @@ public class MainPage {
             GridPane.setConstraints(button, 2 * i,0);
             button.setOnAction(e -> {
                 for (int j  = 0; j < Main.clientController.getUser().getPresets().get(a).getActionList().size(); j++) {
+                    //adds functions the the preset buttons
                     Main.clientController.takeAction(
                             Main.clientController.getUser().getPresets().get(a).getActionList().get(j));
                     Main.clientController.updateUser();
                     scoreLabel.setText(Integer.toString(Main.clientController.getUser().getScore()));
                 }
             });
-
+            //gets the names of the actions in the presets
             Label actionName = new Label("");
             for (int j = 0; j < Main.clientController.getUser().getPresets().get(i).getActionList().size()
                     && j < 4; j++) {
@@ -729,6 +745,7 @@ public class MainPage {
                 gridBot.getChildren().add(actionName);
             }
             actionName.setId("actionNameLast");
+            //Here the delete presetButton is created
             Button deletePreset = new Button("X");
             deletePreset.setId("presetDeleteButton");
             deletePreset.setOnAction(e -> {
@@ -736,8 +753,12 @@ public class MainPage {
                 window.setScene(MainPage.mainScene(window));
             });
             GridPane.setConstraints(deletePreset, 2 * i + 1, 0);
+
+            //here al previously created elements are added the the Bottom grid
             gridBot.getChildren().addAll(button, deletePreset);
         }
+
+        //here the bottom grid is returned
         return gridBot;
     }
 
