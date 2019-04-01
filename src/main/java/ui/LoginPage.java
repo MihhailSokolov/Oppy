@@ -108,13 +108,8 @@ public class LoginPage {
         });
         GridPane.setConstraints(loginButton, 0, 9, 2, 1);
 
-        Button forgotPasswordButton = new Button("forgot password?");
-        forgotPasswordButton.setId("forgotPasswordButton");
-        GridPane.setConstraints(forgotPasswordButton, 1, 7);
-        //Here all elements previously created are added to the view and the view is center
         grid.getChildren().addAll(loginButton, username, password, usernameTextfield,
-                passwordTextfield, rememberMe, forgotPasswordButton,
-                fakeLoginButton, registerButton);
+                passwordTextfield, rememberMe, fakeLoginButton, registerButton);
         grid.setAlignment(Pos.CENTER);
         //TopGrid made here
         GridPane topGrid = new GridPane();
