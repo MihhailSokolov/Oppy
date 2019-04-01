@@ -38,50 +38,39 @@ public class LeaderboardPage {
     public static Scene leaderboardScene(Stage primaryStage) {
         //Here we put the values in the list so they get reloaded with the page everytime.
         user = FXCollections.observableArrayList(Main.clientController.getUser());
-
         top50 = FXCollections.observableArrayList(Main.clientController.getTop50());
-
         num1 = FXCollections.observableArrayList(Main.clientController.getTop50().get(0));
 
+        //setting title of the window and creating the BorderPane, the central layout for the window
         Stage window = primaryStage;
         window.setTitle("LeaderboardPage");
         final BorderPane centralPageLayout = new BorderPane();
 
-        /////////////////////////////////////////////////////////////////////////////////
-        //CentralGrid////////////////////////////////////////////////////////////////////
+        //create the grid for the center of the page
         final  GridPane gridCenter = new GridPane();
 
-        //here the 3 columns for the first are created
+        //here the 3 columns for the first table are created
         TableColumn rank = new TableColumn("rank");
-        //the ranks are stored locally under email
-        rank.setCellValueFactory(new PropertyValueFactory<>("email"));
-
+        rank.setCellValueFactory(new PropertyValueFactory<>("email")); //the ranks are stored locally under email
         TableColumn name = new TableColumn("name");
         name.setCellValueFactory(new PropertyValueFactory<>("username"));
-
         TableColumn score = new TableColumn("score");
         score.setCellValueFactory(new PropertyValueFactory<>("score"));
 
         //here the 3 columns for the second table are created
         TableColumn rank2 = new TableColumn("rank");
-        //the ranks are stored locally under email
-        rank2.setCellValueFactory(new PropertyValueFactory<>("email"));
-
+        rank2.setCellValueFactory(new PropertyValueFactory<>("email")); //the ranks are stored locally under email
         TableColumn name2 = new TableColumn("name");
         name2.setCellValueFactory(new PropertyValueFactory<>("username"));
-
         TableColumn score2 = new TableColumn("score");
         score2.setCellValueFactory(new PropertyValueFactory<>("score"));
         //TableColumn profilePicture = new TableColumn("pf");
 
         //here the 3 columns for last table are created
         TableColumn rank3 = new TableColumn("rank");
-        //the ranks are stored locally under email
-        rank3.setCellValueFactory(new PropertyValueFactory<>("email"));
-
+        rank3.setCellValueFactory(new PropertyValueFactory<>("email")); //the ranks are stored locally under email
         TableColumn name3 = new TableColumn("name");
         name3.setCellValueFactory(new PropertyValueFactory<>("username"));
-
         TableColumn score3 = new TableColumn("score");
         score3.setCellValueFactory(new PropertyValueFactory<>("score"));
 
@@ -121,13 +110,13 @@ public class LeaderboardPage {
                 number1PlayerLabel, bestPlayersLabel, scoreOfUserLabel);
         gridCenter.setId("gridCenter");
 
-        //here the hamburger menu's and the top menu are initialized
+        //here variables for the hamburger menu's and the top menu are initialized
         final GridPane gridHamburgerLeft = MainPage.gridHamburgerLeft(window);
         final GridPane gridHamburgerRight = MainPage.gridHamburgerRight(window);
         final GridPane gridTop = MainPage.gridTop(centralPageLayout, gridHamburgerLeft,
                 gridHamburgerRight, "Leaderboard Page", new Label(), window);
 
-        ////setting the sizes of the rows///////////////////////////////
+        //Here the column and row constraints of all sections of the page are set
         gridCenter.getRowConstraints().addAll(gridRowConstraints());
         gridCenter.getColumnConstraints().addAll(gridColumnConstraints());
         gridHamburgerLeft.getRowConstraints().addAll(MainPage.hamburgerRowConstraintsLeft());
@@ -136,12 +125,11 @@ public class LeaderboardPage {
         gridHamburgerRight.getColumnConstraints().addAll(MainPage.hamburgerColumnConstraintsRight());
         gridTop.getColumnConstraints().addAll(MainPage.girdTopColumnConstraints());
 
-        //////////////////////////////////////////////////////////////////////////////////////
-        ////central page layout///////////////////////////////////////////////////////////////
+        //here the top and center regions of the BorderPane are initialized to the desired gridPanes.
         centralPageLayout.setCenter(gridCenter);
         centralPageLayout.setTop(gridTop);
 
-        //here the create view is made into a scene and returned when the method is called
+        //here a scene is constructed out of the BorderPane and styleSheets are added to it
         Scene scene = new Scene(centralPageLayout, 1920, 1080);
         scene.getStylesheets().add("topHamburgerStyle.css");
         scene.getStylesheets().add("leaderboardStyle.css");
@@ -149,7 +137,7 @@ public class LeaderboardPage {
     }
 
     /**
-     * A method that resets the tableViews form leaderboardPage and updates top50 and user.
+     * A method that resets the tableViews form leaderBoardPage and updates top50 and user.
      */
     public static void resetTables() {
         //because number1Player is static it needs to be reset every time you close the page
