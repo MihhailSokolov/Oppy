@@ -503,49 +503,49 @@ public class MainPage {
         String result = Main.clientController.getScore();
 
         //Here all achievements are created and their conditions for unlocking are set
-        Image preAchievement1 = new Image("acievmentNotUnlocked.png");//implement achievement not unlocked skin
+        Image preAchievement1 = new Image("AchievementNotUnlocked.png");//implement achievement not unlocked skin
         if (Integer.parseInt(result) >= 10000) {
-            preAchievement1 = new Image("Acievment1.png");//implement achievement Image
+            preAchievement1 = new Image("Achievement1.png");//implement achievement Image
         }
         ImageView achievement1 = new ImageView(preAchievement1);
         GridPane.setConstraints(achievement1, 0,0);
         Tooltip.install(achievement1, new Tooltip("Achievement for reaching 10,000 points"));
 
-        Image preAchievement2 = new Image("acievmentNotUnlocked.png");
+        Image preAchievement2 = new Image("AchievementNotUnlocked.png");
         if (Integer.parseInt(result) >= 100000) {
-            preAchievement2 = new Image("Acievment2.png");
+            preAchievement2 = new Image("Achievement2.png");
         }
         ImageView achievement2 = new ImageView(preAchievement2);
         GridPane.setConstraints(achievement2, 0,2);
         Tooltip.install(achievement2, new Tooltip("Achievement for reaching 100,000 points"));
 
-        Image preAchievement3 = new Image("acievmentNotUnlocked.png");
+        Image preAchievement3 = new Image("AchievementNotUnlocked.png");
         if (Integer.parseInt(result) >= 1000000) {
-            preAchievement3 = new Image("Acievment3.png");
+            preAchievement3 = new Image("Achievement3.png");
         }
         ImageView achievement3 = new ImageView(preAchievement3);
         GridPane.setConstraints(achievement3, 0,4);
         Tooltip.install(achievement3, new Tooltip("Achievement for reaching 1,000,000 points"));
 
-        Image preAchievement4 = new Image("acievmentNotUnlocked.png");
+        Image preAchievement4 = new Image("AchievementNotUnlocked.png");
         if (diff >= 7) {
-            preAchievement4 = new Image("Acievment4.png");
+            preAchievement4 = new Image("Achievement4.png");
         }
         ImageView achievement4 = new ImageView(preAchievement4);
         GridPane.setConstraints(achievement4, 1,0);
         Tooltip.install(achievement4, new Tooltip("Achievement for playing for 1 week"));
 
-        Image preAchievement5 = new Image("acievmentNotUnlocked.png");
+        Image preAchievement5 = new Image("AchievementNotUnlocked.png");
         if (diff >= 30) {
-            preAchievement5 = new Image("Acievment5.png");
+            preAchievement5 = new Image("Achievement5.png");
         }
         ImageView achievement5 = new ImageView(preAchievement5);
         GridPane.setConstraints(achievement5, 1,2);
         Tooltip.install(achievement5, new Tooltip("Achievement for playing for 1 month"));
 
-        Image preAchievement6 = new Image("acievmentNotUnlocked.png");
+        Image preAchievement6 = new Image("AchievementNotUnlocked.png");
         if (diff >= 365) {
-            preAchievement6 = new Image("Acievment6.png");
+            preAchievement6 = new Image("Achievement6.png");
         }
         ImageView achievement6 = new ImageView(preAchievement6);
         GridPane.setConstraints(achievement6, 1,4);

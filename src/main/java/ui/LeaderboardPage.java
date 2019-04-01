@@ -132,7 +132,7 @@ public class LeaderboardPage {
         //here a scene is constructed out of the BorderPane and styleSheets are added to it
         Scene scene = new Scene(centralPageLayout, 1920, 1080);
         scene.getStylesheets().add("topHamburgerStyle.css");
-        scene.getStylesheets().add("leaderboardStyle.css");
+        scene.getStylesheets().add("leaderBoardStyle.css");
         return scene;
     }
 
