@@ -30,19 +30,20 @@ public class AddActionPage {
      * @return Scene
      */
     public static Scene addActionScene(Stage primaryStage) {
+        //setting title of the window and creating the BorderPane, the central layout for the window
         Stage window = primaryStage;
         window.setMaximized(true);
         window.setTitle("AddActionPage");
         final BorderPane centralPageLayout = new BorderPane();
 
-        //here the hamburger menu's and the top menu and the mainGrid are initialized
+        //here variables for the hamburger menu's and the top menu and the central page are initialized
         final GridPane gridHamburgerLeft = MainPage.gridHamburgerLeft(window);
         final GridPane gridHamburgerRight = MainPage.gridHamburgerRight(window);
         final GridPane gridTop = MainPage.gridTop(centralPageLayout, gridHamburgerLeft,
                 gridHamburgerRight, "Actions Page", new Label(), window);
         final GridPane gridCenter = centralGrid(window);
 
-        ////setting the sizes of the rows///////////////////////////////
+        //Here the column and row constraints of all sections of the page are set
         gridCenter.getRowConstraints().addAll(gridRowConstraints());
         gridCenter.getColumnConstraints().addAll(gridColumnConstraints());
         gridHamburgerLeft.getRowConstraints().addAll(MainPage.hamburgerRowConstraintsLeft());
@@ -51,12 +52,16 @@ public class AddActionPage {
         gridHamburgerRight.getColumnConstraints().addAll(MainPage.hamburgerColumnConstraintsRight());
         gridTop.getColumnConstraints().addAll(MainPage.girdTopColumnConstraints());
 
+        //here the top and center regions of the BorderPane are initialized to the desired gridPanes.
         centralPageLayout.setCenter(gridCenter);
         centralPageLayout.setTop(gridTop);
-        //here the create view is made into a scene and returned when the method is called
+
+        //here a scene is constructed out of the BorderPane and styleSheets are added to it
         Scene scene = new Scene(centralPageLayout, 1920, 1080);
         scene.getStylesheets().add("addActionStyle.css");
         scene.getStylesheets().add("topHamburgerStyle.css");
+
+        //here Key_events are added to the scene
         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             if (ke.getCode() == KeyCode.ENTER) {
                 submitButton.fire();
@@ -66,6 +71,8 @@ public class AddActionPage {
             }
             ke.consume();
         });
+
+        //here the scene is returned
         return scene;
     }
 
@@ -190,32 +197,29 @@ public class AddActionPage {
      * @return GridPane , the centralGrid
      */
     public static GridPane centralGrid(Stage primaryStage) {
+        //create the grid for the center of the page
         final Stage window = primaryStage;
-        final ArrayList<Action> listOfActions = new ArrayList<Action>();
-        final ArrayList<CheckBox> listCheckboxes = new ArrayList<CheckBox>();
         final GridPane gridCenter = new GridPane();
         gridCenter.setId("gridCenter");
+
+        //initialize some variables an update some stats
+        final ArrayList<Action> listOfActions = new ArrayList<Action>();
+        final ArrayList<CheckBox> listCheckboxes = new ArrayList<CheckBox>();
         Main.clientController.updateActionList();
         List<Action> actionList = Main.clientController.getActionList();
         for (Action act : actionList) {
             listOfActions.add(act);
         }
+
+        //here the Save as button is created
         Button saveAsButton = new Button("Save as preset...");
         GridPane.setConstraints(saveAsButton, 1, 10);
         ArrayList<String> listForPresets = new ArrayList<String>();
         saveAsButton.setOnAction(e -> {
-            for (int i = 0; i < listCheckboxes.size(); i++) {
-                if (listCheckboxes.get(i).isSelected()) {
-                    String actionName = listCheckboxes.get(i).getText();
-                    for (int j = 0; j < listOfActions.size(); j++) {
-                        if (actionName.equals(listOfActions.get(j).getActionName())) {
-                            listForPresets.add(listOfActions.get(j).getActionName());
-                        }
-                    }
-                }
-            }
-            window.setScene(NamePresetPage.namePresetScene(window, listForPresets));
+            saveAS(listOfActions, listCheckboxes, listForPresets, window);
         });
+
+        //here the submit button is created
         Button submitButton = new Button("submit");
         GridPane.setConstraints(submitButton, 3, 10);
         submitButton.setOnAction(e -> {
@@ -226,6 +230,7 @@ public class AddActionPage {
             }
             window.setScene(MainPage.mainScene(window));
         });
+
         //here the drop down menu transport is created
         TitledPane transportCategory = new TitledPane();
         transportCategory.setText("Transport");
@@ -247,6 +252,7 @@ public class AddActionPage {
             gridTransport.getChildren().addAll(newCheckBox, newLabelPoints);
         }
         transportCategory.setContent(gridTransport);
+
         ///here the drop down menu Food is created
         TitledPane foodCategory = new TitledPane();
         foodCategory.setText("Food");
@@ -268,6 +274,7 @@ public class AddActionPage {
             gridFood.getChildren().addAll(newCheckBox, newLabelPoints);
         }
         foodCategory.setContent(gridFood);
+
         //here the drop down menu Energy is created
         TitledPane energyCategory = new TitledPane();
         energyCategory.setText("Energy");
@@ -289,6 +296,7 @@ public class AddActionPage {
             gridEnergy.getChildren().addAll(newCheckBox, newLabelPoints);
         }
         energyCategory.setContent(gridEnergy);
+
         //here the drop down menu misc is created
         TitledPane miscCategory = new TitledPane();
         miscCategory.setText("Misc.");
@@ -310,6 +318,7 @@ public class AddActionPage {
             gridMisc.getChildren().addAll(newCheckBox, newLabelPoints);
         }
         miscCategory.setContent(gridMisc);
+
         //setting so that only one category can be open at any time
         transportCategory.setOnMouseClicked(e -> {
             foodCategory.setExpanded(false);
@@ -331,10 +340,35 @@ public class AddActionPage {
             foodCategory.setExpanded(false);
             energyCategory.setExpanded(false);
         });
-        ////central page layout/////////////////////////////////////////////////////////////////
+
+        //here all objects created above are placed in the central grid
         gridCenter.getChildren().addAll(saveAsButton, submitButton, transportCategory,
                 miscCategory, foodCategory, energyCategory);
         return gridCenter;
+    }
+
+    /**
+     * Method for setting the save as preset function.
+     *
+     * @param listOfActions list of all actions in the database
+     * @param listCheckboxes list of all checkboxes on the page
+     * @param listForPresets list that's send to the server to save as preset
+     * @param window the window that needs to be modified
+     *
+     */
+    public static void saveAS( ArrayList<Action> listOfActions, ArrayList<CheckBox> listCheckboxes,
+                               ArrayList<String> listForPresets, Stage window) {
+        for (int i = 0; i < listCheckboxes.size(); i++) {
+            if (listCheckboxes.get(i).isSelected()) {
+                String actionName = listCheckboxes.get(i).getText();
+                for (int j = 0; j < listOfActions.size(); j++) {
+                    if (actionName.equals(listOfActions.get(j).getActionName())) {
+                        listForPresets.add(listOfActions.get(j).getActionName());
+                    }
+                }
+            }
+        }
+        window.setScene(NamePresetPage.namePresetScene(window, listForPresets));
     }
 
 }
