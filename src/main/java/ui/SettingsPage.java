@@ -3,6 +3,7 @@ package ui;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -84,6 +85,11 @@ public class SettingsPage {
         anonymousButton.setSelected(Main.clientController.getUser().getAnonymous());
         anonymousButton.setOnAction(e -> {
             Main.clientController.updateAnonymous(anonymousButton.isSelected());
+            Alert success = new Alert(Alert.AlertType.INFORMATION);
+            success.setHeaderText("Success!");
+            success.setContentText("Your anonymous settings are changed");
+            success.setTitle("Notification");
+            success.show();
         });
         anonymousButton.setId("JFXToggleButton");
 
