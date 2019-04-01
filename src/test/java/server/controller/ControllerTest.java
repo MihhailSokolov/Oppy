@@ -159,6 +159,8 @@ public class ControllerTest {
     public void checkUserRegister() throws Exception {
         if(userRepository.findFirstByUsername(testUser.getUsername())!=null)
             userRepository.delete(userRepository.findFirstByUsername(testUser.getUsername()));
+        if(userRepository.findFirstByEmail(testUser.getEmail())!=null)
+            userRepository.delete(userRepository.findFirstByEmail(testUser.getEmail()));
         ObjectMapper mapper = new ObjectMapper();
         String jsonBody = mapper.writeValueAsString(testUser);
         User wrongTestUser = new User(testUser.getUsername(), testUser.getPassword(), testUser.getEmail(),
