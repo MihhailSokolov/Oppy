@@ -224,6 +224,7 @@ public class AddActionPage {
                     Main.clientController.takeAction(listCheckboxes.get(i).getText());
                 }
             }
+            window.setScene(MainPage.mainScene(window));
         });
         //here the drop down menu transport is created
         TitledPane transportCategory = new TitledPane();
