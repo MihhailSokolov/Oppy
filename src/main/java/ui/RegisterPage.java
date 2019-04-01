@@ -6,13 +6,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -37,21 +31,29 @@ public class RegisterPage {
      * @return scene.
      */
     public static Scene registerScene(Stage primaryStage) {
+        //setting title of the window and creating the BorderPane, the central layout for the window
         Stage window = primaryStage;
         window.setTitle("RegisterPage");
         window.setMaximized(true);
+        final BorderPane borderPane = new BorderPane();
 
+        //create the grid for the center of the page
         GridPane grid = new GridPane();
         grid.setId("grid2");
-        //fake register button at the top
+
+        //Here a toggleGroup for the login/register switch buttons is created
+        final ToggleGroup loginRegister = new ToggleGroup();
+
+        //here the fake register button is created, at the top of the page
         ToggleButton fakeRegisterButton = new ToggleButton("Register");
         fakeRegisterButton.setId("login-register");
         fakeRegisterButton.setSelected(true);
         fakeRegisterButton.setDisable(true);
         GridPane.setConstraints(fakeRegisterButton, 1, 0);
-        ToggleGroup loginRegister = new ToggleGroup();
         fakeRegisterButton.setToggleGroup(loginRegister);
-        //The button the redirects to the login page
+
+
+        //Here the login button is created, at the top of the page
         ToggleButton loginButton = new ToggleButton("Sign in");
         loginButton.setId("login-register");
         GridPane.setConstraints(loginButton, 0, 0);
@@ -63,107 +65,91 @@ public class RegisterPage {
             }
         });
         loginButton.setToggleGroup(loginRegister);
-        //email, username, password  and confirm password fields and labels
+
+        //Here the email Label is created
         Label email = new Label("email");
         GridPane.setConstraints(email, 0, 2);
+
+        //Here the username Label is created
         Label username = new Label("Username");
         GridPane.setConstraints(username, 0, 5);
+
+        //Here the password Label is created
         Label password = new Label("Password");
         GridPane.setConstraints(password, 0, 8);
+
+        //Here the confirm password Label is created
         Label confirmPassword = new Label("Confirm password");
         GridPane.setConstraints(confirmPassword, 0, 11);
 
+        //Here the email textfield is created
         TextField emailTextfield = new TextField();
         emailTextfield.setPromptText("email");
         GridPane.setConstraints(emailTextfield, 0, 3, 2, 1);
+
+        //Here the username textfield is created
         TextField usernameTextfield = new TextField();
         usernameTextfield.setPromptText("Username");
         GridPane.setConstraints(usernameTextfield, 0, 6, 2, 1);
+
+        //Here the password textfield is created
         PasswordField passwordTextfield = new PasswordField();
         passwordTextfield.setPromptText("Password");
         GridPane.setConstraints(passwordTextfield, 0, 9, 2, 1);
+
+        //Here the confirm password textfield is created
         PasswordField confirmPasswordTextfield = new PasswordField();
         confirmPasswordTextfield.setPromptText("Confirm password");
         GridPane.setConstraints(confirmPasswordTextfield, 0, 12, 2, 1);
+
         //Here the register button is created
         Button registerButton = new Button("Register");
         registerButton.setId("loginRegisterButton");
         GridPane.setConstraints(registerButton, 0, 15, 2, 1);
-
         registerButton.setOnAction(e -> {
-            String result;
-            if (RegisterCheck.checkUser(usernameTextfield.getText())
-                    && RegisterCheck.checkEmail(emailTextfield.getText())
-                    && RegisterCheck.checkPassword(passwordTextfield.getText(), confirmPasswordTextfield.getText())) {
-                ClientController clientController = new ClientController(new User(usernameTextfield.getText(),
-                        passwordTextfield.getText(), emailTextfield.getText(), 0, new Date()));
-                result = clientController.register();
-            } else {
-                result = "username, email, or password is too short "
-                        + "(password is less 8 characters or any other field is left empty)";
-            }
-            if (result.equals("true")) {
-                Alert success = new Alert(Alert.AlertType.INFORMATION);
-                success.setHeaderText("Success!");
-                success.setContentText("You have successfully registered!");
-                success.setTitle("Notification");
-                success.show();
-                try {
-                    window.setScene(LoginPage.loginScene(window));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            } else {
-                Alert failed = new Alert(Alert.AlertType.ERROR);
-                failed.setHeaderText("Failed.");
-                failed.setContentText("Registration failed with the following message: " + result);
-                failed.setTitle("Notification");
-                failed.show();
-            }
+            register(usernameTextfield, emailTextfield, passwordTextfield, confirmPasswordTextfield, window);
         });
-        //The Check-availability button
+
+        //Here the check availability button is created
         Button checkA = new Button("Check Availability");
         checkA.setId("checkAvailability");
         GridPane.setConstraints(checkA, 1, 5);
         checkA.setOnAction(e -> {
-            if (!(usernameTextfield.getText().equals(""))) {
-                String result = new ClientController().checkAvailability(usernameTextfield.getText());
-                if (result.equals("true")) {
-                    usernameTextfield.setStyle("-fx-background-color: #00ff00;"
-                            + "-fx-text-fill: #000000");
-                } else {
-                    usernameTextfield.setStyle("-fx-background-color: #ff0000");
-                }
-            } else {
-                usernameTextfield.setStyle("-fx-background-color: #ff0000");
-            }
+            checkAvailibility(usernameTextfield);
         });
-        //Here all elements previously created are added to the view and the view is centered
+
+        //here all objects created above are placed in the central grid
         grid.getChildren().addAll(email, username, password, confirmPassword, emailTextfield,
                 usernameTextfield, passwordTextfield, confirmPasswordTextfield,
                 registerButton, loginButton, fakeRegisterButton, checkA);
         grid.setAlignment(Pos.CENTER);
-        //TopGrid made here
+
+        //create the grid for the top of the page
         GridPane topGrid = new GridPane();
         topGrid.setPadding(new Insets(10, 10, 10, 10));
         topGrid.setVgap(8);
         topGrid.setHgap(10);
         topGrid.setId("topGrid");
-        //here the logo is created
+
+        //here the imageView of the logo is created
         Image logo = new Image("oppy350x150.png");
         ImageView displayLogo = new ImageView(logo);
         GridPane.setConstraints(displayLogo, 0, 0, 3, 1);
         topGrid.getChildren().add(displayLogo);
         topGrid.setAlignment(Pos.CENTER);
-        //setting the sizes of the rows
+
+        //Here the column and row constraints of all sections of the page are set
         grid.getRowConstraints().addAll(gridRowConstraints());
-        //end of setting row sizes
-        //here the create view is made into a scene and return when the method is called
-        BorderPane borderPane = new BorderPane();
+
+        //here the top and center regions of the BorderPane are initialized to the desired gridPanes.
         borderPane.setCenter(grid);
         borderPane.setTop(topGrid);
+
+        //here the top and center regions of the BorderPane are initialized to the desired gridPanes.
         Scene scene = new Scene(borderPane);
         scene.getStylesheets().add("LoginRegisterStyle.css");
+
+        //here Key_events are added to the scene
         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             if (ke.getCode() == KeyCode.ENTER) {
                 registerButton.fire();
@@ -184,6 +170,8 @@ public class RegisterPage {
                 }
             }
         });
+
+        //here the scene is returned
         return scene;
     }
 
@@ -258,4 +246,66 @@ public class RegisterPage {
         rows.add(row16);
         return rows;
     }
+
+    /**
+     * Method for registering an account.
+     *
+     * @param usernameTextfield  Textfield with the username
+     * @param emailTextfield Textfield with the email
+     * @param passwordTextfield Textfield with the password
+     * @param confirmPasswordTextfield Textfield to confirm the password
+     * @param window The window that needs to be changed
+     */
+    public static void register(TextField usernameTextfield, TextField emailTextfield, TextField passwordTextfield,
+                         TextField confirmPasswordTextfield, Stage window) {
+        String result;
+        if (RegisterCheck.checkUser(usernameTextfield.getText())
+                && RegisterCheck.checkEmail(emailTextfield.getText())
+                && RegisterCheck.checkPassword(passwordTextfield.getText(), confirmPasswordTextfield.getText())) {
+            ClientController clientController = new ClientController(new User(usernameTextfield.getText(),
+                    passwordTextfield.getText(), emailTextfield.getText(), 0, new Date()));
+            result = clientController.register();
+        } else {
+            result = "username, email, or password is too short "
+                    + "(password is less 8 characters or any other field is left empty)";
+        }
+        if (result.equals("true")) {
+            Alert success = new Alert(Alert.AlertType.INFORMATION);
+            success.setHeaderText("Success!");
+            success.setContentText("You have successfully registered!");
+            success.setTitle("Notification");
+            success.show();
+            try {
+                window.setScene(LoginPage.loginScene(window));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        } else {
+            Alert failed = new Alert(Alert.AlertType.ERROR);
+            failed.setHeaderText("Failed.");
+            failed.setContentText("Registration failed with the following message: " + result);
+            failed.setTitle("Notification");
+            failed.show();
+        }
+    }
+
+    /**
+     * Method for Checking if a name is available.
+     *
+     * @param usernameTextfield  Textfield with the username
+     */
+    public static void checkAvailibility(TextField usernameTextfield) {
+        if (!(usernameTextfield.getText().equals(""))) {
+            String result = new ClientController().checkAvailability(usernameTextfield.getText());
+            if (result.equals("true")) {
+                usernameTextfield.setStyle("-fx-background-color: #00ff00;"
+                        + "-fx-text-fill: #000000");
+            } else {
+                usernameTextfield.setStyle("-fx-background-color: #ff0000");
+            }
+        } else {
+            usernameTextfield.setStyle("-fx-background-color: #ff0000");
+        }
+    }
+
 }
