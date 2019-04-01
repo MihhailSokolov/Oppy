@@ -36,49 +36,30 @@ public class SettingsPage {
      */
 
     public static Scene settingsScene(Stage primaryStage) {
+        //setting title of the window and creating the BorderPane, the central layout for the window
         Stage window = primaryStage;
         window.setTitle("SettingsPage");
         final BorderPane centralPageLayout = new BorderPane();
 
-        /////////////////////////////////////////////////////////////////////////////////
-        //CentralGrid////////////////////////////////////////////////////////////////////
+        //create the grid for the center of the page
         final GridPane gridCenter = new GridPane();
         gridCenter.setId("gridCenter");
 
-        BufferedImage serverProfilePicture =
-                Main.clientController.getProfilePic(Main.clientController.getUser().getUsername());
-        if (serverProfilePicture != null) {
-            profilePicture = SwingFXUtils.toFXImage(serverProfilePicture, null);
-        } else {
-            profilePicture = new Image("oppy100x100.png");
-        }
-        ImageView displayProfilePicture = new ImageView(profilePicture);
-        Button profilePictureButton = new Button();
-        profilePictureButton.setGraphic(displayProfilePicture);
-        profilePictureButton.setOnAction(event -> {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Choose profile picture");
-            fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
-            File selectedFile = fileChooser.showOpenDialog(window);
-            if (selectedFile != null) {
-                Image selectedImage = new Image(selectedFile.toURI().toString(), 100, 100, true, true);
-                profilePicture = selectedImage;
-                Main.clientController.updateProfilePic(SwingFXUtils.fromFXImage(selectedImage, null));
-                window.setScene(settingsScene(window));
-            }
-        });
-        GridPane.setConstraints(profilePictureButton,1,0,1,2);
-        profilePictureButton.setId("pfButton");
+        //Here a Button is created with the profile picture as it's skin, that lets you change your profile picture
+        final Button profilePictureButton = pfButton(window);
 
+        //here a label displaying your username is created
         Label username = new Label(Main.clientController.getUser().getUsername());
         GridPane.setConstraints(username, 2,0);
         username.setId("label");
 
+        //here a label displaying your email is created
         String userEmail = Main.clientController.getEmail();
         Label email = new Label(userEmail);
         GridPane.setConstraints(email,2,1);
         email.setId("label");
 
+        //Here a toggleButton is created the allows you the set your account to anonymous
         JFXToggleButton anonymousButton = new JFXToggleButton();
         GridPane.setConstraints(anonymousButton,1,3,2,1);
         anonymousButton.setText("Anonymous");
@@ -93,19 +74,21 @@ public class SettingsPage {
         });
         anonymousButton.setId("JFXToggleButton");
 
+        //here a button is created that let's you change your email
         Button changeEmailButton = new Button("Change email");
         GridPane.setConstraints(changeEmailButton,1,4,2,1);
         changeEmailButton.setOnAction(e -> {
             window.setScene(ChangeEmailPage.changeEmailScene(window));
         });
 
+        //here a button is created that let's you change your password
         Button changePasswordButton = new Button("Change password");
         GridPane.setConstraints(changePasswordButton, 1,5,2,1);
         changePasswordButton.setOnAction(e -> {
             window.setScene(ChangePasswordPage.changePasswordScene(window));
         });
 
-
+        //here a button is created that let's allows you to log out
         logOutButton = new Button("Log out");
         GridPane.setConstraints(logOutButton,1,6,2,1);
         logOutButton.setOnAction(e -> {
@@ -116,12 +99,14 @@ public class SettingsPage {
             }
         });
 
+        //here a button is created that let's you change you delete your entire account
         Button deleteAccountButton = new Button("Delete account");
         GridPane.setConstraints(deleteAccountButton,1,7,2,1);
         deleteAccountButton.setOnAction(e -> {
             window.setScene(DeleteUserPage.deleteUserScene(window));
         });
 
+        //here a button is created that let's you reset your entire account
         Button resetButton = new Button("Reset Points");
         GridPane.setConstraints(resetButton,1,8,2,1);
         resetButton.setOnAction(e -> {
@@ -132,16 +117,16 @@ public class SettingsPage {
         gridCenter.getChildren().addAll(username, email,
                 changeEmailButton, changePasswordButton,
                 logOutButton, deleteAccountButton, resetButton,
-                anonymousButton, displayProfilePicture, profilePictureButton);
+                anonymousButton, profilePictureButton);
 
 
-        //here the hamburger menu's and the top menu are initialized
+        //here variables for the hamburger menu's and the top menu are initialized
         final GridPane gridHamburgerLeft = MainPage.gridHamburgerLeft(window);
         final GridPane gridHamburgerRight = MainPage.gridHamburgerRight(window);
         final GridPane gridTop = MainPage.gridTop(centralPageLayout, gridHamburgerLeft,
                 gridHamburgerRight, "Settings Page", new Label(), window);
 
-        ////setting the sizes of the rows///////////////////////////////
+        //Here the column and row constraints of all sections of the page are set
         gridCenter.getRowConstraints().addAll(gridRowConstraints());
         gridCenter.getColumnConstraints().addAll(gridColumnConstraints());
         gridHamburgerLeft.getRowConstraints().addAll(MainPage.hamburgerRowConstraintsLeft());
@@ -150,15 +135,17 @@ public class SettingsPage {
         gridHamburgerRight.getColumnConstraints().addAll(MainPage.hamburgerColumnConstraintsRight());
         gridTop.getColumnConstraints().addAll(MainPage.girdTopColumnConstraints());
 
-        //////////////////////////////////////////////////////////////////////////////////////
-        ////central page layout///////////////////////////////////////////////////////////////
+
+        //here the top and center regions of the BorderPane are initialized to the desired gridPanes.
         centralPageLayout.setCenter(gridCenter);
         centralPageLayout.setTop(gridTop);
 
-        //here the create vieuw is made into a scene and returned when the method is called
+        //here a scene is constructed out of the BorderPane and styleSheets are added to it
         Scene scene = new Scene(centralPageLayout, 1920, 1080);
         scene.getStylesheets().add("topHamburgerStyle.css");
         scene.getStylesheets().add("settingsStyle.css");
+
+        //here Key_events are added to the scene
         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             if (ke.getCode() == KeyCode.A) {
                 anonymousButton.fire();
@@ -180,6 +167,8 @@ public class SettingsPage {
             }
             ke.consume();
         });
+
+        //here the scene is returned
         return scene;
     }
 
@@ -256,5 +245,39 @@ public class SettingsPage {
         columns.add(column1);
         columns.add(column2);
         return columns;
+    }
+
+    /**
+     *Method the created the profilePictureButton.
+     *
+     * @param window the current window of application
+     * @return Button the lest you set your profile picture
+     */
+    public static Button pfButton(Stage window) {
+        BufferedImage serverProfilePicture =
+                Main.clientController.getProfilePic(Main.clientController.getUser().getUsername());
+        if (serverProfilePicture != null) {
+            profilePicture = SwingFXUtils.toFXImage(serverProfilePicture, null);
+        } else {
+            profilePicture = new Image("oppy100x100.png");
+        }
+        ImageView displayProfilePicture = new ImageView(profilePicture);
+        Button profilePictureButton = new Button();
+        profilePictureButton.setGraphic(displayProfilePicture);
+        profilePictureButton.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choose profile picture");
+            fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+            File selectedFile = fileChooser.showOpenDialog(window);
+            if (selectedFile != null) {
+                Image selectedImage = new Image(selectedFile.toURI().toString(), 100, 100, true, true);
+                profilePicture = selectedImage;
+                Main.clientController.updateProfilePic(SwingFXUtils.fromFXImage(selectedImage, null));
+                window.setScene(settingsScene(window));
+            }
+        });
+        GridPane.setConstraints(profilePictureButton,1,0,1,2);
+        profilePictureButton.setId("pfButton");
+        return profilePictureButton;
     }
 }

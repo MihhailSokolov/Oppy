@@ -158,7 +158,7 @@ public class MainPage {
         gridHamburgerRight.getColumnConstraints().addAll(hamburgerColumnConstraintsRight());
         gridTop.getColumnConstraints().addAll(girdTopColumnConstraints());
 
-        //here the top center and bottom regions of the BorderPane are initialized to the desired gridPanes.
+        //here the top, center and bottom regions of the BorderPane are initialized to the desired gridPanes.
         centralPageLayout.setCenter(gridCenter);
         centralPageLayout.setTop(gridTop);
         centralPageLayout.setBottom(gridBot);
@@ -443,7 +443,7 @@ public class MainPage {
             folowingList = new TableView<>();
             window.setScene(LeaderboardPage.leaderboardScene(window));
         });
-        gridHamburger.setConstraints(leaderboardButton, 0, 1, 2, 1);
+        gridHamburger.setConstraints(leaderBoardButton, 0, 1, 2, 1);
 
         //Here the toggleButton for the addActionPage is created
         ToggleButton addActionButton = new  ToggleButton("Add action");
