@@ -731,18 +731,27 @@ public class MainPage {
                 }
             });
             //gets the names of the actions in the presets
+            ArrayList<String> alreadyDisplayed = new ArrayList<String>();
             Label actionName = new Label("");
+            final int k = 0;
             for (int j = 0; j < Main.clientController.getUser().getPresets().get(i).getActionList().size()
-                    && j < 4; j++) {
-                if (j == 3) {
-                    actionName = new Label("etc.");
-                } else {
-                    actionName = new Label("-"
-                            + Main.clientController.getUser().getPresets().get(i).getActionList().get(j));
+                    && k < 4; j++) {
+                if (! alreadyDisplayed.contains(
+                        Main.clientController.getUser().getPresets().get(i).getActionList().get(j))) {
+                    if (k == 3) {
+                        actionName = new Label("etc.");
+                    } else {
+                        actionName = new Label("-"
+                                + Main.clientController.getUser().getPresets().get(i).getActionList().get(j));
+                        alreadyDisplayed.add(
+                                Main.clientController.getUser().getPresets().get(i).getActionList().get(j));
+                    }
+                    actionName.setId("actionName");
+                    GridPane.setConstraints(actionName, 2 * i,k + 1,2,1);
+                    gridBot.getChildren().add(actionName);
+                    k++;
                 }
-                actionName.setId("actionName");
-                GridPane.setConstraints(actionName, 2 * i,j + 1,2,1);
-                gridBot.getChildren().add(actionName);
+
             }
             actionName.setId("actionNameLast");
             //Here the delete presetButton is created
