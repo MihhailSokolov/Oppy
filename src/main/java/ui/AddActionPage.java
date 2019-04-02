@@ -1,10 +1,7 @@
 package ui;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -16,6 +13,7 @@ import server.model.Action;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Class for adding the action page.
@@ -178,15 +176,19 @@ public class AddActionPage {
         column0.setMinWidth(0);
         column0.setMaxWidth(0);
         ColumnConstraints column1 = new ColumnConstraints();
-        column1.setMinWidth(400);
-        column1.setMaxWidth(400);
+        column1.setMinWidth(350);
+        column1.setMaxWidth(350);
         ColumnConstraints column2 = new ColumnConstraints();
-        column2.setMinWidth(100);
-        column2.setMaxWidth(100);
+        column2.setMinWidth(50);
+        column2.setMaxWidth(50);
+        ColumnConstraints column3 = new ColumnConstraints();
+        column3.setMinWidth(100);
+        column3.setMaxWidth(100);
         ArrayList<ColumnConstraints> columns = new ArrayList<ColumnConstraints>();
         columns.add(column0);
         columns.add(column1);
         columns.add(column2);
+        columns.add(column3);
         return columns;
     }
 
@@ -204,7 +206,7 @@ public class AddActionPage {
 
         //initialize some variables an update some stats
         final ArrayList<Action> listOfActions = new ArrayList<Action>();
-        final ArrayList<CheckBox> listCheckboxes = new ArrayList<CheckBox>();
+        final ArrayList<ActionMenuObject> listCheckboxes = new ArrayList<ActionMenuObject>();
         Main.clientController.updateActionList();
         List<Action> actionList = Main.clientController.getActionList();
         for (Action act : actionList) {
@@ -216,19 +218,18 @@ public class AddActionPage {
         GridPane.setConstraints(saveAsButton, 1, 10);
         ArrayList<String> listForPresets = new ArrayList<String>();
         saveAsButton.setOnAction(e -> {
-            saveAS(listOfActions, listCheckboxes, listForPresets, window);
+            if (validInput(listCheckboxes)) {
+                saveAS(listOfActions, listCheckboxes, listForPresets, window);
+            }
         });
 
         //here the submit button is created
         Button submitButton = new Button("submit");
         GridPane.setConstraints(submitButton, 3, 10);
         submitButton.setOnAction(e -> {
-            for (int i = 0; i < listCheckboxes.size(); i++) {
-                if (listCheckboxes.get(i).isSelected()) {
-                    Main.clientController.takeAction(listCheckboxes.get(i).getText());
-                }
+            if (validInput(listCheckboxes)) {
+                submit(listOfActions, listCheckboxes, listForPresets, window);
             }
-            window.setScene(MainPage.mainScene(window));
         });
 
         //here the drop down menu transport is created
@@ -245,11 +246,15 @@ public class AddActionPage {
         for (int i = 0; i < transportList.size(); i++) {
             CheckBox newCheckBox = new CheckBox(transportList.get(i).getActionName());
             GridPane.setConstraints(newCheckBox, 1, i);
-            listCheckboxes.add(newCheckBox);
+            TextField textField = new TextField();
+            GridPane.setConstraints(textField, 2, i);
+            textField.setId("input");
+            textField.setPromptText("km");
+            listCheckboxes.add(new ActionMenuObject(newCheckBox, textField));
             String strPoints = Integer.toString(transportList.get(i).getPoints());
             Label newLabelPoints = new Label(strPoints);
-            GridPane.setConstraints(newLabelPoints, 2, i);
-            gridTransport.getChildren().addAll(newCheckBox, newLabelPoints);
+            GridPane.setConstraints(newLabelPoints, 3, i);
+            gridTransport.getChildren().addAll(newCheckBox, newLabelPoints, textField);
         }
         transportCategory.setContent(gridTransport);
 
@@ -267,10 +272,10 @@ public class AddActionPage {
         for (int i = 0; i < foodList.size(); i++) {
             CheckBox newCheckBox = new CheckBox(foodList.get(i).getActionName());
             GridPane.setConstraints(newCheckBox, 1, i);
-            listCheckboxes.add(newCheckBox);
+            listCheckboxes.add(new ActionMenuObject(newCheckBox, null));
             String strPoints = Integer.toString(foodList.get(i).getPoints());
             Label newLabelPoints = new Label(strPoints);
-            GridPane.setConstraints(newLabelPoints, 2, i);
+            GridPane.setConstraints(newLabelPoints, 3, i);
             gridFood.getChildren().addAll(newCheckBox, newLabelPoints);
         }
         foodCategory.setContent(gridFood);
@@ -289,10 +294,10 @@ public class AddActionPage {
         for (int i = 0; i < energyList.size(); i++) {
             CheckBox newCheckBox = new CheckBox(energyList.get(i).getActionName());
             GridPane.setConstraints(newCheckBox, 1, i);
-            listCheckboxes.add(newCheckBox);
+            listCheckboxes.add(new ActionMenuObject(newCheckBox, null));
             String strPoints = Integer.toString(energyList.get(i).getPoints());
             Label newLabelPoints = new Label(strPoints);
-            GridPane.setConstraints(newLabelPoints, 2, i);
+            GridPane.setConstraints(newLabelPoints, 3, i);
             gridEnergy.getChildren().addAll(newCheckBox, newLabelPoints);
         }
         energyCategory.setContent(gridEnergy);
@@ -311,15 +316,128 @@ public class AddActionPage {
         for (int i = 0; i < miscList.size(); i++) {
             CheckBox newCheckBox = new CheckBox(miscList.get(i).getActionName());
             GridPane.setConstraints(newCheckBox, 1, i);
-            listCheckboxes.add(newCheckBox);
+            listCheckboxes.add(new ActionMenuObject(newCheckBox, null));
             String strPoints = Integer.toString(miscList.get(i).getPoints());
             Label newLabelPoints = new Label(strPoints);
-            GridPane.setConstraints(newLabelPoints, 2, i);
+            GridPane.setConstraints(newLabelPoints, 3, i);
             gridMisc.getChildren().addAll(newCheckBox, newLabelPoints);
         }
         miscCategory.setContent(gridMisc);
 
         //setting so that only one category can be open at any time
+        onlyOneOpen(transportCategory, foodCategory, energyCategory, miscCategory);
+
+        //here all objects created above are placed in the central grid
+        gridCenter.getChildren().addAll(saveAsButton, submitButton, transportCategory,
+                miscCategory, foodCategory, energyCategory);
+        return gridCenter;
+    }
+
+    /**
+     * Method for setting the save as preset function.
+     *
+     * @param listOfActions list of all actions in the database
+     * @param listCheckboxes list of all checkboxes on the page
+     * @param listForPresets list that's send to the server to save as preset
+     * @param window the window that needs to be modified
+     *
+     */
+    public static void saveAS( ArrayList<Action> listOfActions, ArrayList<ActionMenuObject> listCheckboxes,
+                               ArrayList<String> listForPresets, Stage window) {
+        for (int i = 0; i < listCheckboxes.size(); i++) {
+            if (listCheckboxes.get(i).getCheckBox().isSelected()) {
+                if (listCheckboxes.get(i).getTextField() != null) {
+                    for (int j = 0; j < Integer.parseInt(listCheckboxes.get(i).getTextField().getText()); j++) {
+                        listForPresets.add(listCheckboxes.get(i).getCheckBox().getText());
+                    }
+                } else {
+                    listForPresets.add(listCheckboxes.get(i).getCheckBox().getText());
+                }
+            }
+        }
+        window.setScene(NamePresetPage.namePresetScene(window, listForPresets));
+    }
+
+    /**
+     * Method for submitting your actions.
+     *
+     * @param listOfActions list of all actions in the database
+     * @param listCheckboxes list of all checkboxes on the page
+     * @param listForPresets list that's send to the server to save as preset
+     * @param window the window that needs to be modified
+     *
+     */
+    public static void submit(ArrayList<Action> listOfActions, ArrayList<ActionMenuObject> listCheckboxes,
+                              ArrayList<String> listForPresets, Stage window) {
+        for (int i = 0; i < listCheckboxes.size(); i++) {
+            if (listCheckboxes.get(i).getCheckBox().isSelected()) {
+                if (listCheckboxes.get(i).getTextField() != null) {
+                    for (int j = 0; j < Integer.parseInt(listCheckboxes.get(i).getTextField().getText()); j++) {
+                        Main.clientController.takeAction(listCheckboxes.get(i).getCheckBox().getText());
+                    }
+                } else {
+                    Main.clientController.takeAction(listCheckboxes.get(i).getCheckBox().getText());
+                }
+            }
+        }
+        window.setScene(MainPage.mainScene(window));
+    }
+
+    /**
+     * Method that check if input in textField is valid.
+     *
+     * @param listCheckboxes list of all checkboxes on the page
+     *
+     */
+    public static boolean validInput(ArrayList<ActionMenuObject> listCheckboxes) {
+        for (int i = 0; i < listCheckboxes.size(); i++) {
+            if (listCheckboxes.get(i).getCheckBox().isSelected()) {
+                if (listCheckboxes.get(i).getTextField() != null) {
+                    if (! checkIfInt(listCheckboxes.get(i).getTextField().getText())) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("ALERT!");
+                        alert.setHeaderText("Enter number of km traveled");
+                        alert.showAndWait();
+                        return false;
+                    } else {
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
+            } else {
+                return true;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Method that checks if a String  could be an Integer.
+     *
+     * @param string string to check
+     *
+     */
+    public static boolean checkIfInt(String string) {
+        Scanner sc = new Scanner(string);
+        if (sc.hasNextInt()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Method that makes sure only one titledPane is opened at anny time.
+     *
+     * @param transportCategory the first titledPane
+     * @param foodCategory the second titledPane
+     * @param energyCategory the third titledPane
+     * @param miscCategory the fourth titledPane
+     *
+     */
+    public static void onlyOneOpen(TitledPane transportCategory, TitledPane foodCategory,
+                                   TitledPane energyCategory, TitledPane miscCategory) {
         transportCategory.setOnMouseClicked(e -> {
             foodCategory.setExpanded(false);
             energyCategory.setExpanded(false);
@@ -341,34 +459,5 @@ public class AddActionPage {
             energyCategory.setExpanded(false);
         });
 
-        //here all objects created above are placed in the central grid
-        gridCenter.getChildren().addAll(saveAsButton, submitButton, transportCategory,
-                miscCategory, foodCategory, energyCategory);
-        return gridCenter;
     }
-
-    /**
-     * Method for setting the save as preset function.
-     *
-     * @param listOfActions list of all actions in the database
-     * @param listCheckboxes list of all checkboxes on the page
-     * @param listForPresets list that's send to the server to save as preset
-     * @param window the window that needs to be modified
-     *
-     */
-    public static void saveAS( ArrayList<Action> listOfActions, ArrayList<CheckBox> listCheckboxes,
-                               ArrayList<String> listForPresets, Stage window) {
-        for (int i = 0; i < listCheckboxes.size(); i++) {
-            if (listCheckboxes.get(i).isSelected()) {
-                String actionName = listCheckboxes.get(i).getText();
-                for (int j = 0; j < listOfActions.size(); j++) {
-                    if (actionName.equals(listOfActions.get(j).getActionName())) {
-                        listForPresets.add(listOfActions.get(j).getActionName());
-                    }
-                }
-            }
-        }
-        window.setScene(NamePresetPage.namePresetScene(window, listForPresets));
-    }
-
 }
