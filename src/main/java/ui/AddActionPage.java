@@ -216,7 +216,7 @@ public class AddActionPage {
         GridPane.setConstraints(saveAsButton, 1, 10);
         ArrayList<String> listForPresets = new ArrayList<String>();
         saveAsButton.setOnAction(e -> {
-            saveAS(listOfActions, listCheckboxes, listForPresets, window);
+            saveAs(listOfActions, listCheckboxes, listForPresets, window);
         });
 
         //here the submit button is created
@@ -356,8 +356,8 @@ public class AddActionPage {
      * @param window the window that needs to be modified
      *
      */
-    public static void saveAS( ArrayList<Action> listOfActions, ArrayList<CheckBox> listCheckboxes,
-                               ArrayList<String> listForPresets, Stage window) {
+    public static void saveAs(ArrayList<Action> listOfActions, ArrayList<CheckBox> listCheckboxes,
+                              ArrayList<String> listForPresets, Stage window) {
         for (int i = 0; i < listCheckboxes.size(); i++) {
             if (listCheckboxes.get(i).isSelected()) {
                 String actionName = listCheckboxes.get(i).getText();

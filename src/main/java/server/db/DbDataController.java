@@ -82,7 +82,26 @@ public class DbDataController {
     }
 
     public boolean deleteUser(String username) {
+        deleteUserFromAllUsersFriends(username);
         return userRepository.deleteUserByUsername(username) == 1;
+    }
+
+
+    /**
+     * Method to delete a user from all users' friend list.
+     * @param username user's username
+     */
+    void deleteUserFromAllUsersFriends(String username) {
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            if (!user.getUsername().equals(username)) {
+                int index = findIndexByUsername(user.getFriends(), username);
+                if (index != -1) {
+                    user.getFriends().remove(index - 1);
+                }
+            }
+            userRepository.save(user);
+        }
     }
 
     /**
