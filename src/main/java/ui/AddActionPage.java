@@ -224,7 +224,7 @@ public class AddActionPage {
         GridPane.setConstraints(saveAsButton, 1, 10);
         ArrayList<String> listForPresets = new ArrayList<String>();
         saveAsButton.setOnAction(e -> {
-            if (validInput(listCheckboxes)) {
+            if (validInput(listCheckboxes) && checkEmpty(listCheckboxes)) {
                 saveAS(listOfActions, listCheckboxes, listForPresets, window);
             }
         });
@@ -233,7 +233,7 @@ public class AddActionPage {
         Button submitButton = new Button("submit");
         GridPane.setConstraints(submitButton, 3, 10);
         submitButton.setOnAction(e -> {
-            if (validInput(listCheckboxes)) {
+            if (validInput(listCheckboxes) && checkEmpty(listCheckboxes)) {
                 submit(listOfActions, listCheckboxes, listForPresets, window);
             }
         });
@@ -460,4 +460,25 @@ public class AddActionPage {
         });
 
     }
+
+
+    /**
+     * Method that check if their are action(s) selected.
+     *
+     * @param list list of all checkboxes on the page
+     *
+     */
+    public static boolean checkEmpty(ArrayList<ActionMenuObject> list) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getCheckBox().isSelected()) {
+                return true;
+            }
+        }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("ALERT!");
+        alert.setHeaderText("No actions selected");
+        alert.showAndWait();
+        return false;
+    }
+
 }
