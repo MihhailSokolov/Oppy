@@ -397,21 +397,15 @@ public class AddActionPage {
     public static boolean validInput(ArrayList<ActionMenuObject> listCheckboxes) {
         for (int i = 0; i < listCheckboxes.size(); i++) {
             if (listCheckboxes.get(i).getCheckBox().isSelected()) {
-                if (listCheckboxes.get(i).getTextField() != null) {
+                if (listCheckboxes.get(i).getTextField() != null ) {
                     if (! checkIfInt(listCheckboxes.get(i).getTextField().getText())) {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("ALERT!");
                         alert.setHeaderText("Enter number of km traveled");
                         alert.showAndWait();
                         return false;
-                    } else {
-                        return true;
                     }
-                } else {
-                    return true;
                 }
-            } else {
-                return true;
             }
         }
         return true;
