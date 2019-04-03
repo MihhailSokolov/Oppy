@@ -191,15 +191,15 @@ public class MainPage {
             final KeyCombination addAction = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN);
             public void handle(KeyEvent ke) {
                 if (settings.match(ke)) {
-                    settingsButton.fire();
+                    window.setScene(SettingsPage.settingsScene(window));
                     ke.consume();
                 }
                 if (leaderboard.match(ke)) {
-                    leaderboardButton.fire();
+                    window.setScene(LeaderboardPage.leaderboardScene(window));
                     ke.consume();
                 }
                 if (addAction.match(ke)) {
-                    addActionButton.fire();
+                    window.setScene(AddActionPage.addActionScene(window));
                     ke.consume();
                 }
             }
