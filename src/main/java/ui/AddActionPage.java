@@ -68,11 +68,12 @@ public class AddActionPage {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             if (ke.getCode() == KeyCode.ENTER) {
                 submitButton.fire();
+                ke.consume();
             }
             if (ke.getCode() == KeyCode.S) {
                 saveAsButton.fire();
+                ke.consume();
             }
-            ke.consume();
         });
 
         //here the scene is returned
