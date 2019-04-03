@@ -3,6 +3,7 @@ package ui;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -15,7 +16,7 @@ import java.io.IOException;
 
 public class ChangePasswordPage {
     /**
-     <<<<<<< HEAD
+     * <<<<<<< HEAD
      * Method for creating the change password page.
      *
      * @param primaryStage primary stage
@@ -46,14 +47,28 @@ public class ChangePasswordPage {
 
         Button changeButton = new Button("Change Password");
         changeButton.setOnAction(e -> {
-            String result = Main.clientController.updatePass(newPasswordTextfield.getText());
-            if (result.equals("true")) { // change password
-
-                try {
-                    window.setScene(LoginPage.loginScene(window));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+            if (newPasswordTextfield.getText().length() >= 8) {
+                String result = Main.clientController.updatePass(newPasswordTextfield.getText(),
+                        passwordTextfield.getText());
+                if (result.equals("true")) { // change password
+                    try {
+                        window.setScene(LoginPage.loginScene(window));
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                } else {
+                    Alert failed = new Alert(Alert.AlertType.ERROR);
+                    failed.setContentText("Incorrect password!");
+                    failed.setHeaderText("Failure.");
+                    failed.setTitle("Notification");
+                    failed.show();
                 }
+            } else {
+                Alert failed = new Alert(Alert.AlertType.ERROR);
+                failed.setContentText("Password must contain at least 8 characters.");
+                failed.setHeaderText("Failure.");
+                failed.setTitle("Notification");
+                failed.show();
             }
         });
         GridPane.setConstraints(changeButton, 2, 4);
