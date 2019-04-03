@@ -36,13 +36,7 @@ public class ChangeEmailPage {
         //Here a toggleGroup for the login/register switch buttons is created
         final ToggleGroup loginRegister = new ToggleGroup();
 
-        //here the fake login button is created, at the top of the page
-
-
-        //Here the register button is created, at the top of the page
-
-
-        //Here the login/email Label is created
+        //Here the newemail Label is created
         Label newMail = new Label("New Email");
         GridPane.setConstraints(newMail, 0, 2);
 
@@ -50,10 +44,7 @@ public class ChangeEmailPage {
         Label password = new Label("Password");
         GridPane.setConstraints(password, 0, 5);
 
-        //Here the remember me data is collected
-
-
-        //Here the username textfield is created
+        //Here the newMail textfield is created
         TextField newMailTextfield = new TextField();
         newMailTextfield.setPromptText("New Mail");
         GridPane.setConstraints(newMailTextfield, 0, 3, 2, 1);
@@ -63,9 +54,7 @@ public class ChangeEmailPage {
         passwordTextfield.setPromptText("Password");
         GridPane.setConstraints(passwordTextfield, 0, 6, 2,  1);
 
-        //Here the remember me checkBox is created
-
-        //Here the login button is created
+        //Here the change button is created
         Button ChangeButton = new Button("Change Email");
         ChangeButton.setId("loginRegisterButton");
         ChangeButton.setOnAction(e -> {
