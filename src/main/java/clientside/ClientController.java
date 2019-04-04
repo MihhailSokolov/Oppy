@@ -252,10 +252,16 @@ public class ClientController {
      * @param newPass the new password for the user.
      * @return String response message ("true"/"false").
      */
-    public String updatePass(String newPass) {
-        responseEntity = this.postRequest(this.baseUrl
-                + String.format(Path.UPDATEPASS.toString(), hash(newPass)), user);
-        return new JSONObject(responseEntity.getBody()).getString("message");
+    public String updatePass(String newPass, String oldPlainPass) {
+        if(hash(oldPlainPass).equals(this.user.getPassword())){
+            responseEntity = this.postRequest(this.baseUrl
+                    + String.format(Path.UPDATEPASS.toString(), hash(newPass)), user);
+            return new JSONObject(responseEntity.getBody()).getString("message");
+        }
+        else {
+            return "false";
+        }
+
     }
 
     /**
