@@ -348,13 +348,9 @@ public class AddActionPage {
      * @param window the window that needs to be modified
      *
      */
-<<<<<<< src/main/java/ui/AddActionPage.java
-    public static void saveAs(ArrayList<Action> listOfActions, ArrayList<CheckBox> listCheckboxes,
-                              ArrayList<String> listForPresets, Stage window) {
-=======
+
     public static void saveAS( ArrayList<Action> listOfActions, ArrayList<ActionMenuObject> listCheckboxes,
                                ArrayList<String> listForPresets, Stage window) {
->>>>>>> src/main/java/ui/AddActionPage.java
         for (int i = 0; i < listCheckboxes.size(); i++) {
             if (listCheckboxes.get(i).getCheckBox().isSelected()) {
                 if (listCheckboxes.get(i).getTextField() != null) {
