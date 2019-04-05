@@ -76,4 +76,20 @@ public class DbDataControllerTest {
     public void testSearchUser() {
         assertNull(dbDataController.searchUser("user-which-should-not-exist"));
     }
+
+    @Test
+    public void testDeleteUserFromAllUsersFriends() {
+        User userToBeDeleted = new User("delete-me", "pass", "mail", 0, new Date());
+        User userWithFriends = new User("user-for-testing", "password", "email", 0, new Date());
+        List<User> friends = new ArrayList<>();
+        friends.add(userToBeDeleted);
+        userWithFriends.setFriends(friends);
+        userRepository.save(userWithFriends);
+        userRepository.save(userToBeDeleted);
+        dbDataController.deleteUserFromAllUsersFriends(userToBeDeleted.getUsername());
+        userWithFriends = userRepository.findFirstByUsername(userWithFriends.getUsername());
+        userRepository.delete(userToBeDeleted);
+        userRepository.delete(userWithFriends);
+        assertFalse(userWithFriends.getFriends().contains(userToBeDeleted));
+    }
 }

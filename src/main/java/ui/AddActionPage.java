@@ -348,6 +348,7 @@ public class AddActionPage {
      * @param window the window that needs to be modified
      *
      */
+
     public static void saveAS( ArrayList<Action> listOfActions, ArrayList<ActionMenuObject> listCheckboxes,
                                ArrayList<String> listForPresets, Stage window) {
         for (int i = 0; i < listCheckboxes.size(); i++) {
