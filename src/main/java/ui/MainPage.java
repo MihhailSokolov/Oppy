@@ -191,15 +191,15 @@ public class MainPage {
             final KeyCombination addAction = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN);
             public void handle(KeyEvent ke) {
                 if (settings.match(ke)) {
-                    settingsButton.fire();
+                    window.setScene(SettingsPage.settingsScene(window));
                     ke.consume();
                 }
                 if (leaderboard.match(ke)) {
-                    leaderboardButton.fire();
+                    window.setScene(LeaderboardPage.leaderboardScene(window));
                     ke.consume();
                 }
                 if (addAction.match(ke)) {
-                    addActionButton.fire();
+                    window.setScene(AddActionPage.addActionScene(window));
                     ke.consume();
                 }
             }
@@ -731,18 +731,27 @@ public class MainPage {
                 }
             });
             //gets the names of the actions in the presets
+            ArrayList<String> alreadyDisplayed = new ArrayList<String>();
             Label actionName = new Label("");
+            int nonDuplicateCounter = 0;
             for (int j = 0; j < Main.clientController.getUser().getPresets().get(i).getActionList().size()
-                    && j < 4; j++) {
-                if (j == 3) {
-                    actionName = new Label("etc.");
-                } else {
-                    actionName = new Label("-"
-                            + Main.clientController.getUser().getPresets().get(i).getActionList().get(j));
+                    && nonDuplicateCounter < 4; j++) {
+                if (! alreadyDisplayed.contains(
+                        Main.clientController.getUser().getPresets().get(i).getActionList().get(j))) {
+                    if (nonDuplicateCounter == 3) {
+                        actionName = new Label("etc.");
+                    } else {
+                        actionName = new Label("-"
+                                + Main.clientController.getUser().getPresets().get(i).getActionList().get(j));
+                        alreadyDisplayed.add(
+                                Main.clientController.getUser().getPresets().get(i).getActionList().get(j));
+                    }
+                    actionName.setId("actionName");
+                    GridPane.setConstraints(actionName, 2 * i,
+                            nonDuplicateCounter + 1,2,1);
+                    gridBot.getChildren().add(actionName);
+                    nonDuplicateCounter++;
                 }
-                actionName.setId("actionName");
-                GridPane.setConstraints(actionName, 2 * i,j + 1,2,1);
-                gridBot.getChildren().add(actionName);
             }
             actionName.setId("actionNameLast");
             //Here the delete presetButton is created

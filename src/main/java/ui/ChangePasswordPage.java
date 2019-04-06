@@ -3,6 +3,7 @@ package ui;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 
 public class ChangePasswordPage {
     /**
-     <<<<<<< HEAD
+     * <<<<<<< HEAD
      * Method for creating the change password page.
      *
      * @param primaryStage primary stage
@@ -55,18 +56,30 @@ public class ChangePasswordPage {
         passwordTextfield.setPromptText("Old Password");
         GridPane.setConstraints(passwordTextfield, 0, 6, 2,  1);
 
-        //Here the change button is created
-        Button ChangeButton = new Button("Change Password");
-        ChangeButton.setId("loginRegisterButton");
-        ChangeButton.setOnAction(e -> {
-            String result = Main.clientController.updatePass(newPassTextfield.getText());
-            if (result.equals("true")) { // change password
-
-                try {
-                    window.setScene(LoginPage.loginScene(window));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+        Button changeButton = new Button("Change Password");
+        changeButton.setOnAction(e -> {
+            if (newPasswordTextfield.getText().length() >= 8) {
+                String result = Main.clientController.updatePass(newPasswordTextfield.getText(),
+                        passwordTextfield.getText());
+                if (result.equals("true")) { // change password
+                    try {
+                        window.setScene(LoginPage.loginScene(window));
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                } else {
+                    Alert failed = new Alert(Alert.AlertType.ERROR);
+                    failed.setContentText("Incorrect password!");
+                    failed.setHeaderText("Failure.");
+                    failed.setTitle("Notification");
+                    failed.show();
                 }
+            } else {
+                Alert failed = new Alert(Alert.AlertType.ERROR);
+                failed.setContentText("Password must contain at least 8 characters.");
+                failed.setHeaderText("Failure.");
+                failed.setTitle("Notification");
+                failed.show();
             }
         });
         GridPane.setConstraints(ChangeButton, 0, 9, 2, 1);

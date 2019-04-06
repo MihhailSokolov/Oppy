@@ -128,7 +128,7 @@ public class ClientControllerTest {
                 .withQueryParam("newpass", equalTo(clientController.hash("newpaws")))
                 .withRequestBody(equalToJson(testUserJson))
                 .willReturn(ok(trueResponse)));
-        assertEquals("true", clientController.updatePass("newpaws"));
+        assertEquals("true", clientController.updatePass("newpaws", "pass"));
     }
 
     @Test

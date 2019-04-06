@@ -2,6 +2,7 @@ package ui;
 
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -9,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
@@ -147,9 +150,6 @@ public class SettingsPage {
 
         //here Key_events are added to the scene
         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
-            if (ke.getCode() == KeyCode.A) {
-                anonymousButton.fire();
-            }
             if (ke.getCode() == KeyCode.E) {
                 changeEmailButton.fire();
             }
@@ -165,9 +165,36 @@ public class SettingsPage {
             if (ke.getCode() == KeyCode.R) {
                 resetButton.fire();
             }
+            if (ke.getCode() == KeyCode.ESCAPE) {
+                window.setScene(MainPage.mainScene(window));
+            }
             ke.consume();
         });
 
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            final KeyCombination mainPage = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
+            final KeyCombination settings = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+            final KeyCombination leaderBoard = new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN);
+            final KeyCombination addAction = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN);
+            public void handle(KeyEvent ke) {
+                if (mainPage.match(ke)) {
+                    window.setScene(MainPage.mainScene(window));
+                    ke.consume();
+                }
+                if (settings.match(ke)) {
+                    window.setScene(SettingsPage.settingsScene(window));
+                    ke.consume();
+                }
+                if (leaderBoard.match(ke)) {
+                    window.setScene(LeaderboardPage.leaderboardScene(window));
+                    ke.consume();
+                }
+                if (addAction.match(ke)) {
+                    window.setScene(AddActionPage.addActionScene(window));
+                    ke.consume();
+                }
+            }
+        });
         //here the scene is returned
         return scene;
     }
