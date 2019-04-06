@@ -33,10 +33,7 @@ public class ChangeEmailPage {
         GridPane grid = new GridPane();
         grid.setId("grid");
 
-        //Here a toggleGroup for the login/register switch buttons is created
-        final ToggleGroup loginRegister = new ToggleGroup();
-
-        //Here the newemail Label is created
+        //Here the newEmail Label is created
         Label newMail = new Label("New Email");
         GridPane.setConstraints(newMail, 0, 2);
 

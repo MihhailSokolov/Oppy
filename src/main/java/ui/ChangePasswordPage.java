@@ -46,10 +46,10 @@ public class ChangePasswordPage {
         Label password = new Label("Old Password");
         GridPane.setConstraints(password, 0, 5);
 
-        //Here the newPass textfield is created
-        PasswordField newPassTextfield = new PasswordField();
-        newPassTextfield.setPromptText("New Password");
-        GridPane.setConstraints(newPassTextfield, 0, 3, 2, 1);
+        //Here the newPassword textfield is created
+        PasswordField newPasswordTextfield = new PasswordField();
+        newPasswordTextfield.setPromptText("New Password");
+        GridPane.setConstraints(newPasswordTextfield, 0, 3, 2, 1);
 
         //Here the password textfield is created
         PasswordField passwordTextfield = new PasswordField();
@@ -57,6 +57,7 @@ public class ChangePasswordPage {
         GridPane.setConstraints(passwordTextfield, 0, 6, 2,  1);
 
         Button changeButton = new Button("Change Password");
+        changeButton.setId("loginRegisterButton");
         changeButton.setOnAction(e -> {
             if (newPasswordTextfield.getText().length() >= 8) {
                 String result = Main.clientController.updatePass(newPasswordTextfield.getText(),
@@ -82,7 +83,7 @@ public class ChangePasswordPage {
                 failed.show();
             }
         });
-        GridPane.setConstraints(ChangeButton, 0, 9, 2, 1);
+        GridPane.setConstraints(changeButton, 0, 9, 2, 1);
 
         Button cancelButton = new Button("Cancel");
         cancelButton.setId("loginRegisterButton");
@@ -92,7 +93,7 @@ public class ChangePasswordPage {
         GridPane.setConstraints(cancelButton, 0, 10, 2,1);
 
         //here all objects created above are placed in the central grid
-        grid.getChildren().addAll(ChangeButton, newPassword, password, newPassTextfield,
+        grid.getChildren().addAll(changeButton, newPassword, password, newPasswordTextfield,
                 passwordTextfield, cancelButton);
         grid.setAlignment(Pos.CENTER);
 
@@ -124,7 +125,7 @@ public class ChangePasswordPage {
         //here Key_events are added to the scene
         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             if (ke.getCode() == KeyCode.ENTER) {
-                ChangeButton.fire();
+                changeButton.fire();
                 ke.consume();
             }
         });
