@@ -78,7 +78,7 @@ public class LoginPage {
         GridPane.setConstraints(password, 0, 5);
 
         //Here the remember me data is collected
-        new FileWriter("remember.txt", false);
+        new FileWriter("remember.txt", true);
         File file = new File("remember.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
         String remUserName = br.readLine();
