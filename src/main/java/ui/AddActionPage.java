@@ -432,6 +432,13 @@ public class AddActionPage {
                         alert.setHeaderText("Enter number of km traveled");
                         alert.showAndWait();
                         return false;
+                    } else if (Integer.parseInt(listCheckboxes.get(i).getTextField().getText()) > 100) {
+                        //So you program won't freeze eternally and you won't DDOS the server
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("ALERT!");
+                        alert.setHeaderText("Number of kilometers traveled to high");
+                        alert.showAndWait();
+                        return false;
                     }
                 }
             }
