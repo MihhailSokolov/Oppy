@@ -313,9 +313,14 @@ public class ClientController {
      *
      * @return String response msg ("true"/"false"), implying success or failure.
      */
-    public String deleteAccount() {
-        responseEntity = this.postRequest(this.baseUrl + Path.DELETE.toString(), user);
-        return new JSONObject(responseEntity.getBody()).getString("message");
+    public String deleteAccount(String pass) {
+        if (hash(pass).equals(this.user.getPassword())) {
+            responseEntity = this.postRequest(this.baseUrl + Path.DELETE.toString(), user);
+            String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
+            return responseMsg;
+        } else {
+            return "false";
+        }
     }
 
     /**
@@ -341,9 +346,14 @@ public class ClientController {
      *
      * @return String resposne msg ("true"/"false").
      */
-    public String reset() {
-        responseEntity = this.postRequest(this.baseUrl + Path.RESET, this.user);
-        return new JSONObject(responseEntity.getBody()).getString("message");
+    public String reset (String pass) {
+        if (hash(pass).equals(this.user.getPassword())) {
+            responseEntity = this.postRequest(this.baseUrl + Path.RESET, this.user);
+            String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
+            return responseMsg;
+        } else {
+            return "false";
+        }
     }
 
     /**

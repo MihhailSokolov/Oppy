@@ -70,7 +70,7 @@
      -fx-max-height: 30px;
      -fx-min-width: 200px;
      -fx-max-width: 200px;
-     -fx-font-size: 12px;
+     -fx-font-size: 15px;
      -fx-text-fill: black;
      -fx-border-width: 0 2 0 2;
      -fx-border-radius: 0px;
@@ -82,7 +82,7 @@
     -fx-max-height: 30px;
     -fx-min-width: 200px;
     -fx-max-width: 200px;
-    -fx-font-size: 12px;
+    -fx-font-size: 15px;
     -fx-text-fill: black;
     -fx-border-width: 0 2 2 2;
     -fx-border-radius: 0 0 5 5px;
@@ -101,7 +101,7 @@
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
     -fx-font-family: "Arial";
     -fx-text-fill: linear-gradient(white, #d0d0d0);
-    -fx-font-size: 12px;
+    -fx-font-size: 15px;
     -fx-min-width: 150px;
     -fx-max-width: 150px;
     -fx-min-height: 30px;
