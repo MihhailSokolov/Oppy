@@ -31,6 +31,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -686,12 +687,61 @@ public class MainPage {
 
         //here a Label the displays the pageName is created
         Label pageName = new Label(text);
-        GridPane.setConstraints(pageName, 1,0);
         pageName.setId("pageName");
         Tooltip.install(pageName, new Tooltip("Your current page"));
+        GridPane.setConstraints(pageName, 1,0);
+
+        Button infoButton = new Button();
+        infoButton.setText("?");
+        infoButton.setId("infoButton");
+        Tooltip.install(pageName, new Tooltip("Click for info on the page"));
+        infoButton.setOnAction(e -> {
+            Alert info = new Alert(Alert.AlertType.INFORMATION);
+            info.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+            info.setHeaderText("Page specific information");
+            info.setTitle("Information");
+            info.setContentText("In the center of the page you see your Oppy. "
+                    + "How happier he looks the better you are doing");
+            info.showAndWait();
+            info.setContentText("also you see two boxes above your Oppy. "
+                    + "The left one displays your username and your current number of points. "
+                    + "The right one displays the time until your next point-loss "
+                    + "and the amount of points you will lose");
+            info.showAndWait();
+            info.setContentText("In the bottom of the page you see your presets, if you have any. "
+                    + "Clicking on their name lets adds them to your points."
+                    + " the button with the cross next to the name let's you delete your preset. "
+                    + "your only allowed up to 8 presets.");
+            info.showAndWait();
+
+            info.setHeaderText("General page information");
+            info.setContentText("At the top of the page you'll find a small bar with a few things in it "
+                    + "two hamburger-buttons( The 3 line on top of each other), the information button, "
+                    + "witch you have already found, and the name of the page."
+                    + " The left hamburger-button opens the navigation menu."
+                    + " The right one opens the achievements and friends menu.");
+            info.showAndWait();
+
+            info.setContentText("The navigation menu has buttons the let you go to different pages: "
+                    + "the action-page, the leaderboard-page, the settings-page and the main-page. "
+                    + "Obviously you can't change to the page you're one");
+            info.showAndWait();
+
+            info.setContentText("The the achievements and friends menu displays at it's top your achievements. "
+                    + "If you haven't unlocked an achievements, your just see a question-mark"
+                    + " Underneath the achievements is a list of people you follow."
+                    + "You can start following more people with the follow people textfield below or "
+                    + "stop following someone by double clicking their name in your follow list.");
+            info.showAndWait();
+
+            info.setHeaderText("End");
+            info.setContentText("This concludes the information on this page");
+            info.showAndWait();
+        });
+        gridTop.setConstraints(infoButton, 1, 0);
 
         //here all previous created elements are added to the top layout
-        gridTop.getChildren().addAll(hamburgerLeft, hamburgerRight, pageName);
+        gridTop.getChildren().addAll(hamburgerLeft, hamburgerRight, pageName, infoButton);
         gridTop.setStyle("-fx-background-color: #4c4242;");
 
         //here the top grid is returned
