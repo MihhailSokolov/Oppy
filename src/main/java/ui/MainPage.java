@@ -31,6 +31,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -686,12 +687,30 @@ public class MainPage {
 
         //here a Label the displays the pageName is created
         Label pageName = new Label(text);
-        GridPane.setConstraints(pageName, 1,0);
         pageName.setId("pageName");
         Tooltip.install(pageName, new Tooltip("Your current page"));
+        GridPane.setConstraints(pageName, 1,0);
+
+        Button infoButton = new Button();
+        infoButton.setText("?");
+        infoButton.setId("infoButton");
+        Tooltip.install(pageName, new Tooltip("Click for info on the page"));
+        infoButton.setOnAction(e -> {
+            if (window.getTitle().equals("MainPage") ) {
+                pageInformationMain();
+            } else if (window.getTitle().equals("AddActionPage")) {
+                pageInformationAction();
+            } else if (window.getTitle().equals("SettingsPage")) {
+                pageInformationSettings();
+            } else if (window.getTitle().equals("LeaderboardPage")) {
+                pageInformationLeaderboard();
+            }
+            generalInformation();
+        });
+        gridTop.setConstraints(infoButton, 1, 0);
 
         //here all previous created elements are added to the top layout
-        gridTop.getChildren().addAll(hamburgerLeft, hamburgerRight, pageName);
+        gridTop.getChildren().addAll(hamburgerLeft, hamburgerRight, pageName, infoButton);
         gridTop.setStyle("-fx-background-color: #4c4242;");
 
         //here the top grid is returned
@@ -823,5 +842,137 @@ public class MainPage {
         });
     }
 
+    /**
+     * Method with the information the applies to all pages.
+     */
+    public static void generalInformation() {
+
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        info.setTitle("Information");
+        info.setHeaderText("General page information");
+
+        info.setContentText("At the top of the page you'll find a small bar with a few things in it "
+                + "two hamburger-buttons( The 3 line on top of each other), the information button, "
+                + "witch you have already found, and the name of the page."
+                + " The left hamburger-button opens the navigation menu."
+                + " The right one opens the achievements and friends menu.");
+        info.showAndWait();
+
+        info.setContentText("The navigation menu has buttons the let you go to different pages: "
+                + "the action-page, the leaderboard-page, the settings-page and the main-page. "
+                + "Obviously you can't change to the page you're one");
+        info.showAndWait();
+
+        info.setContentText("The the achievements and friends menu displays at it's top your achievements. "
+                + "If you haven't unlocked an achievements, your just see a question-mark"
+                + " Underneath the achievements is a list of people you follow."
+                + "You can start following more people with the follow people textfield below or "
+                + "stop following someone by double clicking their name in your follow list.");
+        info.showAndWait();
+
+        info.setHeaderText("End");
+        info.setContentText("This concludes the information on this page");
+        info.showAndWait();
+    }
+
+    /**
+     * Method with the information on the main page.
+     */
+    public static void pageInformationMain() {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        info.setHeaderText("Page specific information");
+        info.setTitle("Information");
+
+        info.setContentText("In the center of the page you see your Oppy. "
+                + "How happier he looks the better you are doing");
+        info.showAndWait();
+
+        info.setContentText("also you see two boxes above your Oppy. "
+                + "The left one displays your username and your current number of points. "
+                + "The right one displays the time until your next point-loss "
+                + "and the amount of points you will lose");
+        info.showAndWait();
+
+        info.setContentText("In the bottom of the page you see your presets, if you have any. "
+                + "Clicking on their name lets adds them to your points."
+                + " the button with the cross next to the name let's you delete your preset. "
+                + "your only allowed up to 8 presets.");
+        info.showAndWait();
+    }
+
+    /**
+     * Method with the information on the action page.
+     */
+    public static void pageInformationAction() {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        info.setHeaderText("Page specific information");
+        info.setTitle("Information");
+
+        info.setContentText("in this page you see a bunch of category's for actions that save co2. "
+                + "When you click on one of these category's the"
+                + " list of available actions of that category will appear. "
+                + "Only one category can be open at any time");
+        info.showAndWait();
+
+        info.setContentText(" When a category is open you can select actions by marking the box in front of it. "
+                + "behind the name of the action you see how many point it's worth.  "
+                + "If you change category's action you marked will stay marked. "
+                + "In the transport category you have to enter the distance you traveled "
+                + "in kilometers for each action.");
+
+        info.showAndWait();
+
+        info.setContentText( "When actions are selected you can either chose to submit them, "
+                + "witch means you get the points of all selected actions added to your score,"
+                + "or save them as a preset, which you then have to name, so you can quickly add these actions"
+                + "to your points from the main menu, this can come in handy for stuff you do on a daily basis. ");
+
+        info.showAndWait();
+    }
+
+    /**
+     * Method with the information on the settings page.
+     */
+    public static void pageInformationSettings() {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        info.setHeaderText("Page specific information");
+        info.setTitle("Information");
+
+        info.setContentText("in this page you can change your setting. Here you can change your password, "
+                + "change your email, reset your points and delete your account. "
+                + "also you can change your profile picture, by clicking your current profile picture"
+                + "and set your account anonymous.");
+        info.showAndWait();
+
+        info.setContentText("When your account is anonymous people can't start folowing you and you won't"
+                + "show up on any leaderboards");
+        info.showAndWait();
+
+        info.setContentText( "Also you can log out from this page");
+        info.showAndWait();
+    }
+
+    /**
+     * Method with the information on the leaderboard page.
+     */
+    public static void pageInformationLeaderboard() {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        info.setHeaderText("Page specific information");
+        info.setTitle("Information");
+
+        info.setContentText("At this page you can see a leaderboard of the top 50 players in the world. "
+                + "Also you can see the first place again in it's own table to highlight the highscore. "
+                + "You can also see your own score and on witch place you are on the world ranking.");
+        info.showAndWait();
+
+        info.setContentText("Players that have made their account anonymous won't show up on this leaderboard,"
+                + " but will be factored in when calculating your rank.");
+        info.showAndWait();
+    }
 }
 
