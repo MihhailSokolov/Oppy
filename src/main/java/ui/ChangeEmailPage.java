@@ -1,5 +1,6 @@
 package ui;
 
+import clientside.RegisterCheck;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -55,9 +56,24 @@ public class ChangeEmailPage {
         Button ChangeButton = new Button("Change Email");
         ChangeButton.setId("loginRegisterButton");
         ChangeButton.setOnAction(e -> {
-            String result = Main.clientController.updateEmail(newMailTextfield.getText(), passwordTextfield.getText());
-            if (result.equals("true")) { // go to Settings page when email is changed
-                window.setScene(SettingsPage.settingsScene(window));
+            if (RegisterCheck.checkEmail(newMailTextfield.getText())) {
+                String result = Main.clientController.updateEmail(newMailTextfield.getText(),
+                        passwordTextfield.getText());
+                if (result.equals("true")) { // change password
+                        window.setScene(SettingsPage.settingsScene(window));
+                } else {
+                    Alert failed = new Alert(Alert.AlertType.ERROR);
+                    failed.setContentText("Incorrect password!");
+                    failed.setHeaderText("Failure.");
+                    failed.setTitle("Notification");
+                    failed.show();
+                }
+            } else {
+                Alert failed = new Alert(Alert.AlertType.ERROR);
+                failed.setContentText("new email is not a valid email address");
+                failed.setHeaderText("Failure.");
+                failed.setTitle("Notification");
+                failed.show();
             }
         });
         GridPane.setConstraints(ChangeButton, 0, 9, 2, 1);

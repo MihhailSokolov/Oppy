@@ -16,7 +16,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ChangePasswordPage {
@@ -63,11 +62,7 @@ public class ChangePasswordPage {
                 String result = Main.clientController.updatePass(newPasswordTextfield.getText(),
                         passwordTextfield.getText());
                 if (result.equals("true")) { // change password
-                    try {
-                        window.setScene(LoginPage.loginScene(window));
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
+                    window.setScene(SettingsPage.settingsScene(window));
                 } else {
                     Alert failed = new Alert(Alert.AlertType.ERROR);
                     failed.setContentText("Incorrect password!");
@@ -88,7 +83,7 @@ public class ChangePasswordPage {
         Button cancelButton = new Button("Cancel");
         cancelButton.setId("loginRegisterButton");
         cancelButton.setOnAction(e -> {
-            window.setScene(SettingsPage.settingsScene(window));
+                window.setScene(SettingsPage.settingsScene(window));
         });
         GridPane.setConstraints(cancelButton, 0, 10, 2,1);
 
