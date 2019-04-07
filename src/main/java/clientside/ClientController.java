@@ -253,12 +253,11 @@ public class ClientController {
      * @return String response message ("true"/"false").
      */
     public String updatePass(String newPass, String oldPlainPass) {
-        if(hash(oldPlainPass).equals(this.user.getPassword())){
+        if (hash(oldPlainPass).equals(this.user.getPassword())) {
             responseEntity = this.postRequest(this.baseUrl
                     + String.format(Path.UPDATEPASS.toString(), hash(newPass)), user);
             return new JSONObject(responseEntity.getBody()).getString("message");
-        }
-        else {
+        } else {
             return "false";
         }
 
@@ -346,7 +345,7 @@ public class ClientController {
      *
      * @return String resposne msg ("true"/"false").
      */
-    public String reset (String pass) {
+    public String reset(String pass) {
         if (hash(pass).equals(this.user.getPassword())) {
             responseEntity = this.postRequest(this.baseUrl + Path.RESET, this.user);
             String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");

@@ -83,7 +83,7 @@ public class ChangePasswordPage {
         Button cancelButton = new Button("Cancel");
         cancelButton.setId("loginRegisterButton");
         cancelButton.setOnAction(e -> {
-                window.setScene(SettingsPage.settingsScene(window));
+            window.setScene(SettingsPage.settingsScene(window));
         });
         GridPane.setConstraints(cancelButton, 0, 10, 2,1);
 

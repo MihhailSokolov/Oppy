@@ -4,7 +4,11 @@ import clientside.RegisterCheck;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -53,14 +57,14 @@ public class ChangeEmailPage {
         GridPane.setConstraints(passwordTextfield, 0, 6, 2,  1);
 
         //Here the change button is created
-        Button ChangeButton = new Button("Change Email");
-        ChangeButton.setId("loginRegisterButton");
-        ChangeButton.setOnAction(e -> {
+        Button changeButton = new Button("Change Email");
+        changeButton.setId("loginRegisterButton");
+        changeButton.setOnAction(e -> {
             if (RegisterCheck.checkEmail(newMailTextfield.getText())) {
                 String result = Main.clientController.updateEmail(newMailTextfield.getText(),
                         passwordTextfield.getText());
                 if (result.equals("true")) { // change password
-                        window.setScene(SettingsPage.settingsScene(window));
+                    window.setScene(SettingsPage.settingsScene(window));
                 } else {
                     Alert failed = new Alert(Alert.AlertType.ERROR);
                     failed.setContentText("Incorrect password!");
@@ -76,7 +80,7 @@ public class ChangeEmailPage {
                 failed.show();
             }
         });
-        GridPane.setConstraints(ChangeButton, 0, 9, 2, 1);
+        GridPane.setConstraints(changeButton, 0, 9, 2, 1);
 
         Button cancelButton = new Button("Cancel");
         cancelButton.setId("loginRegisterButton");
@@ -86,7 +90,7 @@ public class ChangeEmailPage {
         GridPane.setConstraints(cancelButton, 0, 10, 2,1);
 
         //here all objects created above are placed in the central grid
-        grid.getChildren().addAll(ChangeButton, newMail, password, newMailTextfield,
+        grid.getChildren().addAll(changeButton, newMail, password, newMailTextfield,
                 passwordTextfield, cancelButton);
         grid.setAlignment(Pos.CENTER);
 
@@ -118,7 +122,7 @@ public class ChangeEmailPage {
         //here Key_events are added to the scene
         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             if (ke.getCode() == KeyCode.ENTER) {
-                ChangeButton.fire();
+                changeButton.fire();
                 ke.consume();
             }
         });
