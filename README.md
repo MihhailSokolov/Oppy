@@ -2,7 +2,8 @@
 An application that promotes a greener lifestyle through gamification.
 
 ### Example
-
+When you want to compare your green lifestyle tot that of your friends, you can follow them in the app and see
+who cares more about the enviroment.
 
 ### Getting Started
 - Download the application.
@@ -25,6 +26,8 @@ An application that promotes a greener lifestyle through gamification.
 - Open the project in your IDE
 - Open the test folder and select the class you want to test.
 - Run any test
+
+- You can also run the test by running maven install
 
 ## Benjamin Knol
 
