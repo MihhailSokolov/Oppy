@@ -1,28 +1,41 @@
-This a template repository to help you get started on making the best project possible!
+## Oppy
+An application that promotes a greener lifestyle through gamification.
 
-You can download the latest version [here](https://github.com/SERG-Delft/TI1216/releases)
+### Example
+When you want to compare your green lifestyle tot that of your friends, you can follow them in the app and see
+who cares more about the enviroment.
 
-http://stackoverflow.com/a/6466993
+### Getting Started
+- Download the application.
+- Run the application, by selecting the main class in the ui folder and "run" in your IDE
+- Register your account.
+- Log in.
+- Add actions to get points, make presets for different actions for shortcuts.
+- Add and view friends on the right hamburger menu.
 
-## How to import into your IDE
+### What can it do?
+- You can fill in different actions and get feedback on how much co2 you saved with the points.
+- You can make presets of one or multiple actions to store on the home page.
+- You can view the leaderboard with the top 50 players worldwide and your ranking.
+- You can follow your friends and view their points.
+- You can get achievements.
+- You can upload your profile picture and change your account information.
+- Your planet will react to your amount of points.
 
-Eclipse:
-[http://javapapers.com/java/import-maven-project-into-eclipse/](http://javapapers.com/java/import-maven-project-into-eclipse/)
+### Run Tests
+- Open the project in your IDE
+- Open the test folder and select the class you want to test.
+- Run any test
 
-Intellij:  
-[https://www.jetbrains.com/help/idea/2016.2/importing-project-from-maven-model.html](https://www.jetbrains.com/help/idea/2016.2/importing-project-from-maven-model.html)
+- You can also run the test by running maven install
 
-## Getting your weekly reports
+## Benjamin Knol
 
-**Jacoco**:  
-Run `maven install` ([Intellij](https://www.jetbrains.com/help/idea/2016.3/getting-started-with-maven.html#execute_maven_goal)/[Eclipse](http://imgur.com/a/6q7pV))
+NetID: bknol
 
-**Checkstyle**:  
-Run `maven site`
+<img src="https://i.imgur.com/udyAZdC.jpg" width="300" height="400">
 
-Benjamin netid: bknol
-<img src="https://i.imgur.com/udyAZdC.jpg" width="300" height="400">  
-Personal Development Plan
+### Step 1:
 
 Two of my strong points are:
 1. I'm good at git this is useful to fix the problems which we
@@ -36,6 +49,7 @@ ideas
 2. I'm bad at testing, just incredibly bad. I hope I can get some
 help from one of the team members on this front.
 
+### Step 2:
 
 G
 I hope to learn how to test in a more efficient and quick manner. Also
@@ -75,11 +89,13 @@ To reach my goals I am going to do two things:
 
 I am going to start work on this monday the 18th.  
 
-Hugo Koot netid: hmgkoot
+## Hugo Koot
+
+NetID: hmgkoot
+
 <img src="https://i.imgur.com/R2g981c.jpg" width="300" height="400">  
 
-self dev:  
-Step 1: Develop a goal
+### Step 1:
 
 These are some of my personal strengths:  
 - I have a strong motivation which allows me to work very hard voor extended periods of time when I have to.  
@@ -96,7 +112,7 @@ This can result in me becomming a little anoying to my teammates.
 - I do get distracted easily when I get stuck somewhere. This happens a lot when learning for test but I always get through it.  
 In the team this may result in me working at a less than optimal speed.
 
-Step 2: Create a plan to achieve your goal
+### Step 2:
 
 My goal for this project is to improve my communication skills, and become good enough at java to work on a project on my own.  
 I have not continued developing my java skills after OOP, but I am eager to learn. I plan to start improving my communication skills by keeping everyone updated on what I am doing.
@@ -104,8 +120,13 @@ And helping others as much as possible.
 I plan to start improving my java skills by coding as much as possible and asking my teammates when I can not find answers on google.  
 What I can do right now is make sure I meet everyone and start refresh my memory about java.  
 
-Otni netid: oledelay
+## Otni
+
+NetID: oledelay
+
 ![picture of Otni](https://i.imgur.com/dpqDW2r.png)
+
+### Step 1:
 
 | Strong point | Pitfall | Supplement | Opposite |
 | :----------: | :-----: | :--------: | :------: |
@@ -116,6 +137,8 @@ Otni netid: oledelay
 | :---------: | :--------: | :------: | :-------: |
 | disorganized | organizing | inflexibility | flexible |
 | postponing | punctual | overexpecting punctuality | chill and efficient |
+
+### Step 2:
 
 G The strong points I mentioned help balance eachother, so those don't require much attention.  
 I want to:
@@ -135,8 +158,13 @@ The option I want to use most for learning about teamwork is communicating with 
 W I will use chunking and the pressure of being in a group and not wanting to disappoint others to help deal with the postponing issue, whenever we decide on tasks to fulfill. I'll try to be a cooperative team member during this project and try to learn from anything that goes wrong.
 
 
-Duyemo netid: danceaux
-<img src="https://i.imgur.com/5jUfmmG.jpg" width="200" height="280"><img src="https://i.imgur.com/rDIER3M.jpg" width="200" height ="280">
+## Duyemo
+
+NetID: danceaux
+
+<img src="https://i.imgur.com/5jUfmmG.jpg" width="200" height="280">
+
+### Step 1:
 
 Strong points:  
 -I can work many hours in a day till late in the night. For example I worked until 04:30 when finishing the project for the web part of web- and database. If there's a deadline I can do some stuff till late at night if needed.  
@@ -146,14 +174,21 @@ Weak points:
 -I sometimes have tunnel vision. Like when I try to hardcode something you can easily do with a loop. Can show when I focus too much on one particular way of solving a problem while negating an easier one.  
 -I can get distracted while working with a group. Like we hired a room at ewi to study for the ADS exam, but we just ended up joking around and not doing anything productive. Can show by not being as productive when I'm with the group as when I'm working alone.
 
+### Step 2:
+
 I want to learn how to work together with a group while developing a project. This is important to me because I have to do this when I get a job later.  
 I'm not working at that goal jet. I'm gonna start doing that with this project.  
 To reach this goal I'm gonna do this project. My first step is starting making a planning with this group.  
 My teammates can help me with this by making their part of the project.
 
 
-Saman Shahbazi netid: sshahbazi
-![Picture of Sam](https://i.imgur.com/kuTXbXK.jpg)  
+## Saman Shahbazi
+
+NetID: sshahbazi
+
+![Picture of Sam](https://i.imgur.com/kuTXbXK.jpg)
+
+### Step 1:
 
 Strong points:
 -- Local programming
@@ -162,6 +197,8 @@ Strong points:
 Weak points:
 -- Sometimes work alone for too long
 Personally I'd like to learn more about:
+
+### Step 2:
 
 G - Goal
 - Downloading/computing using a web-api
@@ -175,20 +212,31 @@ O - Options
 W - Will
 - Do my best to keep up with the required material
 - Lab days and in between those days if time permits
-================================================================
 
-Mihhail netid: msokolov
+## Mihhail
+
+NetID: msokolov
+
 ![picture of Mihhail](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/1614/avatar.png?width=400)
 
-Personal Development Plan:  
-I consider my strong points to be that I am hard-working and quick-learning. So, I can quite quickly learn new things. My weak point, I think, is the lack of experience of working in team. My second weak point is that I am not good in testing. I would really like to improve that because it will be essential in the future.  
-My main goal would be to get a high grade for this course (at least 8), but I also would like to obtain more experience in working in team with other programmers. Because later, when working for some company, this experience will most likely be crucial. Currently, I am overcoming the dislike for asking for help and becoming more open. Now I just want to get experience in working in team.  
+### Step 1:
+
+I consider my strong points to be that I am hard-working and quick-learning. So, I can quite quickly learn new things.
+
+My weak point, I think, is the lack of experience of working in team. My second weak point is that I am not good in testing. I would really like to improve that because it will be essential in the future.
+
+### Step 2:
+
+My main goal would be to get a high grade for this course (at least 8), but I also would like to obtain more experience in working in team with other programmers. Because later, when working for some company, this experience will most likely be crucial. Currently, I am overcoming the dislike for asking for help and becoming more open. Now I just want to get experience in working in team.
 To achieve my goal, I reckon, I just need to work in team, complete my tasks in time and take part in discussions and planning. And I will certainly do my best to achieve all my goals.  
 
-Markus netid: mmilk
+## Markus
+
+NetID: mmilk
+
 ![picure of Markus](https://www.upload.ee/image/9573307/Max_dokumendifoto18-06-2015-12-49-56-11132.jpg)
 
-Step 1  
+### Step 1:
 Stronger points:  
 Responsibility - I believe I complete my tasks in time. It might take me some time to get started, but I feel like I finish most of my tasks before the deadline.  
 "A team player" - I always try to be positive. I enjoy helping out my team members if I can and have the required knowledge.  
@@ -197,7 +245,7 @@ Weaker points:
 Problem solving - sometimes when I get confused with certain tasks, I tend to get stuck and not make much progression by searching for solutions in wrong places.  
 Experience in the field of programming - I am relatively new to programming (no previous experience before OOP course). This might lead to me looking for some advice from my fellow group members.  
 
-Step 2  
+### Step 2:
 G - Goal  
 Improving my programming skills/mastering the basics - I feel this is the basis of creating something. I believe I have achieved this goal by the end of our project.  
 R - Reality  
@@ -209,6 +257,3 @@ O - Options
 W - Will  
 	I am going to start creating small projects and will try to perfect them/make them as efficient as possible(I was thinking about creating a program to create flashcards for learning a language).  
 	I feel like my teammates could help me notice some inefficiencies inside my code and guide me to a better solution.
-
-
-![picture of peak performance](https://i.imgur.com/wnc0Ssn.jpg)
