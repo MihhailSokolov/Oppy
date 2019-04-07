@@ -116,10 +116,12 @@ public class ClientControllerTest {
 
     @Test
     public void deleteAccountTest() {
+        this.testUser = new User("user", "pass", "email", 0, new Date());
         wireMockRule.stubFor(any(urlPathEqualTo("/delete"))
                 .withRequestBody(equalToJson(testUserJson))
                 .willReturn(ok(trueResponse)));
-        assertEquals("true", clientController.deleteAccount());
+        assertEquals("false", clientController.deleteAccount("123"));
+        assertEquals("true", clientController.deleteAccount(testUser.getPassword()));
     }
 
     @Test
@@ -129,6 +131,7 @@ public class ClientControllerTest {
                 .withRequestBody(equalToJson(testUserJson))
                 .willReturn(ok(trueResponse)));
         assertEquals("true", clientController.updatePass("newpaws", "pass"));
+        assertEquals("false", clientController.updatePass("newpaws", "passs"));
     }
 
     @Test
@@ -152,10 +155,12 @@ public class ClientControllerTest {
 
     @Test
     public void resetTest() {
+        this.testUser = new User("user", "pass", "email", 0, new Date());
         wireMockRule.stubFor(any(urlPathEqualTo("/reset"))
                 .withRequestBody(equalToJson(testUserJson))
                 .willReturn(ok(trueResponse)));
-        assertEquals("true", clientController.reset());
+        assertEquals("false", clientController.reset("123"));
+        assertEquals("true", clientController.reset(testUser.getPassword()));
     }
 
     @Test
