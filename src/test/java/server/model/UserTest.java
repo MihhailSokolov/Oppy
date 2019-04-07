@@ -124,7 +124,7 @@ public class UserTest {
         user.setPresets(presets);
         assertEquals(presets, user.getPresets());
     }
-    
+
     @Test
     public void testEqualsSimilar() {
         assertEquals("A User should be equal to another User with the same values for fields.", user1, user2);
