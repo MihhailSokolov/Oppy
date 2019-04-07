@@ -3,6 +3,7 @@ package ui;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -50,13 +51,25 @@ public class DeleteUserPage {
         Button DeleteButton = new Button("Delete Account");
         DeleteButton.setId("loginRegisterButton");
         DeleteButton.setOnAction(e -> {
-            String result = Main.clientController.deleteAccount();
-            if (result.equals("true")) {
+            String result = Main.clientController.deleteAccount(passwordTextfield.getText());
+            if (result.equals("true")) { // change password
                 try {
                     window.setScene(LoginPage.loginScene(window));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
+            } else {
+                Alert failed = new Alert(Alert.AlertType.ERROR);
+                failed.setContentText("Incorrect password!");
+                failed.setHeaderText("Failure.");
+                failed.setTitle("Notification");
+                failed.show();
+            }
+
+
+
+            if (result.equals("true")) {
+
             }
         });
         GridPane.setConstraints(DeleteButton, 0, 9, 2, 1);

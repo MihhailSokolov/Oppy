@@ -3,6 +3,7 @@ package ui;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -47,9 +48,15 @@ public class ResetPointsPage {
         Button ResetButton = new Button("Reset Points");
         ResetButton.setId("loginRegisterButton");
         ResetButton.setOnAction(e -> {
-            String result = Main.clientController.reset();
-            if (result.equals("true")) { // go to login page, delete account
+            String result = Main.clientController.reset(passwordTextfield.getText());
+            if (result.equals("true")) { // change password
                 window.setScene(SettingsPage.settingsScene(window));
+            } else {
+                Alert failed = new Alert(Alert.AlertType.ERROR);
+                failed.setContentText("Incorrect password!");
+                failed.setHeaderText("Failure.");
+                failed.setTitle("Notification");
+                failed.show();
             }
         });
         GridPane.setConstraints(ResetButton, 0, 9, 2, 1);
