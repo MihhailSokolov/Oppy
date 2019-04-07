@@ -48,9 +48,9 @@ public class DeleteUserPage {
         GridPane.setConstraints(passwordTextfield, 0, 3, 2,  1);
 
         //Here the delete button is created
-        Button DeleteButton = new Button("Delete Account");
-        DeleteButton.setId("loginRegisterButton");
-        DeleteButton.setOnAction(e -> {
+        Button deleteButton = new Button("Delete Account");
+        deleteButton.setId("loginRegisterButton");
+        deleteButton.setOnAction(e -> {
             String result = Main.clientController.deleteAccount(passwordTextfield.getText());
             if (result.equals("true")) { // change password
                 try {
@@ -65,14 +65,8 @@ public class DeleteUserPage {
                 failed.setTitle("Notification");
                 failed.show();
             }
-
-
-
-            if (result.equals("true")) {
-
-            }
         });
-        GridPane.setConstraints(DeleteButton, 0, 9, 2, 1);
+        GridPane.setConstraints(deleteButton, 0, 9, 2, 1);
 
         Button cancelButton = new Button("Cancel");
         cancelButton.setId("loginRegisterButton");
@@ -82,7 +76,7 @@ public class DeleteUserPage {
         GridPane.setConstraints(cancelButton, 0, 10, 2,1);
 
         //here all objects created above are placed in the central grid
-        grid.getChildren().addAll(DeleteButton, password,
+        grid.getChildren().addAll(deleteButton, password,
                 passwordTextfield, cancelButton);
         grid.setAlignment(Pos.CENTER);
 
@@ -114,7 +108,7 @@ public class DeleteUserPage {
         //here Key_events are added to the scene
         scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             if (ke.getCode() == KeyCode.ENTER) {
-                DeleteButton.fire();
+                deleteButton.fire();
                 ke.consume();
             }
         });

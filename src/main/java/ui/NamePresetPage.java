@@ -15,7 +15,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
-import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
 
 import java.util.ArrayList;
 

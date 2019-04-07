@@ -23,7 +23,6 @@ import javafx.stage.Stage;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -149,52 +148,8 @@ public class SettingsPage {
         scene.getStylesheets().add("settingsStyle.css");
 
         //here Key_events are added to the scene
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
-            if (ke.getCode() == KeyCode.E) {
-                changeEmailButton.fire();
-            }
-            if (ke.getCode() == KeyCode.P) {
-                changePasswordButton.fire();
-            }
-            if (ke.getCode() == KeyCode.L) {
-                logOutButton.fire();
-            }
-            if (ke.getCode() == KeyCode.D || ke.getCode() == KeyCode.DELETE) {
-                deleteAccountButton.fire();
-            }
-            if (ke.getCode() == KeyCode.R) {
-                resetButton.fire();
-            }
-            if (ke.getCode() == KeyCode.ESCAPE) {
-                window.setScene(MainPage.mainScene(window));
-            }
-            ke.consume();
-        });
-
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-            final KeyCombination mainPage = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
-            final KeyCombination settings = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
-            final KeyCombination leaderBoard = new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN);
-            final KeyCombination addAction = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN);
-            public void handle(KeyEvent ke) {
-                if (mainPage.match(ke)) {
-                    window.setScene(MainPage.mainScene(window));
-                    ke.consume();
-                }
-                if (settings.match(ke)) {
-                    window.setScene(SettingsPage.settingsScene(window));
-                    ke.consume();
-                }
-                if (leaderBoard.match(ke)) {
-                    window.setScene(LeaderboardPage.leaderboardScene(window));
-                    ke.consume();
-                }
-                if (addAction.match(ke)) {
-                    window.setScene(AddActionPage.addActionScene(window));
-                    ke.consume();
-                }
-            }
-        });
+        addKeyConstraints(scene, changeEmailButton, changePasswordButton, deleteAccountButton, resetButton, window);
+        
         //here the scene is returned
         return scene;
     }
@@ -306,5 +261,65 @@ public class SettingsPage {
         GridPane.setConstraints(profilePictureButton,1,0,1,2);
         profilePictureButton.setId("pfButton");
         return profilePictureButton;
+    }
+
+    /**
+     *Method that creates the key constraints and adds them to the scene.
+     * 
+     * @param scene the scene of the page
+     * @param changeEmailButton a button to change email
+     * @param changePasswordButton a button to change password
+     * @param deleteAccountButton a button to delete your account
+     * @param resetButton a button to reset your account
+     * @param window the current stage
+     */
+    public static void addKeyConstraints(Scene scene, Button  changeEmailButton, Button changePasswordButton,
+                                         Button deleteAccountButton, Button resetButton, Stage window) {
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
+            if (ke.getCode() == KeyCode.E) {
+                changeEmailButton.fire();
+            }
+            if (ke.getCode() == KeyCode.P) {
+                changePasswordButton.fire();
+            }
+            if (ke.getCode() == KeyCode.L) {
+                logOutButton.fire();
+            }
+            if (ke.getCode() == KeyCode.D || ke.getCode() == KeyCode.DELETE) {
+                deleteAccountButton.fire();
+            }
+            if (ke.getCode() == KeyCode.R) {
+                resetButton.fire();
+            }
+            if (ke.getCode() == KeyCode.ESCAPE) {
+                window.setScene(MainPage.mainScene(window));
+            }
+            ke.consume();
+        });
+
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            final KeyCombination mainPage = new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_DOWN);
+            final KeyCombination settings = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+            final KeyCombination leaderBoard = new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN);
+            final KeyCombination addAction = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN);
+            public void handle(KeyEvent ke) {
+                if (mainPage.match(ke)) {
+                    window.setScene(MainPage.mainScene(window));
+                    ke.consume();
+                }
+                if (settings.match(ke)) {
+                    window.setScene(SettingsPage.settingsScene(window));
+                    ke.consume();
+                }
+                if (leaderBoard.match(ke)) {
+                    window.setScene(LeaderboardPage.leaderboardScene(window));
+                    ke.consume();
+                }
+                if (addAction.match(ke)) {
+                    window.setScene(AddActionPage.addActionScene(window));
+                    ke.consume();
+                }
+            }
+        });
     }
 }

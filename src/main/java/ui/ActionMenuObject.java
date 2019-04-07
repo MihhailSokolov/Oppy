@@ -11,9 +11,11 @@ public class ActionMenuObject {
         this.checkBox = checkBox;
         this.textField = textField;
     }
+
     public CheckBox getCheckBox() {
         return this.checkBox;
     }
+
     public TextField getTextField() {
         return this.textField;
     }
