@@ -705,7 +705,7 @@ public class MainPage {
             } else if (window.getTitle().equals("LeaderboardPage")) {
                 pageInformationLeaderboard();
             }
-           generalInformation();
+            generalInformation();
         });
         gridTop.setConstraints(infoButton, 1, 0);
 
@@ -842,7 +842,10 @@ public class MainPage {
         });
     }
 
-    public static void generalInformation () {
+    /**
+     * Method with the information the applies to all pages.
+     */
+    public static void generalInformation() {
 
         Alert info = new Alert(Alert.AlertType.INFORMATION);
         info.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
@@ -873,7 +876,10 @@ public class MainPage {
         info.showAndWait();
     }
 
-    public static void pageInformationMain () {
+    /**
+     * Method with the information on the main page.
+     */
+    public static void pageInformationMain() {
         Alert info = new Alert(Alert.AlertType.INFORMATION);
         info.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         info.setHeaderText("Page specific information");
@@ -896,14 +902,18 @@ public class MainPage {
         info.showAndWait();
     }
 
-    public static void pageInformationAction () {
+    /**
+     * Method with the information on the action page.
+     */
+    public static void pageInformationAction() {
         Alert info = new Alert(Alert.AlertType.INFORMATION);
         info.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         info.setHeaderText("Page specific information");
         info.setTitle("Information");
 
         info.setContentText("in this page you see a bunch of category's for actions that save co2. "
-                + "When you click on one of these category's the list of available actions of that category will appear. "
+                + "When you click on one of these category's the"
+                + " list of available actions of that category will appear. "
                 + "Only one category can be open at any time");
         info.showAndWait();
 
@@ -923,7 +933,10 @@ public class MainPage {
         info.showAndWait();
     }
 
-    public static void pageInformationSettings () {
+    /**
+     * Method with the information on the settings page.
+     */
+    public static void pageInformationSettings() {
         Alert info = new Alert(Alert.AlertType.INFORMATION);
         info.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         info.setHeaderText("Page specific information");
@@ -943,19 +956,22 @@ public class MainPage {
         info.showAndWait();
     }
 
-    public static void pageInformationLeaderboard () {
+    /**
+     * Method with the information on the leaderboard page.
+     */
+    public static void pageInformationLeaderboard() {
         Alert info = new Alert(Alert.AlertType.INFORMATION);
         info.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         info.setHeaderText("Page specific information");
         info.setTitle("Information");
 
-        info.setContentText("At this page you can see a leaderboard of the top 50 players in the world. " +
-                        "Also you can see the first place again in it's own table to highlight the highscore. " +
-                        "You can also see your own score and on witch place you are on the world ranking.");
+        info.setContentText("At this page you can see a leaderboard of the top 50 players in the world. "
+                + "Also you can see the first place again in it's own table to highlight the highscore. "
+                + "You can also see your own score and on witch place you are on the world ranking.");
         info.showAndWait();
 
-        info.setContentText("Players that have made their account anonymous won't show up on this leaderboard," +
-                " but will be factored in when calculating your rank.");
+        info.setContentText("Players that have made their account anonymous won't show up on this leaderboard,"
+                + " but will be factored in when calculating your rank.");
         info.showAndWait();
     }
 }
