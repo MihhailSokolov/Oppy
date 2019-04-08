@@ -147,5 +147,11 @@
     -fx-text-fill: white;
     -fx-font-size: 20px;
     -fx-alignment: CENTER_LEFT;
+    -fx-translate-x: -20px;
+}
 
+#pointsSolarPanel{
+    -fx-max-width: 400px;
+    -fx-min-width: 400px;
+    -fx-translate-x: 380px;
 }

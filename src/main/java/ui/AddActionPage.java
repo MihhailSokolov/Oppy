@@ -256,21 +256,13 @@ public class AddActionPage {
             }
         });
 
-        JFXToggleButton solarPanels = new JFXToggleButton();
-        GridPane.setConstraints(solarPanels,1,11);
-        solarPanels.setText("Solar panels installed");
-        solarPanels.setSelected(Main.clientController.getUser().isHasSolarPanels());
-        solarPanels.setOnAction(e -> {
-            Main.clientController.updateSolarPanel(solarPanels.isSelected());
-            Alert success = new Alert(Alert.AlertType.INFORMATION);
-            success.setHeaderText("Success!");
-            success.setContentText("You indicate that you have installed solar panels. "
-                    + "If this information isn't right or your solar panel broke, turn this of again. "
-                    + "This changes your daily pointloss/pointgain");
-            success.setTitle("Notification");
-            success.show();
-        });
-        solarPanels.setId("JFXToggleButton");
+        //here the ToggleButton for solar panels is created
+        final JFXToggleButton solarPanels = solarPanelsconstructor();
+
+        //here a label for the points of the solarPanel is created
+        Label pointsSolarPanel = new Label("7158 daily" );
+        GridPane.setConstraints(pointsSolarPanel, 1,0,2,1 );
+        pointsSolarPanel.setId("pointsSolarPanel");
 
         //here the submit button is created
         Button submitButton = new Button("submit");
@@ -340,7 +332,8 @@ public class AddActionPage {
         gridEnergy.getColumnConstraints().addAll(menuGridColumnConstraints());
         //gets all available actions and display's dem in the right category
         List<Action> energyList = Main.clientController.getCategoryList("energy");
-        for (int i = 0; i < energyList.size(); i++) {
+        gridEnergy.getChildren().addAll(solarPanels, pointsSolarPanel);
+        for (int i = 1; i < energyList.size(); i++) {
             CheckBox newCheckBox = new CheckBox(energyList.get(i).getActionName());
             GridPane.setConstraints(newCheckBox, 1, i);
             listCheckboxes.add(new ActionMenuObject(newCheckBox, null));
@@ -378,7 +371,7 @@ public class AddActionPage {
 
         //here all objects created above are placed in the central grid
         gridCenter.getChildren().addAll(saveAsButton, submitButton, transportCategory,
-                miscCategory, foodCategory, energyCategory, solarPanels);
+                miscCategory, foodCategory, energyCategory);
         return gridCenter;
     }
 
@@ -545,4 +538,26 @@ public class AddActionPage {
         return false;
     }
 
+    /**
+     * Method that creates the JFXToggleButton solarPanels.
+     */
+    public static JFXToggleButton solarPanelsconstructor() {
+        JFXToggleButton solarPanels = new JFXToggleButton();
+        GridPane.setConstraints(solarPanels,1,0);
+        solarPanels.setText("Solar panels installed");
+        solarPanels.setSelected(Main.clientController.getUser().isHasSolarPanels());
+        solarPanels.setOnAction(e -> {
+            Main.clientController.updateSolarPanel(solarPanels.isSelected());
+            Alert success = new Alert(Alert.AlertType.INFORMATION);
+            success.setHeaderText("Success!");
+            success.setContentText("You indicate that you have installed solar panels. "
+                    + "If this information isn't right or your solar panel broke, turn this of again. "
+                    + "This changes your daily pointloss/pointgain");
+            success.setTitle("Notification");
+            success.show();
+        });
+        solarPanels.setId("JFXToggleButton");
+
+        return solarPanels;
+    }
 }
