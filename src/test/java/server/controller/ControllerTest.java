@@ -753,20 +753,20 @@ public class ControllerTest {
         String jsonBody = mapper.writeValueAsString(testUser);
         String newHasPanels = "true";
         // wrong pass:
-        mockMvc.perform(get(String.format("/changeSolarPanels?hasSolarPanels=%s", newHasPanels))
+        mockMvc.perform(get(String.format("/changeSolarPanels?isHasSolarPanels=%s", newHasPanels))
                 .contentType(MediaType.APPLICATION_JSON).content(wrongJsonBody))
                 .andExpect(status().isUnauthorized())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$.message", is("false")));
         // correct pass :
-        mockMvc.perform(get(String.format("/changeSolarPanels?hasSolarPanels=%s", newHasPanels))
+        mockMvc.perform(get(String.format("/changeSolarPanels?isHasSolarPanels=%s", newHasPanels))
                 .contentType(MediaType.APPLICATION_JSON).content(jsonBody))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$.message", is("true")));
-        // check to see if hasSolarPanels has indeed been changed
+        // check to see if isHasSolarPanels has indeed been changed
         testUser = userRepository.findFirstByUsername(testUser.getUsername());
-        assertEquals(newHasPanels, String.valueOf(testUser.hasSolarPanels()));
+        assertEquals(newHasPanels, String.valueOf(testUser.isHasSolarPanels()));
         userRepository.delete(testUser);
         testUser.setHasSolarPanels(false);
     }

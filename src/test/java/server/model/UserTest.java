@@ -190,7 +190,7 @@ public class UserTest {
 
     @Test
     public void testEqualsSolarPanelsDifferent() {
-        assertNotEquals("If a User has a hasSolarPanels, it should not be equal.", user1, user13);
+        assertNotEquals("If a User has a isHasSolarPanels, it should not be equal.", user1, user13);
     }
 
     @Test
