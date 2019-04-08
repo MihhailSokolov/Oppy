@@ -378,7 +378,7 @@ public class AddActionPage {
     public static void saveAs(ArrayList<Action> listOfActions, ArrayList<ActionMenuObject> listCheckboxes,
                               ArrayList<String> listForPresets, Stage window) {
         for (int i = 0; i < listCheckboxes.size(); i++) {
-            if (listCheckboxes.get(i).getCheckBox().isSelected()) {
+            if (listCheckboxes.get(i).getCheckBox().isSelected() ) {
                 if (listCheckboxes.get(i).getTextField() != null) {
                     for (int j = 0; j < Integer.parseInt(listCheckboxes.get(i).getTextField().getText()); j++) {
                         listForPresets.add(listCheckboxes.get(i).getCheckBox().getText());
@@ -440,6 +440,19 @@ public class AddActionPage {
                         alert.showAndWait();
                         return false;
                     }
+                }
+            }
+            if (listCheckboxes.get(i).getTextField() != null
+                    && ! listCheckboxes.get(i).getTextField().getText().equals("") ) {
+                if (checkIfInt(listCheckboxes.get(i).getTextField().getText())) {
+                    listCheckboxes.get(i).getCheckBox().setSelected(true);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("ALERT!");
+                    alert.setHeaderText("distance traveled not valid");
+                    alert.showAndWait();
+                    listCheckboxes.get(i).getCheckBox().setSelected(true);
+                    return false;
                 }
             }
         }

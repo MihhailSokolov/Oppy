@@ -73,7 +73,7 @@ public class MainPage {
 
         //here the Label witch displays your username is created
         String username = Main.clientController.getUser().getUsername();
-        Label usernameLabel = new Label(username);
+        Label usernameLabel = new Label("Username: " + username);
         Tooltip.install(usernameLabel, new Tooltip("This is your username"));
         usernameLabel.setId("username");
         GridPane.setConstraints(usernameLabel, 0, 1);
@@ -81,7 +81,7 @@ public class MainPage {
         //here the Label for your number of points is created, and set to a color dependent on your score
         String result = Main.clientController.getScore();
         int pointValue = Integer.parseInt(result);
-        final Label numberOfPoints = new Label(result);
+        final Label numberOfPoints = new Label("Points: " + result);
         numberOfPoints.setId("yourPoints");
         Tooltip.install(numberOfPoints, new Tooltip("Your current number of points"));
         if (pointValue < 0) {
@@ -116,7 +116,7 @@ public class MainPage {
         GridPane.setConstraints(displayLogo, 1, 3);
 
         //here the Label that displays your daily point-loss is created
-        Label pointLoss = new Label(Integer.toString(-3000));
+        Label pointLoss = new Label("Daily point-loss: " + Integer.toString(-3000));
         pointLoss.setId("pointLoss");
         Tooltip.install(pointLoss, new Tooltip("Number of points you lose each day"));
         GridPane.setConstraints(pointLoss, 2, 2);
@@ -129,13 +129,13 @@ public class MainPage {
             int minutes = 59 - new Date().getMinutes();
             int seconds = 59 - new Date().getSeconds();
             //timer.setText(hours + ":"+ minutes+ ":" + seconds);
-            timer.setText(sdf.format(new Date(0, 0, 0, hours, minutes, seconds)));
+            timer.setText("Time till pointloss: " + sdf.format(new Date(0, 0, 0, hours, minutes, seconds)));
         }),
                 new KeyFrame(Duration.seconds(1))
         );
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
-        Tooltip.install(timer, new Tooltip("Time before daily point-loss occurs"));
+        Tooltip.install(timer, new Tooltip("Time before daily pointloss occurs"));
         timer.setId("timeTillPointLoss");
         GridPane.setConstraints(timer, 2, 1);
 
