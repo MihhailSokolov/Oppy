@@ -26,6 +26,7 @@ public class User {
     private String profilePicture;
     private List<Preset> presets;
     private List<User> friends;
+    private boolean hasSolarPanels;
 
     /**
      * Constructor for User object.
@@ -48,6 +49,7 @@ public class User {
         this.profilePicture = "";
         this.presets = new ArrayList<>();
         this.friends = new ArrayList<>();
+        this.hasSolarPanels = false;
     }
 
     public Date getRegisterDate() {
@@ -122,6 +124,14 @@ public class User {
         this.friends = friends;
     }
 
+    public boolean hasSolarPanels() {
+        return hasSolarPanels;
+    }
+
+    public void setHasSolarPanels(boolean hasSolarPanels) {
+        this.hasSolarPanels = hasSolarPanels;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == null || getClass() != other.getClass()) {
@@ -130,6 +140,7 @@ public class User {
         User user = (User) other;
         return score == user.score
                 && anonymous == user.anonymous
+                && hasSolarPanels == user.hasSolarPanels
                 && Objects.equal(username, user.username)
                 && Objects.equal(password, user.password)
                 && Objects.equal(email, user.email)

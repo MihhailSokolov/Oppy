@@ -24,6 +24,7 @@ public class UserTest {
     private User user10;
     private User user11;
     private User user12;
+    private User user13;
 
     @Before
     public void setUp(){
@@ -43,6 +44,8 @@ public class UserTest {
         user11.setFriends(Arrays.asList(user5, user6, user7));
         user12 = new User("hugo","pass","test@gmail.com",100, new Date());
         user12.setPresets(Arrays.asList(new Preset("preset1", new ArrayList<>()), new Preset("preset2", new ArrayList<>())));
+        user13 = new User("hugo","pass","test@gmail.com",100, new Date());
+        user13.setHasSolarPanels(true);
     }
 
     @Test
@@ -183,6 +186,11 @@ public class UserTest {
     @Test
     public void testEqualsPresetsDifferent() {
         assertNotEquals("If a User has a different presets, it should not be equal.", user1, user12);
+    }
+
+    @Test
+    public void testEqualsSolarPanelsDifferent() {
+        assertNotEquals("If a User has a hasSolarPanels, it should not be equal.", user1, user13);
     }
 
     @Test
