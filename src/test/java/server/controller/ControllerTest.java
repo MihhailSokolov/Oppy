@@ -110,6 +110,17 @@ public class ControllerTest {
     }
 
     @Test
+    public void actualPointsWithSolarPanelsTest() {
+        testUser.setHasSolarPanels(true);
+        userRepository.save(testUser);
+        int actualScore = dbDataController.getUserScore(testUser.getUsername());
+        int change = -3000 + dbDataController.getActionPoints("Installing solar panels");
+        assertEquals(testUser.getScore() + change, actualScore);
+        userRepository.delete(testUser);
+        testUser.setHasSolarPanels(false);
+    }
+
+    @Test
     public void checkAddWrongFriend() throws Exception {
         userRepository.save(testUser);
         List<User> oldFriends = new ArrayList<>(testUser.getFriends());
@@ -728,6 +739,35 @@ public class ControllerTest {
         String jsonBody = mapper.writeValueAsString(user);
         mockMvc.perform(get("/userinfo").contentType(MediaType.APPLICATION_JSON).content(jsonBody))
                 .andExpect(status().isUnauthorized());
-        //userRepository.delete(testUser);
+        userRepository.delete(testUser);
+    }
+
+    @Test
+    public void checkChangeHasSolarPanels() throws Exception {
+        userRepository.save(testUser);
+        ObjectMapper mapper = new ObjectMapper();
+        User wrongTestUser = new User(testUser.getUsername(), testUser.getPassword(), testUser.getEmail(),
+                testUser.getScore(), testUser.getRegisterDate());
+        wrongTestUser.setPassword("inc0rrectP@ssw0rd");
+        String wrongJsonBody = mapper.writeValueAsString(wrongTestUser);
+        String jsonBody = mapper.writeValueAsString(testUser);
+        String newHasPanels = "true";
+        // wrong pass:
+        mockMvc.perform(get(String.format("/changeSolarPanels?hasSolarPanels=%s", newHasPanels))
+                .contentType(MediaType.APPLICATION_JSON).content(wrongJsonBody))
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("false")));
+        // correct pass :
+        mockMvc.perform(get(String.format("/changeSolarPanels?hasSolarPanels=%s", newHasPanels))
+                .contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("true")));
+        // check to see if hasSolarPanels has indeed been changed
+        testUser = userRepository.findFirstByUsername(testUser.getUsername());
+        assertEquals(newHasPanels, String.valueOf(testUser.hasSolarPanels()));
+        userRepository.delete(testUser);
+        testUser.setHasSolarPanels(false);
     }
 }

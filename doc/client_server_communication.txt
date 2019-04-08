@@ -229,3 +229,14 @@ SEARCH FOR USER
     Response:
         200 OK
         Returns JSON User object whose username matches with provided username (case-insensitive) if found it, null otherwise
+
+CHANGE hasSolarPanels
+    To change hasSolarPanels value of the user in db
+    Request:
+        /changeSolarPanels?hasSolarPanels=true
+        Body should contain JSON object of User with username and password (everything else can be null)
+    Response:
+        200 OK if user is authorized
+        401 UNAUTHORIZED if user is not authorized
+        Body contains JSON Response object with message 'true' if hasSolarPanels value was changed successfully,
+            'false' if user was not authenticated or hasSolarPanels value could not be changed

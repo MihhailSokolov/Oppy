@@ -71,9 +71,11 @@ public class DbDataController {
         Date registerDate = user.getRegisterDate();
         long diff = currentDate.getTime() - registerDate.getTime();
         int interval = Math.toIntExact(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
-        int dailyDecay = 3000;
-        int actualScore = score - dailyDecay * interval;
-        return actualScore;
+        int dailyDecay = -3000;
+        if (user.hasSolarPanels()) {
+            dailyDecay += getActionPoints("Installing solar panels");
+        }
+        return score + (dailyDecay * interval);
     }
 
     public String getUserEmail(String username) {
@@ -459,5 +461,19 @@ public class DbDataController {
         User user = userRepository.findFirstByUsername(username);
         user.setScore(getUserScore(username));
         return user;
+    }
+
+    /**
+     * Method to change hasSolarPanels value in db.
+     *
+     * @param username  user's username
+     * @param hasSolarPanels new hasSolarPanels value
+     * @return true if successful, false otherwise
+     */
+    public boolean changeHasSolarPanels(String username, boolean hasSolarPanels) {
+        User userToUpdate = userRepository.findFirstByUsername(username);
+        userToUpdate.setHasSolarPanels(hasSolarPanels);
+        userRepository.save(userToUpdate);
+        return true;
     }
 }
