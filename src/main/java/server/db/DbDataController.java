@@ -163,7 +163,21 @@ public class DbDataController {
      */
     public List<User> getTop50Users() {
         List<User> users = userRepository.findAllByAnonymous(false);
-        List<User> top50Users = new ArrayList<>();
+        List<User> top50Users = limitUsers(users);
+        for (User user : top50Users) {
+            user.setScore(getUserScore(user.getUsername()));
+        }
+        top50Users.sort(new ScoreComparator());
+        return top50Users;
+    }
+
+    /**
+     * Private method to limit list to 50 users if initial list was bigger than 50.
+     * @param users list of Users
+     * @return limited list of users
+     */
+    List<User> limitUsers(List<User> users) {
+        List<User> top50 = new ArrayList<>();
         int limit = 50;
         if (users.size() < 50) {
             limit = users.size();
@@ -173,12 +187,11 @@ public class DbDataController {
             user.setPassword(null);
             user.setEmail(null);
             user.setRegisterDate(null);
-            user.setScore(getUserScore(user.getUsername()));
-            top50Users.add(user);
+            top50.add(user);
         }
-        top50Users.sort(new ScoreComparator());
-        return top50Users;
+        return top50;
     }
+
 
     private class ScoreComparator implements Comparator<User> {
         @Override

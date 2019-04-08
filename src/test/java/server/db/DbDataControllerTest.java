@@ -92,4 +92,26 @@ public class DbDataControllerTest {
         userRepository.delete(userWithFriends);
         assertFalse(userWithFriends.getFriends().contains(userToBeDeleted));
     }
+
+    @Test
+    public void testSortAndLimitFewUsers() {
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            users.add(new User("user"+i, "pass"+i, "mail"+i, i, new Date()));
+        }
+        users = dbDataController.limitUsers(users);
+        assertEquals(10, users.size());
+    }
+
+    @Test
+    public void testSortAndLimitManyUsers() {
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            users.add(new User("user"+i, "pass"+i, "mail"+i, i, new Date()));
+        }
+        users = dbDataController.limitUsers(users);
+        assertEquals(50, users.size());
+    }
+
+
 }
