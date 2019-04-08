@@ -124,7 +124,7 @@ public class User {
         this.friends = friends;
     }
 
-    public boolean hasSolarPanels() {
+    public boolean isHasSolarPanels() {
         return hasSolarPanels;
     }
 
