@@ -1,5 +1,6 @@
 package ui;
 
+import com.jfoenix.controls.JFXToggleButton;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -255,6 +256,21 @@ public class AddActionPage {
             }
         });
 
+        JFXToggleButton solarPanels = new JFXToggleButton();
+        GridPane.setConstraints(solarPanels,1,11);
+        solarPanels.setText("Solar panels installed");
+        solarPanels.setSelected(Main.clientController.getUser().hasSolarPanels());
+        solarPanels.setOnAction(e -> {
+            Main.clientController.updateSolarPanel(solarPanels.isSelected());
+            Alert success = new Alert(Alert.AlertType.INFORMATION);
+            success.setHeaderText("Success!");
+            success.setContentText("You indicate that you have installed solar panels. "
+                    + "If this information isn't right or your solar panel broke, turn this of again");
+            success.setTitle("Notification");
+            success.show();
+        });
+        solarPanels.setId("JFXToggleButton");
+
         //here the submit button is created
         Button submitButton = new Button("submit");
         GridPane.setConstraints(submitButton, 3, 10);
@@ -361,7 +377,7 @@ public class AddActionPage {
 
         //here all objects created above are placed in the central grid
         gridCenter.getChildren().addAll(saveAsButton, submitButton, transportCategory,
-                miscCategory, foodCategory, energyCategory);
+                miscCategory, foodCategory, energyCategory, solarPanels);
         return gridCenter;
     }
 
