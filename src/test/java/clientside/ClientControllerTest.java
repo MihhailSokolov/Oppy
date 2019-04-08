@@ -262,6 +262,17 @@ public class ClientControllerTest {
     }
 
     @Test
+    public void updateSolarPanelsTest() {
+        this.testUser = new User("user", "pass", "email", 0, new Date());
+        wireMockRule.stubFor(any(urlPathEqualTo("/changeSolarPanels"))
+                .withQueryParam("isHasSolarPanels", equalTo("true"))
+                .withRequestBody(equalToJson(testUserJson))
+                .willReturn(ok(trueResponse)));
+        assertEquals("true", clientController.updateSolarPanel(true));
+        assertEquals(true, clientController.getUser().isHasSolarPanels());
+    }
+
+    @Test
     public void updateUserTest() {
         wireMockRule.stubFor(any(urlPathEqualTo("/userinfo"))
                 .withRequestBody(equalToJson(testUserJson))

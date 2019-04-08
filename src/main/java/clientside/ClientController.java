@@ -132,6 +132,10 @@ public class ClientController {
             public String toString() {
                 return "position?username=%s";
             }
+        }, CHANGESOLAR {
+            public String toString() {
+                return "changeSolarPanels?isHasSolarPanels=%s";
+            }
         }
 
     }
@@ -482,6 +486,19 @@ public class ClientController {
                 + String.format(Path.CHANGEANON.toString(), trueOrFalse), user);
         String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
         this.user.setAnonymous(trueOrFalse);
+        return responseMsg;
+    }
+
+    /**
+     * Sends an "update Solar panels request" to the server.
+     *
+     * @param trueOrFalse tells if anonymous should be set to true or false.
+     */
+    public String updateSolarPanel(boolean trueOrFalse) {
+        responseEntity = this.postRequest(this.baseUrl
+                + String.format(Path.CHANGESOLAR.toString(), trueOrFalse), user);
+        String responseMsg = new JSONObject(responseEntity.getBody()).getString("message");
+        this.user.setHasSolarPanels(trueOrFalse);
         return responseMsg;
     }
 

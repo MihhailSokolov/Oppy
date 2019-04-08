@@ -66,6 +66,7 @@ public class MainPage {
         window.setTitle("MainPage");
         window.setMaximized(true);
         final BorderPane centralPageLayout = new BorderPane();
+        Main.clientController.updateUser();
 
         //create the grid for the center of the page
         GridPane gridCenter = new GridPane();
@@ -94,29 +95,14 @@ public class MainPage {
         GridPane.setConstraints(numberOfPoints, 0, 2);
 
         //here the image of the planet is set dependent on your number of points
-        Image planet;
-        if (pointValue >= 15000) {
-            planet = new Image("oppy1.png");
-        } else if (pointValue >= 10000) {
-            planet = new Image("oppy2.png");
-        } else if (pointValue >= 5000) {
-            planet = new Image("oppy3.png");
-        } else if (pointValue < -15000) {
-            planet = new Image("oppy7.png");
-        } else if (pointValue < -10000) {
-            planet = new Image("oppy6.png");
-        } else if (pointValue < -5000) {
-            planet = new Image("oppy5.png");
-        } else {
-            planet = new Image("oppy4.png");
-        }
-        ImageView displayLogo = new ImageView(planet);
-        displayLogo.setFitHeight(700);
-        displayLogo.setFitWidth(700);
-        GridPane.setConstraints(displayLogo, 1, 3);
+        final ImageView displayLogo = planetConstructor(pointValue);
 
         //here the Label that displays your daily point-loss is created
         Label pointLoss = new Label("Daily point-loss: " + Integer.toString(-3000));
+        if (Main.clientController.getUser().isHasSolarPanels()) {
+            pointLoss.setText("Daily point-gain: " + Integer.toString(-3000 + 7158));
+            pointLoss.setStyle("-fx-text-fill: green");
+        }
         pointLoss.setId("pointLoss");
         Tooltip.install(pointLoss, new Tooltip("Number of points you lose each day"));
         GridPane.setConstraints(pointLoss, 2, 2);
@@ -128,8 +114,11 @@ public class MainPage {
             int hours = 23 - new Date().getHours();
             int minutes = 59 - new Date().getMinutes();
             int seconds = 59 - new Date().getSeconds();
-            //timer.setText(hours + ":"+ minutes+ ":" + seconds);
-            timer.setText("Time till pointloss: " + sdf.format(new Date(0, 0, 0, hours, minutes, seconds)));
+            if (Main.clientController.getUser().isHasSolarPanels()) {
+                timer.setText("Time till point-gain: " + sdf.format(new Date(0, 0, 0, hours, minutes, seconds)));
+            } else {
+                timer.setText("Time till point-loss: " + sdf.format(new Date(0, 0, 0, hours, minutes, seconds)));
+            }
         }),
                 new KeyFrame(Duration.seconds(1))
         );
@@ -973,6 +962,36 @@ public class MainPage {
         info.setContentText("Players that have made their account anonymous won't show up on this leaderboard,"
                 + " but will be factored in when calculating your rank.");
         info.showAndWait();
+    }
+
+    /**
+     * Method that creates the imageView for you planet.
+     *
+     * @param  pointValue the number of points the player currently has
+     */
+    public static ImageView planetConstructor(int pointValue) {
+        Image planet;
+        if (pointValue >= 15000) {
+            planet = new Image("oppy1.png");
+        } else if (pointValue >= 10000) {
+            planet = new Image("oppy2.png");
+        } else if (pointValue >= 5000) {
+            planet = new Image("oppy3.png");
+        } else if (pointValue < -15000) {
+            planet = new Image("oppy7.png");
+        } else if (pointValue < -10000) {
+            planet = new Image("oppy6.png");
+        } else if (pointValue < -5000) {
+            planet = new Image("oppy5.png");
+        } else {
+            planet = new Image("oppy4.png");
+        }
+        ImageView displayLogo = new ImageView(planet);
+        displayLogo.setFitHeight(700);
+        displayLogo.setFitWidth(700);
+        GridPane.setConstraints(displayLogo, 1, 3);
+
+        return displayLogo;
     }
 }
 

@@ -52,7 +52,7 @@
     -fx-border-width: 5 5 0 5;
     -fx-border-radius: 5 5 0 0;
     -fx-min-width: 400px;
-    -fx-max-width: 400px
+    -fx-max-width: 400px;
 }
 
 #pointLoss{

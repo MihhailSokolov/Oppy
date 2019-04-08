@@ -138,3 +138,20 @@
     -fx-border-color: #789149;
     -fx-border-radius: 5px;
 }
+
+#JFXToggleButton{
+    -fx-min-width: 500px;
+    -fx-max-width: 500px;
+    -fx-min-height: 50px;
+    -fx-max-height: 50px;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-translate-x: -20px;
+}
+
+#pointsSolarPanel{
+    -fx-max-width: 400px;
+    -fx-min-width: 400px;
+    -fx-translate-x: 380px;
+}
