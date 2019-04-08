@@ -259,7 +259,7 @@ public class AddActionPage {
         JFXToggleButton solarPanels = new JFXToggleButton();
         GridPane.setConstraints(solarPanels,1,11);
         solarPanels.setText("Solar panels installed");
-        solarPanels.setSelected(Main.clientController.getUser().hasSolarPanels());
+        solarPanels.setSelected(Main.clientController.getUser().isHasSolarPanels());
         solarPanels.setOnAction(e -> {
             Main.clientController.updateSolarPanel(solarPanels.isSelected());
             Alert success = new Alert(Alert.AlertType.INFORMATION);

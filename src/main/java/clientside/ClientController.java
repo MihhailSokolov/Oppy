@@ -134,7 +134,7 @@ public class ClientController {
             }
         }, CHANGESOLAR {
             public String toString() {
-                return "changeSolarPanels?hasSolarPanels=%s";
+                return "changeSolarPanels?isHasSolarPanels=%s";
             }
         }
 

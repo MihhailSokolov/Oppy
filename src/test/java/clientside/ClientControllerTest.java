@@ -269,7 +269,7 @@ public class ClientControllerTest {
                 .withRequestBody(equalToJson(testUserJson))
                 .willReturn(ok(trueResponse)));
         assertEquals("true", clientController.updateSolarPanel(true));
-        assertEquals(true, clientController.getUser().hasSolarPanels());
+        assertEquals(true, clientController.getUser().isHasSolarPanels());
     }
 
     @Test
