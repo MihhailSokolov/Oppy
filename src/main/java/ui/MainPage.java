@@ -95,26 +95,7 @@ public class MainPage {
         GridPane.setConstraints(numberOfPoints, 0, 2);
 
         //here the image of the planet is set dependent on your number of points
-        Image planet;
-        if (pointValue >= 15000) {
-            planet = new Image("oppy1.png");
-        } else if (pointValue >= 10000) {
-            planet = new Image("oppy2.png");
-        } else if (pointValue >= 5000) {
-            planet = new Image("oppy3.png");
-        } else if (pointValue < -15000) {
-            planet = new Image("oppy7.png");
-        } else if (pointValue < -10000) {
-            planet = new Image("oppy6.png");
-        } else if (pointValue < -5000) {
-            planet = new Image("oppy5.png");
-        } else {
-            planet = new Image("oppy4.png");
-        }
-        ImageView displayLogo = new ImageView(planet);
-        displayLogo.setFitHeight(700);
-        displayLogo.setFitWidth(700);
-        GridPane.setConstraints(displayLogo, 1, 3);
+        final ImageView displayLogo = planetConstructor(pointValue);
 
         //here the Label that displays your daily point-loss is created
         Label pointLoss = new Label("Daily point-loss: " + Integer.toString(-3000));
@@ -981,6 +962,36 @@ public class MainPage {
         info.setContentText("Players that have made their account anonymous won't show up on this leaderboard,"
                 + " but will be factored in when calculating your rank.");
         info.showAndWait();
+    }
+
+    /**
+     * Method that creates the imageView for you planet.
+     *
+     * @param  pointValue the number of points the player currently has
+     */
+    public static ImageView planetConstructor(int pointValue) {
+        Image planet;
+        if (pointValue >= 15000) {
+            planet = new Image("oppy1.png");
+        } else if (pointValue >= 10000) {
+            planet = new Image("oppy2.png");
+        } else if (pointValue >= 5000) {
+            planet = new Image("oppy3.png");
+        } else if (pointValue < -15000) {
+            planet = new Image("oppy7.png");
+        } else if (pointValue < -10000) {
+            planet = new Image("oppy6.png");
+        } else if (pointValue < -5000) {
+            planet = new Image("oppy5.png");
+        } else {
+            planet = new Image("oppy4.png");
+        }
+        ImageView displayLogo = new ImageView(planet);
+        displayLogo.setFitHeight(700);
+        displayLogo.setFitWidth(700);
+        GridPane.setConstraints(displayLogo, 1, 3);
+
+        return displayLogo;
     }
 }
 
