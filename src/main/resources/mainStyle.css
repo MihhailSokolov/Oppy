@@ -35,22 +35,32 @@
 #username{
     -fx-border-width: 5 5 0 5;
     -fx-border-radius: 5 5 0 0;
+    -fx-min-width: 400px;
+    -fx-max-width: 400px;
+    -fx-translate-x: -130px;
 }
 
 #yourPoints{
     -fx-border-width: 0 5 5 5;
     -fx-border-radius: 0 0 5 5;
+    -fx-min-width: 400px;
+    -fx-max-width: 400px;
+    -fx-translate-x: -130px;
 }
 
 #timeTillPointLoss{
     -fx-border-width: 5 5 0 5;
     -fx-border-radius: 5 5 0 0;
+    -fx-min-width: 400px;
+    -fx-max-width: 400px
 }
 
 #pointLoss{
     -fx-border-width: 0 5 5 5;
     -fx-text-fill: red;
     -fx-border-radius: 0 0 5 5;
+    -fx-min-width: 400px;
+    -fx-max-width: 400px
 }
 
 #gridBot{
