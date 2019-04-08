@@ -66,6 +66,7 @@ public class MainPage {
         window.setTitle("MainPage");
         window.setMaximized(true);
         final BorderPane centralPageLayout = new BorderPane();
+        Main.clientController.updateUser();
 
         //create the grid for the center of the page
         GridPane gridCenter = new GridPane();
@@ -117,6 +118,10 @@ public class MainPage {
 
         //here the Label that displays your daily point-loss is created
         Label pointLoss = new Label("Daily point-loss: " + Integer.toString(-3000));
+        if (Main.clientController.getUser().isHasSolarPanels()) {
+            pointLoss.setText("Daily point-gain: " + Integer.toString(-3000 + 7158));
+            pointLoss.setStyle("-fx-text-fill: green");
+        }
         pointLoss.setId("pointLoss");
         Tooltip.install(pointLoss, new Tooltip("Number of points you lose each day"));
         GridPane.setConstraints(pointLoss, 2, 2);
@@ -128,8 +133,11 @@ public class MainPage {
             int hours = 23 - new Date().getHours();
             int minutes = 59 - new Date().getMinutes();
             int seconds = 59 - new Date().getSeconds();
-            //timer.setText(hours + ":"+ minutes+ ":" + seconds);
-            timer.setText("Time till pointloss: " + sdf.format(new Date(0, 0, 0, hours, minutes, seconds)));
+            if (Main.clientController.getUser().isHasSolarPanels()) {
+                timer.setText("Time till point-gain: " + sdf.format(new Date(0, 0, 0, hours, minutes, seconds)));
+            } else {
+                timer.setText("Time till point-loss: " + sdf.format(new Date(0, 0, 0, hours, minutes, seconds)));
+            }
         }),
                 new KeyFrame(Duration.seconds(1))
         );
