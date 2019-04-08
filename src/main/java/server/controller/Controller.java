@@ -263,14 +263,14 @@ public class Controller {
     }
 
     /**
-     * Mapping for changing user's hasSolarPanels value.
+     * Mapping for changing user's isHasSolarPanels value.
      * @param user User who wants to change anonymous status
-     * @param strSolarPanels new hasSolarPanels value
+     * @param strSolarPanels new isHasSolarPanels value
      * @return Response object with message 'true' is successful, 'false' otherwise
      */
     @RequestMapping("/changeSolarPanels")
     public ResponseEntity<Response> changeSolarPanels(@RequestBody User user,
-                                                    @RequestParam("hasSolarPanels") String strSolarPanels) {
+                                                    @RequestParam("isHasSolarPanels") String strSolarPanels) {
         boolean hasSolarPanels = Boolean.parseBoolean(strSolarPanels);
         String name = user.getUsername();
         String pass = user.getPassword();

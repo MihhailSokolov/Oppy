@@ -72,7 +72,7 @@ public class DbDataController {
         long diff = currentDate.getTime() - registerDate.getTime();
         int interval = Math.toIntExact(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
         int dailyDecay = -3000;
-        if (user.hasSolarPanels()) {
+        if (user.isHasSolarPanels()) {
             dailyDecay += getActionPoints("Installing solar panels");
         }
         return score + (dailyDecay * interval);
@@ -464,10 +464,10 @@ public class DbDataController {
     }
 
     /**
-     * Method to change hasSolarPanels value in db.
+     * Method to change isHasSolarPanels value in db.
      *
      * @param username  user's username
-     * @param hasSolarPanels new hasSolarPanels value
+     * @param hasSolarPanels new isHasSolarPanels value
      * @return true if successful, false otherwise
      */
     public boolean changeHasSolarPanels(String username, boolean hasSolarPanels) {
