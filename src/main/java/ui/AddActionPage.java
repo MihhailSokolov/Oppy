@@ -265,7 +265,8 @@ public class AddActionPage {
             Alert success = new Alert(Alert.AlertType.INFORMATION);
             success.setHeaderText("Success!");
             success.setContentText("You indicate that you have installed solar panels. "
-                    + "If this information isn't right or your solar panel broke, turn this of again");
+                    + "If this information isn't right or your solar panel broke, turn this of again. "
+                    + "This changes your daily pointloss/pointgain");
             success.setTitle("Notification");
             success.show();
         });
