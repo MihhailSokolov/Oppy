@@ -442,7 +442,8 @@ public class AddActionPage {
                     }
                 }
             }
-            if (listCheckboxes.get(i).getTextField() != null && ! listCheckboxes.get(i).getTextField().getText().equals("") ) {
+            if (listCheckboxes.get(i).getTextField() != null
+                    && ! listCheckboxes.get(i).getTextField().getText().equals("") ) {
                 if (checkIfInt(listCheckboxes.get(i).getTextField().getText())) {
                     listCheckboxes.get(i).getCheckBox().setSelected(true);
                 } else {

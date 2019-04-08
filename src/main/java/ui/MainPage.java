@@ -73,7 +73,7 @@ public class MainPage {
 
         //here the Label witch displays your username is created
         String username = Main.clientController.getUser().getUsername();
-        Label usernameLabel = new Label("username: "+ username);
+        Label usernameLabel = new Label("username: " + username);
         Tooltip.install(usernameLabel, new Tooltip("This is your username"));
         usernameLabel.setId("username");
         GridPane.setConstraints(usernameLabel, 0, 1);
@@ -81,7 +81,7 @@ public class MainPage {
         //here the Label for your number of points is created, and set to a color dependent on your score
         String result = Main.clientController.getScore();
         int pointValue = Integer.parseInt(result);
-        final Label numberOfPoints = new Label("Points: "+ result);
+        final Label numberOfPoints = new Label("Points: " + result);
         numberOfPoints.setId("yourPoints");
         Tooltip.install(numberOfPoints, new Tooltip("Your current number of points"));
         if (pointValue < 0) {
