@@ -6,7 +6,7 @@ CO2 values for actions:
 0.255k for taking bike instead of car (assuming 1 km distance and everything is average)
 0.26k carpooling 2.5 people avg saves (assuming 1 km)
 0.23k saved using public trans (assuming 1 km)
-26127 k co2 saved using solar panels for 10 year (5000 watt)
+7.158k co2 saved using solar panels per day (5000 watt)
 1.16k co2 saved showering 5 mins instead of showering 15 mins
 0.82k co2 saved by turning down heating 1 degree centigrade (to 20 degrees (I know that is already stupidly much)
 0.7k co2 saved by turning off lights for 10 hours a day
