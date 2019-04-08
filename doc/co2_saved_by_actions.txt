@@ -3,9 +3,9 @@ CO2 values for actions:
 1.8k for vegetarian meal
 0.04k for local produce
 0.094k for homegrown produce
-1.275k for taking bike instead of car (assuming 5km distance and everything is average)
-carpooling 2.5 people avg saves 5.2k (assuming 20km)
-4.6k saved using public trans (assuming 20km)
+0.255k for taking bike instead of car (assuming 1 km distance and everything is average)
+0.26k carpooling 2.5 people avg saves (assuming 1 km)
+0.23k saved using public trans (assuming 1 km)
 26127 k co2 saved using solar panels for 10 year (5000 watt)
 1.16k co2 saved showering 5 mins instead of showering 15 mins
 0.82k co2 saved by turning down heating 1 degree centigrade (to 20 degrees (I know that is already stupidly much)
@@ -14,4 +14,4 @@ carpooling 2.5 people avg saves 5.2k (assuming 20km)
 0.17k for keeping devices turned off when not needed assuming averages of the EU
 160k co2 saved for planting an average tree
 2.05k co2 saved by recycling 
-3.64k co2 saved by driving electric over petrol.
+0.182k co2 saved by driving electric over petrol.

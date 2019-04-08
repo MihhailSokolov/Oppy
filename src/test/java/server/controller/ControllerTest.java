@@ -69,7 +69,7 @@ public class ControllerTest {
         Date date = Date.from(nowDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         testUser = new User("oppy123",
                 "0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb",
-                "oppy%40gmail.com",
+                "oppy@gmail.com",
                 42
                 , date);
         List<String> actionList1 = new ArrayList<>();
@@ -107,6 +107,25 @@ public class ControllerTest {
         int actualScore = dbDataController.getUserScore(testUser.getUsername());
         assertEquals(testUser.getScore() - 3000, actualScore);
         userRepository.delete(testUser);
+    }
+
+    @Test
+    public void checkAddWrongFriend() throws Exception {
+        userRepository.save(testUser);
+        List<User> oldFriends = new ArrayList<>(testUser.getFriends());
+        User newFriend = new User("friend-which-does-not-exist", null, null, 0, new Date());
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonBody = mapper.writeValueAsString(newFriend);
+        mockMvc.perform(get("/addfriend?username=" + testUser.getUsername())
+                .contentType(MediaType.APPLICATION_JSON).content(jsonBody))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.message", is("false")));
+        testUser = userRepository.findFirstByUsername(testUser.getUsername());
+        assertFalse(testUser.getFriends().contains(newFriend));
+        assertEquals(oldFriends, testUser.getFriends());
+        userRepository.delete(testUser);
+        testUser.setFriends(friends);
     }
 
     @Test
@@ -658,6 +677,7 @@ public class ControllerTest {
     public void checkSetProfilePictureError() throws Exception {
         userRepository.save(testUser);
         String newProfilePic = "110101011000001010101010010010010010111010010100100100010101110010101101010101010101010101010110100";
+        String oldPic = testUser.getProfilePicture();
         User user = new User(testUser.getUsername() + "nope-wrong-user", null, null, 0, null);
         user.setProfilePicture(newProfilePic);
         ObjectMapper mapper = new ObjectMapper();
@@ -667,7 +687,7 @@ public class ControllerTest {
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$.message", is("false")));
         testUser = userRepository.findFirstByUsername(testUser.getUsername());
-        assertNotEquals(newProfilePic, testUser.getProfilePicture());
+        assertEquals(oldPic, testUser.getProfilePicture());
         userRepository.delete(testUser);
     }
 
@@ -681,6 +701,7 @@ public class ControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         User user = mapper.readValue(result.getResponse().getContentAsString(), User.class);
         assertEquals(testUser, user);
+        userRepository.delete(testUser);
     }
 
     @Test
@@ -696,7 +717,7 @@ public class ControllerTest {
         User receivedUser = mapper.readValue(result.getResponse().getContentAsString(), User.class);
         receivedUser.setScore(receivedUser.getScore() + 3000);
         assertEquals(testUser, receivedUser);
-        //userRepository.delete(testUser);
+        userRepository.delete(testUser);
     }
 
     @Test
