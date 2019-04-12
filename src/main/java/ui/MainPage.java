@@ -483,6 +483,7 @@ public class MainPage {
         //creating the layout of the hamburger menu
         GridPane gridHamburger = new GridPane();
         gridHamburger.setId("hamburgerMenuRight");
+        folowingList = new TableView<>();
 
         //Here some data is acquired, some stats are updated and some variables are created
         Main.clientController.updateUser();
