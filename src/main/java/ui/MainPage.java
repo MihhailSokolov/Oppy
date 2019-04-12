@@ -735,7 +735,7 @@ public class MainPage {
                     Main.clientController.takeAction(
                             Main.clientController.getUser().getPresets().get(a).getActionList().get(j));
                     Main.clientController.updateUser();
-                    scoreLabel.setText(Integer.toString(Main.clientController.getUser().getScore()));
+                    scoreLabel.setText("Points: " + Integer.toString( Main.clientController.getUser().getScore()));
                 }
             });
             //gets the names of the actions in the presets
