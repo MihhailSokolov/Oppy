@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 
 public class Remember {
     /**
-     * This class gives the functionaility where locally a username will be stored to ease loging in.
+     * This class gives the functionality where locally a username will be stored to ease loging in.
      *
      * @param userName The username to be saved for the next login.
      * @param filePath The filepath to where the file is where the name is written.

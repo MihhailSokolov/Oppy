@@ -8,7 +8,7 @@
     <artifactId>OOP-Project</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>Starter OOPProject-Template</name>
+    <name>Oppy</name>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -200,20 +200,5 @@
             </plugin>
         </plugins>
     </build>
-
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${checkstyle.plugin.version}</version>
-                <!-- Specifying configuration here will take effect on the execution of "mvn site",
-                     but will not take effect on the execution of "mvn checkstyle:checkstyle"  -->
-                <configuration>
-                    <configLocation>CSE1105.checkstyle.xml</configLocation>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>
 
 </project>
